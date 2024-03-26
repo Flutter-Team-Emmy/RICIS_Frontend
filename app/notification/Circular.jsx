@@ -28,8 +28,7 @@ const Circular = () => {
 		"Don’t miss out on your competitors and partners’ product launches For questions like these, Sienna and her team seek information to compile resource lists or reports.",
 	];
 	return (
-	
-    <div className='mt-[1.5rem] w-[90%] mx-auto'>
+		<div className='mt-[1.5rem] w-[90%] mx-auto'>
 			<ul className='list-none p-0 m-0 flex flex-col space-y-[8px]'>
 				{data.map((text, i) => (
 					<li

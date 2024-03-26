@@ -5,8 +5,7 @@ import Tab from "./Tab";
 import News from "./News";
 import Notice from "./Notice";
 import Circular from "./Circular";
-import { useRouter, useSearchParams } from "next/navigation";
-import { SearchParamsContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
+import { useSearchParams } from "next/navigation";
 import MainLayout from "@/components/mainLayout";
 
 const Page = () => {
@@ -17,8 +16,9 @@ const Page = () => {
 	const selected = searchParams.get("selected");
 
 	useEffect(() => {
-		console.log(selected);
-		setSelectedTab(selected);
+		if (selected) {
+			setSelectedTab(selected);
+		}
 	}, [selected]);
 
 	const handleClick = (name) => {
