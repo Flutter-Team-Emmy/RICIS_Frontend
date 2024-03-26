@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import React, { useEffect, useState } from "react";
 import BgImgText from "@/components/BgImgText";
@@ -11,15 +12,14 @@ import MainLayout from "@/components/mainLayout";
 const Page = () => {
 	const [selectedTab, setSelectedTab] = useState("News");
 
-	// const searchParams = new useSearchParams();
+	const searchParams = new useSearchParams();
 
-	// const selected = searchParams.get("selected");
-
-	// useEffect(() => {
-	// 	if (selected) {
-	// 		setSelectedTab(selected);
-	// 	}
-	// }, [selected]);
+	useEffect(() => {
+		const selected = searchParams.get("selected");
+		if (selected) {
+			setSelectedTab(selected);
+		}
+	}, [searchParams]);
 
 	const handleClick = (name) => {
 		setSelectedTab(name);
