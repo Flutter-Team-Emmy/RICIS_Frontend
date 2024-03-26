@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import Btn from "@/components/Btn";
+import Link from "next/link";
 import React from "react";
 
 const ThirdSect = () => {
@@ -19,9 +20,9 @@ const ThirdSect = () => {
 						processes that will save you time and money.
 					</h2>
 
-					<div className="w-fit">
-                    <Btn text='Learn more &rarr;' />
-                    </div>
+					<Link href='/legislation_rules' className='w-fit'>
+						<Btn text='Learn more &rarr;' />
+					</Link>
 				</div>
 			</div>
 		</div>

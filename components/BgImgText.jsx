@@ -5,8 +5,8 @@ const BgImgText = ({ url, header, text }) => {
 		<div
 			style={{
 				backgroundImage: `url("${url}")`,
-				backgroundSize: "cover",
-				backgroundPosition: "cover",
+				backgroundSize: "center",
+				backgroundPosition: "center",
 			}}
 		>
 			<div className='h-[500px] w-full bg-[#00000046] relative'>

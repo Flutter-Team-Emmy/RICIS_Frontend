@@ -5,14 +5,17 @@ import Services from "./Services";
 import ThirdSect from "./ThirdSect";
 import Notice from "./Notice";
 import Footer from "@/components/Footer";
+import MainLayout from "@/components/mainLayout";
 
 export default function Home() {
 	return (
-		<div>			
-			<FirstSect />
-			<Services />
-			<ThirdSect />
-			<Notice />			
-		</div>
+		<MainLayout>
+			<div>
+				<FirstSect />
+				<Services />
+				<ThirdSect />
+				<Notice />
+			</div>
+		</MainLayout>
 	);
 }

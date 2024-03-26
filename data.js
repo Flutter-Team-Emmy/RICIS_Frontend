@@ -1,5 +1,9 @@
 export const headerDrop = [
 	{
+		header: "Home",
+        href:"/"
+	},
+	{
 		header: "About Us",
 		drop: [
 			{
@@ -148,26 +152,26 @@ export const headerDrop = [
 		drop: [
 			{
 				text: "News",
-				href: "/notification",
+				href: "/notification?selected=News",
 			},
 			{
 				text: "Notice",
-				href: "/notification",
+				href: "/notification?selected=Notice",
 			},
 			{
 				text: "Circular",
-				href: "/notification",
+				href: "/notification?selected=Circular",
 			},
 		],
 	},
 
 	{
 		header: "FAQs",
-        href:"/faq"
+		href: "/faq",
 	},
 
 	{
 		header: "Contact Us",
-        href:"/contact"
+		href: "/contact",
 	},
 ];

@@ -24,7 +24,7 @@ const Footer = () => {
 						</h2>
 					</div>
 				</div>
-				<div className='w-[20%]'>
+				<div className='w-[20%]'>                    
 					<FooterText
 						header='About Us'
 						data={[
@@ -72,10 +72,10 @@ const Footer = () => {
 				</div>
 			</div>
 
-			<div className='flex justify-between'>
-				<div className='flex flex-col space-y-[0.5rem] items-start w-[40%]'>
+			<div className='flex justify-between md:mt-[3.5rem]'>
+				<div className='flex flex-col space-y-[0.5rem] items-start w-[40%] md:mt-[2rem]'>
 					<img src='/images/logo_bottom 1.jpg' />
-					<div className='flex flex-col '>
+					<div className='flex flex-col space-y-[8px]'>
 						<h2 className='sf700 lg:text-[14px] 2xl:text-[16px] text-white leading-[19.2px] uppercase text-left'>
 							Regulatory IMPLEMentation & compliance scheme
 						</h2>

@@ -1,10 +1,12 @@
 import BgImgText from "@/components/BgImgText";
 import PdfComp from "@/components/PdfComp";
+import MainLayout from "@/components/mainLayout";
 import Link from "next/link";
 import React from "react";
 
 const page = () => {
 	return (
+        <MainLayout>
 		<div>
 			<BgImgText text='Information' />
 
@@ -81,6 +83,7 @@ const page = () => {
 				</div>
 			</div>
 		</div>
+        </MainLayout>
 	);
 };
 

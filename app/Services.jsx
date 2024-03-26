@@ -50,7 +50,7 @@ const Services = () => {
 				/>
 			</div>
 
-			<Link href='' className='mx-auto w-fit bg-black'>
+			<Link href='/services' className='mx-auto w-fit bg-black'>
 				<h2 className='sf400 text-[1rem] leading-[1.5rem] mt-[5rem] text-[#3361FF] text-center mx-auto'>
 					View all &rarr;
 				</h2>

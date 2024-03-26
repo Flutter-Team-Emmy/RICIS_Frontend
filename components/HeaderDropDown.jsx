@@ -3,7 +3,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-const HeaderDropDown = ({ header, drop, href, selectedHeader, setSelectedHeader }) => {
+const HeaderDropDown = ({
+	header,
+	drop,
+	href,
+	selectedHeader,
+	setSelectedHeader,
+}) => {
 	const [isHovered, setIsHovered] = useState(false);
 	const [selected, setSelected] = useState(false);
 	const [counter, setCounter] = useState(0);
@@ -57,6 +63,7 @@ const HeaderDropDown = ({ header, drop, href, selectedHeader, setSelectedHeader 
 							className=' cursor-pointer  '
 							onClick={() => {
 								setCounter((count) => count + 1);
+								setIsHovered(false);
 							}}
 						>
 							<h2 className='sf500 text-[13px] leading-[19.5px] whitespace-nowrap  text-[#7E849B] '>

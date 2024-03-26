@@ -1,8 +1,10 @@
 import BgImgText from "@/components/BgImgText";
+import MainLayout from "@/components/mainLayout";
 import React from "react";
 
 const Activities = () => {
 	return (
+        <MainLayout>
 		<div>
 			<BgImgText header='About Us' text='Activities' />
 			<div className='w-[90%] mx-auto pt-[4rem] pb-[6rem]'>
@@ -37,6 +39,7 @@ const Activities = () => {
 				</h2>
 			</div>
 		</div>
+        </MainLayout>
 	);
 };
 
