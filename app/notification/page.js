@@ -9,7 +9,7 @@ import { useSearchParams } from "next/navigation";
 import MainLayout from "@/components/mainLayout";
 
 const Page = () => {
-	// const [selectedTab, setSelectedTab] = useState("News");
+	const [selectedTab, setSelectedTab] = useState("News");
 
 	// const searchParams = new useSearchParams();
 
@@ -21,9 +21,9 @@ const Page = () => {
 	// 	}
 	// }, [selected]);
 
-	// const handleClick = (name) => {
-	// 	setSelectedTab(name);
-	// };
+	const handleClick = (name) => {
+		setSelectedTab(name);
+	};
 
 	return (
 		<MainLayout>
