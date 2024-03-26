@@ -12,7 +12,7 @@ import MainLayout from "@/components/mainLayout";
 const Page = () => {
 	const [selectedTab, setSelectedTab] = useState("News");
 
-	const searchParams = new useSearchParams();
+	const searchParams = useSearchParams();
 
 	useEffect(() => {
 		const selected = searchParams.get("selected");
