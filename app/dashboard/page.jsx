@@ -1,0 +1,42 @@
+import DashboardLayout from "@/components/layouts/DashboardLayout";
+import Table from "@/components/Table";
+import { AddCircleIcon } from "@/svgs";
+import StatsCard from "./statsCard";
+import { stats } from "./stats";
+
+const Dashboard = () => {
+  return (
+    <DashboardLayout header="Dashboard" icon="">
+      <div className="space-y-10 w-full">
+        <div className="flex justify-between w-full items-center">
+          <div className="space-y-2">
+            <h1 className="text-gray-900 text-3xl font-medium">Welcome Back</h1>
+            <p className="text-gray-500">
+              Here is a preview of your activities and information
+            </p>
+          </div>
+          <button className="bg-blue-700 px-4 py-2.5 flex items-center gap-2 rounded-md text-white hover:bg-blue-600">
+            <span className="">{AddCircleIcon}</span>
+            <span className="">New Application</span>
+          </button>
+        </div>
+        <div className="flex justify-between w-full gap-6">
+          {stats.map((stat) => (
+            <StatsCard
+              key={stat.id}
+              status={stat.status}
+              amount={stat.amount}
+              percentage={stat.percentage}
+              increase={stat.increase}
+              colorCode={stat.colorCode}
+              colorClass={stat.colorClass}
+            />
+          ))}
+        </div>
+        <Table />
+      </div>
+    </DashboardLayout>
+  );
+};
+
+export default Dashboard;
