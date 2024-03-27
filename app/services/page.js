@@ -33,38 +33,71 @@ const page = () => {
 				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[1.5rem] w-[80%] mb-[6rem] mx-auto'>
 					<CardCenter
 						header='Regulation of Boilers & Pressure Vessel'
-						subHeader='Experience the power of our Good Sign today and take your business to new heights.'
-						href=''
+						subHeader='Ensure safety and compliance with our expert regulation
+                        services for boilers and pressure vessels.'
+						href='/services/regulation_of_boilers_pressure_vessel'
 						img='/images/r&b.jpg'
 					/>
 					<CardCenter
 						header='Registration of Passenger Lift & Elevators'
-						subHeader='Experience the power of our Good Sign today and take your business to new heights.'
-						href=''
+						subHeader='Keep your passengers safe and your building compliant with our expert lift and
+                        elevator registration services.'
+						href='/services/registration_of_passenger_lifts_elevators'
 						img='/images/rop.jpg'
 					/>
 					<CardCenter
 						header='Registration of Crane & Lifting Equipment'
-						subHeader='Experience the power of our Good Sign today and take your business to new heights.'
-						href=''
+						subHeader='Ensure the safe and legal operation of your cranes and lifting equipment with our
+                        comprehensive registration services.'
+						href='/services/registration_of_creanes_and_lifting_equipments'
 						img='/images/roc.jpg'
 					/>
 					<CardCenter
-						header='Removal of Personal Certification'
-						subHeader='Experience the power of our Good Sign today and take your business to new heights.'
-						href=''
+						header='Approval of Boiler &amp; Pressure Vessel
+                        Manufacturer'
+						subHeader='Get certified to manufacture safe, high-quality boilers &amp; pressure vessels.'
+						href='/services/approval_of_boiler_and_pressure_vessel_manufacturer'
 						img='/images/ropc.jpg'
 					/>
 					<CardCenter
-						header='Approval of Training Contractor'
-						subHeader='Experience the power of our Good Sign today and take your business to new heights.'
-						href=''
+						header='Renewal of Certificate on Boiler &amp;
+                        Pressure Vessels'
+						subHeader='Avoid Downtime, Ensure Safety: Boiler &amp; Pressure Vessel
+                        Certificate Renewal'
+						href='/services/renewal_of_certificate_on_boiler_and_pressure_vessels'
 						img='/images/aot.jpg'
 					/>
+
 					<CardCenter
-						header='Approval of Boiler & Pressure Vessel Manufacturer'
-						subHeader='Experience the power of our Good Sign today and take your business to new heights.'
-						href=''
+						header='Renewal of Certificates on Passenger &amp;
+                        Elevators'
+						subHeader='Ensure uninterrupted service and passenger safety with our efficient
+                        renewal services.'
+						href='/services/renewal_of_certificates_on_passenger_and_elevators'
+						img='/images/aoc.jpg'
+					/>
+
+					<CardCenter
+						header='Renewal of Certificates on Passenger &amp;
+                        Lift Equipment'
+						subHeader='Ensure uninterrupted service and passenger safety with our efficient
+                        renewal services.'
+						href='/services/renewal_of_certificates_on_passenger_and_lift_equipment'
+						img='/images/aoc.jpg'
+					/>
+					<CardCenter
+						header='Approval of AIA'
+						subHeader='Leverage our expertise to ensure your AIA contracts are clear, comprehensive,
+                        and protect your interests.'
+						href='/services/approval_of_aia'
+						img='/images/aoc.jpg'
+					/>
+
+					<CardCenter
+						header='Certificate Verfication'
+						subHeader='Ensure the authenticity of diplomas, licenses, and more
+                        with our fast, secure verification services.'
+						href='/services/cetificate_verification'
 						img='/images/aoc.jpg'
 					/>
 				</div>

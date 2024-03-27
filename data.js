@@ -1,7 +1,7 @@
 export const headerDrop = [
 	{
 		header: "Home",
-        href:"/"
+		href: "/",
 	},
 	{
 		header: "About Us",
@@ -26,51 +26,51 @@ export const headerDrop = [
 		drop: [
 			{
 				text: "Regulation of Boilers & Pressure Vessels",
-				href: "/services",
+				href: "/services/regulation_of_boilers_pressure_vessel'",
 			},
 			{
 				text: "Registration of Passenger Lift & Elevators",
-				href: "/services",
+				href: "/services/registration_of_passenger_lifts_elevators",
 			},
 			{
 				text: "Registration of Crane & Lifting Equipment",
-				href: "/services",
+				href: "/services/registration_of_creanes_and_lifting_equipments",
 			},
-			{
-				text: "Removal of Personal Certification",
-				href: "/services",
-			},
-			{
-				text: "Approval of Training Contractor",
-				href: "/services",
-			},
+			// {
+			// 	text: "Removal of Personal Certification",
+			// 	href: "/services",
+			// },
+			// {
+			// 	text: "Approval of Training Contractor",
+			// 	href: "/services",
+			// },
 			{
 				text: "Approval of Boiler & Pressure Vessel Manufacturer",
-				href: "/services",
+				href: "/services/approval_of_boiler_and_pressure_vessel_manufacturer",
 			},
-			{
-				text: "Personnel Certification",
-				href: "/services",
-			},
+			// {
+			// 	text: "Personnel Certification",
+			// 	href: "/services",
+			// },
 			{
 				text: "Certificate Verification",
-				href: "/services",
+				href: "/services/cetificate_verification'",
 			},
 			{
 				text: "Renewal of certificate on Boiler & Pressure Vessels",
-				href: "/services",
+				href: "/services/renewal_of_certificate_on_boiler_and_pressure_vessels",
 			},
 			{
 				text: "Renewal of certificates on Passenger  & Elevators",
-				href: "/services",
+				href: "/services/renewal_of_certificates_on_passenger_and_elevators",
 			},
 			{
 				text: "Approval of  AIA",
-				href: "/services",
+				href: "/services/approval_of_aia",
 			},
 			{
 				text: "Renewal of certificates on Passenger & Litty Equipment",
-				href: "/services",
+				href: "/services/renewal_of_certificates_on_passenger_and_lift_equipment",
 			},
 		],
 	},
