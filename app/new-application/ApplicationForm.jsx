@@ -1,4 +1,6 @@
-const { default: InputField } = require("./InputField")
+import InputField from "./InputField";
+
+const pagination = "<1/12 Pages >"
 
 const ApplicationForm = () => {
     return (

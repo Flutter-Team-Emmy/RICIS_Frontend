@@ -21,7 +21,7 @@ export const sidebarLinks = [
     {
         id: "s3",
         name: "Notifications",
-        href: "/notifications",
+        href: "/notifications-admin",
         icon: NotificationIcon
     },
     {

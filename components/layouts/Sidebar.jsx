@@ -11,7 +11,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { sidebarLinks } from ".";
 
-const activeClass = "bg-blue-800 hover:bg-blue-600";
+const activeClass = "bg-blue-700 hover:bg-blue-600";
 
 const Sidebar = ({ display, lg_display, zIndex }) => {
   const pathname = usePathname();
@@ -24,7 +24,7 @@ const Sidebar = ({ display, lg_display, zIndex }) => {
               <li
                 key={link.id}
                 className={` ${
-                  pathname === link.href && activeClass
+                  (pathname === link.href || pathname.includes(link.href)) && activeClass
                 } flex items-center gap-2 p-2 rounded-md mb-3`}
               >
                 <span className="">{link.icon}</span>
