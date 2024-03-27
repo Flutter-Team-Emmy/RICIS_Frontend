@@ -1,3 +1,5 @@
+"use client"
+
 import BgImgText from "@/components/BgImgText";
 import MainLayout from "@/components/mainLayout";
 import React from "react";

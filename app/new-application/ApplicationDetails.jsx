@@ -1,3 +1,5 @@
+"use client"
+
 const pagination = "<1/12 Pages >";
 
 const ApplicationDetails = ({ proceedToNextStep, handleChange, formData, setFormData }) => {

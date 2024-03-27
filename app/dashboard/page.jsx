@@ -1,3 +1,5 @@
+"use client"
+
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import Table from "@/components/Table";
 import { AddCircleIcon } from "@/svgs";

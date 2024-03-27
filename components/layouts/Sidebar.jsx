@@ -1,11 +1,4 @@
 "use client";
-
-import {
-  dashboardIcon,
-  applicationIcon,
-  messageIcon,
-  draftsIcon,
-} from "@/svgs";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";

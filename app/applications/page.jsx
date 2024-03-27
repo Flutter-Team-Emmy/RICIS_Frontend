@@ -20,16 +20,6 @@ const Applications = () => {
     return (
             <DashboardLayout header="Dashboard">
                 <div className="space-y-10 w-full bg-white p-4">
-                    {/* <div className="flex items-center gap-4 text-sm">
-                        {applicationsTabs.map((tab, index) => {
-                            return <Link
-                                // className={`${!param && index === 0 ? activeClass : inactiveClass} ${param === tab.tab ? activeClass : inactiveClass}`}
-                                key={tab.id}
-                                href={{ pathname: pathname, query: { tab: tab.tab } }}>
-                                {capitalizeFirstLetter(tab.tab)}
-                            </Link>
-                        })}
-                    </div> */}
                     <Table />
                 </div>
             </DashboardLayout>

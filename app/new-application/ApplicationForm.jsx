@@ -1,3 +1,5 @@
+"use client"
+
 import InputField from "./InputField";
 
 const pagination = "<1/12 Pages >"

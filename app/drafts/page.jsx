@@ -1,3 +1,5 @@
+"use client"
+
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 
 const draftTableData = [
