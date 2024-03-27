@@ -2,6 +2,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+Figma file
+
+https://www.figma.com/file/g271w3aw1gv9iB4QfRuU8V/Hull-UI-REDESIGN?type=design&node-id=0-1&mode=design&t=p9wLROxlp0ewxbXt-0
+
 First, run the development server:
 
 ```bash
