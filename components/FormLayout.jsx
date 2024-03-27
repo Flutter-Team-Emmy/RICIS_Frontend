@@ -4,7 +4,7 @@ import React from "react";
 
 const FormLayout = ({ handleClick, children }) => {
 	return (
-		<div className='bg-[#FAFAFA] relative h-screen overflow-auto scroll-hidden'>
+		<div className='bg-[#FAFAFA] relative '>
 			<div
 				className='absolute top-[2.5rem] right-[4rem]'
 				onClick={() => {
@@ -14,7 +14,7 @@ const FormLayout = ({ handleClick, children }) => {
 				{XIcon}
 			</div>
 
-			<div>{children}</div>
+			<div className='h-screen overflow-auto scroll-hidden'>{children}</div>
 		</div>
 	);
 };
