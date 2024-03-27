@@ -3,7 +3,7 @@ import MainLayout from "@/components/mainLayout";
 import React from "react";
 import TextComp from "../TextComp";
 
-const page = () => {
+const Page = () => {
 	return (
 		<MainLayout>
 			<BgImgText text='Renewal of certificates on Passenger &amp; Elevators' />
@@ -177,4 +177,4 @@ and keep your lifts and elevators compliant.'
 	);
 };
 
-export default page;
+export default Page;

@@ -3,7 +3,7 @@ import MainLayout from "@/components/mainLayout";
 import React from "react";
 import TextComp from "../TextComp";
 
-const page = () => {
+const Page = () => {
 	return (
 		<MainLayout>
 			<BgImgText text='Renewal of certificate on Boiler &amp; Pressure Vessels' />
@@ -147,4 +147,4 @@ const page = () => {
 	);
 };
 
-export default page;
+export default Page;
