@@ -2,19 +2,19 @@ import { Applications } from "@/utils/data";
 
 const Table = () => {
   return (
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-        <thead class="text-sm text-gray-500 uppercas bg-gray-50">
+    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead className="text-sm text-gray-500 uppercas bg-gray-50">
           <tr>
-            <th scope="col" class="px-6 py-3">
+            <th scope="col" className="px-6 py-3">
               Ref No
             </th>
-            <th scope="col" class="px-6 py-3">
-              <div class="flex items-center">
+            <th scope="col" className="px-6 py-3">
+              <div className="flex items-center">
                 Company Details
                 <a href="#">
                   <svg
-                    class="w-3 h-3 ms-1.5"
+                    className="w-3 h-3 ms-1.5"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
@@ -25,12 +25,12 @@ const Table = () => {
                 </a>
               </div>
             </th>
-            <th scope="col" class="px-6 py-3">
-              <div class="flex items-center">
+            <th scope="col" className="px-6 py-3">
+              <div className="flex items-center">
                 Status
                 <a href="#">
                   <svg
-                    class="w-3 h-3 ms-1.5"
+                    className="w-3 h-3 ms-1.5"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
@@ -41,12 +41,12 @@ const Table = () => {
                 </a>
               </div>
             </th>
-            <th scope="col" class="px-6 py-3">
-              <div class="flex items-center">
+            <th scope="col" className="px-6 py-3">
+              <div className="flex items-center">
                 Date Applied
                 <a href="#">
                   <svg
-                    class="w-3 h-3 ms-1.5"
+                    className="w-3 h-3 ms-1.5"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
@@ -61,20 +61,20 @@ const Table = () => {
         </thead>
         <tbody>
           {Applications.map((application) => (
-            <tr key={application.id} class="bg-white border-b w-full text-sm">
+            <tr key={application.id} className="bg-white border-b w-full text-sm">
               <th
                 scope="row"
-                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
               >
                 {application.ref_no}
               </th>
-              <td class="px-6 py-4 w-80">{application.company_details}</td>
-              <td class="px-6 py-4">
+              <td className="px-6 py-4 w-80">{application.company_details}</td>
+              <td className="px-6 py-4">
                 <span className="px-2.5 py-1.5 bg-green-100 text-green-700 font-medium rounded-3xl">
                   {application.status}
                 </span>
               </td>
-              <td class="px-6 py-4"> {application.date_applied} </td>
+              <td className="px-6 py-4"> {application.date_applied} </td>
             </tr>
           ))}
         </tbody>

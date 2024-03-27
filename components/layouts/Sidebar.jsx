@@ -23,9 +23,9 @@ const Sidebar = ({ display, lg_display, zIndex }) => {
             <>
               <li
                 key={link.id}
-                className={` ${
-                  (pathname === link.href || pathname.includes(link.href)) && activeClass
-                } flex items-center gap-2 p-2 rounded-md mb-3`}
+                className={` ${pathname === link.href && activeClass}
+                  ${pathname.includes(link.href) && activeClass}
+                 flex items-center gap-2 p-2 rounded-md mb-3`}
               >
                 <span className="">{link.icon}</span>
                 <Link className="" href={link.href}>
