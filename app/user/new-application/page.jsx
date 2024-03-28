@@ -30,9 +30,8 @@ const NewApplication = () => {
         router.push(pathname + "?" + createQueryString("tab", formData.application_details))
     }
 
-    if (!param) {
-        return (
-            <Suspense>
+     <Suspense fallback={<div>Loading...</div>}>
+            {!param ? (
                 <DashboardLayout header="Dashboard" icon="">
                     <div className="space-y-10 w-full">
                         <ApplicationDetails
@@ -42,21 +41,14 @@ const NewApplication = () => {
                             handleChange={handleChange} />
                     </div>
                 </DashboardLayout>
-            </Suspense>
-        )
-    }
-
-    if (param) {
-        return (
-            <Suspense>
+            ) : (
                 <DashboardLayout header="Dashboard" icon="">
                     <div className="space-y-10 w-full">
                         <ApplicationForm />
                     </div>
                 </DashboardLayout>
-            </Suspense>
-        )
-    }
+            )}
+        </Suspense>
 };
 
 export default NewApplication;
