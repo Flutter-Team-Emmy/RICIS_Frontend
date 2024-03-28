@@ -2,30 +2,34 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { sidebarLinks } from ".";
+import { UserSidebarLinks, AdminSidebarLinks } from ".";
 
 const activeClass = "bg-blue-700 hover:bg-blue-600";
 
 const Sidebar = ({ display, lg_display, zIndex }) => {
+
   const pathname = usePathname();
+  const isAdmin = pathname.includes("admin");
+
+  console.log(pathname)
+
   return (
     <aside className={`h-screen bg-[#1A191B] px-4 fixed top-0 w-[12rem]`}>
       <div className="flex flex-col space-y-3 text-white mt-2">
         <ul className="mt-28 space-y-3 text-sm">
-          {sidebarLinks.map((link, index) => (
+          {(isAdmin ? AdminSidebarLinks : UserSidebarLinks).map((link, index) => (
             <>
               <li
                 key={link.id}
-                className={` ${pathname === link.href && activeClass}
-                  ${pathname.includes(link.href) && activeClass}
-                 flex items-center gap-2 p-2 rounded-md mb-3`}
+                className={`${pathname === link.href ? activeClass : ""}
+                 flex items-center gap-2 p-2 rounded-md mb-3 text-xs`}
               >
                 <span className="">{link.icon}</span>
                 <Link className="" href={link.href}>
                   {link.name}
                 </Link>
               </li>
-              {index === 0 && <hr className="border-gray-600" />}
+              {index === 0 ? <hr className="border-gray-600" /> : ""}
             </>
           ))}
         </ul>

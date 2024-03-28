@@ -1,48 +1,48 @@
 export const Applications = [
     {
-        id: "a1",
+        id: "k1",
         ref_no: "2938389294284374",
         company_details: "Oshell Kaniuelly SIksy Directive Limited 12th floor, Daine HorneStreet, Lagos. BNEEM",
         status: "completed",
         date_applied: "26/3/2024 16:34:04"
     },
     {
-        id: "a2",
+        id: "k2",
         ref_no: "2938389294284374",
         company_details: "Oshell Kaniuelly SIksy Directive Limited 12th floor, Daine HorneStreet, Lagos. BNEEM",
         status: "completed",
         date_applied: "26/3/2024 16:34:04"
     },
     {
-        id: "a3",
+        id: "k3",
         ref_no: "2938389294284374",
         company_details: "Oshell Kaniuelly SIksy Directive Limited 12th floor, Daine HorneStreet, Lagos. BNEEM",
         status: "completed",
         date_applied: "26/3/2024 16:34:04"
     },
     {
-        id: "a4",
+        id: "k4",
         ref_no: "2938389294284374",
         company_details: "Oshell Kaniuelly SIksy Directive Limited 12th floor, Daine HorneStreet, Lagos. BNEEM",
         status: "completed",
         date_applied: "26/3/2024 16:34:04"
     },
     {
-        id: "a5",
+        id: "k5",
         ref_no: "2938389294284374",
         company_details: "Oshell Kaniuelly SIksy Directive Limited 12th floor, Daine HorneStreet, Lagos. BNEEM",
         status: "completed",
         date_applied: "26/3/2024 16:34:04"
     },
     {
-        id: "a6",
+        id: "k6",
         ref_no: "2938389294284374",
         company_details: "Oshell Kaniuelly SIksy Directive Limited 12th floor, Daine HorneStreet, Lagos. BNEEM",
         status: "completed",
         date_applied: "26/3/2024 16:34:04"
     },
     {
-        id: "a7",
+        id: "k7",
         ref_no: "2938389294284374",
         company_details: "Oshell Kaniuelly SIksy Directive Limited 12th floor, Daine HorneStreet, Lagos. BNEEM",
         status: "completed",
@@ -53,19 +53,19 @@ export const Applications = [
 
 export const applicationsTabs = [
     {
-        id: "a1",
+        id: "p1",
         tab: "recent",
     },
     {
-        id: "a2",
+        id: "p2",
         tab: "pending",
     },
     {
-        id: "a3",
+        id: "p3",
         tab: "approved",
     },
     {
-        id: "a4",
+        id: "p4",
         tab: "rejected",
     }
 ];

@@ -23,7 +23,7 @@ const NotificationsAdmin = () => {
                     <div className="bg-white w-full shadow-md rounded-md space-y-8 py-6">
                         {notifications.map((msg, index) =>
                             <p key={index} className="border-b-2 border-b-gray-300 border-b-solid pl-6 pb-6 text-sm" >
-                                <Link href="notifications-admin/id">
+                                <Link href="notifications/id">
                                     {msg}
                                 </Link>
                             </p>
