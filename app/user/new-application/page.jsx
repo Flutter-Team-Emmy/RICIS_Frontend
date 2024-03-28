@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import ApplicationForm from "./ApplicationForm";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import ApplicationDetails from "./ApplicationDetails";
-import { Suspense } from "react/cjs/react.production.min";
+import { Suspense } from "react";
 
 const pagination = "<1/12 Pages >";
 
@@ -32,15 +32,17 @@ const NewApplication = () => {
 
     if (!param) {
         return (
-            <DashboardLayout header="Dashboard" icon="">
-                <div className="space-y-10 w-full">
-                    <ApplicationDetails
-                        proceedToNextStep={proceedToNextStep}
-                        formData={formData}
-                        setFormData={setFormData}
-                        handleChange={handleChange} />
-                </div>
-            </DashboardLayout>
+            <Suspense>
+                <DashboardLayout header="Dashboard" icon="">
+                    <div className="space-y-10 w-full">
+                        <ApplicationDetails
+                            proceedToNextStep={proceedToNextStep}
+                            formData={formData}
+                            setFormData={setFormData}
+                            handleChange={handleChange} />
+                    </div>
+                </DashboardLayout>
+            </Suspense>
         )
     }
 
@@ -57,4 +59,4 @@ const NewApplication = () => {
     }
 };
 
-export default NewApplication
+export default NewApplication;
