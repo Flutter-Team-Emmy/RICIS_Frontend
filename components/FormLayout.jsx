@@ -14,7 +14,9 @@ const FormLayout = ({ handleClick, children }) => {
 				{XIcon}
 			</div>
 
-			<div className='h-screen overflow-auto scroll-hidden'>{children}</div>
+			<div className='h-screen overflow-auto scroll-hidden flex items-center justify-center py-[2rem] '>
+				{children}
+			</div>
 		</div>
 	);
 };
