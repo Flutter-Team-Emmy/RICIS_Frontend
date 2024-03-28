@@ -1,8 +1,11 @@
+"use client"
+
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import Table from "@/components/Table";
 import { AddCircleIcon } from "@/svgs";
-import StatsCard from "./statsCard";
-import { stats } from "./stats";
+import StatsCard from "./dashboard/statsCard";
+import { stats } from "./dashboard/stats";
+import Link from "next/link";
 
 const Dashboard = () => {
   return (
@@ -15,10 +18,10 @@ const Dashboard = () => {
               Here is a preview of your activities and information
             </p>
           </div>
-          <button className="bg-blue-700 px-4 py-2.5 flex items-center gap-2 rounded-md text-white hover:bg-blue-600">
+          <Link href="user/new-application" className="bg-blue-700 px-4 py-2.5 flex items-center gap-2 rounded-md text-white hover:bg-blue-600">
             <span className="">{AddCircleIcon}</span>
             <span className="">New Application</span>
-          </button>
+          </Link>
         </div>
         <div className="flex justify-between w-full gap-6">
           {stats.map((stat) => (
