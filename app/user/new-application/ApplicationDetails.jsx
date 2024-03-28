@@ -14,7 +14,7 @@ const ApplicationDetails = ({ proceedToNextStep, handleChange, formData, setForm
             <div className="bg-white w-[95%] m-auto shadow-md rounded-md space-y-8 py-6 pl-6">
                 <h1 className="text-[#46B038] font-bold">APPLICATION DETAILS</h1>
                 <form className="max-w-sm">
-                    <label for="applicationType" className="block mb-2 font-medium">Application Type</label>
+                    <label htmlFor="applicationType" className="block mb-2 font-medium">Application Type</label>
                     <select onChange={handleChange} name="application_details" value={formData.application_details} id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block lg:w-[70%] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option selected>Select a Type</option>
                         <option value="clearance">Clearance</option>
