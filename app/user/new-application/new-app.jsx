@@ -8,7 +8,6 @@ import ApplicationForm from "./ApplicationForm";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import ApplicationDetails from "./ApplicationDetails";
 
-const pagination = "<1/12 Pages >";
 
 const initialFormData = {
     application_details: ""

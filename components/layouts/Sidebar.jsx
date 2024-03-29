@@ -57,7 +57,7 @@ const Sidebar = ({ display, lg_display, zIndex }) => {
   }, []);
 
   return (
-    <aside className={`h-screen bg-[#1A191B] px-4 fixed top-0 w-[12rem]`}>
+    <aside className={`h-screen bg-[#1A191B] px-2 fixed top-0 w-[12rem]`}>
       <div className="flex flex-col space-y-3 text-white mt-2">
         <ul className="mt-28 space-y-3 text-sm">
           {(isAdmin ? AdminSidebarLinks : UserSidebarLinks).map(

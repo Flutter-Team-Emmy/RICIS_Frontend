@@ -3,6 +3,7 @@ import {
     applicationIcon,
     draftsIcon,
     NotificationIcon,
+    CiChartIcon
 } from "@/svgs";
 
 export const UserSidebarLinks = [
@@ -37,7 +38,7 @@ export const AdminSidebarLinks = [
         id: "s1",
         name: "Overview",
         href: "/admin",
-        icon: dashboardIcon
+        icon: CiChartIcon
     },
     {
         id: "s2",
