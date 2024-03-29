@@ -10,6 +10,15 @@ import { useState } from "react";
 const HomeSidebar = ({ setShowHomeSidebar }) => {
 
     const [toggle, setToggle] = useState(false);
+    const [selectedId, setSelectedId] = useState(["01"]);
+
+    const toggleDropDown = (dropdown_id) => {
+        if (selectedId.includes(dropdown_id)) {
+            setSelectedId(selectedId.filter(id => id !== dropdown_id));
+        } else {
+            setSelectedId(prev => [...prev, dropdown_id])
+        }
+    }
 
     // console.log(selectedId)
 
@@ -35,21 +44,23 @@ const HomeSidebar = ({ setShowHomeSidebar }) => {
                 </div>
             </Link>
             <ul className="py-6 pl-4 text-gray-400 h-full overflow-y-scroll">
-                {headerDrop.map((data, index) =>
-                    <li key={index}>
+                {headerDrop.map((data, index) => {
+                    const isOpen = selectedId.includes(data.id);
+                    return <li key={index}>
                         {data.drop ?
-                            <div onClick={() => setToggle(prev => !prev)} className="flex items-center gap-x-2">
+                            <div onClick={()=> toggleDropDown(data.id)} className="flex items-center gap-x-2">
                                 <p className="font-medium ">{data.header}</p>
-                                <Image width={20} height={20} color="gray" className={`${toggle ? "rotate-180" : "rotate-0"} text-gray-300`} src={dropdown} alt="" />
+                                <Image width={20} height={20} color="gray" className={`${isOpen ? "rotate-180" : "rotate-0"} text-gray-300`} src={dropdown} alt="" />
                             </div> :
                             <p className="font-medium ">{data.header}</p>
                         }
-                        <div className="text-gray-300">
+                        {isOpen && <div className="text-gray-300">
                             {data.drop?.map((info, idx) =>
                                 <p key={idx}>{info.text}</p>
                             )}
-                        </div>
+                        </div>}
                     </li>
+                }
                 )}
             </ul>
         </div>
