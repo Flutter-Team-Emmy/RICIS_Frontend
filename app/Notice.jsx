@@ -1,7 +1,7 @@
 import React from "react";
 import TextHeader from "./TextHeader";
 import Link from "next/link";
-import CardLeft from "@/components/CardLeft";
+import CardLeft from "../components/CardLeft";
 
 const Notice = () => {
 	return (

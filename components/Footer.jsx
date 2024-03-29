@@ -1,6 +1,6 @@
 import React from "react";
 import FooterText from "./FooterText";
-import { headerRound } from "@/svgs";
+import { headerRound } from "../svgs";
 
 const Footer = () => {
 	return (

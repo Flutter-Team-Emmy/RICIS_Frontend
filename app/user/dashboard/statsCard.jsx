@@ -1,4 +1,4 @@
-import { TrendArrow } from "@/svgs";
+import { TrendArrow } from "../../../svgs";
 import Image from "next/image";
 
 const StatsCard = ({ status, amount, percentage, increase, colorCode, colorClass }) => {

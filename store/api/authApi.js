@@ -5,7 +5,7 @@ import {
   requestOTPUrl,
   signInUrl,
   verifyOTPUrl,
-} from "@/lib/configs";
+} from "../../lib/configs";
 
 export const authApi = createApi({
   reducerPath: "authApi",

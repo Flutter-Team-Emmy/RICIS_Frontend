@@ -1,6 +1,6 @@
 import React from "react";
 import TextHeader from "./TextHeader";
-import CardCenter from "@/components/CardCenter";
+import CardCenter from "../components/CardCenter";
 import Link from "next/link";
 
 const Services = () => {

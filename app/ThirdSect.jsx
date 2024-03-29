@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import Btn from "@/components/Btn";
+import Btn from "../components/Btn";
 import Link from "next/link";
 import React from "react";
 

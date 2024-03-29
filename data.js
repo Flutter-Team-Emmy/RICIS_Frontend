@@ -2,9 +2,11 @@ export const headerDrop = [
 	{
 		header: "Home",
 		href: "/",
+		id: "01"
 	},
 	{
 		header: "About Us",
+		id: "02",
 		drop: [
 			{
 				text: "Activities",
@@ -23,6 +25,7 @@ export const headerDrop = [
 
 	{
 		header: "Services",
+		id: "03",
 		drop: [
 			{
 				text: "Regulation of Boilers & Pressure Vessels",
@@ -77,6 +80,7 @@ export const headerDrop = [
 
 	{
 		header: "Legislation/Rules",
+		id: "04",
 		drop: [
 			{
 				text: "Factories Act 2004",
@@ -103,6 +107,7 @@ export const headerDrop = [
 
 	{
 		header: "Information",
+		id: "05",
 		drop: [
 			{
 				text: "Checklist",
@@ -149,6 +154,7 @@ export const headerDrop = [
 
 	{
 		header: "Notifications",
+		id: "06",
 		drop: [
 			{
 				text: "News",
@@ -167,11 +173,13 @@ export const headerDrop = [
 
 	{
 		header: "FAQs",
+		id: "07",
 		href: "/faq",
 	},
 
 	{
 		header: "Contact Us",
+		id: "08",
 		href: "/contact",
 	},
 ];
