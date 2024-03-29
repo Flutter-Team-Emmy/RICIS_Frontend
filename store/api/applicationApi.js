@@ -1,5 +1,10 @@
+"use client";
+
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "@/lib/configs";
+import { getToken } from "@/utils/authHelpers";
+
+const token = getToken();
 
 export const applicationApi = createApi({
   reducerPath: "applicationApi",
@@ -13,7 +18,7 @@ export const applicationApi = createApi({
         return {
           url: `/users/updatepassword/${token}`,
           method: "PUT",
-          credentials: "include",
+          // credentials: "include",
           body: payload,
         };
       },
@@ -22,8 +27,9 @@ export const applicationApi = createApi({
     addNewApplication: builder.mutation({
       query(payload) {
         return {
-          url: `/users/resetpassword`,
+          url: "/application",
           method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
           //   credentials: 'include',
           body: payload,
         };
@@ -48,6 +54,24 @@ export const applicationApi = createApi({
       },
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
     }),
+    getForms: builder.query({
+      query() {
+        return {
+          url: "/forms",
+          //   credentials: 'include'
+        };
+      },
+      invalidatesTags: [{ type: "Applications", id: "LIST" }],
+    }),
+    getSingleFormFields: builder.query({
+      query(formId) {
+        return {
+          url: `/forms/${formId}/fields`,
+          //   credentials: 'include'
+        };
+      },
+      invalidatesTags: [{ type: "Applications", id: "LIST" }],
+    }),
     deleteApplication: builder.mutation({
       query(userId) {
         return {
@@ -67,4 +91,6 @@ export const {
   useGetSingleApplicationQuery,
   useGetAllApplicationsQuery,
   useDeleteApplicationMutation,
+  useGetFormsQuery,
+  useGetSingleFormFieldsQuery
 } = applicationApi;

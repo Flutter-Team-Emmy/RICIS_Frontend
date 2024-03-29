@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { getToken } from "@/utils/authHelpers";
 
 const InitialData = {
   email: "",
@@ -23,9 +24,7 @@ const Page = () => {
     requestRegistrationOTP,
     { isLoading, isSuccess, isError, error, data },
   ] = useRequestRegistrationOTPMutation();
-
-  console.log(data);
-  console.log(error);
+  const token = getToken();
 
   const handleRequestOTP = async () => {
     const emailIsInValid =
@@ -40,9 +39,9 @@ const Page = () => {
 
   useEffect(() => {
     // const { isErr, err } = normalizeErrors(data);
-    //   if (isErr) {
-    //     toast.error(err, { autoClose: 3000 });
-    //   }
+    // if (isErr) {
+    //   toast.error(err, { autoClose: 3000 });
+    // }
     if (isError) {
       toast.error(data?.message, { autoClose: 3000 });
     }
@@ -52,6 +51,12 @@ const Page = () => {
       router.push(`/verify-otp?email=${formData.email}`);
     }
   }, [isSuccess, isError]);
+
+  useEffect(() => {
+    if (token) {
+      router.replace("/user");
+    }
+  }, [token]);
 
   return (
     <FormLayout>
