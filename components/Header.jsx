@@ -49,9 +49,9 @@ const Header = () => {
 						</div>
 					</Link>
 
-					<div>
+					<Link href="/signin">
 						<Btn text='Sign in' />
-					</div>
+					</Link>
 				</div>
 
 				<div className='mt-[3rem] flex items-center space-x-[2rem] justify-between pb-[5px] '>
