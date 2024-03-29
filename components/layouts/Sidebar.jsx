@@ -3,10 +3,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { UserSidebarLinks, AdminSidebarLinks } from ".";
+import crossIcon from "../../public/images/Cross.svg";
 
 const activeClass = "bg-blue-700 hover:bg-blue-600";
 
-const Sidebar = ({ display, lg_display, zIndex }) => {
+const Sidebar = ({ setShowSidebar, showSidebar }) => {
 
   const pathname = usePathname();
   const isAdmin = pathname.includes("admin");
@@ -14,9 +15,10 @@ const Sidebar = ({ display, lg_display, zIndex }) => {
   console.log(pathname)
 
   return (
-    <aside className={`h-screen bg-[#1A191B] px-2 fixed top-0 w-[12rem]`}>
+    <aside className={`h-screen bg-[#1A191B] px-2 fixed top-0 w-[12rem] z-[1000] lg:block ${showSidebar}`}>
+      <Image onClick={() => setShowSidebar("hidden")} src={crossIcon} className="w-12 h-12 lg:hidden ml-32 mt-6" alt="" />
       <div className="flex flex-col space-y-3 text-white mt-2">
-        <ul className="mt-28 space-y-3 text-sm">
+        <ul className="mt-16 lg:mt-28 space-y-3 text-sm">
           {(isAdmin ? AdminSidebarLinks : UserSidebarLinks).map((link, index) => (
             <>
               <li
@@ -43,7 +45,7 @@ const Sidebar = ({ display, lg_display, zIndex }) => {
           />
           <div className>
             <p className="text-sm">David Stephen</p>
-            <p className="text-xs text-gray-200">Applicant</p>
+            <p className="text-sm lg:text-xs text-gray-200">Applicant</p>
           </div>
         </div>
       </div>

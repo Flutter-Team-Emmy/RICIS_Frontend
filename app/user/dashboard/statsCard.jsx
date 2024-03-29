@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const StatsCard = ({ status, amount, percentage, increase, colorCode, colorClass }) => {
   return (
-    <div className="border-2 border-gray-200 rounded-md bg-white">
+    <div className="whitespace-nowrap border-2 border-gray-200 rounded-md bg-white">
       <p className="p-4 text-2xl font-medium text-gray-700">
         {" "}
         {status} Applications
@@ -19,7 +19,7 @@ const StatsCard = ({ status, amount, percentage, increase, colorCode, colorClass
             <span className="">{TrendArrow(colorCode)}</span>
           </div>
         </div>
-        <Image width={230} height={100} className="" src="/images/graph.png" />
+        <Image width={230} height={100} className="w-fit" src="/images/graph.png" />
       </div>
     </div>
   );

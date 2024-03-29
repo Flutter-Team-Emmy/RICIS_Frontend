@@ -6,12 +6,12 @@ import Link from "next/link";
 const StaffManagement = () => {
     return (
         <DashboardLayout header="Admin">
-            <div className="flex justify-between w-[95%]">
-                <div className="w-full pb-8">
+            <div className="lg:flex lg:justify-between w-[95%] pb-8">
+                <div className="w-full pb-4 lg:pb-8">
                     <h1 className="text-black font-bold text-2xl">Staff Management</h1>
                     <p className="text-gray-600 text-sm">view all your staff list below</p>
                 </div>
-                <div className="w-[15%]">
+                <div className="w-full lg:w-[15%]">
                     <Link href="/admin/create-staff">
                         <button className="text-sm bg-[#46B038] text-white py-2 px-4 w-fit rounded-md">Create Staff</button>
                     </Link>
