@@ -1,8 +1,8 @@
 "use client"
 
-import DashboardLayout from "@/components/layouts/DashboardLayout";
-import Table from "@/components/Table";
-import { AddCircleIcon } from "@/svgs";
+import DashboardLayout from "../../components/layouts/DashboardLayout";
+import Table from "../../components/Table";
+import { AddCircleIcon } from "";
 import StatsCard from "./dashboard/statsCard";
 import { stats } from "./dashboard/stats";
 import Link from "next/link";
