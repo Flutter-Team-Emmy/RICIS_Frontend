@@ -2,12 +2,17 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "@/lib/configs";
 import { getToken } from "@/utils/authHelpers";
 
-const token = getToken();
-
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
     baseUrl,
+    prepareHeaders: (headers, { getState }) => {
+      const token = getToken(); // Get the token
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`); // Set Authorization header
+      }
+      return headers;
+    },
   }),
   tagTypes: ["Users"],
   endpoints: (builder) => ({

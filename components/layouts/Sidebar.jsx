@@ -10,11 +10,18 @@ import {
   removeLoginTime,
   getLoginTime,
 } from "@/utils/authHelpers";
+import { useGetUserQuery } from "@/store/api/userApi";
 
 const activeClass = "bg-blue-700 hover:bg-blue-600";
 
-const Sidebar = ({ display, lg_display, zIndex }) => {
-
+const Sidebar = ({
+  display,
+  lg_display,
+  zIndex,
+  showSidebar,
+  setShowSidebar,
+}) => {
+  // const []
   const pathname = usePathname();
   const router = useRouter();
   const isAdmin = pathname.includes("admin");
@@ -60,8 +67,15 @@ const Sidebar = ({ display, lg_display, zIndex }) => {
   }, []);
 
   return (
-    <aside className={`h-screen bg-[#1A191B] px-2 fixed top-0 w-[12rem] z-[1000] lg:block ${showSidebar}`}>
-      <Image onClick={() => setShowSidebar("hidden")} src={crossIcon} className="w-12 h-12 lg:hidden ml-32 mt-6" alt="" />
+    <aside
+      className={`h-screen bg-[#1A191B] px-2 fixed top-0 w-[12rem] z-[1000] lg:block ${showSidebar}`}
+    >
+      <Image
+        onClick={() => setShowSidebar("hidden")}
+        src={crossIcon}
+        className="w-12 h-12 lg:hidden ml-32 mt-6"
+        alt=""
+      />
       <div className="flex flex-col space-y-3 text-white mt-2">
         <ul className="mt-28 space-y-3 text-sm">
           {(isAdmin ? AdminSidebarLinks : UserSidebarLinks).map(
@@ -71,15 +85,16 @@ const Sidebar = ({ display, lg_display, zIndex }) => {
                   key={link.id}
                   className={`${pathname === link.href ? activeClass : ""}
                  flex items-center gap-2 p-2 rounded-md mb-3 text-xs`}
-              >
-                <span className="">{link.icon}</span>
-                <Link className="" href={link.href}>
-                  {link.name}
-                </Link>
-              </li>
-              {index === 0 ? <hr className="border-gray-600" /> : ""}
-            </>
-          ))}
+                >
+                  <span className="">{link.icon}</span>
+                  <Link className="" href={link.href}>
+                    {link.name}
+                  </Link>
+                </li>
+                {index === 0 ? <hr className="border-gray-600" /> : ""}
+              </>
+            )
+          )}
           {(isLoading || data?.data?.length === 0) &&
             [1, 2, 3, 4].map((loader) => (
               <div
