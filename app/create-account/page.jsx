@@ -4,7 +4,6 @@ import FPI from "@/components/FPI";
 import FormLayout from "@/components/FormLayout";
 import TextInput from "@/components/TextInput";
 import useForm from "@/hooks/useForm";
-import { eyeCloaseIcon, peopleIcon } from "@/svgs";
 import { useSearchParams } from "next/navigation";
 import { validator } from "@/utils/validator";
 import Link from "next/link";

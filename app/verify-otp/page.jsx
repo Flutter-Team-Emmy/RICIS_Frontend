@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useVerifyOTPMutation } from "@/store/api/authApi";
 import { otpNumbersFields } from ".";
 import { normalizeErrors } from "@/utils/helpers";
+import { getToken } from "@/utils/authHelpers";
 
 const InitialData = {
   first_number: "",
@@ -27,11 +28,11 @@ const Page = () => {
     useVerifyOTPMutation();
   const disableBtn = validator.whiteSpaces(formData);
   const router = useRouter();
-
   const email = param.get("email");
   const otp = Object.values(formData)
     .map((num) => num)
     .join("");
+  const token = getToken();
 
   const handleVerifyOTP = async () => {
     const payload = { email, otp };
@@ -56,6 +57,12 @@ const Page = () => {
       router.push(`/create-account?email=${email}&otp=${otp}`);
     }
   }, [isSuccess]);
+
+  useEffect(() => {
+    if (token) {
+      router.replace("/user");
+    }
+  }, [token]);
 
   return (
     <FormLayout>

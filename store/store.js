@@ -1,5 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authApi } from "./api/authApi";
+import { applicationApi } from "./api/applicationApi";
+import { userApi } from "./api/userApi";
 // import { authApi } from './api/authApi';
 // import { userApi } from './api/userApi';
 // import { memberApi } from './api/memberApi';
@@ -9,6 +11,8 @@ import { authApi } from "./api/authApi";
 const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
+    [applicationApi.reducerPath]: applicationApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,
     // chartYearSelector: chartYearSelectorReducer,
     // [authApi.reducerPath]: authApi.reducer,
     // [userApi.reducerPath]: userApi.reducer,
@@ -17,7 +21,11 @@ const store = configureStore({
   },
 
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([authApi.middleware]),
+    getDefaultMiddleware().concat([
+      authApi.middleware,
+      applicationApi.middleware,
+      userApi.middleware,
+    ]),
 });
 
 export default store;

@@ -11,7 +11,7 @@ import React, { useEffect } from "react";
 import { toast } from "react-toastify";
 import { normalizeErrors } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
-import { setToken, setLoginTime } from "@/utils/authHelpers";
+import { setToken, setLoginTime, getToken } from "@/utils/authHelpers";
 
 const InitialData = {
   email: "",
@@ -24,6 +24,7 @@ const Page = () => {
     useSignInUserMutation();
   const disableBtn = validator.whiteSpaces(formData);
   const router = useRouter();
+  const token = getToken();
 
   const handleSignIn = async () => {
     const IsInValid = validator.whiteSpaces(formData);
@@ -51,6 +52,12 @@ const Page = () => {
       setLoginTime();
     }
   }, [isSuccess, isError]);
+
+  useEffect(() => {
+    if (token) {
+      router.replace("/user");
+    }
+  }, [token]);
 
   return (
     <FormLayout>

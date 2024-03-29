@@ -3,13 +3,14 @@ import Link from "next/link";
 import { useEffect } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { UserSidebarLinks, AdminSidebarLinks } from ".";
+import { UserSidebarLinks, AdminSidebarLinks, StaffSidebarLinks } from ".";
 import {
   getToken,
   removeToken,
   removeLoginTime,
   getLoginTime,
 } from "@/utils/authHelpers";
+import { useGetUserQuery } from "@/store/api/userApi";
 
 const activeClass = "bg-blue-700 hover:bg-blue-600";
 
@@ -17,9 +18,11 @@ const Sidebar = ({ display, lg_display, zIndex }) => {
   const pathname = usePathname();
   const router = useRouter();
   const isAdmin = pathname.includes("admin");
-
-  console.log(pathname);
+  const { isLoading, isSuccess, isError, error, data } = useGetUserQuery();
+  const role = data?.data.role;
+  const currentUser = data?.data?.user;
   const token = getToken();
+  console.log(role);
 
   useEffect(() => {
     if (!token) {
@@ -60,23 +63,33 @@ const Sidebar = ({ display, lg_display, zIndex }) => {
     <aside className={`h-screen bg-[#1A191B] px-2 fixed top-0 w-[12rem]`}>
       <div className="flex flex-col space-y-3 text-white mt-2">
         <ul className="mt-28 space-y-3 text-sm">
-          {(isAdmin ? AdminSidebarLinks : UserSidebarLinks).map(
-            (link, index) => (
-              <>
-                <li
-                  key={link.id}
-                  className={`${pathname === link.href ? activeClass : ""}
+          {(isSuccess && role === "ADMIN"
+            ? AdminSidebarLinks
+            : role === "USER"
+            ? UserSidebarLinks
+            : StaffSidebarLinks
+          ).map((link, index) => (
+            <>
+              <li
+                key={link.id}
+                className={`${pathname === link.href ? activeClass : ""}
                  flex items-center gap-2 p-2 rounded-md mb-3 text-xs`}
-                >
-                  <span className="">{link.icon}</span>
-                  <Link className="" href={link.href}>
-                    {link.name}
-                  </Link>
-                </li>
-                {index === 0 ? <hr className="border-gray-600" /> : ""}
-              </>
-            )
-          )}
+              >
+                <span className="">{link.icon}</span>
+                <Link className="" href={link.href}>
+                  {link.name}
+                </Link>
+              </li>
+              {index === 0 ? <hr className="border-gray-600" /> : ""}
+            </>
+          ))}
+          {(isLoading || data?.data?.length === 0) &&
+            [1, 2, 3, 4].map((loader) => (
+              <div
+                key={loader}
+                className="w-full h-8 rounded-md bg-gray-700 animate-pulse"
+              ></div>
+            ))}
         </ul>
         <div className="fixed bottom-6 space-y-10">
           <button

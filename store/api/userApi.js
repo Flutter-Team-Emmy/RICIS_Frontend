@@ -1,97 +1,58 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { baseUrl } from '../../lib/baseUrl'; 
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { baseUrl } from "@/lib/configs";
+import { getToken } from "@/utils/authHelpers";
+
+const token = getToken();
 
 export const userApi = createApi({
-  reducerPath: 'userApi',
+  reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
-    baseUrl
+    baseUrl,
   }),
-  tagTypes: ['Users'],
+  tagTypes: ["Users"],
   endpoints: (builder) => ({
-    updateUserPassword: builder.mutation({
-      query({ token, payload }) {
-        return {
-          url: `/users/updatepassword/${token}`,
-          method: 'PUT',
-          credentials: 'include',
-          body: payload
-        };
-      },
-      invalidatesTags: [{ type: 'Users', id: 'LIST' }]
-    }),
-    resetUserPassword: builder.mutation({
-      query(payload) {
-        return {
-          url: `/users/resetpassword`,
-          method: 'POST',
-        //   credentials: 'include',
-          body: payload
-        };
-      },
-      invalidatesTags: [{ type: 'Users', id: 'LIST' }]
-    }),
     verifyUser: builder.mutation({
-        query(Id) {
-          return { 
-            url: `/users/verify/${Id}`,
-            method: 'PUT',
-            // credentials: 'include',
-            // body: payload
-          };
-        },
-        invalidatesTags: [{ type: 'Users', id: 'LIST' }]
-      }),
-      updateUserProfileData: builder.mutation({
-        query({token, payload}) {
-          return { 
-            url: `/users/${token}`,
-            method: 'PUT',
-            // credentials: 'include',
-            body: payload
-          };
-        },
-        invalidatesTags: [{ type: 'Users', id: 'LIST' }]
-      }),
-      uploadUserAvatar: builder.mutation({
-        query({token, payload}) {
-          return { 
-            url: `/users/upload/${token}`,
-            method: 'PUT',
-            // credentials: 'include',
-            body: payload
-          };
-        },
-        invalidatesTags: [{ type: 'Users', id: 'LIST' }]
-      }),
+      query(Id) {
+        return {
+          url: `/users/verify/${Id}`,
+          method: "PUT",
+          // credentials: 'include',
+          // body: payload
+        };
+      },
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
+    }),
     getUser: builder.query({
       query(token) {
         return {
-          url: `users/${token}`,
-        //   credentials: 'include'
+          url: `/user`,
+          headers: { Authorization: `Bearer ${token}` },
+          //   credentials: 'include'
         };
       },
-      providesTags: (result, error, id) => [{ type: 'Users', id }]
+      providesTags: (result, error, id) => [{ type: "Users", id }],
     }),
     getAllUsers: builder.query({
       query() {
         return {
-          url: '/users',
-        //   credentials: 'include'
+          url: "/users",
+          headers: { Authorization: `Bearer ${token}` },
+          //   credentials: 'include'
         };
       },
-      invalidatesTags: [{ type: 'Users', id: 'LIST' }]
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
     }),
     deleteUser: builder.mutation({
       query(userId) {
         return {
           url: `/users/${userId}`,
-          method: 'DELETE',
-        //   credentials: 'include'
+          method: "DELETE",
+          //   credentials: 'include'
         };
       },
-      invalidatesTags: [{ type: 'Users', id: 'LIST' }]
-    })
-  })
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
+    }),
+  }),
 });
 
 export const {
@@ -102,5 +63,5 @@ export const {
   useGetUserQuery,
   useVerifyUserMutation,
   useUpdateUserProfileDataMutation,
-  useUploadUserAvatarMutation 
+  useUploadUserAvatarMutation,
 } = userApi;
