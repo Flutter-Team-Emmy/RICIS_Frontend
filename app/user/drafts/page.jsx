@@ -113,7 +113,7 @@ const Drafts = () => {
                                 {draftTableData.map((data, index) => {
                                     const columns = Object.keys(data);
                                     return (
-                                        <tr key={index} className="even:bg-white odd:bg-gray-100">
+                                        <tr key={index} className="whitespace-nowrap even:bg-white odd:bg-gray-100">
                                             {columns.map((col, idx) =>
                                                 col === "dateStarted" ?
                                                     <td key={idx} className="text-center">

@@ -30,7 +30,7 @@ const UserProfile = () => {
                 <h1 className="text-[#46B038] font-bold pt-4 pb-6">USER DETAILS:</h1>
                 <div className="space-y-6">
                     {userDetails.map((data, index) =>
-                        <div key={index} className="w-[25%] space-y-2">
+                        <div key={index} className="w-[70%] lg:w-[25%] space-y-2">
                             <h2 className="font-bold">{data.header}</h2>
                             <div className="border-[1px] border-gray-150 border-solid rounded-lg py-2 pl-4">
                                 <p className="text-sm text-gray-400">{data.des}</p>
