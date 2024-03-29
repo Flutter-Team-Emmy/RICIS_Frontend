@@ -14,7 +14,7 @@ const TextInput = ({
 	const inputRef = useRef();
 	return (
 		<div className='w-full'>
-			<h2 className='inter500 text-[14px] text-[#8D8D8D] leading-[21px] mb-[4px] '>
+			<h2 className='inter500 text-[14px] text-[#8D8D8D] leading-[21px] mb-[4px] font-semibold '>
 				{label}
 			</h2>
 			<div className='border items-center border-[#F0F0F0] outline:border-[2px] outline:border-[#3361FF] outline:cursor-[#3361FF]  rounded-[8px] flex px-[1rem] '>
@@ -27,7 +27,7 @@ const TextInput = ({
 						handleChange(e);
 					}}
 					ref={inputRef}
-					className='placeholder:text-[#8d8d8d] placeholder:text-[14px] inter500 text-[14px] text-[#8D8D8D]  py-[14px]  leading-[21px] w-full flex-grow-1 outline-none h-full'
+					className='placeholder:text-gray-400 placeholder:text-[14px] inter500 text-[14px] text-[#8D8D8D]  py-[14px]  leading-[21px] w-full flex-grow-1 outline-none h-full'
 				/>
 				<span
 					className='w-fit'
