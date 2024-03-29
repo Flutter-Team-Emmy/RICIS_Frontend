@@ -3,7 +3,7 @@ import Btn from "@/components/Btn";
 import FPI from "@/components/FPI";
 import FormLayout from "@/components/FormLayout";
 import TextInput from "@/components/TextInput";
-import { eyeCloaseIcon, peopleIcon } from "@/svgs";
+import { eyeCloaseIcon } from "@/svgs";
 import { apiCall } from "@/utils/helper";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
