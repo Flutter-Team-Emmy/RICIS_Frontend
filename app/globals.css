@@ -96,6 +96,13 @@
 	font-weight: 500;
 	font-style: normal;
 }
+body {
+	overflow-x: hidden;
+}
+
+html {
+	overflow-x: hidden;
+}
 
 .serviceHeader {
 	font-size: 12px;

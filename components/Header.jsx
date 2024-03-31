@@ -13,14 +13,19 @@ const Header = () => {
 	const dropData = headerDrop();
 
 	return (
-		<div className="w-[60%] flex flex-col items-enter">
-			<div className="flex justify-between w-full items-start ">
+		<div className="hidden lg:flex flex-col w-full px-[3.75rem] pt-[1rem] items-end">
+			<div className="flex justify-between w-full">
+				<div className=" flex justify-between gap-2">
+					<span>{headerRound("#2056A7")}</span>
+					<img alt="" className="w-8 h-8" src="/images/logo.jpg" />
+				</div>
 				<Link
 					href="/"
-					className="flex flex-col space-y-[0.5rem] items-center justify-between "
+					className="flex flex-col text-center space-y-[10px]  mb-[1rem]"
 				>
-					<img alt="" src="/images/logo.jpg" />
-					<div className="flex flex-col space--[1px] hidden">
+						<h2 className='sf500 text-[10px] text-[#68768C] uppercase leading-[12px] tracking-[-0.2px] font-[500]'>
+							Technical Consultant
+						</h2>
 						<h2 className="sf600 text-[10px] leading-[12px] uppercase text-center  text-[#68768C] font-[500]">
 							Regulatory IMPLEMentation & compliance scheme
 						</h2>
@@ -30,13 +35,12 @@ const Header = () => {
 						<h2 className="sf600 text-[10px] leading-[12px] uppercase text-center  text-[#68768C] font-[500]">
 							FEDERAL MINISTRY OF LABOUR & EMPLOYMENT
 						</h2>
-					</div>
 				</Link>
-
 				<Link className="" href="/signin">
 					<Btn text="Sign in" />
 				</Link>
 			</div>
+
 
 			<div className='mt-[3rem] flex items-center space-x-[2rem] justify-between pb-[5px]'>
 				{dropData?.map((drop, i) => (

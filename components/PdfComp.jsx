@@ -1,7 +1,6 @@
 "use client";
 
 import { file, grid } from "@/svgs";
-import Image from "next/image";
 import React from "react";
 
 const PdfComp = ({ data }) => {
@@ -33,9 +32,7 @@ const PdfComp = ({ data }) => {
         </div>
       </div>
       <div className="bg-[#F8F9FA] rounded-[20px] w-full">
-        <Image
-          width="0"
-          height=""
+        <img
           alt=""
           src={data?.img}
           className="w-[20%] max-h-[500px] lg:max-h-[300px] rounded-[12px]"

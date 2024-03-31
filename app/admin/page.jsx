@@ -31,7 +31,7 @@ const Admin = () => {
             />
           ))}
         </div>
-        <Table tableData={applications} />
+        <Table />
       </div>
     </DashboardLayout>
   );
