@@ -64,7 +64,7 @@ const ApplicationForm = () => {
       return;
     }
     const payload = { form_id: formId, as_draft: false, data: formData };
-    console.log(payload)
+    console.log(payload);
     await addNewApplication(payload);
   };
 
@@ -81,7 +81,7 @@ const ApplicationForm = () => {
       });
       setFormData(InitialData);
     }
-  }, [isApplicationSuccess, applicationError]);
+  }, [isApplicationSuccess, applicationError, InitialData, setFormData]);
 
   return (
     <div className="w-full">
@@ -101,7 +101,7 @@ const ApplicationForm = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-3 md:grid-cols-2 align-items-center gap-y-8 w-full">
               {isSuccess &&
                 fields?.map((field) => (
-                  <div className="w-full">
+                  <div key={field.id} className="w-full">
                     <label
                       className="block mb-3 font-medium max-w-[17rem]"
                       htmlFor={field.name}

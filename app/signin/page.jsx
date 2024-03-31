@@ -50,17 +50,25 @@ const Page = () => {
       setToken(data?.data?.token.token);
       setLoginTime();
     }
-  }, [isSuccess, isError]);
+  }, [
+    isSuccess,
+    isError,
+    asStaff,
+    data?.data?.token.token,
+    data?.message,
+    error,
+    router,
+  ]);
 
   useEffect(() => {
     if (token) {
       router.replace(`${asStaff ? "/admin" : "/user"}`);
     }
-  }, [token]);
+  }, [token, asStaff, router]);
 
   useEffect(() => {
     router.push(`/signin/?as_staff=${asStaff}`);
-  }, [asStaff]);
+  }, [asStaff, router]);
 
   const toggleRoleSignIn = () => {
     setAsStaff((prev) => !prev);

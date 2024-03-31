@@ -5,7 +5,7 @@ import MainLayout from "@/components/mainLayout";
 import { useGetContactInfosQuery } from "@/store/api/generalApi";
 import React from "react";
 
-const page = () => {
+const Contact = () => {
 
 	const { data, isLoading, isSuccess } = useGetContactInfosQuery();
 	const contactInfos = data?.data.contactInfo;
@@ -59,4 +59,4 @@ const page = () => {
 	);
 };
 
-export default page;
+export default Contact;

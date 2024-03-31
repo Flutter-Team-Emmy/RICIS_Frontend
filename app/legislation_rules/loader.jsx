@@ -11,7 +11,7 @@ const Loader = () => {
                 </div>
             </div>
             <div className='rounded-[20px] w-[60%] lg:w-[20%] h-[10rem] lg:h-[16rem] animate-pulse bg-white'>
-                <img className='w-[20%] max-h-[500px] lg:max-h-[300px] rounded-[12px]' />
+                <div className='w-[20%] max-h-[500px] lg:max-h-[300px] rounded-[12px]' />
             </div>
             <div className='w-full flex justify-end animate-pulse'>
                 <button className={`py-4 lg:py-6 px-12 lg:px-16 bg-white rounded-[6px]`}></button>

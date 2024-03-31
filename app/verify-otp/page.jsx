@@ -52,13 +52,13 @@ const Page = () => {
       toast.success(data?.message, { autoClose: 2000 });
       router.push(`/create-account?email=${email}&otp=${otp}`);
     }
-  }, [isSuccess]);
+  }, [isSuccess, data?.message, email, error, otp, router]);
 
   useEffect(() => {
     if (token) {
       router.replace("/user");
     }
-  }, [token]);
+  }, [token, router]);
 
   return (
     <FormLayout>

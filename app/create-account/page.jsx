@@ -63,7 +63,14 @@ const Page = () => {
       setToken(data?.data?.token.token);
       setLoginTime();
     }
-  }, [isSuccess, isError]);
+  }, [
+    isSuccess,
+    isError,
+    data?.data?.token.token,
+    data?.message,
+    error,
+    router,
+  ]);
 
   return (
     <FormLayout>

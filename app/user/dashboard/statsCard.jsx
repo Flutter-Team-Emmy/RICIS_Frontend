@@ -33,6 +33,7 @@ const StatsCard = ({
           height={100}
           className="w-fit lg:w-60"
           src="/images/graph.png"
+          alt="graph"
         />
       </div>
     </div>

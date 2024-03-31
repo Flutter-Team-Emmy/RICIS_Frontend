@@ -6,7 +6,7 @@ import MainLayout from "@/components/mainLayout";
 import { useGetServicesQuery } from "@/store/api/generalApi";
 import React from "react";
 
-const page = () => {
+const Services = () => {
 
 	const { data, isLoading, isSuccess } = useGetServicesQuery();
 
@@ -35,7 +35,7 @@ const page = () => {
 						/>
 					)}
 					{(isLoading || results?.length === 0) && [0, 1, 2, 3, 4, 5].map(loader =>
-						<div className="">
+						<div key={loader} className="">
 							<div className='rounded-t-[12px] bg-gray-200 w-[20rem] h-[180px]'></div>
 							<h1 className='w-[20rem] mt-4 mb-4 h-4 bg-gray-200 animate-pulse'></h1>
 							<h2 className='w-[20rem] h-4 bg-gray-200 animate-pulse'></h2>
@@ -47,4 +47,4 @@ const page = () => {
 	);
 };
 
-export default page;
+export default Services;

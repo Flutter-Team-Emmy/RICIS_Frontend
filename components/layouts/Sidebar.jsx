@@ -68,13 +68,13 @@ const Sidebar = ({
         }, 60000);
       }
     }
-  }, []);
+  }, [logout]);
 
   useEffect(() => {
     if (!token) {
       router.replace("/");
     }
-  }, [token]);
+  }, [token, router]);
 
   return (
     <aside
