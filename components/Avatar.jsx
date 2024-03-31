@@ -2,8 +2,8 @@
 import { useRouter } from "next/navigation";
 
 const Avatar = ({ currentUser, role }) => {
-  const firstNameAcr = currentUser?.first_name[0];
-  const secondNameAcr = currentUser?.last_name[0];
+  const firstNameAcr = currentUser?.first_name?.charAt(0);
+  const secondNameAcr = currentUser?.last_name?.charAt(0);
   const router = useRouter();
 
   const navigateToProfilePage = () => {
