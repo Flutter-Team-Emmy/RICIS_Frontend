@@ -71,6 +71,14 @@ export const generalAPI = createApi({
             },
             providesTags: (result, error, id) => [{ type: "administrative_pesonnels", id }],
         }),
+        getService: builder.query({
+            query(id) {
+                return {
+                    url: `services/${id}`,
+                };
+            },
+            providesTags: (result, error, id) => [{ type: "services", id }],
+        }),
     }),
 });
 
@@ -82,4 +90,5 @@ export const {
     useGetServicesQuery,
     useGetAdministrativePersonnelsQuery,
     useGetAboutCertificateQuery,
+    useGetServiceQuery,
     useGetInformationQuery } = generalAPI;

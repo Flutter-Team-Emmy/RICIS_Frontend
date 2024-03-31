@@ -8,6 +8,9 @@ import Link from "next/link";
 
 const Header = () => {
 
+
+	const dropData = headerDrop();
+
 	const [selectedHeader, setSelectedHeader] = useState("");
 
 	return (
@@ -57,7 +60,7 @@ const Header = () => {
 				</div>
 
 				<div className='mt-[3rem] flex items-center space-x-[2rem] justify-between pb-[5px]'>
-					{headerDrop.map((drop, i) => (
+					{dropData?.map((drop, i) => (
 						<HeaderDropDown
 							header={drop.header}
 							drop={drop.drop}

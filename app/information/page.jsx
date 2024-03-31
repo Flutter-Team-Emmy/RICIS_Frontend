@@ -34,11 +34,14 @@ const page = () => {
 					<div className='border border-[#DDDDDD] rounded-[12px] p-[20px] lg:p-[48px] '>
 						<h1 className='inter600 text-[2.25rem] leading-[54px]'>Checklist</h1>
 						<h2 className='sf400 text-[1.25rem] leading-[30px]  text-[#00000084] mt-[20px]'>
-							The section is with its headquarters in Wolfsburg is one of the
-							world’s leading automobile manufacturers and the largest carmaker in
-							Europe. The Group is made up of ten brands from seven European
-							countries: Volkswagen, Volkswagen Nutzfahrzeuge, ŠKODA, SEAT, CUPRA,
-							Audi, Lamborghini, Bentley, Porsche and Ducati.
+							This comprehensive checklist outlines the requirements for various
+							boiler maintenance certifications. It includes criteria for certifications
+							such as ASME Boiler and Pressure Vessel Code (BPVC) certification, National
+							Board Inspection Code (NBIC) certification, and American Society of Mechanical
+							Engineers (ASME) Boiler Operator certification. The checklist covers inspection procedures,
+							documentation requirements, safety protocols, and compliance standards for each
+							certification. By following this checklist, boiler operators and maintenance personnel can ensure compliance with
+							industry standards, enhance safety measures, and achieve the necessary certifications to perform boiler maintenance tasks effectively.
 						</h2>
 
 						<Link href="/checklist" >

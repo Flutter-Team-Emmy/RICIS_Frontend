@@ -1,12 +1,8 @@
 import Link from "next/link";
 import React from "react";
 
-const CardCenter = ({header, subHeader, img, id, results }) => {
-
-	const storeData = (data) => {
-		console.log(data)
-		localStorage.setItem('services', data);
-	};
+const CardCenter = ({header, subHeader, img, id}) => {
+ 
 
 	return (
 		<div className='flex items-center flex-col justify-center pb-[1.5rem] border border-transparent border-b-[#DFE0E7]'>
@@ -19,7 +15,7 @@ const CardCenter = ({header, subHeader, img, id, results }) => {
 					{subHeader.split('').slice(0,80)}...
 				</h2>
 			</div>
-			<Link onClick={() => results && storeData(results)}
+			<Link 
 				href={`/services/${id}`}
 				className='sf400 text-[1rem] leading-[1.5rem] text-[#3361FF] mt-[0.5rem]'
 			>

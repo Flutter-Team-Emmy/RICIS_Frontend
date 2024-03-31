@@ -36,9 +36,8 @@ const HeaderDropDown = ({
 
 	return (
 		<div
-			className={`relative  w-fit  z-[30] h-[20px]  ${
-				isSelected && "border-[#2056A7] border-b-[2px]"
-			}  `}
+			className={`relative  w-fit  z-[30] h-[20px]  ${isSelected && "border-[#2056A7] border-b-[2px]"
+				}  `}
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
 			onClick={() => {
@@ -47,18 +46,17 @@ const HeaderDropDown = ({
 			}}
 		>
 			<h1
-				className={` headerNav cursor-pointer sf600 text-[13px] leading-[19.5px] text-center  ${
-					isSelected ? "text-[#3361FF]" : "text-[#7E849B]"
-				} `}
+				className={` headerNav cursor-pointer sf600 text-[13px] leading-[19.5px] text-center  ${isSelected ? "text-[#3361FF]" : "text-[#7E849B]"
+					} `}
 			>
 				{header}
 			</h1>
 
 			{isHovered && drop && (
 				<div className='absolute left-[-50%]  bg-[#FFFFFF]  border-[4px] border-transparent border-b-[#3361FF] py-[1.5rem] px-[2rem]  flex-col flex gap-[12px]'>
-					{drop.map((drop, i) => (
+					{drop.map((drop,i) => (
 						<Link
-							href={drop.href}
+							href={header === "Services" ? `/services/${drop.id}` : header === "Legislation/Rules" ? "/legislation_rules" : header === "Information" ? "/information" : drop.href}
 							key={i}
 							className=' cursor-pointer  '
 							onClick={() => {
@@ -67,7 +65,7 @@ const HeaderDropDown = ({
 							}}
 						>
 							<h2 className='sf500 text-[13px] leading-[19.5px] whitespace-nowrap  text-[#7E849B] '>
-								{drop.text}
+								{drop.name}
 							</h2>
 						</Link>
 					))}
