@@ -46,12 +46,12 @@ const ApplicationForm = () => {
       }
       return InitialData;
     };
-    if (isSuccess) {
+    if (fields?.length !== 0) {
       InitialData = createInitialObject();
       // Update formData directly when InitialData changes
       setFormData(InitialData);
     }
-  }, [isSuccess, fields]);
+  }, [fields]);
 
   const { formData, setFormData, handleChange } = useForm(InitialData);
   console.log(formData);
@@ -79,7 +79,6 @@ const ApplicationForm = () => {
       toast.success("Successfully created application form!", {
         autoClose: 2000,
       });
-      setFormData(InitialData);
     }
   }, [isApplicationSuccess, applicationError, InitialData, setFormData]);
 
