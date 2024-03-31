@@ -6,7 +6,7 @@ import FAQ from "./FAQ";
 import MainLayout from "@/components/mainLayout";
 import { useGetFAQSQuery } from "@/store/api/generalApi";
 
-const page = () => {
+const FAQs = () => {
 
 	const { isLoading, isSuccess, isError, error, data } = useGetFAQSQuery();
 	const description = data?.data.description;
@@ -30,4 +30,4 @@ const page = () => {
 	);
 };
 
-export default page;
+export default FAQs;
