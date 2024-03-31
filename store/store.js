@@ -3,6 +3,12 @@ import { authApi } from "./api/authApi";
 import { applicationApi } from "./api/applicationApi";
 import { userApi } from "./api/userApi";
 import { cloudinaryApi } from "./api/cloudinaryApi";
+import { generalAPI } from "./api/generalApi";
+// import { authApi } from './api/authApi';
+// import { userApi } from './api/userApi';
+// import { memberApi } from './api/memberApi';
+// import { paymentApi } from './api/paymentApi';
+// import chartYearSelectorReducer from './features/chartYearSelectorSlice';
 
 const store = configureStore({
   reducer: {
@@ -10,6 +16,12 @@ const store = configureStore({
     [applicationApi.reducerPath]: applicationApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [cloudinaryApi.reducerPath]: cloudinaryApi.reducer,
+    [generalAPI.reducerPath]: generalAPI.reducer,
+    // chartYearSelector: chartYearSelectorReducer,
+    // [authApi.reducerPath]: authApi.reducer,
+    // [userApi.reducerPath]: userApi.reducer,
+    // [memberApi.reducerPath]: memberApi.reducer,
+    // [paymentApi.reducerPath]: paymentApi.reducer
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -18,6 +30,7 @@ const store = configureStore({
       applicationApi.middleware,
       userApi.middleware,
       cloudinaryApi.middleware,
+      generalAPI.middleware,
     ]),
 });
 

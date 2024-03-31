@@ -1,78 +1,43 @@
-/* eslint-disable react/no-unescaped-entities */
+"use client"
+
 import BgImgText from "@/components/BgImgText";
 import React from "react";
 import Card from "./Card";
 import MainLayout from "@/components/mainLayout";
+import { useGetAdministrativePersonnelsQuery } from "@/store/api/generalApi";
 
 const Admin = () => {
-	const data = [
-		{
-			name: "Seth Giveon",
-			position: "Founder, and CEO",
-			text: `Doctors and researchers might ask Sienna’s team whether a particular
-            drug was ever linked to an adverse event, like “Has amoxycillin ever
-            caused encephalitis?” Or they might answer questions about new drug
-            delivery platforms, like “How do you get our large molecule drug
-            inside the cell so that it can actually get to the target, where it
-            will do the work of curing the disease?” For questions like these,
-            Sienna and her team seek information to compile resource lists or
-            reports.`,
-			img: "/images/man.jpg",
-		},
-		{
-			name: "Seth Giveon",
-			position: "Founder, and CEO",
-			text: `Doctors and researchers might ask Sienna’s team whether a particular
-            drug was ever linked to an adverse event, like “Has amoxycillin ever
-            caused encephalitis?” Or they might answer questions about new drug
-            delivery platforms, like “How do you get our large molecule drug
-            inside the cell so that it can actually get to the target, where it
-            will do the work of curing the disease?” For questions like these,
-            Sienna and her team seek information to compile resource lists or
-            reports.`,
-			img: "/images/man.jpg",
-		},
-		{
-			name: "Seth Giveon",
-			position: "Founder, and CEO",
-			text: `Doctors and researchers might ask Sienna’s team whether a particular
-            drug was ever linked to an adverse event, like “Has amoxycillin ever
-            caused encephalitis?” Or they might answer questions about new drug
-            delivery platforms, like “How do you get our large molecule drug
-            inside the cell so that it can actually get to the target, where it
-            will do the work of curing the disease?” For questions like these,
-            Sienna and her team seek information to compile resource lists or
-            reports.`,
-			img: "/images/man.jpg",
-		},
-		{
-			name: "Seth Giveon",
-			position: "Founder, and CEO",
-			text: `Doctors and researchers might ask Sienna’s team whether a particular
-            drug was ever linked to an adverse event, like “Has amoxycillin ever
-            caused encephalitis?” Or they might answer questions about new drug
-            delivery platforms, like “How do you get our large molecule drug
-            inside the cell so that it can actually get to the target, where it
-            will do the work of curing the disease?” For questions like these,
-            Sienna and her team seek information to compile resource lists or
-            reports.`,
-			img: "/images/man.jpg",
-		},
-	];
+
+	const { data, isLoading, isSuccess } = useGetAdministrativePersonnelsQuery();
+
+	const results = data?.data.administrative_personnel;
+	const imgUrl = data?.data.image;
+	const description = data?.data.description;
+
 	return (
 		<MainLayout>
 			<div>
-				<BgImgText header='About Us' text='Administrative Structure' />
-				<div className='pt-[4rem] pb-[6rem] w-[90%] mx-auto flex flex-col space-y-[4rem]'>
-					{data.map((data, i) => (
+				<BgImgText isLoading={isLoading} url={imgUrl} header='About Us' text='Administrative Structure' />
+				<div className='pt-[4rem] pb-[6rem] w-[90%] mx-auto lg:flex flex-col space-y-[4rem]'>
+					{isSuccess && results?.map((data) => (
 						<Card
-							key={i}
+							key={data.id}
 							name={data.name}
 							position={data.position}
-							text={data.text}
-							img={data.img}
+							text={data.description}
+							img={data.image}
 						/>
 					))}
+					{(isLoading || results?.length === 0) && [0, 1, 2, 3].map(loader =>
+						<div className="grid lg:grid-cols-[25rem,1fr] gap-x-0 pt-6">
+							<div className="w-[20rem] h-[20rem] bg-gray-200 animate-pulse rounded-[8px]" ></div>
+							<div className="pl-4 pt-6">
+								<h1 className="h-4 w-[25%] mb-4 bg-gray-200 animate-pulse"></h1>
+								<h2 className="h-6 w-[40%] mb-4 bg-gray-200 animate-pulse"></h2>
+								<h2 className="h-[75%] w-[90%] bg-gray-200 animate-pulse"></h2>
+							</div>
+						</div>
+					)}
 				</div>
 
 				<div className='w-[90%]  mx-auto bg-[#F8F9FA] px-[40px] py-[64px] mb-[6rem]'>

@@ -4,10 +4,10 @@ import { headerRound } from "../svgs";
 
 const Footer = () => {
 	return (
-		<div className='bg-[#2056A7] py-[5rem] px-[4rem] relative'>
+		<div className='bg-[#2056A7] py-[5rem] px-4 lg:px-[4rem] relative'>
 			<div className='flex justify-between mb-[2rem]'>
 				<div className='flex flex-col space-y-[10px] w-[40%] '>
-					<span>{headerRound("white")}</span>
+					<span className="pb-4">{headerRound("white")}</span>
 					<div>
 						<h2 className='sf700  lg:text-[14px] 2xl:text-[16px] mb-[4px] uppercase leading-[19.2px] tracking-[-0.2px] text-white'>
 							Technical Consultant
@@ -30,15 +30,15 @@ const Footer = () => {
 						data={[
 							{
 								text: "Activities",
-								href: "/",
+								href: "/about_us",
 							},
 							{
 								text: "Administrative Structure",
-								href: "",
+								href: "/about_us/administrative_structure",
 							},
 							{
 								text: "Certificate issued",
-								href: "",
+								href: "/about_us/certificate_issued",
 							},
 						]}
 					/>
@@ -74,7 +74,7 @@ const Footer = () => {
 
 			<div className='flex justify-between md:mt-[3.5rem]'>
 				<div className='flex flex-col space-y-[0.5rem] items-start w-[40%] md:mt-[2rem]'>
-					<img src='/images/logo_bottom 1.jpg' />
+					<img src='/images/logo_bottom 1.jpg' className="pb-4" />
 					<div className='flex flex-col space-y-[8px]'>
 						<h2 className='sf700 lg:text-[14px] 2xl:text-[16px] text-white leading-[19.2px] uppercase text-left'>
 							Regulatory IMPLEMentation & compliance scheme
@@ -152,7 +152,7 @@ const Footer = () => {
 				</div>
 			</div>
 
-			<div className='flex space-x-[12px] items-center absolute bottom-[2rem] left-[4rem]'>
+			<div className='flex space-x-[12px] items-center justify-center pt-8'>
 				<img src='/images/fb.jpg' />
 				<img src='/images/linkedin.jpg' />
 				<img src='/images/x.jpg' />
