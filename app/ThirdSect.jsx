@@ -2,12 +2,13 @@
 import Btn from "../components/Btn";
 import Link from "next/link";
 import React from "react";
+import Image from "next/image";
 
 const ThirdSect = () => {
 	return (
 		<div className='w-full bg-[#F8F9FA] py-[5rem] px-6 '>
 			<div className='flex flex-col md:flex-row md:w-[70%] mx-auto md:space-x-[2rem] items-center'>
-				<img src='/images/legis.jpg' className='rounded-[12px] w-full' />
+				<Image width="0" height="0" src='/images/legis.jpg' className='rounded-[12px] w-full' />
 				<div className='flex flex-col items-left'>
 					<h1 className='sf700 md:text-[2rem] md:leading-[48px]  mb-[1.25rem] pt-4 mx-auto'>
 						Legislation and Rule Overview Management and Guide

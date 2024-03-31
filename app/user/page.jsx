@@ -7,7 +7,7 @@ import { AddCircleIcon } from "@/svgs";
 import StatsCard from "./dashboard/statsCard";
 import { stats } from "./dashboard/stats";
 import Link from "next/link";
-import { applications } from "@/utils/data";
+// import { applications } from "@/utils/data";
 // import TableSkeleton from "@/components/skeleton-loaders/TableSkeleton";
 // import useForm from "@/hooks/useForm";
 // import { useUploadImageMutation } from "@/store/api/cloudinaryApi";
@@ -22,7 +22,7 @@ import { applications } from "@/utils/data";
 // };
 
 const Dashboard = () => {
-  // const { formData, setFormData, handleChange, mediaPreview, setMediaPreview } = 
+  // const { formData, setFormData, handleChange, mediaPreview, setMediaPreview } =
   //   useForm(initialData);
   // const [
   //   uploadImage,
@@ -51,6 +51,7 @@ const Dashboard = () => {
   // };
 
   // console.log(media_data);
+
   return (
     <DashboardLayout header="Dashboard" icon="">
       <div className="space-y-10 w-full">
@@ -95,8 +96,7 @@ const Dashboard = () => {
             />
           ))}
         </div>
-        <Table tableData={applications} />
-        {/* <TableSkeleton /> */}
+        <Table />
       </div>
     </DashboardLayout>
   );

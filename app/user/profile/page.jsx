@@ -60,7 +60,7 @@ const Profile = () => {
       refetchUser();
       setFormData(InitialData);
     }
-  }, [isUpdated]);
+  }, [isUpdated, error, refetchUser, setFormData]);
 
   return (
     <DashboardLayout

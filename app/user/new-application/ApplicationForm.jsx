@@ -6,7 +6,7 @@ import {
 } from "@/store/api/applicationApi";
 import { useEffect, useState } from "react";
 import InputField from "./InputField";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { capitalizeFirstLetter } from "@/utils/helpers";
 import Pagination from "@/components/Pagination";
 import TextFieldSkeleton from "@/components/skeleton-loaders/TextFieldSkeleton";
@@ -18,6 +18,7 @@ import { normalizeErrors } from "@/utils/helpers";
 
 const ApplicationForm = () => {
   const param = useSearchParams();
+  const router = useRouter();
   const formId = param.get("form_id");
   const { isLoading, isSuccess, isError, error, data } =
     useGetSingleFormFieldsQuery(formId);
@@ -46,12 +47,12 @@ const ApplicationForm = () => {
       }
       return InitialData;
     };
-    if (isSuccess) {
+    if (fields?.length !== 0) {
       InitialData = createInitialObject();
       // Update formData directly when InitialData changes
       setFormData(InitialData);
     }
-  }, [isSuccess, fields]);
+  }, [fields]);
 
   const { formData, setFormData, handleChange } = useForm(InitialData);
   console.log(formData);
@@ -64,9 +65,15 @@ const ApplicationForm = () => {
       return;
     }
     const payload = { form_id: formId, as_draft: false, data: formData };
-    console.log(payload)
+    console.log(payload);
     await addNewApplication(payload);
   };
+
+  useEffect(() => {
+    if (isApplicationSuccess) {
+      router.push("/user/applications");
+    }
+  }, [router, isApplicationSuccess]);
 
   console.log(applicationError);
 
@@ -79,9 +86,8 @@ const ApplicationForm = () => {
       toast.success("Successfully created application form!", {
         autoClose: 2000,
       });
-      setFormData(InitialData);
     }
-  }, [isApplicationSuccess, applicationError]);
+  }, [isApplicationSuccess, applicationError, InitialData, setFormData]);
 
   return (
     <div className="w-full">
@@ -101,7 +107,7 @@ const ApplicationForm = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-3 md:grid-cols-2 align-items-center gap-y-8 w-full">
               {isSuccess &&
                 fields?.map((field) => (
-                  <div className="w-full">
+                  <div key={field.id} className="w-full">
                     <label
                       className="block mb-3 font-medium max-w-[17rem]"
                       htmlFor={field.name}

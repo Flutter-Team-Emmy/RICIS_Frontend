@@ -46,13 +46,13 @@ const Page = () => {
       toast.success(data?.message, { autoClose: 1000 });
       router.push(`/verify-otp?email=${formData.email}`);
     }
-  }, [isSuccess, isError]);
+  }, [isSuccess, isError, data?.message, error, formData.email, router]);
 
   useEffect(() => {
     if (token) {
       router.replace("/user");
     }
-  }, [token]);
+  }, [token, router]);
 
   return (
     <FormLayout>

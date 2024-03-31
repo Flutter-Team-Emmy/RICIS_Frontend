@@ -7,7 +7,7 @@ const FPI = ({ length, shade }) => {
 
 	useEffect(() => {
 		setCurrentForm(shade ? shade : 1);
-	}, []);
+	}, [shade]);
 
 	const circles = Array.from({ length: length }, (_, index) => (
 		<div

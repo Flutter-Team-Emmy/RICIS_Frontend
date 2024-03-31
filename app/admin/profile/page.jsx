@@ -50,7 +50,7 @@ const Profile = () => {
       refetchUser();
       setFormData(InitialData);
     }
-  }, [isUpdated]);
+  }, [isUpdated, refetchUser, setFormData]);
 
   return (
     <DashboardLayout header={isSuccess ? currentUser?.user.name : ""}>

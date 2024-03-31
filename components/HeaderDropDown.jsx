@@ -32,7 +32,7 @@ const HeaderDropDown = ({
 			`/${header.toLowerCase()}`,
 		);
 		setSelected(selected);
-	}, []);
+	}, [header]);
 
 	return (
 		<div
