@@ -1,20 +1,14 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import ApplicationRejected from "./Rejected";
-import ApplicationApproved from "./Approved";
+import { Suspense } from "react";
+import ApplicationFormDetailsSuspenseBoundary from "./ApplicationFormDetailsSuspenseBoundary";
 
 const ApplicationFormDetails = () => {
-  const params = useSearchParams();
-  const applicationStatus = params.get("status");
-
-  if (applicationStatus.toLocaleLowerCase() === "rejected") {
-    return <ApplicationRejected />;
-  }
-
-  if (applicationStatus.toLocaleLowerCase() === "approved") {
-    return <ApplicationApproved />;
-  }
+  return (
+    <Suspense>
+      <ApplicationFormDetailsSuspenseBoundary />
+    </Suspense>
+  );
 };
 
 export default ApplicationFormDetails;
