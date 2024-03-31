@@ -52,7 +52,7 @@ export const applicationApi = createApi({
     getAllApplications: builder.query({
       query() {
         return {
-          url: "/users",
+          url: "/application",
         };
       },
       invalidatesTags: [{ type: "Applications", id: "LIST" }],

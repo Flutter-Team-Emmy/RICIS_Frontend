@@ -5,9 +5,16 @@ import { useState } from "react";
 import { BellIcon } from "@/svgs";
 import Image from "next/image";
 import Hamburger from "../../public/images/hamburger.svg";
+import Avatar from "../Avatar";
+import { useGetCurrentUserQuery } from "@/store/api/userApi";
 
 const DashboardLayout = ({ children, header, icon }) => {
   const [showSidebar, setShowSidebar] = useState("hidden");
+
+  const { isLoading, isSuccess, isError, error, data } =
+    useGetCurrentUserQuery();
+  const currentUser = data?.data.user;
+  const role = data?.data.role;
 
   return (
     <>
@@ -43,14 +50,8 @@ const DashboardLayout = ({ children, header, icon }) => {
                 <div className="p-2 border-2 rounded-full">
                   <span className="">{BellIcon}</span>
                 </div>
-                <div className="p-1.5 border-2 rounded-full">
-                  <Image
-                    width={30}
-                    height={30}
-                    src="/images/avatar.png"
-                    alt=""
-                    className=""
-                  />
+                <div className="p-1 border-2 rounded-full">
+                  <Avatar currentUser={currentUser} role={role} />
                 </div>
               </div>
             </div>

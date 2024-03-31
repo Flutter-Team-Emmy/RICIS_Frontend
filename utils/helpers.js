@@ -2,15 +2,15 @@ export const capitalizeFirstLetter = (word) => {
   return word[0].toUpperCase() + word.substring(1);
 };
 
+export const cutString = (str, length) => {
+  if (str.length <= length) {
+    return str;
+  } else {
+    return str.substring(0, length);
+  }
+};
+
 export const normalizeErrors = (error) => {
-  // if (error) {
-  //   if ("status" in error) {
-  //     const errMsg = "error" in error ? error.error : error.data.message;
-  //     return errMsg;
-  //   } else {
-  //     return error?.message;
-  //   }
-  // }
   const isErrorObject = typeof error?.data === "object";
 
   if (isErrorObject) {

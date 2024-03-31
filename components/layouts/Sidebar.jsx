@@ -12,6 +12,7 @@ import {
 } from "@/utils/authHelpers";
 import { useGetCurrentUserQuery } from "@/store/api/userApi";
 import { LogoutIcon, crossIcon } from "@/svgs";
+import Avatar from "../Avatar";
 
 const activeClass = "bg-blue-700 hover:bg-blue-600";
 
@@ -26,7 +27,8 @@ const Sidebar = ({
   const pathname = usePathname();
   const router = useRouter();
   const isAdmin = pathname.includes("admin");
-  const { isLoading, isSuccess, isError, error, data } = useGetCurrentUserQuery();
+  const { isLoading, isSuccess, isError, error, data } =
+    useGetCurrentUserQuery();
   const role = data?.data.role;
   const currentUser = data?.data.user;
   const token = getToken();
@@ -131,15 +133,11 @@ const Sidebar = ({
             onClick={openProfilePage}
             className="fixed bottom-6 flex justify-center items-center gap-2 cursor-pointer"
           >
-            <Image
-              width={30}
-              height={30}
-              className=""
-              src="/images/avatar.png"
-              alt="avatar"
-            />
+            <Avatar currentUser={currentUser} role={role} />
             <div className>
-              <p className="text-sm">David Stephen</p>
+              <p className="text-sm">
+                {currentUser?.first_name + " " + currentUser?.last_name}
+              </p>
               <p className="text-xs text-gray-200">Applicant</p>
             </div>
           </div>

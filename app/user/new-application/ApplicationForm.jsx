@@ -6,7 +6,7 @@ import {
 } from "@/store/api/applicationApi";
 import { useEffect, useState } from "react";
 import InputField from "./InputField";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { capitalizeFirstLetter } from "@/utils/helpers";
 import Pagination from "@/components/Pagination";
 import TextFieldSkeleton from "@/components/skeleton-loaders/TextFieldSkeleton";
@@ -18,6 +18,7 @@ import { normalizeErrors } from "@/utils/helpers";
 
 const ApplicationForm = () => {
   const param = useSearchParams();
+  const router = useRouter();
   const formId = param.get("form_id");
   const { isLoading, isSuccess, isError, error, data } =
     useGetSingleFormFieldsQuery(formId);
@@ -67,6 +68,12 @@ const ApplicationForm = () => {
     console.log(payload);
     await addNewApplication(payload);
   };
+
+  useEffect(() => {
+    if (isApplicationSuccess) {
+      router.push("/user/applications");
+    }
+  }, [router, isApplicationSuccess]);
 
   console.log(applicationError);
 
