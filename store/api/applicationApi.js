@@ -10,6 +10,13 @@ export const applicationApi = createApi({
   reducerPath: "applicationApi",
   baseQuery: fetchBaseQuery({
     baseUrl,
+    prepareHeaders: (headers, { getState }) => {
+      const token = getToken(); // Get the token
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`); // Set Authorization header
+      }
+      return headers;
+    },
   }),
   tagTypes: ["Applications"],
   endpoints: (builder) => ({
@@ -29,8 +36,6 @@ export const applicationApi = createApi({
         return {
           url: "/application",
           method: "POST",
-          headers: { Authorization: `Bearer ${token}` },
-          //   credentials: 'include',
           body: payload,
         };
       },
@@ -40,7 +45,6 @@ export const applicationApi = createApi({
       query(token) {
         return {
           url: `users/${token}`,
-          //   credentials: 'include'
         };
       },
       providesTags: (result, error, id) => [{ type: "Applications", id }],
@@ -49,7 +53,6 @@ export const applicationApi = createApi({
       query() {
         return {
           url: "/users",
-          //   credentials: 'include'
         };
       },
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
@@ -58,7 +61,6 @@ export const applicationApi = createApi({
       query() {
         return {
           url: "/forms",
-          //   credentials: 'include'
         };
       },
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
@@ -67,7 +69,6 @@ export const applicationApi = createApi({
       query(formId) {
         return {
           url: `/forms/${formId}/fields`,
-          //   credentials: 'include'
         };
       },
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
@@ -77,7 +78,6 @@ export const applicationApi = createApi({
         return {
           url: `/users/${userId}`,
           method: "DELETE",
-          //   credentials: 'include'
         };
       },
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
@@ -92,5 +92,5 @@ export const {
   useGetAllApplicationsQuery,
   useDeleteApplicationMutation,
   useGetFormsQuery,
-  useGetSingleFormFieldsQuery
+  useGetSingleFormFieldsQuery,
 } = applicationApi;

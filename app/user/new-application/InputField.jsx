@@ -14,7 +14,7 @@ const InputField = ({
       type={type}
       required={required}
       value={value}
-      handleChange={handleChange}
+      onChange={handleChange}
       className="text-sm p-2 w-[90%] border border-gray-300 rounded-lg"
       placeholder={placeholder}
     />

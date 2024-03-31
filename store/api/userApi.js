@@ -16,33 +16,36 @@ export const userApi = createApi({
   }),
   tagTypes: ["Users"],
   endpoints: (builder) => ({
-    verifyUser: builder.mutation({
-      query(Id) {
+    updateUserBioData: builder.mutation({
+      query(payload) {
         return {
-          url: `/users/verify/${Id}`,
-          method: "PUT",
-          // credentials: 'include',
-          // body: payload
+          url: `/user`,
+          method: "POST",
+          body: payload,
         };
       },
       invalidatesTags: [{ type: "Users", id: "LIST" }],
     }),
-    getUser: builder.query({
-      query(token) {
+    getCurrentUser: builder.query({
+      query() {
         return {
           url: `/user`,
-          headers: { Authorization: `Bearer ${token}` },
-          //   credentials: 'include'
+        };
+      },
+      providesTags: (result, error, id) => [{ type: "Users", id }],
+    }),
+    getUser: builder.query({
+      query(userId) {
+        return {
+          url: `/user/${userId}`,
         };
       },
       providesTags: (result, error, id) => [{ type: "Users", id }],
     }),
     getAllUsers: builder.query({
-      query() {
+      query({ page, limit }) {
         return {
-          url: "/users",
-          headers: { Authorization: `Bearer ${token}` },
-          //   credentials: 'include'
+          url: `/users?page=${page}&&limit=${limit}`,
         };
       },
       invalidatesTags: [{ type: "Users", id: "LIST" }],
@@ -52,7 +55,6 @@ export const userApi = createApi({
         return {
           url: `/users/${userId}`,
           method: "DELETE",
-          //   credentials: 'include'
         };
       },
       invalidatesTags: [{ type: "Users", id: "LIST" }],
@@ -61,12 +63,9 @@ export const userApi = createApi({
 });
 
 export const {
-  useUpdateUserPasswordMutation,
-  useResetUserPasswordMutation,
+  useUpdateUserBioDataMutation,
   useDeleteUserMutation,
   useGetAllUsersQuery,
+  useGetCurrentUserQuery,
   useGetUserQuery,
-  useVerifyUserMutation,
-  useUpdateUserProfileDataMutation,
-  useUploadUserAvatarMutation,
 } = userApi;

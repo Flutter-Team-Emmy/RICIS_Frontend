@@ -4,6 +4,7 @@ import StatsCard from "../user/dashboard/statsCard";
 import Link from "next/link";
 import { AddCircleIcon } from "@/svgs";
 import { stats } from "../user/dashboard/stats";
+import { applications } from "@/utils/data";
 
 const Admin = () => {
   return (
@@ -16,10 +17,6 @@ const Admin = () => {
               Here is a preview of your activities and information
             </p>
           </div>
-          <Link href="user/new-application" className="bg-blue-700 mt-6 w-[50%] lg:w-[20%] px-4 py-2.5 flex items-center gap-2 rounded-md text-white hover:bg-blue-600">
-            <span className="">{AddCircleIcon}</span>
-            <span className="">New Application</span>
-          </Link>
         </div>
         <div className="flex justify-between w-full gap-6 overflow-x-scroll lg:overflow-x-hidden">
           {stats.map((stat) => (
@@ -34,10 +31,10 @@ const Admin = () => {
             />
           ))}
         </div>
-        <Table />
+        <Table tableData={applications} />
       </div>
     </DashboardLayout>
-  )
+  );
 };
 
 export default Admin;

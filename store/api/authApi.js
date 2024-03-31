@@ -14,23 +14,11 @@ export const authApi = createApi({
   }),
   tagTypes: ["Auth"],
   endpoints: (builder) => ({
-    // updateUserPassword: builder.mutation({
-    //   query({ token, payload }) {
-    //     return {
-    //       url: `/users/updatepassword/${token}`,
-    //       method: 'PUT',
-    //       credentials: 'include',
-    //       body: payload
-    //     };
-    //   },
-    //   invalidatesTags: [{ type: 'Users', id: 'LIST' }]
-    // }),
     requestRegistrationOTP: builder.mutation({
       query(payload) {
         return {
           url: requestOTPUrl,
           method: "POST",
-          //   credentials: 'include',
           body: payload,
         };
       },
@@ -41,7 +29,6 @@ export const authApi = createApi({
         return {
           url: verifyOTPUrl,
           method: "POST",
-          // credentials: 'include',
           body: payload,
         };
       },
@@ -52,7 +39,6 @@ export const authApi = createApi({
         return {
           url: registrationUrl,
           method: "POST",
-          // credentials: 'include',
           body: payload,
         };
       },
@@ -61,9 +47,8 @@ export const authApi = createApi({
     signInUser: builder.mutation({
       query(payload) {
         return {
-          url: signInUrl ,
+          url: signInUrl,
           method: "POST",
-          // credentials: 'include',
           body: payload,
         };
       },

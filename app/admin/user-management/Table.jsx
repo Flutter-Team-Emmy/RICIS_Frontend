@@ -1,112 +1,137 @@
- 
-const tableHeader = ["Username", "Email Address", "Phone Number", "Date Applied"];
+"use client";
+import { time } from "@/utils/time&dates";
+import { useRouter } from "next/navigation";
+import Pagination from "./Pagination";
 
-const tableData = [
-    {
-        username: "Sheila Daniels",
-        email: "Sheiladaniel@gmail.com",
-        phone: "09050000000",
-        dateApplied: {
-            date: "26/3/2024",
-            time: "16:34:04"
-        },
-    },
-    {
-        username: "Sheila Daniels",
-        email: "Sheiladaniel@gmail.com",
-        phone: "09050000000",
-        dateApplied: {
-            date: "26/3/2024",
-            time: "16:34:04"
-        },
-    },
-    {
-        username: "Sheila Daniels",
-        email: "Sheiladaniel@gmail.com",
-        phone: "09050000000",
-        dateApplied: {
-            date: "26/3/2024",
-            time: "16:34:04"
-        },
-    },
-    {
-        username: "Sheila Daniels",
-        email: "Sheiladaniel@gmail.com",
-        phone: "09050000000",
-        dateApplied: {
-            date: "26/3/2024",
-            time: "16:34:04"
-        },
-    },
-    {
-        username: "Sheila Daniels",
-        email: "Sheiladaniel@gmail.com",
-        phone: "09050000000",
-        dateApplied: {
-            date: "26/3/2024",
-            time: "16:34:04"
-        },
-    },
-    {
-        username: "Sheila Daniels",
-        email: "Sheiladaniel@gmail.com",
-        phone: "09050000000",
-        dateApplied: {
-            date: "26/3/2024",
-            time: "16:34:04"
-        },
-    },
-    {
-        username: "Sheila Daniels",
-        email: "Sheiladaniel@gmail.com",
-        phone: "09050000000",
-        dateApplied: {
-            date: "26/3/2024",
-            time: "16:34:04"
-        },
-    },
-    
+const tableHeader = [
+  "Username",
+  "Email Address",
+  "Phone Number",
+  "Date Applied",
 ];
 
+// const tableData = [
+//   {
+//     id: "u1",
+//     username: "Sheila Daniels",
+//     email: "Sheiladaniel@gmail.com",
+//     phone: "09050000000",
+//     dateApplied: {
+//       date: "26/3/2024",
+//       time: "16:34:04",
+//     },
+//   },
+//   {
+//     id: "u2",
+//     username: "Sheila Daniels",
+//     email: "Sheiladaniel@gmail.com",
+//     phone: "09050000000",
+//     dateApplied: {
+//       date: "26/3/2024",
+//       time: "16:34:04",
+//     },
+//   },
+//   {
+//     id: "u3",
+//     username: "Sheila Daniels",
+//     email: "Sheiladaniel@gmail.com",
+//     phone: "09050000000",
+//     dateApplied: {
+//       date: "26/3/2024",
+//       time: "16:34:04",
+//     },
+//   },
+//   {
+//     id: "u3",
+//     username: "Sheila Daniels",
+//     email: "Sheiladaniel@gmail.com",
+//     phone: "09050000000",
+//     dateApplied: {
+//       date: "26/3/2024",
+//       time: "16:34:04",
+//     },
+//   },
+//   {
+//     id: "u4",
+//     username: "Sheila Daniels",
+//     email: "Sheiladaniel@gmail.com",
+//     phone: "09050000000",
+//     dateApplied: {
+//       date: "26/3/2024",
+//       time: "16:34:04",
+//     },
+//   },
+//   {
+//     id: "u5",
+//     username: "Sheila Daniels",
+//     email: "Sheiladaniel@gmail.com",
+//     phone: "09050000000",
+//     dateApplied: {
+//       date: "26/3/2024",
+//       time: "16:34:04",
+//     },
+//   },
+//   {
+//     id: "u6",
+//     username: "Sheila Daniels",
+//     email: "Sheiladaniel@gmail.com",
+//     phone: "09050000000",
+//     dateApplied: {
+//       date: "26/3/2024",
+//       time: "16:34:04",
+//     },
+//   },
+// ];
 
-const Table = () => {
-    return (
-        <div className="w-full overflow-x-scroll lg:overflow-x-hidden z-[-10] rounded-lg">
-            <table className="w-full text-sm text-left rtl:text-right">
-                <thead className={`text-sm bg-dark-gray text-gray-400 py-4`}>
-                    <tr className="whitespace-nowrap">
-                        {tableHeader.map((data, index) =>
-                            <th key={index} scope="col" className="lg:px-6 px-4 py-3">
-                                {data}
-                            </th>
-                        )}
-                    </tr>
-                </thead>
-                <tbody className="">
-                    {tableData.map((data, index) => {
-                        const columns = Object.keys(data);
-                        return (
-                            <tr key={index} className="border-b-[1px] border-b-gray-300 border-b-solid">
-                                {columns.map((col, idx) =>
-                                    col === "dateApplied" ?
-                                        <td key={idx} className="px-6 py-4">
-                                            <p>{data.dateApplied.date}</p>
-                                            <p>{data.dateApplied.time}</p>
-                                        </td> :
-                                        <td key={idx}
-                                            className={`px-6 py-4 ${col === "status" && ""}`}>
-                                            {data[col]}
-                                        </td>
-                                )}
-                            </tr>
-                        )
-                    }
+const Table = ({ tableData }) => {
+  const router = useRouter();
 
-                    )}
-                </tbody>
-            </table>
-        </div>
-    )
+  const openUserProfile = (userId) => {
+    router.push(`/admin/user-management/${userId}`);
+  };
+
+  return (
+    <div className="w-full overflow-x-scroll lg:overflow-x-hidden z-[-10] rounded-lg">
+      <table className="w-full text-sm text-left rtl:text-right">
+        <thead className={`text-sm bg-dark-gray text-gray-400 py-4`}>
+          <tr className="whitespace-nowrap">
+            {tableHeader.map((data, index) => (
+              <th key={index} scope="col" className="lg:px-6 px-4 py-3">
+                {data}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody className="">
+          {tableData?.map((data, index) => {
+            return (
+              <tr
+                onClick={() => openUserProfile(data?.id)}
+                key={data.id}
+                className="whitespace-nowrap lg:whitespace-normal bg-white border-b w-full text-sm cursor-pointer hover:opacity-70"
+              >
+                <th
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                >
+                  {data.first_name}
+                </th>
+                <td className="px-6 py-4 w-80">{data.email}</td>
+                <td className="px-6 py-4">
+                  <span className="px-2.5 py-1.5">{data?.phone}</span>
+                </td>
+                <td className="px-6 py-4">
+                  {time.formatDate(data.created_at) +
+                    " at " +
+                    time.formatTime(data.created_at)}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
 };
 
 export default Table;

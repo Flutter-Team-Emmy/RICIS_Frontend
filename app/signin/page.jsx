@@ -4,14 +4,14 @@ import FormLayout from "@/components/FormLayout";
 import TextInput from "@/components/TextInput";
 import useForm from "@/hooks/useForm";
 import { useSignInUserMutation } from "@/store/api/authApi";
-import { VisibilityOff, PeopleIcon } from "@/svgs";
+import { PeopleIcon } from "@/svgs";
 import { validator } from "@/utils/validator";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { normalizeErrors } from "@/utils/helpers";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { setToken, setLoginTime, getToken } from "@/utils/authHelpers";
+import { normalizeErrors } from "@/utils/helpers";
 
 const InitialData = {
   email: "",
@@ -19,16 +19,19 @@ const InitialData = {
 };
 
 const Page = () => {
+  const [asStaff, setAsStaff] = useState(false);
   const { formData, setFormData, handleChange } = useForm(InitialData);
   const [signInuser, { isLoading, isSuccess, isError, error, data }] =
     useSignInUserMutation();
   const disableBtn = validator.whiteSpaces(formData);
   const router = useRouter();
+  const param = useSearchParams();
   const token = getToken();
 
   const handleSignIn = async () => {
     const IsInValid = validator.whiteSpaces(formData);
-    const payload = { ...formData, as_staff: false };
+    const as_staff = param.get("as_staff");
+    const payload = { ...formData, as_staff };
     if (IsInValid) {
       toast.warning("Enter valid credentials!", { autoClose: 2000 });
       return;
@@ -37,17 +40,13 @@ const Page = () => {
   };
 
   useEffect(() => {
-    // const { isErr, err } = normalizeErrors(data);
-    // if (isErr) {
-    //   toast.error(err, { autoClose: 3000 });
-    // }
-    if (isError) {
-      toast.error(error?.message, { autoClose: 3000 });
+    if (error) {
+      const err = normalizeErrors(error);
+      toast.error(err, { autoClose: 2000 });
     }
-
     if (isSuccess) {
       toast.success(data?.message, { autoClose: 1000 });
-      router.replace("/user");
+      router.replace(`${asStaff ? "/admin" : "/user"}`);
       setToken(data?.data?.token.token);
       setLoginTime();
     }
@@ -55,9 +54,17 @@ const Page = () => {
 
   useEffect(() => {
     if (token) {
-      router.replace("/user");
+      router.replace(`${asStaff ? "/admin" : "/user"}`);
     }
   }, [token]);
+
+  useEffect(() => {
+    router.push(`/signin/?as_staff=${asStaff}`);
+  }, [asStaff]);
+
+  const toggleRoleSignIn = () => {
+    setAsStaff((prev) => !prev);
+  };
 
   return (
     <FormLayout>
@@ -67,16 +74,19 @@ const Page = () => {
 
           <h2 className="inter500 text-[14px] leading-[21px] text-[#8D8D8D] mb-[12px] ">
             Login with the adjacent username and password field! The button only
-            work with staff members.
+            work with {asStaff ? "staff members" : "regular users"}
           </h2>
 
-          <div className="rounded-[8px] border-[2px] p-[1rem] flex space-x-[12px] border-[#3361FF] justify-center items-center mb-[1.5rem] ">
+          <button
+            onClick={toggleRoleSignIn}
+            className="w-full rounded-[8px] border-[2px] p-[1rem] flex space-x-[12px] border-[#3361FF] justify-center items-center mb-[1.5rem] "
+          >
             <span>{PeopleIcon}</span>
 
             <h3 className="text-[#3361FF] inter500 text-[14px] leading-[21px] ">
-              Login as staff member
+              {asStaff ? "Login as regular user" : "Login as staff member"}
             </h3>
-          </div>
+          </button>
 
           <TextInput
             label="Email"
@@ -95,7 +105,6 @@ const Page = () => {
               handleChange={handleChange}
               placeholder="Enter Password"
               name="password"
-              endIcon={VisibilityOff}
             />
             <h2 className="inter600 text-[12px] leading-[18px] text-[#0000008A] ">
               Forgot Password?

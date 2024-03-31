@@ -66,4 +66,4 @@ export const AdminSidebarLinks = [
   },
 ];
 
-export const StaffSidebarLinks = AdminSidebarLinks.splice(0, 2);
+export const StaffSidebarLinks = AdminSidebarLinks.slice(0, 2);

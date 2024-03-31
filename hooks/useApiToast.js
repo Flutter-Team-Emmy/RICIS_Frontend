@@ -18,7 +18,7 @@ const useApiToast = ({
     }
     if (error) {
       if ("status" in error) {
-        const errMsg = "error" in error ? error.error : error.data.message;
+        const errMsg = "error" in error ? error.error : error.data?.message;
         toast.update(id, {
           render: errMsg,
           type: "error",

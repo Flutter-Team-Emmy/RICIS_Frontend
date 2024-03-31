@@ -38,14 +38,10 @@ const Page = () => {
   };
 
   useEffect(() => {
-    // const { isErr, err } = normalizeErrors(data);
-    // if (isErr) {
-    //   toast.error(err, { autoClose: 3000 });
-    // }
-    if (isError) {
-      toast.error(data?.message, { autoClose: 3000 });
+    if (error) {
+      const err = normalizeErrors(error);
+      toast.error(err, { autoClose: 2000 });
     }
-
     if (isSuccess) {
       toast.success(data?.message, { autoClose: 1000 });
       router.push(`/verify-otp?email=${formData.email}`);

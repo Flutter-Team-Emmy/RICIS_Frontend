@@ -7,7 +7,6 @@ import Image from "next/image";
 import Hamburger from "../../public/images/hamburger.svg";
 
 const DashboardLayout = ({ children, header, icon }) => {
-  const [isVisible, setIsVisible] = useState(false);
   const [showSidebar, setShowSidebar] = useState("hidden");
 
   return (
@@ -25,7 +24,7 @@ const DashboardLayout = ({ children, header, icon }) => {
             <div className="w-full flex justify-between items-center">
               <div className="items-center gap-x-2 hidden lg:flex">
                 {icon}
-                <h1 className="text-slate-800 text-2xl font-semibold">
+                <h1 className="text-slate-800 text-2xl font-semibold inline whitespace-nowrap">
                   {header}
                 </h1>
               </div>

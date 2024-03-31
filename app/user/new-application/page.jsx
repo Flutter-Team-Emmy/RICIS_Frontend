@@ -1,19 +1,24 @@
-"use client"
+"use client";
 import { Suspense } from "react";
-import NewApp from "./new-app";
+import DashboardLayout from "@/components/layouts/DashboardLayout";
+import ApplicationForm from "./ApplicationForm";
 
 const pagination = "<1/12 Pages >";
 
 const initialFormData = {
-    application_details: ""
-}
+  application_details: "",
+};
 
 const NewApplication = () => {
-    return(
+  return (
+    <DashboardLayout header="New Application" icon="">
+      <div className="space-y-10 w-full">
         <Suspense>
-            <NewApp />
+          <ApplicationForm />
         </Suspense>
-    )
+      </div>
+    </DashboardLayout>
+  );
 };
 
 export default NewApplication;

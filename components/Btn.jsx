@@ -1,18 +1,26 @@
 import React from "react";
 import { ClipLoader, FadeLoader } from "react-spinners";
 
-const Btn = ({ text, disabled, handleClick, loading, loadingMsg }) => {
+const Btn = ({
+  text,
+  disabled,
+  handleClick,
+  loading,
+  loadingMsg,
+  bgColorClass = "bg-[#3361FF]",
+}) => {
   return (
     <button
-      className={`py-2 px-[1.725rem] h-10 cursor-pointer flex items-center justify-center ${
-        disabled ? "bg-gray-200" : "bg-[#3361FF] "
+      className={`py-2 px-[1.725rem] h-10 cursor-pointer flex items-center justify-center hover:opacity-70 shadow-md ${
+        disabled ? "bg-gray-200" : bgColorClass
       } rounded-[4px]`}
       onClick={handleClick}
       disabled={disabled}
+      type="button"
     >
       {loading ? (
         <div className="flex items-center gap-4">
-          <ClipLoader color="#fff" size={25} />
+          <ClipLoader color="#fff" size={20} />
           <span className="text-white text-sm">{loadingMsg}</span>
         </div>
       ) : (

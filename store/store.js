@@ -2,22 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import { authApi } from "./api/authApi";
 import { applicationApi } from "./api/applicationApi";
 import { userApi } from "./api/userApi";
-// import { authApi } from './api/authApi';
-// import { userApi } from './api/userApi';
-// import { memberApi } from './api/memberApi';
-// import { paymentApi } from './api/paymentApi';
-// import chartYearSelectorReducer from './features/chartYearSelectorSlice';
+import { cloudinaryApi } from "./api/cloudinaryApi";
 
 const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
     [applicationApi.reducerPath]: applicationApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
-    // chartYearSelector: chartYearSelectorReducer,
-    // [authApi.reducerPath]: authApi.reducer,
-    // [userApi.reducerPath]: userApi.reducer,
-    // [memberApi.reducerPath]: memberApi.reducer,
-    // [paymentApi.reducerPath]: paymentApi.reducer
+    [cloudinaryApi.reducerPath]: cloudinaryApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -25,6 +17,7 @@ const store = configureStore({
       authApi.middleware,
       applicationApi.middleware,
       userApi.middleware,
+      cloudinaryApi.middleware,
     ]),
 });
 
