@@ -10,10 +10,12 @@ import {
   removeLoginTime,
   getLoginTime,
 } from "@/utils/authHelpers";
+import { useGetUserQuery } from "@/store/api/userApi";
+import crossIcon from "../../public/images/Cross.svg";
 
 const activeClass = "bg-blue-700 hover:bg-blue-600";
 
-const Sidebar = ({ display, lg_display, zIndex }) => {
+const Sidebar = ({ display, lg_display, zIndex, showSidebar, setShowSidebar }) => {
 
   const pathname = usePathname();
   const router = useRouter();
@@ -71,15 +73,15 @@ const Sidebar = ({ display, lg_display, zIndex }) => {
                   key={link.id}
                   className={`${pathname === link.href ? activeClass : ""}
                  flex items-center gap-2 p-2 rounded-md mb-3 text-xs`}
-              >
-                <span className="">{link.icon}</span>
-                <Link className="" href={link.href}>
-                  {link.name}
-                </Link>
-              </li>
-              {index === 0 ? <hr className="border-gray-600" /> : ""}
-            </>
-          ))}
+                >
+                  <span className="">{link.icon}</span>
+                  <Link className="" href={link.href}>
+                    {link.name}
+                  </Link>
+                </li>
+                {index === 0 ? <hr className="border-gray-600" /> : ""}
+              </>
+            ))}
           {(isLoading || data?.data?.length === 0) &&
             [1, 2, 3, 4].map((loader) => (
               <div

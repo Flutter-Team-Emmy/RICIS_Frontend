@@ -3,11 +3,10 @@ import React from "react";
 
 const NewsCard = ({ data }) => {
 	return (
-		<div className='flex space-x-[12px] py-[20px] items-center  '>
-			<img src={data?.img} />
-
-			<div className='flex flex-col space-y-[8px]'>
-				<h1 className='sf700 text-[1.5rem] leading-[20px] text-[#000000CC]'>
+		<div className='lg:flex space-x-[12px] space-y-4 py-[20px] lg:items-center'>
+			<img src={data?.img} className="w-full" />
+			<div className='lg:flex flex-col space-y-[8px]'>
+				<h1 className='sf700 text-[1rem] lg:text-[1.5rem] leading-[20px] text-[#000000CC]'>
 					{data?.name}
 				</h1>
 				<h2 className='text-[#00000061]  text-[1rem] sf400 leading-[20px]  '>

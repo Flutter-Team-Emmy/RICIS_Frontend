@@ -2,7 +2,7 @@
 
 import DashboardLayout from "../../components/layouts/DashboardLayout";
 import Table from "../../components/Table";
-import { AddCircleIcon } from "";
+import { AddCircleIcon } from "@/svgs";
 import StatsCard from "./dashboard/statsCard";
 import { stats } from "./dashboard/stats";
 import Link from "next/link";
@@ -18,7 +18,7 @@ const Dashboard = () => {
               Here is a preview of your activities and information
             </p>
           </div>
-          <Link href="user/new-application" className="bg-blue-700 mt-6 w-[50%] lg:w-[20%] px-4 py-2.5 flex items-center gap-2 rounded-md text-white hover:bg-blue-600">
+          <Link href="user/new-application" className="bg-blue-700 mt-6 w-[60%] lg:w-[20%] px-4 py-2.5 flex items-center gap-2 rounded-md text-white hover:bg-blue-600">
             <span className="">{AddCircleIcon}</span>
             <span className="">New Application</span>
           </Link>

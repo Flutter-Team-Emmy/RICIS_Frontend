@@ -32,7 +32,7 @@ const Notice = () => {
 			<ul className='list-none p-0 m-0 flex flex-col space-y-[8px]'>
 				{data.map((text, i) => (
 					<li
-						className='text-[#000000AD] sf500 text-[1.5rem] leading-[36px] text-left flex items-start py-[1rem]'
+						className='text-[#000000AD] sf500 text-[1rem] text-justify leading-[36px] text-left flex items-start py-[1rem]'
 						key={i}
 					>
 						<span className='mr-[8px] text-[#000000AD] '>&#8226;</span>
