@@ -2,29 +2,29 @@ import ApplicationStatus from "./ApplicationStatus";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { DownloadIcon } from "@/svgs";
 
-const ApplicationRejected = () => {
+const ApplicationRejected = ({ data }) => {
   return (
     <DashboardLayout header="Application">
       <div className="lg:flex lg:justify-between w-[95%] pb-8">
         <div className="w-full pb-8">
           <h1 className="text-black font-bold text-2xl">
-            APPLICATION REJECTED
+            Application <span className="text-red-600">Rejected</span>
           </h1>
-          <p className="text-gray-600 text-sm">
+          {/* <p className="text-gray-600 text-sm">
             Sorry! Your Application was unsuccessful
-          </p>
+          </p> */}
         </div>
         <div className="lg:w-[30%]">
           {/* <Image src={certificateIcon} alt="download certificate icon" /> */}
-          <button className="flex items-center gap-1 text-sm bg-[#46B038] text-white py-2 px-4 w-fit rounded-md hover:opacity-70">
+          {/* <button className="flex items-center gap-1 text-sm bg-[#46B038] text-white py-2 px-4 w-fit rounded-md hover:opacity-70">
             <span className="">{DownloadIcon}</span>
             <span className="">Download Certificate</span>
-          </button>
+          </button> */}
         </div>
       </div>
       <div className="bg-white lg:flex lg:justify-between rounded-md pt-12 px-6 pb-6">
-        <ApplicationStatus />
-        <div className="lg:w-[45%] h-[80%] mt-8 pb-6 px-6 pt-8 bg-[#FFF6F6] text-[#7D3434] border-solid border-[1px] border-[#7D3434] rounded-md">
+        <ApplicationStatus data={data} />
+        {/* <div className="lg:w-[45%] h-[80%] mt-8 pb-6 px-6 pt-8 bg-[#FFF6F6] text-[#7D3434] border-solid border-[1px] border-[#7D3434] rounded-md">
           <p className="pb-4 font-bold">Reason:</p>
           <p className="text-sm text-justify">
             Thanks! it's amazing. however, I cannot open this and 'cleverly'
@@ -55,7 +55,7 @@ const ApplicationRejected = () => {
             of the largest oil companies include Saudi Aramco, ExxonMobil, BP,
             Royal Dutch Shell, and Chevron.
           </p>
-        </div>
+        </div> */}
       </div>
     </DashboardLayout>
   );

@@ -27,7 +27,7 @@ const UserManagement = () => {
       <div className="bg-white rounded-lg">
         <h1 className="text-[#3361FF] font-bold pt-4 pl-6 pb-6">All</h1>
         {isLoading ? <TableSkeleton /> : <Table tableData={users} />}
-        <Pagination page={page} setPage={setPage} totalPages={totalPages} />
+        {/* <Pagination page={page} setPage={setPage} totalPages={totalPages} /> */}
       </div>
     </DashboardLayout>
   );

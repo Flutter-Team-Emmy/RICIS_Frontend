@@ -13,7 +13,7 @@ export const userApi = createApi({
       }
       return headers;
     },
-  }),
+  }),  
   tagTypes: ["Users"],
   endpoints: (builder) => ({
     updateUserBioData: builder.mutation({

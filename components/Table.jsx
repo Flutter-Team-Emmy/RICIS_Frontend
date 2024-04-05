@@ -19,7 +19,7 @@ const Table = () => {
   const router = useRouter();
   const previousRoute = router.asPath;
 
-  const previousRouteName = previousRoute?.split('/').pop();
+  const previousRouteName = previousRoute?.split("/").pop();
 
   const { isLoading, isSuccess, isError, error, data, refetch } =
     useGetAllApplicationsQuery();
@@ -33,12 +33,9 @@ const Table = () => {
   const applications = data?.data.applications;
 
   const openApplicationDetails = (applicationId, applicationStatus) => {
-    if (
-      applicationStatus.toLocaleLowerCase() === "approved" ||
-      applicationStatus.toLocaleLowerCase() === "rejected"
-    ) {
+    {
       router.push(
-        `/user/applications/${applicationId}?status=${applicationStatus}`
+        `/user/applications/${applicationId}?status=${applicationStatus}&id=${applicationId}`
       );
     }
   };

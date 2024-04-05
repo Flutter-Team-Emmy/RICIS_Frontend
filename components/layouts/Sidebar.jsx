@@ -136,7 +136,7 @@ const Sidebar = ({
             <Avatar currentUser={currentUser} role={role} />
             <div className>
               <p className="text-sm">
-                {currentUser?.first_name + " " + currentUser?.last_name}
+                { role !== "USER" ? currentUser?.name : currentUser?.first_name + " " + currentUser?.last_name }
               </p>
               <p className="text-xs text-gray-200">Applicant</p>
             </div>

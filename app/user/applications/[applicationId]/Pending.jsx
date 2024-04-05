@@ -2,17 +2,14 @@ import ApplicationStatus from "./ApplicationStatus";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { DownloadIcon } from "@/svgs";
 
-const ApplicationApproved = ({data}) => {
+const ApplicationPending = ({data}) => {
   return (
     <DashboardLayout header="Application">
       <div className="lg:flex lg:justify-between w-[95%] pb-8">
         <div className="w-full pb-8">
-          <h1 className="text-black font-bold text-2xl">
-            Application <span className="text-green-300">Approved</span>
+          <h1 className="text-black font-bold text-2xl capitalize">
+            Application <span className="text-yellow-400">Pending</span>
           </h1>
-          {/* <p className="text-gray-600 text-sm">
-            Congratulations! Your Application was successful
-          </p> */}
         </div>
         {/* <div className="lg:w-[30%]">
           <button className="flex items-center gap-1 text-sm bg-[#46B038] text-white py-2 px-4 w-fit rounded-md hover:opacity-70">
@@ -28,4 +25,4 @@ const ApplicationApproved = ({data}) => {
   );
 };
 
-export default ApplicationApproved;
+export default ApplicationPending;
