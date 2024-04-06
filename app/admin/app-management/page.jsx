@@ -1,11 +1,9 @@
 "use client";
 import Table from "@/components/Table";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
-import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
-const AppManagement = () => {
-  const params = useSearchParams();
+const AppManagement = () => {  
 
   return (
     <DashboardLayout header="Admin">
