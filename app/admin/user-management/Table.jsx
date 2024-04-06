@@ -87,7 +87,7 @@ const Table = ({ tableData }) => {
   const router = useRouter();
 
   const openUserProfile = (userId) => {
-    router.push(`/admin/user-management/${userId}`);
+    router.push(`/admin/user-management/${userId}?id=${userId}`);
   };
 
   return (

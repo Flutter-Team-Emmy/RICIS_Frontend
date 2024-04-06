@@ -27,3 +27,12 @@ export const normalizeErrors = (error) => {
     }
   }
 };
+
+export const formatDate = (inputDateStr) => {
+  const inputDate = new Date(inputDateStr);
+  const formattedDate = `${inputDate.getDate()}/${
+    inputDate.getMonth() + 1
+  }/${inputDate.getFullYear()}`;
+  const formattedTime = `${inputDate.getHours()}:${inputDate.getMinutes()}:${inputDate.getSeconds()}`;
+  return `${formattedDate} ${formattedTime}`;
+};

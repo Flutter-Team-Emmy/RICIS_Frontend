@@ -1,6 +1,7 @@
 import ApplicationStatus from "./ApplicationStatus";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { DownloadIcon } from "@/svgs";
+import { ClipLoader } from "react-spinners";
 
 const ApplicationRejected = ({ data }) => {
   return (
@@ -23,7 +24,13 @@ const ApplicationRejected = ({ data }) => {
         </div>
       </div>
       <div className="bg-white lg:flex lg:justify-between rounded-md pt-12 px-6 pb-6">
-        <ApplicationStatus data={data} />
+        {data ? (
+          <ApplicationStatus data={data} />
+        ) : (
+          <div className="flex items-center justify-center h-[40vh] w-full  ">
+            <ClipLoader color="#46B038" size={30} />
+          </div>
+        )}
         {/* <div className="lg:w-[45%] h-[80%] mt-8 pb-6 px-6 pt-8 bg-[#FFF6F6] text-[#7D3434] border-solid border-[1px] border-[#7D3434] rounded-md">
           <p className="pb-4 font-bold">Reason:</p>
           <p className="text-sm text-justify">

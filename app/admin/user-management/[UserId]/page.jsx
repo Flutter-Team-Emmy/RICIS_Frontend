@@ -4,11 +4,11 @@ import DashboardLayout from "@/components/layouts/DashboardLayout";
 import TextFieldSkeleton from "@/components/skeleton-loaders/TextFieldSkeleton";
 import { useGetUserQuery } from "@/store/api/userApi";
 import { time } from "@/utils/time&dates";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 
 const UserProfile = () => {
-  const params = useParams();
-  const userId = params?.userId;
+  const params = useSearchParams();
+  const userId = params.get("id");
   console.log(userId);
   const { isLoading, isSuccess, isError, error, data } =
     useGetUserQuery(userId);

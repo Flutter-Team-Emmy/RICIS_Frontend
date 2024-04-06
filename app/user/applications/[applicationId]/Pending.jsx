@@ -1,8 +1,9 @@
 import ApplicationStatus from "./ApplicationStatus";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { DownloadIcon } from "@/svgs";
+import { ClipLoader } from "react-spinners";
 
-const ApplicationPending = ({data}) => {
+const ApplicationPending = ({ data }) => {
   return (
     <DashboardLayout header="Application">
       <div className="lg:flex lg:justify-between w-[95%] pb-8">
@@ -19,7 +20,13 @@ const ApplicationPending = ({data}) => {
         </div> */}
       </div>
       <div className="bg-white rounded-md pt-8 pl-6 pb-6">
-        <ApplicationStatus data={data} />
+        {data ? (
+          <ApplicationStatus data={data} />
+        ) : (
+          <div className="flex items-center justify-center h-[40vh] w-full  ">
+            <ClipLoader color="#46B038" size={30} />
+          </div>
+        )}
       </div>
     </DashboardLayout>
   );
