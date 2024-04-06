@@ -13,35 +13,29 @@ import { useEffect, useState } from "react";
 import { getToken } from "@/utils/authHelpers";
 
 const Admin = () => {
-
+  const [data, setData] = useState([]);
   // hello george, i dont understand the way u handle ur api, so i decided to do something over here
-  const getApplications = async () =>{
+  const getApplications = async () => {
     try {
-       const token = getToken(); 
-     const res = await axios.get(`${baseUrl}/application`, {
-       headers:{
-         "Authorization": `Bearer ${token}`
-       }
-     })
-     
-    if(res){
-      setData(res.data.data.applications)
-    }
-      
+      const token = getToken();
+      const res = await axios.get(`${baseUrl}/application/stats`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res) {
+        console.log(res.data.data.stats);
+        setData(res.data.data.stats);
+      }
     } catch (error) {
-        console.log(error)
-    } 
-  }
+      console.log(error);
+    }
+  };
 
-  const [data, setData] = useState([])
-
-  useEffect(()=>{
-      getApplications()
-    
-    
-  },[])
-
-
+  useEffect(() => {
+    getApplications();
+  }, []);
 
   return (
     <DashboardLayout header="Admin">
@@ -54,16 +48,17 @@ const Admin = () => {
             </p>
           </div>
         </div>
-        <div className="flex justify-between w-full gap-6 overflow-x-scroll lg:overflow-x-hidden">
-          { stats.map((stat) => (
+        <div className="flex w-full gap-6 flex-wrap w-fit">
+          {data?.map((stat) => (
             <StatsCard
               key={stat.id}
               status={stat.status}
               amount={stat.amount}
-              percentage={stat.percentage}
-              increase={stat.increase}
-              colorCode={stat.colorCode}
-              colorClass={stat.colorClass}
+              percentage={Number(stat.percentage.toFixed(2))}
+              increase={stat.daily_stats[0]}
+              dailyStat={Object.values(stat.daily_stats)}
+              colorCode={stat.chart_color}
+              colorClass={`text-[#${stat.chart_color[0]}]`}
             />
           ))}
         </div>

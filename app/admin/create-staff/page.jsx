@@ -3,6 +3,8 @@ import { baseUrl } from "@/lib/configs";
 import { getToken } from "@/utils/authHelpers";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { ClipLoader } from "react-spinners";
+import { toast } from "react-toastify";
 
 const {
   default: DashboardLayout,
@@ -10,6 +12,16 @@ const {
 
 const CreateStaff = () => {
   const [form, setForm] = useState([]);
+  const [btnLoad, setBtnLoad] = useState(false);
+
+  const [formData, setFormData] = useState({
+    is_admin: "",
+    name: "",
+    email: "",
+  });
+
+  const [checkedItems, setCheckedItems] = useState([]);
+
   const fetchForm = async () => {
     try {
       const token = getToken();
@@ -25,11 +37,39 @@ const CreateStaff = () => {
     }
   };
 
+  const createStaff = async () => {
+    setBtnLoad(true);
+    try {
+      const token = getToken();
+      const res = await axios.post(
+        `${baseUrl}/staff`,
+        {
+          name: formData.name,
+          email: formData.email,
+          is_admin: formData.is_admin === "admin-staff" ? true : false,
+          forms: checkedItems,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (res) {
+        console.log(res);
+        toast.success(" created staff successfully", { autoClose: 2000 });
+        setBtnLoad(false);
+      }
+    } catch (error) {
+      setBtnLoad(false);
+      console.log(error);
+      toast.error(error.response.data.error.message,  { autoClose: 2000 });
+    }
+  };
+
   useEffect(() => {
     fetchForm();
   }, []);
-
-  const [checkedItems, setCheckedItems] = useState([]);
 
   const handleCheckboxChange = (id) => {
     if (checkedItems.includes(id)) {
@@ -48,25 +88,31 @@ const CreateStaff = () => {
             create a staff by filling their information below
           </p>
         </div>
-        <div className="bg-white w-[95%] m-auto shadow-md rounded-md space-y-8 py-6 pl-6">
+        <div className="bg-white min-w-[95%] m-auto shadow-md rounded-md space-y-8 py-6 pl-6 w-fit">
           <h1 className="text-[#46B038] font-bold">STAFF DETAILS</h1>
-          <div className="lg:flex gap-x-6 items-center space-y-6">
+          <div className="lg:flex gap-x-6 items-center flex-wrap space-y-6 ">
             <form className="max-w-sm">
               <label htmlFor="applicationType" className="block mb-2 font-bold">
-                Application Type
+                Staff Access
               </label>
               <select
                 name="application_details"
-                value=""
+                value={formData.is_admin}
+                onChange={(e) => {
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    is_admin: e.target.value,
+                  }));
+                }}
                 id="countries"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               >
-                <option selected>Select a Type</option>
-                <option value="clearance">Clearance</option>
-                <option value="oil_and_greasing_equipments_check">
-                  Oil and greasing equipments check
+                <option selected disabled>
+                  Select the staff access
                 </option>
-                <option value="suit_check">Suit check</option>
+                <option value="admin-staff">Admin Staff</option>
+
+                <option value="Non-admin-staff">Non-admin Staff</option>
               </select>
             </form>
             <div>
@@ -74,6 +120,13 @@ const CreateStaff = () => {
               <input
                 type="text"
                 className="py-2 px-4 border-[1px] border-solid border-gray-300 rounded-lg"
+                value={formData.name}
+                onChange={(e) => {
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    name: e.target.value,
+                  }));
+                }}
                 placeholder="Enter Name"
               />
             </div>
@@ -83,6 +136,13 @@ const CreateStaff = () => {
                 type="text"
                 className="py-2 px-4 border-[1px] border-solid border-gray-300 rounded-lg"
                 placeholder="Enter Email Address"
+                value={formData.email}
+                onChange={(e) => {
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    email: e.target.value,
+                  }));
+                }}
               />
             </div>
           </div>
@@ -110,12 +170,18 @@ const CreateStaff = () => {
                 </div>
               ))}
           </div>
-          <div className="flex gap-x-4 w-full">
-            <button className="rounded-md h-[50%] text-sm text-[#46B038] p-2 border-[1px] border-solid border-[#46B038]">
-              Create & Suspend
-            </button>
-            <button className="text-sm bg-[#46B038] h-[50%] text-white py-2 px-4 w-fit rounded-md">
-              Create Account
+          <div
+            className="flex gap-x-4 w-full cursor-pointer"
+            onClick={() => {
+              createStaff();
+            }}
+          >
+            <button className="text-sm bg-[#46B038] h-[50%] text-white py-2 px-4 w-fit rounded-md flex items-center justify-center">
+              {btnLoad ? (
+                <ClipLoader color="#fff" size={20} />
+              ) : (
+                "Create Account"
+              )}
             </button>
           </div>
         </div>

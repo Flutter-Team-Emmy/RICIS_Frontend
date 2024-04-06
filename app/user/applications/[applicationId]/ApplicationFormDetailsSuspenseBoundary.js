@@ -13,6 +13,7 @@ const ApplicationFormDetailsSuspenseBoundary = () => {
   const params = useSearchParams();
   const applicationStatus = params.get("status");
   const applicationId = params.get("id");
+  const [reason, setReason] = useState("");
   const [data, setData] = useState();
 
   const fethcApp = async () => {
@@ -25,7 +26,9 @@ const ApplicationFormDetailsSuspenseBoundary = () => {
             Authorization: `Bearer ${token}`,
           },
         }
-      );      
+      );
+      setReason(fetchData?.data?.data?.application?.statusReason);
+      console.log(fetchData?.data?.data?.application?.statusReason, "dsjdskj");
       setData(fetchData?.data?.data);
     } catch (error) {
       console.log(error);
@@ -39,7 +42,7 @@ const ApplicationFormDetailsSuspenseBoundary = () => {
   }, []);
 
   if (applicationStatus.toLocaleLowerCase() === "rejected") {
-    return <ApplicationRejected data={data} />;
+    return <ApplicationRejected data={data} reason={reason} />;
   }
 
   if (applicationStatus.toLocaleLowerCase() === "approved") {

@@ -114,15 +114,24 @@ const ApplicationForm = () => {
                     >
                       {capitalizeFirstLetter(field.name)}
                     </label>
-                    <InputField
-                      id={field.id}
-                      type={field.type}
-                      required={field.required}
-                      name={field.name}
-                      placeholder={`Enter ${capitalizeFirstLetter(field.name)}`}
-                      handleChange={handleChange}
-                      value={formData[field.name]}
-                    />
+                    {field.type === "LONG_TEXT" ? (
+                      <textarea
+                        className="border boder-gray-200 outline-none "
+                        placeholder={`Enter ${field.name}`}
+                      ></textarea>
+                    ) : (
+                      <InputField
+                        id={field.id}
+                        type={field?.type.toLowerCase()}
+                        required={field.required}
+                        name={field.name}
+                        placeholder={`Enter ${capitalizeFirstLetter(
+                          field.name
+                        )}`}
+                        handleChange={handleChange}
+                        value={formData[field.name]}
+                      />
+                    )}
                   </div>
                 ))}
               {(isLoading || !data) &&

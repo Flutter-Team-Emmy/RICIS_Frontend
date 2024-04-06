@@ -1,12 +1,15 @@
 "use client";
 
 import DashboardLayout from "../../components/layouts/DashboardLayout";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Table from "../../components/Table";
 import { AddCircleIcon } from "@/svgs";
 import StatsCard from "./dashboard/statsCard";
 import { stats } from "./dashboard/stats";
 import Link from "next/link";
+import { getToken } from "@/utils/authHelpers";
+import { baseUrl } from "@/lib/configs";
+import axios from "axios";
 // import { applications } from "@/utils/data";
 // import TableSkeleton from "@/components/skeleton-loaders/TableSkeleton";
 // import useForm from "@/hooks/useForm";
@@ -22,35 +25,31 @@ import Link from "next/link";
 // };
 
 const Dashboard = () => {
-  // const { formData, setFormData, handleChange, mediaPreview, setMediaPreview } =
-  //   useForm(initialData);
-  // const [
-  //   uploadImage,
-  //   { isLoading, isSuccess, isError, error, data: media_data }
-  // ] = useUploadImageMutation();
+  const [data, setData] = useState([]);
+  // hello george, i dont understand the way u handle ur api, so i decided to do something over here
+  const getApplications = async () => {
+    try {
+      const token = getToken();
+      const res = await axios.get(`${baseUrl}/application/stats`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-  // useEffect(() => {
-  //   if (error) {
-  //     const err = normalizeErrors(error);
-  //     toast.error(err, { autoClose: 2000 });
-  //   }
-  //   if (isSuccess) {
-  //     toast.success("success!", { autoClose: 1000 });
-  //   }
-  // }, [isSuccess, isError]);
+      console.log(res);
 
-  // const handleUpload = async () => {
-  //   if (!formData.media) {
-  //     toast.warning("select an image!", { autoClose: 2000 });
-  //   }
-  //   const data = new FormData();
-  //   data.append("file", formData.media);
-  //   data.append("upload_preset", upload_preset);
-  //   data.append("cloud_name", cloud_name);
-  //   await uploadImage(data);
-  // };
+      if (res) {
+        console.log(res);
+        setData(res.data.data.stats);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  // console.log(media_data);
+  useEffect(() => {
+    getApplications();
+  }, []);
 
   return (
     <DashboardLayout header="Dashboard" icon="">
@@ -83,16 +82,21 @@ const Dashboard = () => {
             <span className="">New Application</span>
           </Link>
         </div>
-        <div className="flex justify-between w-full gap-6 overflow-x-scroll lg:overflow-x-hidden">
-          {stats.map((stat) => (
+        <div className="flex w-full gap-6 ">
+          {data?.map((stat) => (
             <StatsCard
               key={stat.id}
               status={stat.status}
               amount={stat.amount}
-              percentage={stat.percentage}
-              increase={stat.increase}
-              colorCode={stat.colorCode}
-              colorClass={stat.colorClass}
+              percentage={
+                stat.percentage === null
+                  ? 0
+                  : Number(stat.percentage.toFixed(2))
+              }              
+              increase={stat.daily_stats[0]}
+              dailyStat={Object.values(stat.daily_stats)}
+              colorCode={stat.chart_color}
+              colorClass={`text-[#${stat.chart_color[0]}]`}
             />
           ))}
         </div>

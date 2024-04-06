@@ -40,6 +40,7 @@ const SignInSuspenseBoundary = () => {
   };
 
   useEffect(() => {
+    console.log(token, "ttok");
     if (error) {
       const err = normalizeErrors(error);
       toast.error(err, { autoClose: 2000 });

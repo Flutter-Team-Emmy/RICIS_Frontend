@@ -1,7 +1,12 @@
+"use client";
 import Table from "@/components/Table";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 const AppManagement = () => {
+  const params = useSearchParams();
+
   return (
     <DashboardLayout header="Admin">
       <div className="w-full pb-8">
@@ -10,7 +15,7 @@ const AppManagement = () => {
         </h1>
         <p className="text-gray-600 text-sm">view all your staff list below</p>
       </div>
-      <Table  />
+      <Table />
     </DashboardLayout>
   );
 };

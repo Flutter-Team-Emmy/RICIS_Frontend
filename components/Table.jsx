@@ -42,7 +42,7 @@ const Table = () => {
 
   if (isLoading) return <TableSkeleton />;
 
-  return (
+  return applications.length > 0 ? (
     <div className="relative overflow-x-auto lg:overflow-x-hidden shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead className="text-sm text-gray-500 uppercas bg-gray-50">
@@ -102,22 +102,29 @@ const Table = () => {
                   className={`px-2.5 py-1.5 text-xs ${
                     application?.status === "APPROVED"
                       ? "bg-green-100 text-green-700"
-                      : "bg-yellow-100 text-yellow-700"
+                      : application?.status === "PENDING"
+                      ? "bg-yellow-100 text-yellow-700"
+                      : "bg-red-100 text-red-600"
                   } font-medium rounded-3xl`}
                 >
                   {application.status}
                 </span>
               </td>
-              <td className="px-6 py-4 space-y-1">
+              <td className="px-6 py-4 space-y-1 flex flex-col items-end ">
                 <p className="">{time.formatDate(application?.updated_at)}</p>
-                <p className="text-center">
-                  {time.formatTime(application?.updated_at)}
-                </p>
+                <p className="">{time.formatTime(application?.updated_at)}</p>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+    </div>
+  ) : (
+    <div className="flex items-center justify-center bg-white rounded-[4px] ">
+      <h1>
+        You currently dont have an application, create an application to get
+        started
+      </h1>
     </div>
   );
 };
