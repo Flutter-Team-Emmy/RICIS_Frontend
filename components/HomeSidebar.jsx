@@ -66,15 +66,15 @@ const HomeSidebar = ({ setShowHomeSidebar }) => {
                     </h2>
                 </div>
             </Link>
-            <ul className="py-6 pl-4 text-gray-400 h-full overflow-y-scroll">
+            <ul className="py-6 pl-4 text-gray-400 h-full overflow-y-scroll  ">
                 {dropData.map((data, index) => {
                     const isOpen = selectedId.includes(data.id);
                     return (
-                        <li key={index}>
+                        <li key={index} className='mb-8'>
                             {data.drop ? (
                                 <div
                                     onClick={() => toggleDropDown(data.id)}
-                                    className="flex items-center gap-x-2"
+                                    className="flex items-center gap-x-2 mb-4 "
                                 >
                                     <p className="font-medium ">{data.header}</p>
                                     <Image
@@ -88,10 +88,10 @@ const HomeSidebar = ({ setShowHomeSidebar }) => {
                                     />
                                 </div>
                             ) : (
-                                <p className="font-medium ">{data.header}</p>
+                                <p className="font-medium mb-12">{data.header}</p>
                             )}
                             {isOpen && (
-                                <div className="text-gray-300">
+                                <div className="text-gray-300 flex flex-col space-y-8">
                                     {data.drop?.map((info, idx) => (
                                         <Link key={idx} href={data.header === "Services" ? `/services/${info.id}` : data.header === "Legislation/Rules" ? "/legislation_rules" : data.header === "Information" ? "/information" : info.href}>
                                             {info.name}
@@ -103,7 +103,7 @@ const HomeSidebar = ({ setShowHomeSidebar }) => {
                     );
                 })}
                 {!token && (
-                    <button className="bg-[#3361FF] text-white w-[70%] rounded-md ml-4 mt-6 px-4 py-2">
+                    <button className="bg-[#3361FF] text-white w-[70%] rounded-md ml-4 mt-12 px-4 py-2">
                         Sign In
                     </button>
                 )}

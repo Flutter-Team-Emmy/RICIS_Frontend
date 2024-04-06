@@ -89,8 +89,9 @@ const CreateStaff = () => {
           <div className="space-y-4 w-[60%]">
             <h1 className="font-bold">Roles</h1>
             {form.length > 0 &&
-              form.map((formObj) => (
+              form.map((formObj, i) => (
                 <div
+                  key={i}
                   className="flex gap-x-2 text-sm items-center"
                   onClick={() => {
                     handleCheckboxChange(formObj.id);
