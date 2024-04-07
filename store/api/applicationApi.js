@@ -57,6 +57,14 @@ export const applicationApi = createApi({
       },
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
     }),
+    getAllDrafts: builder.query({
+      query() {
+        return {
+          url: "/application/draft",
+        };
+      },
+      invalidatesTags: [{ type: "Applications", id: "LIST" }],
+    }),
     getForms: builder.query({
       query() {
         return {
@@ -91,6 +99,7 @@ export const {
   useUpdateApplicationMutation,
   useGetSingleApplicationQuery,
   useGetAllApplicationsQuery,
+  useGetAllDraftsQuery,
   useGetFormsQuery,
   useGetSingleFormFieldsQuery,
   useCreateFlutterTransactionMutation

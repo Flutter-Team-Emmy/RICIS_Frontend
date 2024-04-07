@@ -2,7 +2,10 @@
 
 import { SortIcon } from "@/svgs";
 import { usePathname, useRouter } from "next/navigation";
-import { useGetAllApplicationsQuery } from "@/store/api/applicationApi";
+import {
+  useGetAllApplicationsQuery,
+  useGetAllDraftsQuery,
+} from "@/store/api/applicationApi";
 import { time } from "@/utils/time&dates";
 import { cutString } from "@/utils/helpers";
 import TableSkeleton from "./skeleton-loaders/TableSkeleton";
@@ -17,7 +20,10 @@ const tableColumn = [
   "Date Applied",
 ];
 
-const Table = () => {
+const Table = ({ type, drafts }) => {
+  console.log(type, "dsd");
+  console.log(drafts);
+  // console.log(draftData);
   const router = useRouter();
   // const previousRoute = router.asPath;
 
@@ -38,8 +44,15 @@ const Table = () => {
   const openApplicationDetails = (applicationId, applicationStatus) => {
     {
       router.push(
-        `/user/applications/${applicationId}?status=${applicationStatus}&id=${applicationId}`
+        `/user/applications/${applicationId}?status=${applicationStatus}&id=${applicationId}&type=${type}`
       );
+    }
+  };
+
+  const openApplicationDrafts = (formId, userId, data) => {
+    window.localStorage.setItem(userId, JSON.stringify(data));
+    {
+      router.push(`/user/new-application/?form_id=${formId}&user_id=${userId}`);
     }
   };
 
@@ -64,7 +77,13 @@ const Table = () => {
           {applications?.map((application) => (
             <tr
               onClick={() =>
-                openApplicationDetails(application.id, application.status)
+                drafts
+                  ? openApplicationDrafts(
+                      application.formId,
+                      application.user.id,
+                      application.data
+                    )
+                  : openApplicationDetails(application.id, application.status)
               }
               key={application.id}
               className="whitespace-nowrap lg:whitespace-normal bg-white border-b w-full text-sm cursor-pointer hover:opacity-70"
@@ -95,14 +114,16 @@ const Table = () => {
               <td className="px-6 py-4">
                 <span
                   className={`px-2.5 py-1.5 text-xs ${
-                    application?.status === "APPROVED"
+                    application?.isDraft
+                      ? "bg-gray-100 text-gray-500"
+                      : application?.status === "APPROVED"
                       ? "bg-green-100 text-green-700"
                       : application?.status === "PENDING"
                       ? "bg-yellow-100 text-yellow-700"
                       : "bg-red-100 text-red-600"
                   } font-medium rounded-3xl`}
                 >
-                  {application.status}
+                  {application?.isDraft ? "Draft" : application.status}
                 </span>
               </td>
               <td className="px-6 py-4 space-y-1 flex flex-col items-end ">

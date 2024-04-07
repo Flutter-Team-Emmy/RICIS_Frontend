@@ -115,9 +115,13 @@ const HomeSidebar = ({ setShowHomeSidebar }) => {
           );
         })}
         {!token && (
-          <button className="bg-[#3361FF] text-white w-[70%] rounded-md ml-4 mt-12 px-4 py-2">
+          <Link
+            href="/signin"
+            className="bg-[#3361FF] text-white w-[70%] rounded-md ml-4 mt-12 px-4 py-2 inline-block text-center"
+            onClick={() => {}}
+          >
             Sign In
-          </button>
+          </Link>
         )}
       </ul>
     </div>

@@ -19,6 +19,7 @@ const ApplicationPending = ({ data }) => {
   const params = useSearchParams();
   const [reason, setReason] = useState("");
   const applicationId = params.get("id");
+  const type = params.get("type");
   const [btnLoad, setBtnLoad] = useState(false);
   const closeModal = () => {
     setIsOpen(false);
@@ -104,34 +105,40 @@ const ApplicationPending = ({ data }) => {
       </div>
       <div className="bg-white rounded-md pt-8 pl-6 pb-6">
         {data ? (
-          <ApplicationStatus data={data} />
+          <ApplicationStatus data={data} type={type} />
         ) : (
           <div className="flex items-center justify-center h-[40vh] w-full  ">
             <ClipLoader color="#46B038" size={30} />
           </div>
         )}
 
-        <div className="flex gap-x-4 w-full lg:justify-start mt-8">
-          <button
-            className="rounded-md h-[50%] text-sm text-[#fff] p-2  bg-[#46B038]"
-            onClick={() => {
-              setStatus("APPROVED");
-              openModal();
-            }}
-          >
-            Approve
-          </button>
-          <button
-            className="text-sm bg-red-500 h-[50%] text-white py-2 px-4 w-fit rounded-md"
-            onClick={() => {
-              setStatus("REJECTED");
-              openModal();
-              // setSaveBtnLoader(true);
-            }}
-          >
-            {rejectBtnLoader ? <ClipLoader color="#fff" size={25} /> : "Reject"}
-          </button>
-        </div>
+        {!type && (
+          <div className="flex gap-x-4 w-full lg:justify-start mt-8">
+            <button
+              className="rounded-md h-[50%] text-sm text-[#fff] p-2  bg-[#46B038]"
+              onClick={() => {
+                setStatus("APPROVED");
+                openModal();
+              }}
+            >
+              Approve
+            </button>
+            <button
+              className="text-sm bg-red-500 h-[50%] text-white py-2 px-4 w-fit rounded-md"
+              onClick={() => {
+                setStatus("REJECTED");
+                openModal();
+                // setSaveBtnLoader(true);
+              }}
+            >
+              {rejectBtnLoader ? (
+                <ClipLoader color="#fff" size={25} />
+              ) : (
+                "Reject"
+              )}
+            </button>
+          </div>
+        )}
       </div>
 
       {isOpen && (

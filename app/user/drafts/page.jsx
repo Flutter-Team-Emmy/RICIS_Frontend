@@ -2,10 +2,11 @@
 
 import Table from "@/components/Table";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
-import { drafts } from "@/utils/data";
-
+import { applications, drafts } from "@/utils/data";
+import { useGetAllDraftsQuery } from "@/store/api/applicationApi";
 
 const Drafts = () => {
+
   return (
     <DashboardLayout header="Dashboard" icon="">
       <div className="space-y-10 w-full text-sm">
@@ -17,7 +18,7 @@ const Drafts = () => {
             </p>
           </div>
           <div className="w-full bg-white overflow-x-scroll lg:overflow-x-hidden z-[-10] rounded-lg">
-            <Table tableData={drafts} />
+            <Table tableData={drafts} drafts={true} />
           </div>
         </div>
       </div>

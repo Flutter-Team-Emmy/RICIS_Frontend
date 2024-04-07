@@ -47,7 +47,7 @@ const StatsCard = ({
           alt="graph"
         /> */}
 
-        {/* <StatChart
+        <StatChart
           data={{
             amount,
             amount_today: increase,
@@ -56,7 +56,7 @@ const StatsCard = ({
             percentage,
             status,
           }}
-        /> */}
+        />
       </div>
     </div>
   );
