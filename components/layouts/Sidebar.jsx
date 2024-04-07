@@ -72,12 +72,6 @@ const Sidebar = ({
     }
   }, [logout]);
 
-  useEffect(() => {
-    if (!token) {
-      router.replace("/");
-    }
-  }, [token, router]);
-
   return (
     <aside
       className={`h-screen bg-[#1A191B] px-2 fixed top-0 w-[12rem] z-[1000] lg:block ${showSidebar}`}

@@ -6,6 +6,7 @@ import useForm from "@/hooks/useForm";
 import { useGetFormsQuery } from "@/store/api/applicationApi";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import WithAuth from "@/components/withAuth";
 
 const initialFormData = {
   application_type: "",
@@ -90,4 +91,4 @@ const ApplicationDetails = () => {
   );
 };
 
-export default ApplicationDetails;
+export default WithAuth(ApplicationDetails);

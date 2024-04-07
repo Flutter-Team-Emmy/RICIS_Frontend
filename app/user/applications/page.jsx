@@ -5,6 +5,7 @@ import { applications, applicationsTabs } from "@/utils/data";
 import Table from "@/components/Table";
 import { Suspense } from "react";
 import TabSwitcher from "./TabSwitcher";
+import WithAuth from "@/components/withAuth";
 
 const Applications = () => {
   return (
@@ -20,4 +21,4 @@ const Applications = () => {
   );
 };
 
-export default Applications;
+export default WithAuth(Applications);

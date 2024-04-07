@@ -2,6 +2,7 @@
 
 import { Suspense } from "react";
 import ApplicationFormDetailsSuspenseBoundary from "./ApplicationFormDetailsSuspenseBoundary";
+import WithAuth from "@/components/withAuth";
 
 const ApplicationFormDetails = () => {
   return (
@@ -11,4 +12,4 @@ const ApplicationFormDetails = () => {
   );
 };
 
-export default ApplicationFormDetails;
+export default WithAuth(ApplicationFormDetails);

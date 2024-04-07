@@ -21,7 +21,7 @@ const Btn = ({
       {loading ? (
         <div className="flex items-center gap-4">
           <ClipLoader color="#fff" size={20} />
-          <span className="text-white text-sm">{loadingMsg}</span>
+          <span className="text-white">{loadingMsg}</span>
         </div>
       ) : (
         <h1

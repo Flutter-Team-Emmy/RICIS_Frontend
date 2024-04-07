@@ -5,7 +5,8 @@ import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
- 
+import ProgressBar from "@/components/ProgressBar";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,16 +19,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${inter.className} bg-gray-100`}>
+        <ProgressBar />
         <Provider store={store}>
-            <ToastContainer
-              position="top-center"
-              pauseOnHover={false}
-              closeOnClick
-              closeButton={true}
-            />
-            <div>
-              <div>{children}</div>
-            </div>
+          <ToastContainer
+            position="top-center"
+            pauseOnHover={false}
+            closeOnClick
+            closeButton={true}
+          />
+          <div>
+            <div>{children}</div>
+          </div>
         </Provider>
       </body>
     </html>

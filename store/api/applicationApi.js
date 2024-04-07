@@ -73,6 +73,16 @@ export const applicationApi = createApi({
       },
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
     }),
+    createFlutterTransaction: builder.mutation({
+      query(payload) {
+        return {
+          url: "/transactions",
+          method: "POST",
+          body: payload,
+        };
+      },
+      invalidatesTags: [{ type: "Applications", id: "LIST" }],
+    }),
     deleteApplication: builder.mutation({
       query(userId) {
         return {
@@ -93,4 +103,5 @@ export const {
   useDeleteApplicationMutation,
   useGetFormsQuery,
   useGetSingleFormFieldsQuery,
+  useCreateFlutterTransactionMutation
 } = applicationApi;

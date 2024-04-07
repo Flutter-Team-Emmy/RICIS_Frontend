@@ -11,6 +11,7 @@ import { normalizeErrors } from "@/utils/helpers";
 import { validator } from "@/utils/validator";
 import { toast } from "react-toastify";
 import TextFieldSkeleton from "@/components/skeleton-loaders/TextFieldSkeleton";
+import WithAuth from "@/components/withAuth";
 
 const InitialData = {
   first_name: "",
@@ -114,4 +115,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default WithAuth(Profile);

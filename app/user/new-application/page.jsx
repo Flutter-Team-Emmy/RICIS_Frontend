@@ -2,6 +2,7 @@
 import { Suspense } from "react";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import ApplicationForm from "./ApplicationForm";
+import WithAuth from "@/components/withAuth";
 
 const pagination = "<1/12 Pages >";
 
@@ -21,4 +22,4 @@ const NewApplication = () => {
   );
 };
 
-export default NewApplication;
+export default WithAuth(NewApplication);

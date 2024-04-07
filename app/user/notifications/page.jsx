@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
+import WithAuth from "@/components/withAuth";
 
 const notifications = ["Thanks! it's amazing. however, I cannot open this and 'cleverly' which was also just released by the same author, on sketch 63.1. I get a message thatsays that the file...",
     "  Thanks! it's amazing. however, I cannot open this and 'cleverly' which was also just released by the same author, on sketch 63.1. I get a message thatsays that the file...",
@@ -35,4 +36,4 @@ const NotificationsAdmin = () => {
     )
 };
 
-export default NotificationsAdmin;
+export default WithAuth(NotificationsAdmin);

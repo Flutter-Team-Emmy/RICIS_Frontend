@@ -19,10 +19,10 @@ const Modal = ({
     return type === "pending" ? (
       <div>
         <div
-          className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center modal-content"
+          className="fixed inset-0 bg-[rgb(0,0,0,0.8)] z-[9999] bg-opacity-50 flex items-center justify-center modal-content"
           onClick={handleModalClick}
         >
-          <div className="bg-white p-4 rounded shadow-md md:w-[500px]">
+          <div className="bg-white p-4 rounded shadow-md md:w-[500px] z-[9999]">
             <h1 className="text-black capitalize text-center mb-4 text-lg font-bold">
               {text} Application
             </h1>
@@ -32,12 +32,12 @@ const Modal = ({
             </p>
 
             {text === "reject" && (
-              <div className='mt-8  '>
+              <div className="mt-8  ">
                 <h2>Reason:</h2>
                 <textarea
-                className='border border-gray-300 rounded-[12px] w-full outline-none p-4 mt-2'
+                  className="border border-gray-300 rounded-[12px] w-full outline-none p-4 mt-2"
                   rows={5}
-                  placeholder='Why are you rejecting this application?'
+                  placeholder="Why are you rejecting this application?"
                   cols={10}
                   onChange={(e) => {
                     setReason(e.target.value);

@@ -10,6 +10,8 @@ import Link from "next/link";
 import { getToken } from "@/utils/authHelpers";
 import { baseUrl } from "@/lib/configs";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import WithAuth from "@/components/withAuth";
 // import { applications } from "@/utils/data";
 // import TableSkeleton from "@/components/skeleton-loaders/TableSkeleton";
 // import useForm from "@/hooks/useForm";
@@ -26,10 +28,11 @@ import axios from "axios";
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
+  const router = useRouter();
+  const token = getToken();
   // hello george, i dont understand the way u handle ur api, so i decided to do something over here
   const getApplications = async () => {
     try {
-      const token = getToken();
       const res = await axios.get(`${baseUrl}/application/stats`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -92,7 +95,7 @@ const Dashboard = () => {
                 stat.percentage === null
                   ? 0
                   : Number(stat.percentage.toFixed(2))
-              }              
+              }
               increase={stat.daily_stats[0]}
               dailyStat={Object.values(stat.daily_stats)}
               colorCode={stat.chart_color}
@@ -106,4 +109,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default WithAuth(Dashboard);
