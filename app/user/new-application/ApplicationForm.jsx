@@ -42,6 +42,7 @@ const ApplicationForm = () => {
       data: newApplication,
     },
   ] = useAddNewApplicationMutation();
+  const application_id = newApplication?.data?.application?.id;
 
   let InitialData = {};
   const [images, setImages] = useState([]);
@@ -143,11 +144,11 @@ const ApplicationForm = () => {
     return files;
   };
 
-  useEffect(() => {
-    if (isApplicationSuccess) {
-      router.push("/user/applications");
-    }
-  }, [router, isApplicationSuccess]);
+  // useEffect(() => {
+  //   if (isApplicationSuccess) {
+  //     router.push("/user/applications");
+  //   }
+  // }, [router, isApplicationSuccess]);
 
   console.log(applicationError);
 
@@ -161,7 +162,7 @@ const ApplicationForm = () => {
         autoClose: 2000,
       });
     }
-  }, [isApplicationSuccess, applicationError, InitialData, setFormData]);
+  }, [isApplicationSuccess, applicationError]);
 
   // get inputfields for currentpage
   const currentPage = fields?.filter((field) => {
@@ -173,25 +174,31 @@ const ApplicationForm = () => {
   });
 
   console.log(data);
+  // console.log(newApplication?.data?.application?.id);
 
   return (
     <>
-    <div className="w-full">
-      <div className="flex justify-between items-center min-w-[95%] m-auto pb-8">
-        <div className="">
-          <h1 className="text-black font-bold">NEW APPLICATION</h1>
-          <p className="text-gray-600 text-sm">
-            Please fill all information correctly
-          </p>
+      {isApplicationSuccess && <PaymentModal application_id={application_id} />}
+      <div className="w-full">
+        <div className="flex justify-between items-center min-w-[95%] m-auto pb-8">
+          <div className="">
+            <h1 className="text-black font-bold">NEW APPLICATION</h1>
+            <p className="text-gray-600 text-sm">
+              Please fill all information correctly
+            </p>
+          </div>
+          <Pagination
+            totalPages={total_pages}
+            form_Id={formId}
+            currentPageNum={currentPageNum}
+          />
         </div>
-        <Pagination totalPages={total_pages} />
-      </div>
-      <div className="bg-white w-fit  min-w-[95%] m-auto shadow-md rounded-md space-y-8 py-6 px-6">
-        <h1 className="text-[#46B038] font-bold">APPLICATION DETAILS</h1>
-        <form className="">
+        <div className="bg-white w-fit  min-w-[95%] m-auto shadow-md rounded-md space-y-8 py-6 px-6">
+          <h1 className="text-[#46B038] font-bold">APPLICATION DETAILS</h1>
+          <form className="">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-3 md:grid-cols-2 align-items-center gap-y-8 w-full">
               {isSuccess &&
-                fields?.map((field, i) => (
+                currentPage?.map((field, i) => (
                   <div key={field.id} className="w-full">
                     <label
                       className="block mb-3 font-medium max-w-[17rem]"
