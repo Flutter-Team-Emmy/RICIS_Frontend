@@ -25,6 +25,7 @@ import axios from "axios";
 // };
 
 const Dashboard = () => {
+  
   const [data, setData] = useState([]);
   // hello george, i dont understand the way u handle ur api, so i decided to do something over here
   const getApplications = async () => {
