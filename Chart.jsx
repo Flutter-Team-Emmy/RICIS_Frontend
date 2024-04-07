@@ -1,6 +1,6 @@
 // StatChart.js
 import { useEffect, useRef } from "react";
-// import Chart from "chart.js/auto";
+import Chart from "chart.js/auto";
 
 const StatChart = ({ data }) => {
   const chartRef = useRef(null);
@@ -61,7 +61,7 @@ const StatChart = ({ data }) => {
               beginAtZero: true,
             },
           },
-          plugins: {
+        plugins: {
             legend: {
               display: false, // Hide legend
             },

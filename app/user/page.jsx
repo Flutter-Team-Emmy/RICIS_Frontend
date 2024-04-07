@@ -27,7 +27,6 @@ import WithAuth from "@/components/withAuth";
 // };
 
 const Dashboard = () => {
-  
   const [data, setData] = useState([]);
   const router = useRouter();
   const token = getToken();
@@ -104,7 +103,7 @@ const Dashboard = () => {
             />
           ))}
         </div>
-        <Table />
+        <Table type={true} />
       </div>
     </DashboardLayout>
   );
