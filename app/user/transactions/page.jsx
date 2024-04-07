@@ -1,7 +1,10 @@
+"use client"
+
 import InputField from "@/app/user/new-application/InputField";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { SearchIcon } from "@/svgs";
 import TransactionsTable from "@/components/TransactionsTable";
+import WithAuth from "@/components/withAuth";
 
 const Transactions = () => {
   return (
@@ -33,4 +36,4 @@ const Transactions = () => {
   );
 };
 
-export default Transactions;
+export default WithAuth(Transactions);

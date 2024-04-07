@@ -1,3 +1,5 @@
+"use client"
+
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { SearchIcon } from "@/svgs";
 import Table from "./Table";

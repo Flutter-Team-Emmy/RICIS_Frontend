@@ -4,9 +4,9 @@ import Table from "@/components/Table";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { applications, drafts } from "@/utils/data";
 import { useGetAllDraftsQuery } from "@/store/api/applicationApi";
+import WithAuth from "@/components/withAuth";
 
 const Drafts = () => {
-
   return (
     <DashboardLayout header="Dashboard" icon="">
       <div className="space-y-10 w-full text-sm">
@@ -26,4 +26,4 @@ const Drafts = () => {
   );
 };
 
-export default Drafts;
+export default WithAuth(Drafts);
