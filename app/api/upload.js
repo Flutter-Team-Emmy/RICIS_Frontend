@@ -13,12 +13,15 @@ cloudinary.config({
 export const POST = async (req) => {
   if (req.method === "POST") {
     const fileStr = req.body.file; // Assuming the image is sent as a base64 string from the frontend
-
+    console.log(fileStr);
     try {
       // Upload the image to Cloudinary
-      const uploadResponse = await cloudinary.uploader.upload(fileStr, {
-        upload_preset: "application_files", // Set this up in your Cloudinary settings
-      });
+      const uploadResponse = await cloudinary.uploader.upload(
+        { file: fileStr },
+        {
+          upload_preset: "application_files", // Set this up in your Cloudinary settings
+        }
+      );
 
       // Send the uploaded image URL back to the frontend
       res.status(200).json({ imageURL: uploadResponse.secure_url });
