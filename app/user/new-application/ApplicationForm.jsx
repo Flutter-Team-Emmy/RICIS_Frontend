@@ -32,6 +32,7 @@ const ApplicationForm = () => {
   const { isLoading, isSuccess, isError, error, data } =
     useGetSingleFormFieldsQuery(formId);
   const [fields, setFields] = useState([]);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const localStorageFields = userId
@@ -84,9 +85,10 @@ const ApplicationForm = () => {
   const { formData, setFormData, handleChange } = useForm(InitialData);
   console.log(formData);
 
-  const invalidFields = validator.whiteSpaces(formData);
+  const allfieldsNotFilled = validator.whiteSpaces(formData);
 
-  const createNewApplication = async (draft) => {
+
+  const createNewApplication = async () => {
     const files = await handleUpload();
     console.log(files);
     // Assuming formData is an object and files is an array of objects
@@ -105,11 +107,11 @@ const ApplicationForm = () => {
       { ...formData }
     );
 
-    if (invalidFields) {
-      toast.warning("Fill in all fields correctly!", { autoClose: 2000 });
-      return;
-    }
-    const payload = { form_id: formId, as_draft: draft, data: forms };
+    const payload = {
+      form_id: formId,
+      as_draft: allfieldsNotFilled,
+      data: forms,
+    };
     console.log(payload);
     await addNewApplication(payload);
   };
@@ -156,12 +158,6 @@ const ApplicationForm = () => {
     return files;
   };
 
-  // useEffect(() => {
-  //   if (isApplicationSuccess) {
-  //     router.push("/user/applications");
-  //   }
-  // }, [router, isApplicationSuccess]);
-
   console.log(applicationError);
 
   useEffect(() => {
@@ -170,9 +166,19 @@ const ApplicationForm = () => {
       toast.error(err, { autoClose: 2000 });
     }
     if (isApplicationSuccess) {
-      toast.success("Successfully created application form!", {
-        autoClose: 2000,
-      });
+      toast.success(
+        `${
+          allfieldsNotFilled
+            ? "Saved form to drafts"
+            : "Successfully created form!"
+        }`,
+        {
+          autoClose: 2000,
+        }
+      );
+      if (allfieldsNotFilled) {
+        router.push("/user/drafts");
+      }
     }
   }, [isApplicationSuccess, applicationError]);
 
@@ -185,12 +191,21 @@ const ApplicationForm = () => {
     }
   });
 
-  console.log(data);
-  // console.log(newApplication?.data?.application?.id);
+  useEffect(() => {
+    if (allfieldsNotFilled) {
+      setIsVisible(false);
+    }
+    if (!allfieldsNotFilled) {
+      setIsVisible(true);
+    }
+  }, [allfieldsNotFilled]);
+
 
   return (
     <>
-      {isApplicationSuccess && <PaymentModal application_id={application_id} />}
+      {isVisible && isApplicationSuccess && (
+        <PaymentModal application_id={application_id} />
+      )}
       <div className="w-full">
         <div className="flex justify-between items-center min-w-[95%] m-auto pb-8">
           <div className="">
@@ -478,22 +493,22 @@ const ApplicationForm = () => {
             <div className="flex gap-x-2 mt-8">
               <Btn
                 text="save as daft"
-                loadingMsg="saving to draft..."
-                disabled={invalidFields}
-                // loading={isApplicationLoading}
+                loadingMsg="saving to drafts..."
+                disabled={!allfieldsNotFilled}
+                loading={allfieldsNotFilled && isApplicationLoading}
                 handleClick={() => {
-                  createNewApplication(true);
+                  createNewApplication();
                 }}
                 bgColorClass="bg-[#46B038]"
               />
               <Btn
                 text="save and continue"
                 loadingMsg="submitting..."
-                loading={isApplicationLoading}
+                loading={!allfieldsNotFilled && isApplicationLoading}
                 handleClick={() => {
-                  createNewApplication(false);
+                  createNewApplication();
                 }}
-                disabled={invalidFields}
+                disabled={allfieldsNotFilled}
                 bgColorClass="bg-[#46B038]"
               />
             </div>

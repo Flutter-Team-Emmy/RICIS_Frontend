@@ -8,7 +8,7 @@ import {
 } from "@/store/api/applicationApi";
 import { time } from "@/utils/time&dates";
 import { cutString } from "@/utils/helpers";
-import TableSkeleton from "./skeleton-loaders/TableSkeleton";
+import TableSkeleton from "@/components/skeleton-loaders/TableSkeleton";
 import { useEffect } from "react";
 
 const tableColumn = [
@@ -24,18 +24,18 @@ const Table = () => {
   const router = useRouter();
 
   const { isLoading, isSuccess, isError, error, data } =
-    useGetAllApplicationsQuery();
+    useGetAllDraftsQuery();
 
-  const applications = data?.data.applications;
-  console.log(data);
+  const drafts = data?.data.application;
+//   console.log(data);
 
-  const openApplicationDetails = (applicationId, applicationStatus) => {
-    {
-      router.push(
-        `/user/applications/${applicationId}?status=${applicationStatus}&id=${applicationId}`
-      );
-    }
-  };
+//   const openApplicationDetails = (applicationId, applicationStatus) => {
+//     {
+//       router.push(
+//         `/user/applications/${applicationId}?status=${applicationStatus}&id=${applicationId}`
+//       );
+//     }
+//   };
 
   // const openApplicationDrafts = (formId, userId, data) => {
   //   window.localStorage.setItem(userId, JSON.stringify(data));
@@ -46,7 +46,7 @@ const Table = () => {
 
   if (isLoading) return <TableSkeleton />;
 
-  return applications?.length > 0 ? (
+  return drafts?.length > 0 ? (
     <div className="relative overflow-x-auto lg:overflow-x-hidden shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead className="text-sm text-gray-500 uppercas bg-gray-50">
@@ -62,11 +62,11 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {applications?.map((application) => (
+          {drafts?.map((application) => (
             <tr
-              onClick={() =>
-                openApplicationDetails(application.id, application.status)
-              }
+            //   onClick={() =>
+            //     openApplicationDetails(application.id, application.status)
+            //   }
               key={application.id}
               className="whitespace-nowrap lg:whitespace-normal bg-white border-b w-full text-sm cursor-pointer hover:opacity-70"
             >
@@ -94,19 +94,7 @@ const Table = () => {
               </td>
               <td className="px-6 py-4 w-80">{application?.form?.name}</td>
               <td className="px-6 py-4">
-                <span
-                  className={`px-2.5 py-1.5 text-xs ${
-                    application?.isDraft
-                      ? "bg-gray-100 text-gray-500"
-                      : application?.status === "APPROVED"
-                      ? "bg-green-100 text-green-700"
-                      : application?.status === "PENDING"
-                      ? "bg-yellow-100 text-yellow-700"
-                      : "bg-red-100 text-red-600"
-                  } font-medium rounded-3xl`}
-                >
-                  {application?.isDraft ? "Draft" : application.status}
-                </span>
+                <span className={`px-2.5 py-1.5 text-sm bg-gray-200 rounded-3xl py-1 px-3`}>Draft</span>
               </td>
               <td className="px-6 py-4 space-y-1 flex flex-col items-end ">
                 <p className="">{time.formatDate(application?.updated_at)}</p>

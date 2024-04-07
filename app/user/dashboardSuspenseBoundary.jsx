@@ -10,7 +10,7 @@ import Link from "next/link";
 import { getToken } from "@/utils/authHelpers";
 import { baseUrl } from "@/lib/configs";
 import axios from "axios";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 
 const DashboardSuspenseBoundary = () => {
@@ -18,6 +18,8 @@ const DashboardSuspenseBoundary = () => {
   const router = useRouter();
   const token = getToken();
   const param = useSearchParams();
+  const pathname = usePathname();
+  const isAdmin = pathname.includes("admin");
   // const transactionStatus = param.get("transaction_status");
   // hello george, i dont understand the way u handle ur api, so i decided to do something over here
   const getApplications = async () => {
@@ -62,13 +64,15 @@ const DashboardSuspenseBoundary = () => {
               Here is a preview of your activities and information
             </p>
           </div>
-          <Link
-            href="user/application-details"
-            className="bg-blue-700 mt-6 w-[50%] lg:w-[20%] px-4 py-2.5 flex items-center gap-2 rounded-md text-white hover:bg-blue-600"
-          >
-            <span className="">{AddCircleIcon}</span>
-            <span className="">New Application</span>
-          </Link>
+          {!isAdmin && (
+            <Link
+              href="user/application-details"
+              className="bg-blue-700 mt-6 w-[50%] lg:w-[20%] px-4 py-2.5 flex items-center gap-2 rounded-md text-white hover:bg-blue-600"
+            >
+              <span className="">{AddCircleIcon}</span>
+              <span className="">New Application</span>
+            </Link>
+          )}
         </div>
         <div className="flex w-full gap-6 ">
           {data?.map((stat) => (

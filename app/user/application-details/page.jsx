@@ -27,7 +27,9 @@ const ApplicationDetails = () => {
       toast("Select a field to proceed!", { autoClose: 3000 });
       return;
     }
-    router.push(`/user/new-application/?form_id=${selectedFormId}`);
+    router.push(
+      `/user/new-application/?form_id=${selectedFormId}`
+    );
   };
 
   return (

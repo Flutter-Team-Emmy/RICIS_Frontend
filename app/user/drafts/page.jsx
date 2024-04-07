@@ -1,6 +1,6 @@
 "use client";
 
-import Table from "@/components/Table";
+import Table from "./Table";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { applications, drafts } from "@/utils/data";
 import { useGetAllDraftsQuery } from "@/store/api/applicationApi";
@@ -18,7 +18,7 @@ const Drafts = () => {
             </p>
           </div>
           <div className="w-full bg-white overflow-x-scroll lg:overflow-x-hidden z-[-10] rounded-lg">
-            <Table tableData={drafts} drafts={true} />
+            <Table />
           </div>
         </div>
       </div>
