@@ -32,7 +32,6 @@ const Sidebar = ({
   const role = data?.data.role;
   const currentUser = data?.data.user;
   const token = getToken();
-  console.log(role);
 
   const openProfilePage = () => {
     if (role === "ADMIN" || role === "STAFF") {
@@ -130,9 +129,13 @@ const Sidebar = ({
             <Avatar currentUser={currentUser} role={role} />
             <div className>
               <p className="text-sm">
-                { role !== "USER" ? currentUser?.name : currentUser?.first_name + " " + currentUser?.last_name }
+                {role !== "USER"
+                  ? currentUser?.name
+                  : currentUser?.first_name + " " + currentUser?.last_name}
               </p>
-              <p className="text-xs text-gray-200">Applicant</p>
+              <p className="text-xs text-gray-200">
+                {role === "ADMIN" ? "Admin" : "Applicant"}
+              </p>
             </div>
           </div>
         )}

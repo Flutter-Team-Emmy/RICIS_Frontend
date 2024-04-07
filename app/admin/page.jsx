@@ -11,6 +11,7 @@ import axios from "axios";
 import { baseUrl } from "@/lib/configs";
 import { useEffect, useState } from "react";
 import { getToken } from "@/utils/authHelpers";
+import WithAuth from "@/components/withAuth";
 
 const Admin = () => {
   const [data, setData] = useState([]);
@@ -68,4 +69,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default WithAuth(Admin);

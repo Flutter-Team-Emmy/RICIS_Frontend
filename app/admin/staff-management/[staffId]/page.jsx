@@ -1,6 +1,7 @@
 "use client";
 import { stats } from "@/app/user/dashboard/stats";
 import Modal from "@/components/Modal";
+import WithAuth from "@/components/withAuth";
 import { baseUrl } from "@/lib/configs";
 import { getToken } from "@/utils/authHelpers";
 import { formatDate } from "@/utils/helpers";
@@ -250,4 +251,4 @@ const StaffProfile = () => {
   );
 };
 
-export default StaffProfile;
+export default WithAuth(StaffProfile);

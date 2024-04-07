@@ -8,29 +8,32 @@ import { cutString } from "@/utils/helpers";
 import TableSkeleton from "./skeleton-loaders/TableSkeleton";
 import { useEffect } from "react";
 
-const drafttableHeadData = [
+const tableColumn = [
   "Ref No",
-  "Company Details",
+  "Applicant Name",
+  "Payment Status",
+  "Application Name",
   "Status",
-  "Date started",
+  "Date Applied",
 ];
 
 const Table = () => {
   const router = useRouter();
-  const previousRoute = router.asPath;
+  // const previousRoute = router.asPath;
 
-  const previousRouteName = previousRoute?.split("/").pop();
+  // const previousRouteName = previousRoute?.split("/").pop();
 
-  const { isLoading, isSuccess, isError, error, data, refetch } =
+  const { isLoading, isSuccess, isError, error, data } =
     useGetAllApplicationsQuery();
 
-  useEffect(() => {
-    if (previousRouteName?.includes("new-application")) {
-      refetch();
-    }
-  }, [previousRouteName, refetch]);
+  // useEffect(() => {
+  //   if (previousRouteName?.includes("new-application")) {
+  //     refetch();
+  //   }
+  // }, [previousRouteName]);
 
   const applications = data?.data.applications;
+  console.log(data);
 
   const openApplicationDetails = (applicationId, applicationStatus) => {
     {
@@ -42,38 +45,19 @@ const Table = () => {
 
   if (isLoading) return <TableSkeleton />;
 
-  return applications.length > 0 ? (
+  return applications?.length > 0 ? (
     <div className="relative overflow-x-auto lg:overflow-x-hidden shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead className="text-sm text-gray-500 uppercas bg-gray-50">
           <tr className="whitespace-nowrap">
-            <th scope="col" className="px-6 py-3">
-              Ref No
-            </th>
-            <th scope="col" className="px-6 py-3">
-              <div className="flex items-center">
-                Applicant Name
-                <a href="#">{SortIcon}</a>
-              </div>
-            </th>
-            <th scope="col" className="px-6 py-3">
-              <div className="flex items-center">
-                Application
-                <a href="#">{SortIcon}</a>
-              </div>
-            </th>
-            <th scope="col" className="px-6 py-3">
-              <div className="flex items-center">
-                Status
-                <a href="#">{SortIcon}</a>
-              </div>
-            </th>
-            <th scope="col" className="px-6 py-3">
-              <div className="flex items-center">
-                Date Applied
-                <a href="#">{SortIcon}</a>
-              </div>
-            </th>
+            {tableColumn.map((column) => (
+              <th key={column} scope="col" className="px-6 py-3">
+                <div className="flex items-center">
+                  {column}
+                  <a href="#">{SortIcon}</a>
+                </div>
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
@@ -95,6 +79,17 @@ const Table = () => {
                 {application?.user?.first_name +
                   " " +
                   application?.user?.last_name}
+              </td>
+              <td className="px-6 py-4">
+                <span
+                  className={`py-1.5 rounded-3xl ${
+                    application?.transactions?.length === 0
+                      ? "bg-red-100 text-red-600 px-3"
+                      : "bg-green-100 text-green-700 px-6"
+                  } `}
+                >
+                  {application?.transactions?.length === 0 ? "Unpaid" : "Paid"}
+                </span>
               </td>
               <td className="px-6 py-4 w-80">{application?.form?.name}</td>
               <td className="px-6 py-4">

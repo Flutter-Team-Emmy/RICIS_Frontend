@@ -1,4 +1,5 @@
 "use client";
+import WithAuth from "@/components/withAuth";
 import { baseUrl } from "@/lib/configs";
 import { getToken } from "@/utils/authHelpers";
 import axios from "axios";
@@ -63,7 +64,7 @@ const CreateStaff = () => {
     } catch (error) {
       setBtnLoad(false);
       console.log(error);
-      toast.error(error.response.data.error.message,  { autoClose: 2000 });
+      toast.error(error.response.data.error.message, { autoClose: 2000 });
     }
   };
 
@@ -190,4 +191,4 @@ const CreateStaff = () => {
   );
 };
 
-export default CreateStaff;
+export default WithAuth(CreateStaff);

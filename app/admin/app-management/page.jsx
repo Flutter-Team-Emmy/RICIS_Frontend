@@ -1,10 +1,9 @@
 "use client";
 import Table from "@/components/Table";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
-import { useEffect } from "react";
+import WithAuth from "@/components/withAuth";
 
-const AppManagement = () => {  
-
+const AppManagement = () => {
   return (
     <DashboardLayout header="Admin">
       <div className="w-full pb-8">
@@ -18,4 +17,4 @@ const AppManagement = () => {
   );
 };
 
-export default AppManagement;
+export default WithAuth(AppManagement);

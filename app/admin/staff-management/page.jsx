@@ -3,10 +3,9 @@ import { SearchIcon } from "@/svgs";
 import Table from "./Table";
 import Link from "next/link";
 import { getToken } from "@/utils/authHelpers";
+import WithAuth from "@/components/withAuth";
 
 const StaffManagement = () => {
-  
-
   return (
     <DashboardLayout header="Admin">
       <div className="lg:flex lg:justify-between w-[95%] pb-8">
@@ -49,4 +48,4 @@ const StaffManagement = () => {
   );
 };
 
-export default StaffManagement;
+export default WithAuth(StaffManagement);

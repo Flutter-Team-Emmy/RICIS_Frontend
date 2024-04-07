@@ -3,10 +3,10 @@ export const capitalizeFirstLetter = (word) => {
 };
 
 export const cutString = (str, length) => {
-  if (str.length <= length) {
+  if (str?.length <= length) {
     return str;
   } else {
-    return str.substring(0, length);
+    return str?.substring(0, length);
   }
 };
 

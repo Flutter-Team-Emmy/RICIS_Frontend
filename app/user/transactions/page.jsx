@@ -2,14 +2,15 @@ import InputField from "@/app/user/new-application/InputField";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { SearchIcon } from "@/svgs";
 import TransactionsTable from "@/components/TransactionsTable";
-import WithAuth from "@/components/withAuth";
 
-const FinancialManagement = () => {
+const Transactions = () => {
   return (
-    <DashboardLayout header="Admin">
+    <DashboardLayout header="Transactions">
       <div className="w-full pb-8">
         <h1 className="text-black font-bold text-2xl">Financial Management</h1>
-        <p className="text-gray-600 text-sm">view all users transactions</p>
+        <p className="text-gray-600 text-sm">
+          view all your previous transactions
+        </p>
       </div>
       <div className="bg-white rounded-lg">
         <h1 className="text-black font-bold py-6 pl-6">Payment Information</h1>
@@ -32,4 +33,4 @@ const FinancialManagement = () => {
   );
 };
 
-export default WithAuth(FinancialManagement);
+export default Transactions;

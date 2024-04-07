@@ -2,6 +2,7 @@
 
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import TextFieldSkeleton from "@/components/skeleton-loaders/TextFieldSkeleton";
+import WithAuth from "@/components/withAuth";
 import { useGetUserQuery } from "@/store/api/userApi";
 import { time } from "@/utils/time&dates";
 import { useParams, useSearchParams } from "next/navigation";
@@ -61,4 +62,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default WithAuth(UserProfile);

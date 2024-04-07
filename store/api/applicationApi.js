@@ -83,15 +83,6 @@ export const applicationApi = createApi({
       },
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
     }),
-    deleteApplication: builder.mutation({
-      query(userId) {
-        return {
-          url: `/users/${userId}`,
-          method: "DELETE",
-        };
-      },
-      invalidatesTags: [{ type: "Applications", id: "LIST" }],
-    }),
   }),
 });
 
@@ -100,7 +91,6 @@ export const {
   useUpdateApplicationMutation,
   useGetSingleApplicationQuery,
   useGetAllApplicationsQuery,
-  useDeleteApplicationMutation,
   useGetFormsQuery,
   useGetSingleFormFieldsQuery,
   useCreateFlutterTransactionMutation

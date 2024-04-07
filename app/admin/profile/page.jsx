@@ -12,6 +12,7 @@ import { validator } from "@/utils/validator";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import TextFieldSkeleton from "@/components/skeleton-loaders/TextFieldSkeleton";
+import WithAuth from "@/components/withAuth";
 
 const InitialData = {
   name: "",
@@ -109,4 +110,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default WithAuth(Profile);

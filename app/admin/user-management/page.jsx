@@ -6,6 +6,7 @@ import { useGetAllUsersQuery } from "@/store/api/userApi";
 import TableSkeleton from "@/components/skeleton-loaders/TableSkeleton";
 import Pagination from "./Pagination";
 import { useState } from "react";
+import WithAuth from "@/components/withAuth";
 
 const UserManagement = () => {
   const [page, setPage] = useState(1);
@@ -33,4 +34,4 @@ const UserManagement = () => {
   );
 };
 
-export default UserManagement;
+export default WithAuth(UserManagement);
