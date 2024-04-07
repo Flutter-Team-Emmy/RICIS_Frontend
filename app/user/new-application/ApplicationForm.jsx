@@ -51,6 +51,7 @@ const ApplicationForm = () => {
       data: newApplication,
     },
   ] = useAddNewApplicationMutation();
+  const application_id = newApplication?.data?.application?.id;
 
   let InitialData = {};
   const [images, setImages] = useState([]);
@@ -155,11 +156,11 @@ const ApplicationForm = () => {
     return files;
   };
 
-  useEffect(() => {
-    if (isApplicationSuccess) {
-      window.location.href = "/user/applications";
-    }
-  }, [router, isApplicationSuccess]);
+  // useEffect(() => {
+  //   if (isApplicationSuccess) {
+  //     router.push("/user/applications");
+  //   }
+  // }, [router, isApplicationSuccess]);
 
   console.log(applicationError);
 
@@ -173,7 +174,7 @@ const ApplicationForm = () => {
         autoClose: 2000,
       });
     }
-  }, [isApplicationSuccess, applicationError, InitialData, setFormData]);
+  }, [isApplicationSuccess, applicationError]);
 
   // get inputfields for currentpage
   const currentPage = fields?.filter((field) => {
@@ -185,9 +186,11 @@ const ApplicationForm = () => {
   });
 
   console.log(data);
+  // console.log(newApplication?.data?.application?.id);
 
   return (
     <>
+      {isApplicationSuccess && <PaymentModal application_id={application_id} />}
       <div className="w-full">
         <div className="flex justify-between items-center min-w-[95%] m-auto pb-8">
           <div className="">
@@ -196,47 +199,110 @@ const ApplicationForm = () => {
               Please fill all information correctly
             </p>
           </div>
-          <Pagination totalPages={total_pages} />
+          <Pagination
+            totalPages={total_pages}
+            form_Id={formId}
+            currentPageNum={currentPageNum}
+          />
         </div>
         <div className="bg-white w-fit  min-w-[95%] m-auto shadow-md rounded-md space-y-8 py-6 px-6">
           <h1 className="text-[#46B038] font-bold">APPLICATION DETAILS</h1>
           <form className="">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-3 md:grid-cols-2 align-items-center gap-y-8 w-full">
-              {isSuccess &&
-                fields?.map((field, i) => (
-                  <div key={field.id} className="w-full">
-                    <label
-                      className="block mb-3 font-medium max-w-[17rem]"
-                      htmlFor={userId ? field.form_field.name : field.name}
-                    >
-                      {capitalizeFirstLetter(
-                        userId ? field.form_field.name : field.name
-                      )}
-                    </label>
-                    {userId ? (
-                      field.form_field.type === "LONG_TEXT" ? (
+              {isSuccess && userId
+                ? fields?.map((field, i) => (
+                    <div key={field.id} className="w-full">
+                      <label
+                        className="block mb-3 font-medium max-w-[17rem]"
+                        htmlFor={userId ? field.form_field.name : field.name}
+                      >
+                        {capitalizeFirstLetter(
+                          userId ? field.form_field.name : field.name
+                        )}
+                      </label>
+                      {userId ? (
+                        field.form_field.type === "LONG_TEXT" ? (
+                          <textarea
+                            className="border boder-gray-200 outline-none w-full p-2 "
+                            row={10}
+                            onChange={handleChange}
+                            name={field.form_field.name}
+                            value={formData[field.form_field.name]}
+                            placeholder={`Enter ${field.form_field.name}`}
+                          ></textarea>
+                        ) : field.form_field.type === "FILE" ? (
+                          <div className="flex items-center">
+                            <input
+                              id={field.form_field.id}
+                              name={field.form_field.name}
+                              type="file"
+                              ref={formFile}
+                              onChange={(e) => {
+                                handleImage(e, field.form_field.name);
+                                const newFiles = [
+                                  ...fileNames,
+                                  {
+                                    name: field.form_field.name,
+
+                                    value: e.target.files[0].name,
+                                  },
+                                ];
+
+                                setFileNames(newFiles);
+
+                                handleChange(e);
+                              }}
+                              className="hidden"
+                            />
+                            <label
+                              htmlFor={field.form_field.id}
+                              className="text-sm p-2 min-w-[120px] rounded-full bg-gray-100 text-gray-500 cursor-pointer w-fit text-center "
+                            >
+                              Choose a file
+                            </label>
+
+                            <span className="ml-2 truncate ">
+                              {fileNames.find(
+                                (obj) => obj.name === field.form_field.name
+                              )?.value || field.value}
+                            </span>
+                          </div>
+                        ) : (
+                          <InputField
+                            id={field.form_field.id}
+                            type={field.form_field.type.toLowerCase()}
+                            required={field.form_field.required}
+                            value={formData[field.form_field.name]}
+                            name={field.form_field.name}
+                            placeholder={`Enter ${capitalizeFirstLetter(
+                              field.form_field.name
+                            )}`}
+                            handleChange={handleChange}
+                            // value={field.value}
+                          />
+                        )
+                      ) : field.type === "LONG_TEXT" ? (
                         <textarea
                           className="border boder-gray-200 outline-none w-full p-2 "
                           row={10}
                           onChange={handleChange}
-                          name={field.form_field.name}
-                          value={formData[field.form_field.name]}
-                          placeholder={`Enter ${field.form_field.name}`}
+                          value={userId && field.value}
+                          name={userId ? field.form_field.name : field.name}
+                          placeholder={`Enter ${field.name}`}
                         ></textarea>
-                      ) : field.form_field.type === "FILE" ? (
+                      ) : field.type === "FILE" ? (
                         <div className="flex items-center">
                           <input
-                            id={field.form_field.id}
-                            name={field.form_field.name}
+                            id={field.id}
+                            name={field.name}
                             type="file"
                             ref={formFile}
                             onChange={(e) => {
-                              handleImage(e, field.form_field.name);
+                              handleImage(e, field.name);
                               const newFiles = [
                                 ...fileNames,
                                 {
-                                  name: field.form_field.name,
-
+                                  name: field.name,
                                   value: e.target.files[0].name,
                                 },
                               ];
@@ -248,91 +314,162 @@ const ApplicationForm = () => {
                             className="hidden"
                           />
                           <label
-                            htmlFor={field.form_field.id}
-                            className="text-sm p-2 min-w-[120px] rounded-full bg-gray-100 text-gray-500 cursor-pointer w-fit text-center "
+                            htmlFor={field.id}
+                            className="text-sm p-2 w-[90%] rounded-full bg-gray-100 text-gray-500 cursor-pointer w-fit"
                           >
                             Choose a file
                           </label>
 
-                          <span className="ml-2 truncate ">
-                            {fileNames.find(
-                              (obj) => obj.name === field.form_field.name
-                            )?.value || field.value}
+                          <span className="ml-2">
+                            {fileNames.find((obj) => obj.name === field.name)
+                              ?.value || ""}
                           </span>
                         </div>
                       ) : (
                         <InputField
-                          id={field.form_field.id}
-                          type={field.form_field.type.toLowerCase()}
-                          required={field.form_field.required}
-                          value={formData[field.form_field.name]}
-                          name={field.form_field.name}
+                          id={field.id}
+                          type={field?.type.toLowerCase()}
+                          required={field.required}
+                          name={field.name}
                           placeholder={`Enter ${capitalizeFirstLetter(
-                            field.form_field.name
+                            field.name
                           )}`}
                           handleChange={handleChange}
-                          // value={field.value}
+                          value={formData[field.name]}
                         />
-                      )
-                    ) : field.type === "LONG_TEXT" ? (
-                      <textarea
-                        className="border boder-gray-200 outline-none w-full p-2 "
-                        row={10}
-                        onChange={handleChange}
-                        value={userId && field.value}
-                        name={userId ? field.form_field.name : field.name}
-                        placeholder={`Enter ${field.name}`}
-                      ></textarea>
-                    ) : field.type === "FILE" ? (
-                      <div className="flex items-center">
-                        <input
+                      )}
+                    </div>
+                  ))
+                : currentPage?.map((field, i) => (
+                    <div key={field.id} className="w-full">
+                      <label
+                        className="block mb-3 font-medium max-w-[17rem]"
+                        htmlFor={userId ? field.form_field.name : field.name}
+                      >
+                        {capitalizeFirstLetter(
+                          userId ? field.form_field.name : field.name
+                        )}
+                      </label>
+                      {userId ? (
+                        field.form_field.type === "LONG_TEXT" ? (
+                          <textarea
+                            className="border boder-gray-200 outline-none w-full p-2 "
+                            row={10}
+                            onChange={handleChange}
+                            name={field.form_field.name}
+                            value={formData[field.form_field.name]}
+                            placeholder={`Enter ${field.form_field.name}`}
+                          ></textarea>
+                        ) : field.form_field.type === "FILE" ? (
+                          <div className="flex items-center">
+                            <input
+                              id={field.form_field.id}
+                              name={field.form_field.name}
+                              type="file"
+                              ref={formFile}
+                              onChange={(e) => {
+                                handleImage(e, field.form_field.name);
+                                const newFiles = [
+                                  ...fileNames,
+                                  {
+                                    name: field.form_field.name,
+
+                                    value: e.target.files[0].name,
+                                  },
+                                ];
+
+                                setFileNames(newFiles);
+
+                                handleChange(e);
+                              }}
+                              className="hidden"
+                            />
+                            <label
+                              htmlFor={field.form_field.id}
+                              className="text-sm p-2 min-w-[120px] rounded-full bg-gray-100 text-gray-500 cursor-pointer w-fit text-center "
+                            >
+                              Choose a file
+                            </label>
+
+                            <span className="ml-2 truncate ">
+                              {fileNames.find(
+                                (obj) => obj.name === field.form_field.name
+                              )?.value || field.value}
+                            </span>
+                          </div>
+                        ) : (
+                          <InputField
+                            id={field.form_field.id}
+                            type={field.form_field.type.toLowerCase()}
+                            required={field.form_field.required}
+                            value={formData[field.form_field.name]}
+                            name={field.form_field.name}
+                            placeholder={`Enter ${capitalizeFirstLetter(
+                              field.form_field.name
+                            )}`}
+                            handleChange={handleChange}
+                            // value={field.value}
+                          />
+                        )
+                      ) : field.type === "LONG_TEXT" ? (
+                        <textarea
+                          className="border boder-gray-200 outline-none w-full p-2 "
+                          row={10}
+                          onChange={handleChange}
+                          value={userId && field.value}
+                          name={userId ? field.form_field.name : field.name}
+                          placeholder={`Enter ${field.name}`}
+                        ></textarea>
+                      ) : field.type === "FILE" ? (
+                        <div className="flex items-center">
+                          <input
+                            id={field.id}
+                            name={field.name}
+                            type="file"
+                            ref={formFile}
+                            onChange={(e) => {
+                              handleImage(e, field.name);
+                              const newFiles = [
+                                ...fileNames,
+                                {
+                                  name: field.name,
+                                  value: e.target.files[0].name,
+                                },
+                              ];
+
+                              setFileNames(newFiles);
+
+                              handleChange(e);
+                            }}
+                            className="hidden"
+                          />
+                          <label
+                            htmlFor={field.id}
+                            className="text-sm p-2 w-[90%] rounded-full bg-gray-100 text-gray-500 cursor-pointer w-fit"
+                          >
+                            Choose a file
+                          </label>
+
+                          <span className="ml-2">
+                            {fileNames.find((obj) => obj.name === field.name)
+                              ?.value || ""}
+                          </span>
+                        </div>
+                      ) : (
+                        <InputField
                           id={field.id}
+                          type={field?.type.toLowerCase()}
+                          required={field.required}
                           name={field.name}
-                          type="file"
-                          ref={formFile}
-                          onChange={(e) => {
-                            handleImage(e, field.name);
-                            const newFiles = [
-                              ...fileNames,
-                              {
-                                name: field.name,
-                                value: e.target.files[0].name,
-                              },
-                            ];
-
-                            setFileNames(newFiles);
-
-                            handleChange(e);
-                          }}
-                          className="hidden"
+                          placeholder={`Enter ${capitalizeFirstLetter(
+                            field.name
+                          )}`}
+                          handleChange={handleChange}
+                          value={formData[field.name]}
                         />
-                        <label
-                          htmlFor={field.id}
-                          className="text-sm p-2 w-[90%] rounded-full bg-gray-100 text-gray-500 cursor-pointer w-fit"
-                        >
-                          Choose a file
-                        </label>
-
-                        <span className="ml-2">
-                          {fileNames.find((obj) => obj.name === field.name)
-                            ?.value || ""}
-                        </span>
-                      </div>
-                    ) : (
-                      <InputField
-                        id={field.id}
-                        type={field?.type.toLowerCase()}
-                        required={field.required}
-                        name={field.name}
-                        placeholder={`Enter ${capitalizeFirstLetter(
-                          field.name
-                        )}`}
-                        handleChange={handleChange}
-                        value={formData[field.name]}
-                      />
-                    )}
-                  </div>
-                ))}
+                      )}
+                    </div>
+                  ))}
               {(isLoading || !data) &&
                 [1, 2, 3, 4, 5, 6, 7, 8, 9].map((loader) => (
                   <TextFieldSkeleton key={loader} />
