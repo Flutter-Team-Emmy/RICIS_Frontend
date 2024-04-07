@@ -1,3 +1,5 @@
+"use client"
+
 import InputField from "@/app/user/new-application/InputField";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { SearchIcon } from "@/svgs";
