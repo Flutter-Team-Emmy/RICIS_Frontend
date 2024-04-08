@@ -1,5 +1,4 @@
 "use client";
-import { stats } from "@/app/user/dashboard/stats";
 import Modal from "@/components/Modal";
 import WithAuth from "@/components/withAuth";
 import { baseUrl } from "@/lib/configs";
