@@ -15,6 +15,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCreateFlutterTransactionMutation } from "@/store/api/applicationApi";
 import { normalizeErrors } from "@/utils/helpers";
 import PaymentModal from "@/components/modals/paymentModal";
+import { useGetCurrentUserQuery } from "@/store/api/userApi";
 
 const ApplicationPending = ({ data }) => {
   const [rejectBtnLoader, setRejectBtnLoader] = useState(false);
@@ -28,8 +29,12 @@ const ApplicationPending = ({ data }) => {
   const type = params.get("type");
   const [btnLoad, setBtnLoad] = useState(false);
   const pathname = usePathname();
-  const isAdmin = pathname.includes("admin");
-  const router = useRouter();
+  // const isAdmin = pathname.includes("admin");
+  // const router = useRouter();
+  const { isLoading, isSuccess, isError, error, data: currentUser } =
+    useGetCurrentUserQuery();
+  const role = currentUser?.data.role;
+  const isAdmin = role === "ADMIN";
 
   const closeModal = () => {
     setIsOpen(false);
