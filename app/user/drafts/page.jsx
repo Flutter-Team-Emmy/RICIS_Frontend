@@ -8,7 +8,7 @@ import WithAuth from "@/components/withAuth";
 
 const Drafts = () => {
   return (
-    <DashboardLayout header="Dashboard" icon="">
+    <DashboardLayout header="Drafts" icon="">
       <div className="space-y-10 w-full text-sm">
         <div className="bg-gray-100">
           <div className="w-full pb-8">

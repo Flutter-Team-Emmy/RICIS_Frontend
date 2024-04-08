@@ -1,5 +1,5 @@
 export const capitalizeFirstLetter = (word) => {
-  return word[0].toUpperCase() + word.substring(1);
+  return word?.charAt(0).toUpperCase() + word.substring(1).toLowerCase();
 };
 
 export const cutString = (str, length) => {

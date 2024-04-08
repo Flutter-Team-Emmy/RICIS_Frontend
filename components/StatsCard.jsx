@@ -1,8 +1,6 @@
-import SplineAreaChart from "@/components/charts/SplineAreaChart";
-import { TrendArrow } from "../../../svgs";
-import Image from "next/image";
-import Chart from "@/Chart";
+import { TrendArrow } from "@/svgs";
 import StatChart from "@/Chart";
+import { capitalizeFirstLetter } from "@/utils/helpers";
 
 const StatsCard = ({
   status,
@@ -16,9 +14,8 @@ const StatsCard = ({
   console.log(dailyStat, "ddds");
   return (
     <div className="whitespace-nowrap border-2 border-gray-200 rounded-md bg-white flex-grow">
-      <p className="p-4 text-2xl font-medium text-gray-700">
-        {" "}
-        {status} Applications
+      <p className="p-4 text-xl font-semibold text-gray-700">
+        {capitalizeFirstLetter(status)} Applications
       </p>
       <div className="flex items-end justify-between">
         <div className="px-4 py-2 space-y-2">
@@ -38,14 +35,6 @@ const StatsCard = ({
             <span className="">{TrendArrow(`#${colorCode[0]}`)}</span>
           </div>
         </div>
-        {/* <SplineAreaChart /> */}
-        {/* <Image
-          width={230}
-          height={100}
-          className="w-fit lg:w-60"
-          src="/images/graph.png"
-          alt="graph"
-        /> */}
 
         <StatChart
           data={{

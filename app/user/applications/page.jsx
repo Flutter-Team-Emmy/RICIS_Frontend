@@ -11,11 +11,10 @@ const Applications = () => {
   return (
     <DashboardLayout header="Dashboard">
       <div className="space-y-12 w-full bg-white">
-        <Suspense>
+        {/* <Suspense>
           <TabSwitcher applicationsTabs={applicationsTabs} />
-        </Suspense>
+        </Suspense> */}
         <Table tableData={applications} />
-        {/* <TableSkeleton /> */}
       </div>
     </DashboardLayout>
   );

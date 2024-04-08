@@ -1,9 +1,50 @@
 import ApplicationStatus from "./ApplicationStatus";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
-import { DownloadIcon } from "@/svgs";
+import {
+  useDownloadCertificateQuery,
+  useLazyDownloadCertificateQuery,
+  useLazyMailCertificateQuery,
+} from "@/store/api/applicationApi";
+import { DownloadIcon, MailIcon } from "@/svgs";
+import { useEffect } from "react";
 import { ClipLoader } from "react-spinners";
+import { normalizeErrors } from "@/utils/helpers";
+import { toast } from "react-toastify";
 
 const ApplicationApproved = ({ data }) => {
+  const [
+    downloadCertificate,
+    { isLoading: isDownloading, isSuccess, isError, error, data: certificate },
+  ] = useLazyDownloadCertificateQuery();
+  const [
+    mailCertificate,
+    {
+      isLoading: mailing,
+      isSuccess: mailingSuccess,
+      error: mailingError,
+      data: mail,
+    },
+  ] = useLazyMailCertificateQuery();
+
+
+  useEffect(() => {
+    if (mailingSuccess) {
+      toast.success("Certifcate successfully sent to our mail!", {
+        autoClose: 3000,
+      });
+    }
+  }, [mailingSuccess]);
+
+  const handleDownload = async () => {
+    await downloadCertificate(data?.application?.id);
+    const url = window.URL.createObjectURL(new Blob([certificate]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "certificate.pdf"); // Set the name for the downloaded file
+    document.body.appendChild(link);
+    link.click();
+  };
+
   return (
     <DashboardLayout header="Application">
       <div className="lg:flex lg:justify-between w-[95%] pb-8">
@@ -15,12 +56,36 @@ const ApplicationApproved = ({ data }) => {
             Congratulations! Your Application was successful
           </p> */}
         </div>
-        {/* <div className="lg:w-[30%]">
-          <button className="flex items-center gap-1 text-sm bg-[#46B038] text-white py-2 px-4 w-fit rounded-md hover:opacity-70">
-            <span className="">{DownloadIcon}</span>
-            <span className="">Download Certificate</span>
+        <div className="lg:w-[30%] space-y-3">
+          <button
+            onClick={handleDownload}
+            className="flex items-center gap-1 text-sm bg-[#46B038] text-white py-2 px-4 w-fit rounded-md hover:opacity-70"
+          >
+            {isDownloading ? (
+              <ClipLoader color="#fff" size={20} />
+            ) : (
+              <span className="">{DownloadIcon}</span>
+            )}
+            <span className="">
+              {isDownloading
+                ? "downloading certificate..."
+                : "Download Certificate"}
+            </span>
           </button>
-        </div> */}
+          <button
+            onClick={() => mailCertificate(data?.application?.id)}
+            className="flex items-center gap-1 text-sm bg-[#46B038] text-white py-2 px-4 w-fit rounded-md hover:opacity-70"
+          >
+            {mailing ? (
+              <ClipLoader color="#fff" size={20} />
+            ) : (
+              <span className="">{MailIcon}</span>
+            )}
+            <span className="">
+              {mailing ? "mailing certificate..." : "Mail Certificate"}
+            </span>
+          </button>
+        </div>
       </div>
       <div className="bg-white rounded-md pt-8 pl-6 pb-6">
         {data ? (

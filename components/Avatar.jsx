@@ -2,8 +2,10 @@
 import { useRouter } from "next/navigation";
 
 const Avatar = ({ currentUser, role }) => {
-  const firstNameAcr =  role !== "USER" ? "A" : currentUser?.first_name?.charAt(0);
-  const secondNameAcr = role !== "USER" ? "" : currentUser?.last_name?.charAt(0);
+  const firstNameAcr =
+    role !== "USER" ? "A" : currentUser?.first_name?.charAt(0);
+  const secondNameAcr =
+    role !== "USER" ? "" : currentUser?.last_name?.charAt(0);
   const router = useRouter();
 
   const navigateToProfilePage = () => {
@@ -19,8 +21,8 @@ const Avatar = ({ currentUser, role }) => {
       onClick={navigateToProfilePage}
       className="flex items-center justify-center cursor-pointer text-md bg-[rgba(85,147,232)] text-white px-3 py-1 rounded-full w-10 h-10"
     >
-      <span className="">{firstNameAcr}</span>
-      <span className="">{secondNameAcr}</span>
+      <span className="">{firstNameAcr?.toUpperCase()}</span>
+      <span className="">{secondNameAcr?.toUpperCase()}</span>
     </div>
   );
 };

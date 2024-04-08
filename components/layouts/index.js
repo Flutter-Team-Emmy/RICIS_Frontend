@@ -73,4 +73,17 @@ export const AdminSidebarLinks = [
   },
 ];
 
-export const StaffSidebarLinks = AdminSidebarLinks.slice(0, 2);
+export const StaffSidebarLinks = [
+  {
+    id: "sss1",
+    name: "Overview",
+    href: "/admin",
+    icon: CiChartIcon,
+  },
+  {
+    id: "sss2",
+    name: "App Management",
+    href: "/admin/app-management",
+    icon: dashboardIcon,
+  },
+];

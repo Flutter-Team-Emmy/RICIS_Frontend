@@ -4,48 +4,26 @@ import DashboardLayout from "../../components/layouts/DashboardLayout";
 import { useEffect, useState } from "react";
 import Table from "../../components/Table";
 import { AddCircleIcon } from "@/svgs";
-import StatsCard from "./dashboard/statsCard";
-import { stats } from "./dashboard/stats";
+import StatsCard from "@/components/StatsCard";
 import Link from "next/link";
-import { getToken } from "@/utils/authHelpers";
-import { baseUrl } from "@/lib/configs";
-import axios from "axios";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
+import { useGetStatsQuery } from "@/store/api/applicationApi";
 
 const DashboardSuspenseBoundary = () => {
-  const [data, setData] = useState([]);
   const router = useRouter();
-  const token = getToken();
   const param = useSearchParams();
   const pathname = usePathname();
   const isAdmin = pathname.includes("admin");
-  // const transactionStatus = param.get("transaction_status");
-  // hello george, i dont understand the way u handle ur api, so i decided to do something over here
-  const getApplications = async () => {
-    try {
-      const res = await axios.get(`${baseUrl}/application/stats`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+  const transactionStatus = param.get("status");
 
-      console.log(res);
-
-      if (res) {
-        console.log(res);
-        setData(res.data.data.stats);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { isLoading, isSuccess, error, data, refetch } = useGetStatsQuery();
+  const stats = data?.data?.stats;
+  console.log(data);
 
   useEffect(() => {
-    getApplications();
+    refetch();
   }, []);
-
-  const transactionStatus = param.get("status");
 
   useEffect(() => {
     if (transactionStatus === "successful") {
@@ -58,7 +36,7 @@ const DashboardSuspenseBoundary = () => {
     <DashboardLayout header="Dashboard" icon="">
       <div className="space-y-10 w-full">
         <div className="lg:flex lg:justify-between w-full items-center">
-          <div className="space-y-2">
+          <div className="space-y-1">
             <h1 className="text-gray-900 text-3xl font-medium">Welcome Back</h1>
             <p className="text-gray-500">
               Here is a preview of your activities and information
@@ -75,7 +53,7 @@ const DashboardSuspenseBoundary = () => {
           )}
         </div>
         <div className="flex w-full gap-6 ">
-          {data?.map((stat) => (
+          {stats?.map((stat) => (
             <StatsCard
               key={stat.id}
               status={stat.status}

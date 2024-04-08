@@ -12,6 +12,7 @@ const tableHeader = [
   "Applicant Name",
   "Application Name",
   "Amount Paid",
+  "Transaction Status",
   "Date Applied",
 ];
 
@@ -72,19 +73,19 @@ const TransactionsTable = () => {
                   {transaction?.application?.form?.name}
                 </td>
                 <td className="px-6 py-4 w-80">{transaction?.amount}</td>
-                {/* <td className="px-6 py-4">
-                  <span
-                    className={`px-2.5 py-1.5 text-xs ${
-                      application?.status === "APPROVED"
+                <td className="px-6 py-4">
+                  <p
+                    className={`px-2.5 py-1.5 text-xs w-fit ${
+                      transaction?.status === "CONFIRMED"
                         ? "bg-green-100 text-green-700"
-                        : application?.status === "PENDING"
+                        : transaction?.status === "PENDING"
                         ? "bg-yellow-100 text-yellow-700"
                         : "bg-red-100 text-red-600"
                     } font-medium rounded-3xl`}
                   >
-                    {application.status}
-                  </span>
-                </td> */}
+                    {transaction?.status}
+                  </p>
+                </td>
                 <td className="px-6 py-4 space-y-1 flex flex-col items-end ">
                   <p className="">{time.formatDate(transaction?.updatedAt)}</p>
                   <p className="">{time.formatTime(transaction?.updatedAt)}</p>

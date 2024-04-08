@@ -1,41 +1,18 @@
 "use client";
 import Table from "@/components/Table";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
-import StatsCard from "../user/dashboard/statsCard";
-import Link from "next/link";
-import { AddCircleIcon } from "@/svgs";
-import { stats } from "../user/dashboard/stats";
-import { applications } from "@/utils/data";
-import { useGetAllApplicationsQuery } from "@/store/api/applicationApi";
-import axios from "axios";
-import { baseUrl } from "@/lib/configs";
-import { useEffect, useState } from "react";
-import { getToken } from "@/utils/authHelpers";
+import StatsCard from "@/components/StatsCard";
 import WithAuth from "@/components/withAuth";
+import { useGetStatsQuery } from "@/store/api/applicationApi";
+import { useEffect } from "react";
 
 const Admin = () => {
-  const [data, setData] = useState([]);
-  // hello george, i dont understand the way u handle ur api, so i decided to do something over here
-  const getApplications = async () => {
-    try {
-      const token = getToken();
-      const res = await axios.get(`${baseUrl}/application/stats`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (res) {
-        console.log(res.data.data.stats);
-        setData(res.data.data.stats);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { isLoading, isSuccess, error, data, refetch } = useGetStatsQuery();
+  const stats = data?.data?.stats;
+  console.log(data);
 
   useEffect(() => {
-    getApplications();
+    refetch();
   }, []);
 
   return (
@@ -49,13 +26,13 @@ const Admin = () => {
             </p>
           </div>
         </div>
-        <div className="flex w-full gap-6 flex-wrap w-fit">
-          {data?.map((stat) => (
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 w-full">
+          {stats?.map((stat) => (
             <StatsCard
               key={stat.id}
               status={stat.status}
               amount={stat.amount}
-              percentage={Number(stat.percentage.toFixed(2))}
+              percentage={Number(stat.percentage?.toFixed(2) ?? 0)}
               increase={stat.daily_stats[0]}
               dailyStat={Object.values(stat.daily_stats)}
               colorCode={stat.chart_color}

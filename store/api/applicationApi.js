@@ -81,12 +81,37 @@ export const applicationApi = createApi({
       },
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
     }),
+    getStats: builder.query({
+      query() {
+        return {
+          url: `/application/stats`,
+        };
+      },
+      invalidatesTags: [{ type: "Applications", id: "LIST" }],
+    }),
     createFlutterTransaction: builder.mutation({
       query(payload) {
         return {
           url: "/transactions",
           method: "POST",
           body: payload,
+        };
+      },
+      invalidatesTags: [{ type: "Applications", id: "LIST" }],
+    }),
+    downloadCertificate: builder.query({
+      query(application_id) {
+        return {
+          url: `/application/${application_id}/certificate/download`,
+          responseType: "blob",
+        };
+      },
+      invalidatesTags: [{ type: "Applications", id: "LIST" }],
+    }),
+    mailCertificate: builder.query({
+      query(application_id) {
+        return {
+          url: `/application/${application_id}/certificate/send-to-mail`,
         };
       },
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
@@ -102,5 +127,8 @@ export const {
   useGetAllDraftsQuery,
   useGetFormsQuery,
   useGetSingleFormFieldsQuery,
-  useCreateFlutterTransactionMutation
+  useGetStatsQuery,
+  useCreateFlutterTransactionMutation,
+  useLazyDownloadCertificateQuery,
+  useLazyMailCertificateQuery,
 } = applicationApi;
