@@ -37,15 +37,15 @@ const DashboardSuspenseBoundary = () => {
       <div className="space-y-10 w-full">
         <div className="lg:flex lg:justify-between w-full items-center">
           <div className="space-y-1">
-            <h1 className="text-gray-900 text-3xl font-medium">Welcome Back</h1>
-            <p className="text-gray-500">
+            <h1 className="text-gray-900 text-2xl font-semibold">Welcome Back</h1>
+            <p className="text-gray-500 text-sm">
               Here is a preview of your activities and information
             </p>
           </div>
           {!isAdmin && (
             <Link
-              href="user/application-details"
-              className="bg-blue-700 mt-6 w-[50%] lg:w-[20%] px-4 py-2.5 flex items-center gap-2 rounded-md text-white hover:bg-blue-600"
+              href="user/new-application"
+              className="bg-blue-700 mt-6 w-fit px-4 py-2.5 text-sm flex items-center gap-2 rounded-md text-white hover:bg-blue-600"
             >
               <span className="">{AddCircleIcon}</span>
               <span className="">New Application</span>

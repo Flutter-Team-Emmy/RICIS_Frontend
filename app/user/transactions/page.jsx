@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import InputField from "@/app/user/new-application/InputField";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
@@ -25,7 +25,7 @@ const Transactions = () => {
             <input
               type="search"
               id="search"
-              className="rounded-2xl text-white bg-gray-100 block w-full p-3 ps-10 text-sm text-white-900"
+              className="rounded-2xl text-gray-700 bg-gray-100 block w-full p-3 ps-10 text-sm text-white-900"
               placeholder="Search"
             />
           </div>

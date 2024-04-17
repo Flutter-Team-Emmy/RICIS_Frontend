@@ -33,7 +33,7 @@ const SignInSuspenseBoundary = () => {
     const as_staff = param.get("as_staff");
     const payload = { ...formData, as_staff };
     if (IsInValid) {
-      toast.warning("Enter valid credentials!", { autoClose: 2000 });
+      toast.warning("Enter valid credentials!", { autoClose: 30000 });
       return;
     }
     await signInuser(payload);
@@ -43,7 +43,7 @@ const SignInSuspenseBoundary = () => {
     console.log(token, "ttok");
     if (error) {
       const err = normalizeErrors(error);
-      toast.error(err, { autoClose: 2000 });
+      toast.error(err, { autoClose: 30000 });
     }
     if (isSuccess) {
       toast.success(data?.message, { autoClose: 1000 });

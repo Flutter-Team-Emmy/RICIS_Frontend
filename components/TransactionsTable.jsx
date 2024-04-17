@@ -38,9 +38,9 @@ const TransactionsTable = () => {
   if (isLoading) return <TableSkeleton />;
 
   return (
-    <div className="w-full overflow-x-scroll lg:overflow-x-hidden z-[-10] rounded-lg">
-      <table className="w-full text-sm text-left rtl:text-right">
-        <thead className={`text-sm bg-dark-gray text-gray-400 py-4`}>
+    <div className="w-full overflow-x-scroll lg:overflow-x-hidden z-[-10] rounded-lg text-xs">
+      <table className="w-full text-left rtl:text-right">
+        <thead className={`bg-dark-gray text-gray-400 py-4`}>
           <tr className="whitespace-nowrap">
             {tableHeader.map((data, index) => (
               <th key={index} scope="col" className="lg:px-6 px-4 py-3">
@@ -56,7 +56,7 @@ const TransactionsTable = () => {
               <tr
                 onClick={() => openTransactionInvoice(transaction?.id)}
                 key={transaction.id}
-                className="whitespace-nowrap lg:whitespace-normal bg-white border-b w-full text-sm cursor-pointer hover:opacity-70"
+                className="whitespace-nowrap lg:whitespace-normal bg-white border-b w-full cursor-pointer hover:opacity-70"
               >
                 <th
                   scope="row"
@@ -87,8 +87,8 @@ const TransactionsTable = () => {
                   </p>
                 </td>
                 <td className="px-6 py-4 space-y-1 flex flex-col items-end ">
-                  <p className="">{time.formatDate(transaction?.updatedAt)}</p>
-                  <p className="">{time.formatTime(transaction?.updatedAt)}</p>
+                  <p className="">{time.formatDate(transaction?.createdAt)}</p>
+                  <p className="">{time.formatTime(transaction?.createdAt)}</p>
                 </td>
               </tr>
             );

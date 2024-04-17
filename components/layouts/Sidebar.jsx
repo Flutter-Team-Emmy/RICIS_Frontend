@@ -146,8 +146,8 @@ const Sidebar = ({
               className="fixed bottom-6 flex justify-center items-center gap-2 cursor-pointer"
             >
               <Avatar currentUser={currentUser} role={role} />
-              <div className>
-                <p className="text-sm">
+              <div className="space-y-1">
+                <p className="text-xs">
                   {role !== "USER"
                     ? currentUser?.name
                     : currentUser?.first_name + " " + currentUser?.last_name}

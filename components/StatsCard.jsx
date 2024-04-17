@@ -1,6 +1,7 @@
 import { TrendArrow } from "@/svgs";
 import StatChart from "@/Chart";
 import { capitalizeFirstLetter } from "@/utils/helpers";
+import { ApexCharts } from "@/utils/chartHelpers";
 
 const StatsCard = ({
   status,
@@ -11,10 +12,57 @@ const StatsCard = ({
   colorCode,
   colorClass,
 }) => {
-  console.log(dailyStat, "ddds");
+  const series = [
+    { name: "dd", data: [2, 24, 19, 33, 15, 90, 20, 50, 80, 67, 9, 44] },
+  ];
+  const options = {
+    chart: {
+      group: "sparklines",
+      type: "area",
+      sparkline: {
+        enabled: true,
+      },
+      dropShadow: {
+        enabled: true,
+        top: 3,
+        left: 2,
+        blur: 4,
+        opacity: 1,
+        color: "#69CB5C",
+      },
+    },
+    stroke: {
+      curve: "straight",
+    },
+    fill: {
+      opacity: 1,
+    },
+    yaxis: {
+      min: 0,
+      show: false,
+    },
+    xaxis: {
+      //   type: 'datetime',
+      categories: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+    },
+    colors: ["#69CB5C"],
+  };
   return (
     <div className="whitespace-nowrap border-2 border-gray-200 rounded-md bg-white flex-grow">
-      <p className="p-4 text-xl font-semibold text-gray-700">
+      <p className="p-4 text-lg font-semibold text-gray-700">
         {capitalizeFirstLetter(status)} Applications
       </p>
       <div className="flex items-end justify-between">
@@ -35,17 +83,13 @@ const StatsCard = ({
             <span className="">{TrendArrow(`#${colorCode[0]}`)}</span>
           </div>
         </div>
-
-        <StatChart
-          data={{
-            amount,
-            amount_today: increase,
-            dailyStat: dailyStat,
-            chart_color: colorCode,
-            percentage,
-            status,
-          }}
-        />
+        {/* <ApexCharts
+          type="Area"
+          series={series}
+          options={options}
+          width={150}
+          height={70}
+        /> */}
       </div>
     </div>
   );

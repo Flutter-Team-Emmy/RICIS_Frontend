@@ -44,7 +44,7 @@ const DashboardLayout = ({ children, header, icon }) => {
             <div className="w-full flex justify-between items-center">
               <div className="items-center gap-x-2 hidden lg:flex">
                 {icon}
-                <h1 className="text-slate-800 text-2xl font-semibold inline whitespace-nowrap">
+                <h1 className="text-slate-800 text-lg font-semibold inline whitespace-nowrap">
                   {header}
                 </h1>
               </div>

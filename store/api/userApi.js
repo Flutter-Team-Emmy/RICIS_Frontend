@@ -13,7 +13,7 @@ export const userApi = createApi({
       }
       return headers;
     },
-  }),  
+  }),
   tagTypes: ["Users"],
   endpoints: (builder) => ({
     updateUserBioData: builder.mutation({
@@ -50,6 +50,14 @@ export const userApi = createApi({
       },
       invalidatesTags: [{ type: "Users", id: "LIST" }],
     }),
+    getAllStaffs: builder.query({
+      query() {
+        return {
+          url: `/staff`,
+        };
+      },
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
+    }),
     deleteUser: builder.mutation({
       query(userId) {
         return {
@@ -68,4 +76,5 @@ export const {
   useGetAllUsersQuery,
   useGetCurrentUserQuery,
   useGetUserQuery,
+  useGetAllStaffsQuery,
 } = userApi;

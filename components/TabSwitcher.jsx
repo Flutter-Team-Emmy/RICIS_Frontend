@@ -8,7 +8,7 @@ const TabSwitcher = ({ applicationsTabs }) => {
   const param = searchParams.get("tab");
 
   return (
-    <div className="space-x-3 px-4 pt-6">
+    <div className="space-x-3 bg-white rounded-md p-4 shadow-sm text-sm">
       {applicationsTabs.map((tab, index) => (
         <Link
           key={tab.id}

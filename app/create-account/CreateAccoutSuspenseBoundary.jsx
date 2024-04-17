@@ -47,7 +47,7 @@ const CreateAccoutSuspenseBoundary = () => {
     const payload = { ...formData, email, otp };
     console.log(payload);
     if (isInValid) {
-      toast.error(validator.errorMessage, { autoClose: 2000 });
+      toast.error(validator.errorMessage, { autoClose: 30000 });
       return;
     }
     await registerUser(payload);
@@ -56,7 +56,7 @@ const CreateAccoutSuspenseBoundary = () => {
   useEffect(() => {
     if (error) {
       const err = normalizeErrors(error);
-      toast.error(err, { autoClose: 2000 });
+      toast.error(err, { autoClose: 30000 });
     }
     if (isSuccess) {
       toast.success(data?.message, { autoClose: 1000 });

@@ -1,7 +1,7 @@
 "use client";
 
 import { SortIcon } from "@/svgs";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   useGetAllApplicationsQuery,
   useGetAllDraftsQuery,
@@ -9,7 +9,7 @@ import {
 import { time } from "@/utils/time&dates";
 import { cutString } from "@/utils/helpers";
 import TableSkeleton from "./skeleton-loaders/TableSkeleton";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const tableColumn = [
   "Ref No",
@@ -22,12 +22,11 @@ const tableColumn = [
 
 const Table = () => {
   const router = useRouter();
-
+  const params = useSearchParams();
+  const tab = params.get("tab");
+  const [applications, setApplications] = useState([]);
   const { isLoading, isSuccess, isError, error, data } =
     useGetAllApplicationsQuery();
-
-  const applications = data?.data.applications;
-  console.log(data);
 
   const openApplicationDetails = (applicationId, applicationStatus) => {
     {
@@ -36,6 +35,42 @@ const Table = () => {
       );
     }
   };
+
+  useEffect(() => {
+    switch (tab) {
+      case null:
+        setApplications(data?.data.applications);
+        break;
+
+      case "all":
+        setApplications(data?.data.applications);
+        break;
+
+      case "pending":
+        const pendingApplications = data?.data.applications?.filter(
+          (application) => application.status === "PENDING"
+        );
+        setApplications(pendingApplications);
+        break;
+
+      case "approved":
+        const approvedApplications = data?.data.applications?.filter(
+          (application) => application.status === "APPROVED"
+        );
+        setApplications(approvedApplications);
+        break;
+
+      case "rejected":
+        const rejectedApplications = data?.data.applications?.filter(
+          (application) => application.status === "REJECTED"
+        );
+        setApplications(rejectedApplications);
+        break;
+
+      default:
+        break;
+    }
+  }, [data, tab]);
 
   // const openApplicationDrafts = (formId, userId, data) => {
   //   window.localStorage.setItem(userId, JSON.stringify(data));
@@ -49,7 +84,7 @@ const Table = () => {
   return applications?.length > 0 ? (
     <div className="relative overflow-x-auto lg:overflow-x-hidden shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-        <thead className="text-sm text-gray-500 uppercas bg-gray-50">
+        <thead className="text-xs text-gray-500 uppercas bg-gray-50">
           <tr className="whitespace-nowrap">
             {tableColumn.map((column) => (
               <th key={column} scope="col" className="px-6 py-3">
@@ -68,7 +103,7 @@ const Table = () => {
                 openApplicationDetails(application.id, application.status)
               }
               key={application.id}
-              className="whitespace-nowrap lg:whitespace-normal bg-white border-b w-full text-sm cursor-pointer hover:opacity-70"
+              className="whitespace-nowrap lg:whitespace-normal bg-white border-b w-full text-xs cursor-pointer hover:opacity-70"
             >
               <th
                 scope="row"
@@ -109,8 +144,8 @@ const Table = () => {
                 </span>
               </td>
               <td className="px-6 py-4 space-y-1 flex flex-col items-end ">
-                <p className="">{time.formatDate(application?.updated_at)}</p>
-                <p className="">{time.formatTime(application?.updated_at)}</p>
+                <p className="">{time.formatDate(application?.created_at)}</p>
+                <p className="">{time.formatTime(application?.created_at)}</p>
               </td>
             </tr>
           ))}

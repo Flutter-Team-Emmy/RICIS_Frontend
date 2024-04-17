@@ -19,7 +19,7 @@ const Avatar = ({ currentUser, role }) => {
   return (
     <div
       onClick={navigateToProfilePage}
-      className="flex items-center justify-center cursor-pointer text-md bg-[rgba(85,147,232)] text-white px-3 py-1 rounded-full w-10 h-10"
+      className="flex items-center justify-center cursor-pointer text-md bg-[rgba(85,147,232)] text-white text-sm px-3 py-1 rounded-full w-[2.2rem] h-[2.1rem]"
     >
       <span className="">{firstNameAcr?.toUpperCase()}</span>
       <span className="">{secondNameAcr?.toUpperCase()}</span>

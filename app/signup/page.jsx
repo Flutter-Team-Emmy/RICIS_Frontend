@@ -40,7 +40,7 @@ const Page = () => {
   useEffect(() => {
     if (error) {
       const err = normalizeErrors(error);
-      toast.error(err, { autoClose: 2000 });
+      toast.error(err, { autoClose: 30000 });
     }
     if (isSuccess) {
       toast.success(data?.message, { autoClose: 1000 });

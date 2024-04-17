@@ -119,7 +119,7 @@ export const drafts = [
 export const applicationsTabs = [
   {
     id: "p1",
-    tab: "recent",
+    tab: "all",
   },
   {
     id: "p2",
@@ -134,3 +134,18 @@ export const applicationsTabs = [
     tab: "rejected",
   },
 ];
+
+export const staffTabs = [
+  {
+    id: "s1",
+    tab: "all",
+  },
+  {
+    id: "s1",
+    tab: "active",
+  },
+  {
+    id: "s1",
+    tab: "suspended",
+  }
+]

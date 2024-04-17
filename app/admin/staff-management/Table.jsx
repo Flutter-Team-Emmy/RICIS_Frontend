@@ -1,11 +1,12 @@
 "use client";
 import TableSkeleton from "@/components/skeleton-loaders/TableSkeleton";
 import { baseUrl } from "@/lib/configs";
+import { useGetAllStaffsQuery } from "@/store/api/userApi";
 import { getToken } from "@/utils/authHelpers";
 import { formatDate } from "@/utils/helpers";
 import { time } from "@/utils/time&dates";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const tableHeader = [
@@ -101,37 +102,50 @@ const tableData = [
 ];
 
 const Table = () => {
-  const [data, setData] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+  const [staffs, setStaffs] = useState();
+  const param = useSearchParams();
+  const tab = param.get("tab");
 
-  const fetchStaff = async () => {
-    try {
-      const token = getToken();
-      const fetchData = await axios.get(`${baseUrl}/staff`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(fetchData);
-      setData(fetchData?.data?.data?.staffs);
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchStaff();
-  }, []);
+  const { isLoading, isSuccess, isError, error, data } = useGetAllStaffsQuery();
+  console.log(data);
 
   const router = useRouter();
+
+  useEffect(() => {
+    switch (tab) {
+      case null:
+        setStaffs(data?.data.staffs);
+        break;
+
+      case "all":
+        setStaffs(data?.data.staffs);
+        break;
+
+      case "active":
+        const activeStaffs = data?.data.staffs?.filter(
+          (staff) => staff.status === "ACTIVE"
+        );
+        setStaffs(activeStaffs);
+        break;
+
+      case "suspended":
+        const suspendedStaffs = data?.data.staffs?.filter(
+          (staff) => staff.status === "SUSPENDED"
+        );
+        setStaffs(suspendedStaffs);
+        break;
+
+      default:
+        break;
+    }
+  }, [data, tab]);
 
   if (isLoading) return <TableSkeleton />;
 
   return (
-    <div className="w-full overflow-x-scroll lg:overflow-x-hidden z-[-10] rounded-lg">
-      <table className="w-full text-sm text-left rtl:text-right">
-        <thead className={`text-sm bg-dark-gray text-gray-400 py-4`}>
+    <div className="w-full overflow-x-scroll lg:overflow-x-hidden z-[-10] rounded-lg text-xs">
+      <table className="w-full text-left rtl:text-right">
+        <thead className={` bg-dark-gray text-gray-400 py-4`}>
           <tr className="whitespace-nowrap">
             {tableHeader.map((data, index) => (
               <th key={index} scope="col" className="lg:px-6 px-4 py-3">
@@ -141,12 +155,12 @@ const Table = () => {
           </tr>
         </thead>
         <tbody className="">
-          {data?.map((data, index) => {
+          {staffs?.map((data, index) => {
             const columns = Object.keys(data);
             return (
               <tr
                 key={index}
-                className="text-sm border-b-[1px] border-b-gray-300 border-b-solid cursor-pointer"
+                className=" border-b-[1px] border-b-gray-300 border-b-solid cursor-pointer"
                 onClick={() => {
                   router.push(
                     `/admin/staff-management/${data.id}?id=${data.id}`
