@@ -134,6 +134,24 @@ export const applicationApi = createApi({
       },
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
     }),
+    createDraft: builder.mutation({
+      query(payload) {
+        return {
+          url: "/application/draft",
+          method: "POST",
+          body: payload,
+        };
+      },
+      invalidatesTags: [{ type: "Applications", id: "LIST" }],
+    }),
+    getSingleDraft: builder.query({
+      query(draftId) {
+        return {
+          url: `/application/draft/${draftId}`,
+        };
+      },
+      invalidatesTags: [{ type: "Applications", id: "LIST" }],
+    }),
     mailCertificate: builder.query({
       query(application_id) {
         return {
@@ -159,4 +177,6 @@ export const {
   useCreateFlutterTransactionMutation,
   useLazyDownloadCertificateQuery,
   useLazyMailCertificateQuery,
+  useCreateDraftMutation,
+  useGetSingleDraftQuery,
 } = applicationApi;

@@ -18,6 +18,7 @@ import {
   setApplications,
 } from "@/store/features/applicatonsSlice";
 import { useSelector, useDispatch } from "react-redux";
+import ReactPaginate from "react-paginate";
 
 const tableColumn = [
   "Ref No",
