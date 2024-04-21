@@ -12,10 +12,11 @@ import { toast } from "react-toastify";
 import { baseUrl } from "@/lib/configs";
 import Btn from "@/components/Btn";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCreateFlutterTransactionMutation } from "@/store/api/applicationApi";
 import { normalizeErrors } from "@/utils/helpers";
 import PaymentModal from "@/components/modals/paymentModal";
 import { useGetCurrentUserQuery } from "@/store/api/userApi";
+import { useSelector } from "react-redux";
+import { selectRole } from "@/store/features/userSlice";
 
 const ApplicationPending = ({ data }) => {
   const [rejectBtnLoader, setRejectBtnLoader] = useState(false);
@@ -29,11 +30,17 @@ const ApplicationPending = ({ data }) => {
   const type = params.get("type");
   const [btnLoad, setBtnLoad] = useState(false);
   const pathname = usePathname();
+  const role = useSelector(selectRole);
   // const isAdmin = pathname.includes("admin");
   // const router = useRouter();
-  const { isLoading, isSuccess, isError, error, data: currentUser } =
-    useGetCurrentUserQuery();
-  const role = currentUser?.data.role;
+  // const {
+  //   isLoading,
+  //   isSuccess,
+  //   isError,
+  //   error,
+  //   data: currentUser,
+  // } = useGetCurrentUserQuery();
+  // const role = currentUser?.data.role;
   const isAdmin = role === "ADMIN";
 
   const closeModal = () => {

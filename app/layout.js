@@ -6,7 +6,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import ProgressBar from "@/components/ProgressBar";
-
+import ApplicationsProvider from "@/components/contexts/applicationsProvider";
+import UserProvider from "@/components/contexts/userProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,9 +28,13 @@ export default function RootLayout({ children }) {
             closeOnClick
             closeButton={true}
           />
-          <div>
-            <div>{children}</div>
-          </div>
+          <UserProvider>
+            <ApplicationsProvider>
+              <div>
+                <div>{children}</div>
+              </div>
+            </ApplicationsProvider>
+          </UserProvider>
         </Provider>
       </body>
     </html>

@@ -1,6 +1,7 @@
 "use client";
 
-import { SortIcon } from "@/svgs";
+import Link from "next/link";
+import { EmptyPagesIcon, SortIcon } from "@/svgs";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   useGetAllApplicationsQuery,
@@ -10,6 +11,13 @@ import { time } from "@/utils/time&dates";
 import { cutString } from "@/utils/helpers";
 import TableSkeleton from "./skeleton-loaders/TableSkeleton";
 import { useEffect, useState } from "react";
+import { ApplicationAdd } from "@/svgs";
+import {
+  selectApplications,
+  selectFetchingStates,
+  setApplications,
+} from "@/store/features/applicatonsSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 const tableColumn = [
   "Ref No",
@@ -24,9 +32,14 @@ const Table = () => {
   const router = useRouter();
   const params = useSearchParams();
   const tab = params.get("tab");
-  const [applications, setApplications] = useState([]);
-  const { isLoading, isSuccess, isError, error, data } =
-    useGetAllApplicationsQuery();
+  const applications = useSelector(selectApplications);
+  const fetchingStates = useSelector(selectFetchingStates);
+  const isLoading = fetchingStates?.isLoading;
+  const dispatch = useDispatch();
+  const [filteredAppliations, setFilteredApplications] = useState([]);
+  // const [applications, setApplications] = useState([]);
+  // const { isLoading, isSuccess, isError, error, data } =
+  //   useGetAllApplicationsQuery();
 
   const openApplicationDetails = (applicationId, applicationStatus) => {
     {
@@ -36,48 +49,51 @@ const Table = () => {
     }
   };
 
+  const openNewApplication = () => {
+    router.push("/user/new-application");
+  };
+
+  useEffect(() => {
+    dispatch(setApplications(applications));
+  }, []); // Run once on initial render to set the applications
+
   useEffect(() => {
     switch (tab) {
       case null:
-        setApplications(data?.data.applications);
+        setFilteredApplications([]);
+        dispatch(setApplications(applications));
         break;
 
       case "all":
-        setApplications(data?.data.applications);
+        setFilteredApplications([]);
+        dispatch(setApplications(applications));
         break;
 
       case "pending":
-        const pendingApplications = data?.data.applications?.filter(
+        const pendingApplications = applications?.filter(
           (application) => application.status === "PENDING"
         );
-        setApplications(pendingApplications);
+        setFilteredApplications(pendingApplications);
         break;
 
       case "approved":
-        const approvedApplications = data?.data.applications?.filter(
+        const approvedApplications = applications?.filter(
           (application) => application.status === "APPROVED"
         );
-        setApplications(approvedApplications);
+        setFilteredApplications(approvedApplications);
         break;
 
       case "rejected":
-        const rejectedApplications = data?.data.applications?.filter(
+        const rejectedApplications = applications?.filter(
           (application) => application.status === "REJECTED"
         );
-        setApplications(rejectedApplications);
+        setFilteredApplications(rejectedApplications);
         break;
 
       default:
         break;
     }
-  }, [data, tab]);
-
-  // const openApplicationDrafts = (formId, userId, data) => {
-  //   window.localStorage.setItem(userId, JSON.stringify(data));
-  //   {
-  //     router.push(`/user/new-application/?form_id=${formId}&user_id=${userId}`);
-  //   }
-  // };
+  }, [applications, tab]);
 
   if (isLoading) return <TableSkeleton />;
 
@@ -97,7 +113,10 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {applications?.map((application) => (
+          {(filteredAppliations?.length > 0
+            ? filteredAppliations
+            : applications
+          )?.map((application) => (
             <tr
               onClick={() =>
                 openApplicationDetails(application.id, application.status)
@@ -153,11 +172,19 @@ const Table = () => {
       </table>
     </div>
   ) : (
-    <div className="flex items-center justify-center bg-white rounded-[4px] ">
-      <h1>
+    <div className="flex flex-col items-center justify-center gap-4 bg-white rounded-[4px] py-10">
+      <div className="animate-bounce">{EmptyPagesIcon}</div>
+      <h1 className="text-gray-500 lg:text-lg text-sm text-center">
         You currently dont have an application, create an application to get
         started
       </h1>
+      <button
+        onClick={openNewApplication}
+        className="bg-blue-700 mt-6 w-fit px-4 py-2.5 text-sm flex items-center gap-3 rounded-md text-white hover:bg-blue-600"
+      >
+        <span className="">{ApplicationAdd}</span>
+        <span className="">New Application</span>
+      </button>
     </div>
   );
 };

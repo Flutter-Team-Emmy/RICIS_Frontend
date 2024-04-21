@@ -6,7 +6,7 @@ import Table from "./Table";
 import Link from "next/link";
 import { getToken } from "@/utils/authHelpers";
 import WithAuth from "@/components/withAuth";
-import Search from "@/components/Search";
+import Search from "@/components/search/Search";
 import { Suspense } from "react";
 import TabSwitcher from "@/components/TabSwitcher";
 import { staffTabs } from "@/utils/data";

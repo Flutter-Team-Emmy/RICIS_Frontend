@@ -7,16 +7,21 @@ import Image from "next/image";
 import Hamburger from "../../public/images/hamburger.svg";
 import Avatar from "../Avatar";
 import { useGetCurrentUserQuery } from "@/store/api/userApi";
+import { useSelector } from "react-redux";
+import { selectRole, selectUser } from "@/store/features/userSlice";
 
 const DashboardLayout = ({ children, header, icon }) => {
   const [showSidebar, setShowSidebar] = useState("hidden");
 
-  const { isLoading, isSuccess, isError, error, data } =
-    useGetCurrentUserQuery();
-  const currentUser = data?.data.user;
-  const role = data?.data.role;
+  const currentUser = useSelector(selectUser);
+  const role = useSelector(selectRole)
 
-  console.log("gottend here ", currentUser);
+  // const { isLoading, isSuccess, isError, error, data } =
+  //   useGetCurrentUserQuery();
+  // const currentUser = data?.data.user;
+  // const role = data?.data.role;
+
+  console.log("gottend here ", role);
 
   return (
     <>
@@ -29,7 +34,7 @@ const DashboardLayout = ({ children, header, icon }) => {
           setShowSidebar={setShowSidebar}
           showSidebar={showSidebar}
         />
-        <div className={`space-y-6 px-6 lg:pr-20 pb-12`}>
+        <div className={`space-y-6 lg:px-6 px-3 lg:pr-20 pb-12`}>
           <div
             className={`flex justify-between py-5 px-5 w-full lg:w-[calc(100%-12rem)] lg:left-[12rem] left-0 lg:r-56 shadow-sm fixed top-0 bg-nav-bg backdrop-blur-md  transition ease-out delay-100 duration-500 z-[100]`}
           >

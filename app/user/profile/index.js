@@ -42,6 +42,13 @@ export const userBioData = [
     label: "Company's Role",
   },
   {
+    id: "company_email",
+    name: "company_email",
+    placeholder: "Enter Company's Email",
+    type: "text",
+    label: "Company's Email",
+  },
+  {
     id: "address",
     name: "address",
     placeholder: "Enter Address",

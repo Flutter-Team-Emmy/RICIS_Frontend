@@ -7,44 +7,57 @@ import { Suspense, useState } from "react";
 import TabSwitcher from "../../../components/TabSwitcher";
 import { SearchIcon } from "@/svgs";
 import WithAuth from "@/components/withAuth";
-import Search from "@/components/Search";
+import Search from "@/components/search/Search";
+import Paginations from "@/components/Pagination";
+import { useSearchParams } from "next/navigation";
+import { capitalizeFirstLetter } from "@/utils/helpers";
 
-// const searchFilters = [
-//   {
-//     id: "c1",
-//     filterKey: "referrence_no",
-//     name: "Referrence No",
-//   },
-//   {
-//     id: "c2",
-//     filterKey: "applicant_name",
-//     name: "Applicant Name",
-//   },
-//   {
-//     id: "c1",
-//     filterKey: "application_name",
-//     name: "Application Name",
-//   },
-// ];
+const ApplicationsSuspense = () => {
+  const param = useSearchParams();
+  const status = param.get("tab");
 
-const Applications = () => {
   return (
     <DashboardLayout header="Applications">
       <div className="space-y-6 w-full">
         <Suspense>
           <TabSwitcher applicationsTabs={applicationsTabs} />
         </Suspense>
-        <h1 className="px-4 font-semibold text-lg text-gray-600">
-          All Applications
-        </h1>
+        {/* <div className="">
+          <input type="date" />
+        </div> */}
+        <div className="flex items-center gap-2 px-4 font-semibold lg:text-lg text-md text-gray-600">
+          <span
+            className={`${
+              status === "approved"
+                ? "text-green-500"
+                : status === "pending"
+                ? "text-yellow-500"
+                : status === "rejected"
+                ? "text-red-500"
+                : "text-gray-600"
+            }`}
+          >
+            {!status ? "All" : capitalizeFirstLetter(status)}
+          </span>
+          <span>Applications</span>
+        </div>
         <div className="space-y-8 bg-white py-4 px-4">
           <Search />
           <Suspense>
             <Table />
           </Suspense>
         </div>
+        <Paginations />
       </div>
     </DashboardLayout>
+  );
+};
+
+const Applications = () => {
+  return (
+    <Suspense>
+      <ApplicationsSuspense />
+    </Suspense>
   );
 };
 

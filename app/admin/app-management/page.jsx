@@ -1,6 +1,6 @@
 "use client";
 import TabSwitcher from "@/components/TabSwitcher";
-import Search from "@/components/Search";
+import Search from "@/components/search/Search";
 import Table from "@/components/Table";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import WithAuth from "@/components/withAuth";

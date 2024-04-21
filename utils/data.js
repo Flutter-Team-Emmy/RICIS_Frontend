@@ -147,5 +147,5 @@ export const staffTabs = [
   {
     id: "s1",
     tab: "suspended",
-  }
-]
+  },
+];

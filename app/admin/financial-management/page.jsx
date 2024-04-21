@@ -5,7 +5,7 @@ import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { SearchIcon } from "@/svgs";
 import TransactionsTable from "@/components/TransactionsTable";
 import WithAuth from "@/components/withAuth";
-import Search from "@/components/Search";
+import Search from "@/components/search/Search";
 
 const FinancialManagement = () => {
   return (

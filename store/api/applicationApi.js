@@ -57,6 +57,32 @@ export const applicationApi = createApi({
       },
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
     }),
+    searchApplications: builder.query({
+      query(params) {
+        return {
+          url: "/application/search",
+          params: {
+            // Define your parameters here
+            application_name: params?.application_name,
+            applicant_name: params?.applicant_name,
+            start_date: params?.start_date,
+            end_date: params?.end_date,
+            reference_id: params?.reference_id,
+            // Add more parameters as needed
+          },
+        };
+      },
+      // invalidatesTags: [{ type: "Applications", id: "LIST" }],
+    }),
+    // getCategories
+    getCategories: builder.query({
+      query() {
+        return {
+          url: "/categories",
+        };
+      },
+      invalidatesTags: [{ type: "Applications", id: "LIST" }],
+    }),
     getAllDrafts: builder.query({
       query() {
         return {
@@ -66,9 +92,9 @@ export const applicationApi = createApi({
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
     }),
     getForms: builder.query({
-      query() {
+      query(param) {
         return {
-          url: "/forms",
+          url: `/forms?categories=${param}`,
         };
       },
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
@@ -124,6 +150,8 @@ export const {
   useUpdateApplicationMutation,
   useGetSingleApplicationQuery,
   useGetAllApplicationsQuery,
+  useLazySearchApplicationsQuery,
+  useGetCategoriesQuery,
   useGetAllDraftsQuery,
   useGetFormsQuery,
   useGetSingleFormFieldsQuery,

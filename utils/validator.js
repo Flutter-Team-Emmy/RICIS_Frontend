@@ -12,6 +12,10 @@ export class Validator {
     return invalidFields.length !== 0;
   }
 
+  notEmpty(value) {
+    return value && value.trim().length !== 0;
+  }
+
   validateEmail(email) {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
@@ -20,6 +24,11 @@ export class Validator {
   validateOTPCode(code) {
     const regex = /^[0-9]+$/;
     return regex.test(code);
+  }
+
+  validatePhoneNumber(phone) {
+    const regex = /^[0-9]+$/;
+    return regex.test(phone);
   }
 
   atLeastOneValueNotEmpty(obj) {
@@ -31,6 +40,23 @@ export class Validator {
         value.trim().length !== 0
     );
   }
+
+  // validate file type
+  validateFileType = (file) => {
+    // Get the file extension
+    const extension = file?.name.split(".").pop().toLowerCase();
+
+    // List of allowed extensions
+    const allowedExtensions = ["pdf", "jpeg", "jpg", "png"];
+
+    // Check if the extension is allowed
+    if (!allowedExtensions.includes(extension)) {
+      // toast.warning("Please upload a PDF or image file.", { autoClose: 10000 });
+      return false;
+    } else {
+      return true;
+    }
+  };
 }
 
 export const validator = new Validator();

@@ -1,7 +1,7 @@
 "use client";
 
 import { useGetCurrentUserQuery } from "@/store/api/userApi";
-import { setRole, setUser } from "@/store/features/userSlice";
+import { setRole, setUser, setFetchingStates } from "@/store/features/userSlice";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
@@ -13,8 +13,15 @@ const UserProvider = ({ children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const fetchingStates = {
+      isLoading,
+      isSuccess,
+      error,
+    //   refetch,
+    };
     dispatch(setUser(currentUser));
     dispatch(setRole(role));
+    dispatch(setFetchingStates(fetchingStates));
   }, [currentUser, role]);
 
   return <>{children}</>;

@@ -19,6 +19,7 @@ const InitialData = {
   company_location: "",
   last_name: "",
   company_role: "",
+  company_email: "",
   address: "",
   phone: "",
 };

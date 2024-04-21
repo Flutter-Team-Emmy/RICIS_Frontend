@@ -56,11 +56,11 @@ const Page = () => {
 
   return (
     <FormLayout>
-      <div className="w-[60%] mx-auto max-w-[440px]">
+      <div className="w-full lg:w-[35rem] px-4 mx-auto mt-8 space-y-8">
         <FPI length={3} shade={1} />
 
-        <div className="bg-white rounded-[12px] py-[3rem] px-[3.5rem] border border-[#E6E8EC] mt-[1.5rem]  ">
-          <h1 className="formHeader">Sign up</h1>
+        <div className="bg-white rounded-[12px] py-[3rem] px-4 lg:px-8 border border-[#E6E8EC] mt-[1.5rem] space-y-4 ">
+          <h1 className="text-lg font-semibold">Sign up</h1>
 
           <TextInput
             label="Email"
@@ -80,7 +80,7 @@ const Page = () => {
               disabled={!formData.email}
             />
             <h2 className="text-[12px] leading-[14px] text-[#3361FF] inter600 text-center ">
-              Already have an account? <Link href="/signin">Sign In </Link>{" "}
+              <Link href="/signin">Already have an account? Sign In </Link>{" "}
             </h2>
           </div>
         </div>

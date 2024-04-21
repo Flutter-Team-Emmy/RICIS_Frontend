@@ -629,8 +629,8 @@ export const fileIcon = (
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M5.8 14H5V15H5.8C6.1 15 6.3 14.8 6.3 14.5C6.3 14.2 6.1 14 5.8 14ZM11 2H3V18H16V7L11 2ZM7.2 14.6C7.2 15.4 6.6 16 5.8 16H5V17H4V13H5.8C6.6 13 7.2 13.6 7.2 14.4V14.6ZM11.3 15.1C11.3 16.1 10.5 17 9.4 17H8V13H9.4C10.4 13 11.3 13.8 11.3 14.9V15.1ZM15 14H13V15H14.5V16H13V17H12V13H15V14ZM15 12H4V3H11V7H15V12ZM9.4 14H9V16H9.4C10 16 10.4 15.6 10.4 15C10.4 14.4 9.9 14 9.4 14Z"
       fill="#999999"
     />
@@ -662,9 +662,9 @@ export const Check = (
     <path
       d="M17.8337 1.25L6.37533 12.7083L1.16699 7.5"
       stroke="white"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
@@ -741,26 +741,26 @@ export const PlusCircle = (
     <path
       d="M21 38.5C30.665 38.5 38.5 30.665 38.5 21C38.5 11.335 30.665 3.5 21 3.5C11.335 3.5 3.5 11.335 3.5 21C3.5 30.665 11.335 38.5 21 38.5Z"
       stroke="black"
-      stroke-opacity="0.6"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeOpacity="0.6"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M21 14V28"
       stroke="black"
-      stroke-opacity="0.6"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeOpacity="0.6"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M14 21H28"
       stroke="black"
-      stroke-opacity="0.6"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeOpacity="0.6"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
@@ -777,17 +777,17 @@ export const Cancel = (
       d="M15 5L5 15"
       stroke="black"
       stroke-opacity="0.6"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M5 5L15 15"
       stroke="black"
-      stroke-opacity="0.6"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeOpacity="0.6"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
@@ -826,5 +826,188 @@ export const DocumentEmpty = (
       fill="#ccc"
       d="M4 4a2 2 0 0 1 2-2h8a1 1 0 0 1 .707.293l5 5A1 1 0 0 1 20 8v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm13.586 4L14 4.414V8zM12 4H6v16h12V10h-5a1 1 0 0 1-1-1z"
     />
+  </svg>
+);
+
+export const FacebookIcon = (
+  <svg
+    width="44"
+    height="44"
+    viewBox="0 0 44 44"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect width="44" height="44" rx="5" fill="white" />
+    <path
+      d="M23.5482 32V22.8777H26.6089L27.0681 19.3216H23.5482V17.0515C23.5482 16.0222 23.8329 15.3208 25.3105 15.3208L27.192 15.32V12.1392C26.8666 12.0969 25.7497 12 24.4497 12C21.7351 12 19.8767 13.657 19.8767 16.6993V19.3216H16.8066V22.8777H19.8767V32H23.5482Z"
+      fill="#1877F2"
+    />
+  </svg>
+);
+
+export const LinkedInIcon = (
+  <svg
+    width="44"
+    height="44"
+    viewBox="0 0 44 44"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect width="44" height="44" rx="5" fill="white" />
+    <g clip-path="url(#clip0_3_836)">
+      <path
+        d="M31.9951 32.0001V31.9993H32.0001V24.6643C32.0001 21.0759 31.2276 18.3118 27.0326 18.3118C25.0159 18.3118 23.6626 19.4184 23.1101 20.4676H23.0517V18.6468H19.0742V31.9993H23.2159V25.3876C23.2159 23.6468 23.5459 21.9634 25.7017 21.9634C27.8259 21.9634 27.8576 23.9501 27.8576 25.4993V32.0001H31.9951Z"
+        fill="#0E76A8"
+      />
+      <path d="M12.3301 18.6475H16.4767V32H12.3301V18.6475Z" fill="#0E76A8" />
+      <path
+        d="M14.4017 12C13.0758 12 12 13.0758 12 14.4017C12 15.7275 13.0758 16.8258 14.4017 16.8258C15.7275 16.8258 16.8033 15.7275 16.8033 14.4017C16.8025 13.0758 15.7267 12 14.4017 12V12Z"
+        fill="#0E76A8"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_3_836">
+        <rect
+          width="20"
+          height="20"
+          fill="white"
+          transform="translate(12 12)"
+        />
+      </clipPath>
+    </defs>
+  </svg>
+);
+
+export const TwitterIcon = (
+  <svg
+    width="44"
+    height="44"
+    viewBox="0 0 44 44"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect width="44" height="44" rx="5" fill="white" />
+    <path
+      d="M12.834 13.6667H14.9173L27.4173 30.3334H25.334L12.834 13.6667ZM16.584 13.6667H18.6673L31.1673 30.3334H29.084L16.584 13.6667ZM14.5007 13.6667H18.6673V15.3334H14.5007V13.6667ZM25.334 28.6667H29.5007V30.3334H25.334V28.6667ZM27.4173 13.6667H30.334L16.1673 30.3334H13.2507L27.4173 13.6667Z"
+      fill="black"
+    />
+  </svg>
+);
+
+export const RecordIcon = (
+  <svg
+    width="18"
+    height="16"
+    viewBox="0 0 18 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M17.3334 15.5H0.666748V0.5H2.33341V13.8333H4.00008V6.33333H7.33341V13.8333H9.00008V3H12.3334V13.8333H14.0001V9.66667H17.3334V15.5Z"
+      fill="#C3C3C3"
+    />
+  </svg>
+);
+
+export const UserIcon = (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M5 4.33334C5 5.98734 6.346 7.33334 8 7.33334C9.654 7.33334 11 5.98734 11 4.33334C11 2.67934 9.654 1.33334 8 1.33334C6.346 1.33334 5 2.67934 5 4.33334ZM13.3333 14H14V13.3333C14 10.7607 11.906 8.66668 9.33333 8.66668H6.66667C4.09333 8.66668 2 10.7607 2 13.3333V14H13.3333Z"
+      fill="#C3C3C3"
+    />
+  </svg>
+);
+
+export const FilterIcon = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.5em"
+    height="1.5em"
+    viewBox="0 0 24 24"
+  >
+    <path
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeMiterlimit="10"
+      strokeWidth="1.5"
+      d="M21.25 12H8.895m-4.361 0H2.75m18.5 6.607h-5.748m-4.361 0H2.75m18.5-13.214h-3.105m-4.361 0H2.75m13.214 2.18a2.18 2.18 0 1 0 0-4.36a2.18 2.18 0 0 0 0 4.36Zm-9.25 6.607a2.18 2.18 0 1 0 0-4.36a2.18 2.18 0 0 0 0 4.36Zm6.607 6.608a2.18 2.18 0 1 0 0-4.361a2.18 2.18 0 0 0 0 4.36Z"
+    />
+  </svg>
+);
+
+export const EmptyPagesIcon = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="6em"
+    height="6em"
+    viewBox="0 0 512 512"
+  >
+    <path
+      fill="#eac083"
+      d="M446.067 512h-217.97c-2.818 0-5.102-3.663-5.102-8.182V8.182c0-4.519 2.284-8.182 5.102-8.182H446.23c2.727 0 4.938 3.546 4.938 7.92v495.898c.001 4.519-2.283 8.182-5.101 8.182"
+    />
+    <path
+      fill="#f9e7c0"
+      d="M392.753 512H191.967L35.007 355.04V8.182A8.182 8.182 0 0 1 43.189 0h349.826a7.92 7.92 0 0 1 7.92 7.92v495.898a8.182 8.182 0 0 1-8.182 8.182"
+    />
+    <path
+      fill="#eac083"
+      d="M191.967 512L35.007 355.04h123.597c18.426 0 33.363 14.937 33.363 33.363z"
+    />
+  </svg>
+);
+
+export const ApplicationAdd = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.5em"
+    height="1.5em"
+    viewBox="0 0 14 14"
+  >
+    <path
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M5 .5H1.5a1 1 0 0 0-1 1V5a1 1 0 0 0 1 1H5a1 1 0 0 0 1-1V1.5a1 1 0 0 0-1-1M12.5 8H9a1 1 0 0 0-1 1v3.5a1 1 0 0 0 1 1h3.5a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1M5 8H1.5a1 1 0 0 0-1 1v3.5a1 1 0 0 0 1 1H5a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1m5.75-2V.5M8 3.25h5.5"
+    />
+  </svg>
+);
+
+export const ArrowLeft = (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M12 19L5 12L12 5"
+      stroke="black"
+      strokeOpacity="0.9"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const CalendarIcon = (
+  <svg
+    class="w-4 h-4 text-gray-500 dark:text-gray-400"
+    aria-hidden="true"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    viewBox="0 0 20 20"
+  >
+    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
   </svg>
 );

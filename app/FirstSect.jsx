@@ -3,14 +3,14 @@ import React from "react";
 const FirstSect = () => {
 	return (
 		<div
-			className='flex items-center justify-center w-full min-h-[600px]'
+			className='flex items-center justify-center w-full min-h-[600px] h-full'
 			style={{
 				backgroundImage: 'url("/images/9347.jpg")',
 				backgroundPosition: "contain",
 				backgroundSize: "cover",
 			}}
 		>
-			<div className='flex flex-col items-center justify-center space-y-[1rem] 2xl:space-y-[1.5rem]  bg-[#0000006c] w-full h-screen'>
+			<div className='flex flex-col items-center justify-center space-y-[1rem] 2xl:space-y-[1.5rem]  bg-[#0000006c] w-full h-full min-h-[600px] px-6'>
 				<h1 className='inter900 lg:text-[3rem] 2xl:text-[4rem] lg:leading-[72px] 2xl:leading-[96px] text-white text-center'>
 					Empowered to make a difference
 				</h1>

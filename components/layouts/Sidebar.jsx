@@ -89,6 +89,7 @@ const Sidebar = ({
 
   return (
     <>
+    {/* <div className="lg:hidden fixed top-0 bottom-0 left-0 right-0  inset-0 bg-[rgb(0,0,0,0.8)] overflow-y-auto bg-opacity-50 z-[999] h-full w-full"></div> */}
       <aside
         className={`h-screen bg-[#1A191B] px-2 fixed top-0 w-[12rem] z-[1000] lg:block ${showSidebar}`}
       >

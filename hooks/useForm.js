@@ -20,6 +20,7 @@ const useForm = (InitialData) => {
         return { ...prevState, [name]: value };
       });
     }
+    // callback();
   };
 
   return { mediaPreview, setMediaPreview, formData, setFormData, handleChange };

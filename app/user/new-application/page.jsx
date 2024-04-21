@@ -1,5 +1,5 @@
 "use client";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import ApplicationForm from "./ApplicationForm";
 import WithAuth from "@/components/withAuth";
@@ -7,6 +7,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Btn from "@/components/Btn";
 import FPI from "../FPI";
 import { useRouter } from "next/navigation";
+import { useGetCategoriesQuery } from "@/store/api/applicationApi";
+import { ClipLoader } from "react-spinners";
+import { toast } from "react-toastify";
 
 const pagination = "<1/12 Pages >";
 
@@ -39,9 +42,31 @@ const categories = [
 
 const NewApplication = () => {
   const router = useRouter();
+  const { isLoading, isSuccess, error, data } = useGetCategoriesQuery();
+  const categories = data?.data?.categories;
+  const [checkedCategories, setCheckedCategories] = useState([]);
+  // const [selectedIds, setSelectedIds] = useState([]);
+
+  // Function to handle checkbox change
+  const handleCheckboxChange = (value) => {
+    // Update the checkedItems array based on the checkbox state
+    if (!checkedCategories.includes(value)) {
+      setCheckedCategories([...checkedCategories, value]);
+      // setSelectedIds([...selectedIds, value]);
+    } else {
+      setCheckedCategories(checkedCategories.filter((item) => item !== value));
+    }
+  };
 
   const navigateToNextStep = () => {
-    router.push("/user/application-type");
+    if (checkedCategories?.length === 0) {
+      return toast.warning("Select one or more categories to proceed", {
+        autoClose: 30000,
+      });
+    }
+    const params = checkedCategories.join(",");
+    router.push(`/user/application-type?categories=${params}`);
+    // console.log(checkedCategories.join(","));
   };
 
   return (
@@ -60,19 +85,31 @@ const NewApplication = () => {
           </h2>
           <div className="space-y-4">
             <h3 className="font-semibold text-gray-500">Categories</h3>
-            <div className="space-y-3">
-              {categories.map((category) => (
-                <div key={category.id} className="flex items-center gap-4">
-                  <Checkbox id="terms" />
-                  <label
-                    htmlFor="terms"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    {category.text}
-                  </label>
-                </div>
-              ))}
-            </div>
+            {
+              <div className="space-y-3">
+                {isLoading ? (
+                  <ClipLoader size={40} />
+                ) : (
+                  categories?.map((category) => (
+                    <div key={category.id} className="flex items-center gap-4">
+                      <Checkbox
+                        value={category.id}
+                        checked={checkedCategories.includes(category.id)}
+                        onCheckedChange={() =>
+                          handleCheckboxChange(category.id)
+                        }
+                      />
+                      <label
+                        htmlFor="terms"
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      >
+                        {category.name}
+                      </label>
+                    </div>
+                  ))
+                )}
+              </div>
+            }
           </div>
           <Btn
             handleClick={navigateToNextStep}

@@ -5,6 +5,8 @@ import {
   NotificationIcon,
   CiChartIcon,
   tranactionIcon,
+  RecordIcon,
+  UserIcon,
 } from "@/svgs";
 
 export const UserSidebarLinks = [
@@ -34,9 +36,15 @@ export const UserSidebarLinks = [
   },
   {
     id: "s5",
-    name: "Transactions",
+    name: "Payment Record",
     href: "/user/transactions",
-    icon: tranactionIcon,
+    icon: RecordIcon,
+  },
+  {
+    id: "s6",
+    name: "User Profile",
+    href: "/user/profile",
+    icon: UserIcon,
   },
 ];
 

@@ -26,11 +26,10 @@ const ApplicationApproved = ({ data }) => {
     },
   ] = useLazyMailCertificateQuery();
 
-
   useEffect(() => {
     if (mailingSuccess) {
-      toast.success("Certifcate successfully sent to our mail!", {
-        autoClose: 3000,
+      toast.success("Certifcate successfully sent to your mail!", {
+        autoClose: 5000,
       });
     }
   }, [mailingSuccess]);

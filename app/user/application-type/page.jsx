@@ -8,13 +8,17 @@ import { usePathname, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import WithAuth from "@/components/withAuth";
 import FPI from "../FPI";
+import { Suspense } from "react";
 
 const initialFormData = {
   application_type: "",
 };
 
-const ApplicationDetails = () => {
-  const { isLoading, isSuccess, isError, error, data } = useGetFormsQuery();
+const ApplicationTypesSuspense = () => {
+  const param = useSearchParams();
+  const categories = param.get("categories");
+  const { isLoading, isSuccess, isError, error, data } =
+    useGetFormsQuery(categories);
   const { formData, handleChange, setFormData } = useForm(initialFormData);
   const forms = data?.data.forms;
   const selectedFormId = forms?.find(
@@ -78,7 +82,7 @@ const ApplicationDetails = () => {
               onClick={proceedToNextStep}
               className="bg-[#46B038] px-4 py-2 text-white text-sm font-medium rounded-md shadow-lg hover:bg-lime-700"
             >
-              Save and Proceed
+               Proceed
             </button>
           </div>
         </div>
@@ -87,4 +91,12 @@ const ApplicationDetails = () => {
   );
 };
 
-export default WithAuth(ApplicationDetails);
+const ApplicationTypes = () => {
+  return (
+    <Suspense>
+      <ApplicationTypesSuspense />
+    </Suspense>
+  );
+};
+
+export default WithAuth(ApplicationTypes);

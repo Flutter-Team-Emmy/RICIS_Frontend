@@ -6,10 +6,12 @@ import { cloudinaryApi } from "./api/cloudinaryApi";
 import { generalAPI } from "./api/generalApi";
 import { transactionsApi } from "./api/transactionsApi";
 import userReducer from "./features/userSlice";
+import applicationsReducer from "./features/applicatonsSlice";
 
 const store = configureStore({
   reducer: {
     user: userReducer,
+    applications: applicationsReducer,
     [authApi.reducerPath]: authApi.reducer,
     [applicationApi.reducerPath]: applicationApi.reducer,
     [userApi.reducerPath]: userApi.reducer,

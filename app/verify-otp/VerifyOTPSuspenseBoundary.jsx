@@ -62,17 +62,15 @@ const VerifyOTPSuspenseBoundary = () => {
 
   return (
     <FormLayout>
-      <div className="w-[60%] mx-auto max-w-[440px]">
+      <div className="w-full lg:w-[35rem] mx-auto mt-8 px-4 space-y-8">
         <FPI length={3} shade={2} />
 
-        <div className="bg-white rounded-[12px] py-[3rem] px-[3.5rem] border border-[#E6E8EC] mt-[1.5rem]  ">
-          <h1 className="formHeader">Verification Code</h1>
+        <div className="bg-white rounded-[12px] py-[3rem] px-4 lg:px-8 border border-[#E6E8EC] space-y-4 lg:space-y-8 mt-[1.5rem]  ">
+          <h1 className="text-lg font-semibold">Verification Code</h1>
 
-          <div>
-            <h2 className="inter500 text-[14px] text-[#8D8D8D] leading-[21px] mb-[4px] ">
-              OTP
-            </h2>
-            <div className="flex space-x-[12px]">
+          <div className="space-y-3">
+            <h2 className=" text-md text-[#8D8D8D] ">OTP</h2>
+            <div className="flex justify-center gap-x-2">
               {otpNumbersFields.map((field) => (
                 <input
                   key={field.id}
@@ -80,7 +78,7 @@ const VerifyOTPSuspenseBoundary = () => {
                   value={formData[field.name]}
                   onChange={handleChange}
                   name={field.name}
-                  className="w-[75px] h-[52px] outline-none border-[2px] rounded-[4px] border-[#F0F0F0] p-4 text-center font-semibold text-xl "
+                  className="w-16 lg:w-24 h-16 lg:h-20 outline-none border-[2px] rounded-[4px] border-[#F0F0F0] p-1 text-center font-semibold text-xl "
                 />
               ))}
             </div>
@@ -95,7 +93,7 @@ const VerifyOTPSuspenseBoundary = () => {
               loadingMsg="Verifying..."
             />
             <h2 className="text-[12px] leading-[14px] text-[#3361FF] inter600 text-center ">
-              Already have an account? <Link href="/login">Sign In </Link>{" "}
+              <Link href="/signin">Already have an account? Sign In </Link>{" "}
             </h2>
           </div>
         </div>

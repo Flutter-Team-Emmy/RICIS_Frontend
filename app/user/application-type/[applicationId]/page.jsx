@@ -4,73 +4,78 @@ import { useEffect } from "react";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import WithAuth from "@/components/withAuth";
 import FPI from "../../FPI";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { useParams, useRouter } from "next/navigation";
-import { capitalizeFirstLetter } from "@/utils/helpers";
 import useForm from "@/hooks/useForm";
+import { useGetSingleFormFieldsQuery } from "@/store/api/applicationApi";
+import TextFieldSkeleton from "@/components/skeleton-loaders/TextFieldSkeleton";
+import { validator } from "@/utils/validator";
+import TextInput from "./TextInput";
+import TextArea from "./TextArea";
+import DatePicker from "./DatePicker";
+import { FieldTypes } from ".";
 
-const form = [
-  {
-    id: "f1",
-    name: "first_name",
-    placeholder: "first name",
-    type: "text",
-  },
-  {
-    id: "f2",
-    name: "last_name",
-    placeholder: "last name",
-    type: "text",
-  },
-  {
-    id: "f3",
-    name: "classification",
-    placeholder: "classification",
-    type: "text",
-  },
-  {
-    id: "f4",
-    name: "topic",
-    placeholder: "topic",
-    type: "text",
-  },
-  {
-    id: "f5",
-    name: "email",
-    placeholder: "email",
-    type: "email",
-  },
-  {
-    id: "f6",
-    name: "tel_Phone",
-    placeholder: "phone",
-    type: "text",
-  },
-];
-
-const InitialData = {
-  first_name: "",
-  last_name: "",
-  classification: "",
-  topic: "",
-  email: "",
-  tel_phone: "",
-};
-
-const ApplicationDetails = () => {
+const ApplicationFormFields = () => {
   const router = useRouter();
   const params = useParams();
   const applicationId = params.applicationId;
-  //   persist form data
+  const { isLoading, isSuccess, isError, error, data } =
+    useGetSingleFormFieldsQuery(applicationId);
+  const fields = data?.data?.fields;
+
+  console.log(fields);
+
+  // forms fields are on page one and 2 of fields data
+  const formFields = fields?.filter(
+    (field) => field.page === 1 || field.page === 2
+  );
+
+  // documents are on page 3 of fiels data
+  const generatedDocuments = fields?.filter((field) => field.page === 3);
+  console.log(generatedDocuments);
+
+  useEffect(() => {
+    if (generatedDocuments?.length !== 0) {
+      localStorage.setItem(
+        "generatedDocuments",
+        JSON.stringify(generatedDocuments)
+      );
+    }
+  }, [fields]);
+
+  console.log(data);
+  let InitialData = {};
+  // let fieldsInitialErrorStates = {};
+
+  // auto generate form Fields object of dynamic form field
+  useEffect(() => {
+    const createInitialObject = () => {
+      if (formFields?.length !== 0) {
+        formFields?.forEach((field) => {
+          InitialData[field?.name] = "";
+          // fieldsInitialErrorStates[field?.name] = false;
+        });
+        return InitialData;
+      }
+      return {};
+    };
+    if (formFields?.length !== 0) {
+      const initialData = createInitialObject();
+      setFormData(initialData);
+    }
+  }, [fields]);
+
+  // persist form fields object
   const initializer = () =>
     JSON.parse(localStorage.getItem("formData")) || InitialData;
   const { formData, setFormData, handleChange } = useForm(initializer);
+  const allfieldsNotFilled = validator.whiteSpaces(formData);
 
   const navigateToNextStep = () => {
+    console.log(formData);
     router.push(`/user/application-type/${applicationId}/documents`);
   };
 
+  // fetch persisted data from local storage
   useEffect(() => {
     const storedFormData = localStorage.getItem("formData");
     if (storedFormData) {
@@ -82,6 +87,15 @@ const ApplicationDetails = () => {
   useEffect(() => {
     localStorage.setItem("formData", JSON.stringify(formData));
   }, [formData]);
+
+  const fieldNotEmpty = validator.notEmpty();
+
+  const validateForm = (type) => {
+    // const fieldsInitialErrorStates = {};
+    // formFields?.forEach((field) => {
+    //   InitialData[field?.name] = false;
+    // });
+  };
 
   return (
     <DashboardLayout header="Application Details" icon="">
@@ -106,25 +120,52 @@ const ApplicationDetails = () => {
               <h1 className="text-[#46B038] font-bold">APPLICATION DETAILS:</h1>
               <span className="">{applicationId}</span>
             </div>
-            <div className="grid grid-cols-2 gap-y-8">
-              {form.map((item) => (
-                <div
-                  key={item.id}
-                  className="grid w-full max-w-sm items-center gap-2"
-                >
-                  <Label htmlFor={item.name}>
-                    {capitalizeFirstLetter(item.name.split("_").join(" "))}
-                  </Label>
-                  <Input
-                    type={item.type}
-                    id={item.id}
-                    placeholder={item.placeholder}
-                    name={item.name}
-                    onChange={handleChange}
-                    value={formData[item.name]}
-                  />
-                </div>
-              ))}
+            <div className="grid lg:grid-cols-2 grid-cols-1 gap-y-8 lg:gap-y-10 w-full">
+              {isSuccess &&
+                formFields?.map((field) => {
+                  const fieldNotEmpty = validator.notEmpty(
+                    formData[field.name]
+                  );
+                  return field.type === "SHORT_TEXT" ||
+                    field.type === "EMAIL" ||
+                    field.type === "PHONE" ? (
+                    <TextInput
+                      key={field.id}
+                      id={field.id}
+                      type={FieldTypes[field.type]}
+                      name={field.name}
+                      onChange={handleChange}
+                      value={formData[field.name]}
+                      fieldCustomType={field.type}
+                      // isValid={isValid}
+                      // onFocus={}
+                    />
+                  ) : field.type === "LONG_TEXT" ? (
+                    <TextArea
+                      key={field.id}
+                      id={field.id}
+                      name={field.name}
+                      onChange={handleChange}
+                      value={formData[field.name]}
+                      // isValid={isValid}
+                    />
+                  ) : field.type === "DATE" ? (
+                    <DatePicker
+                      key={field.id}
+                      id={field.id}
+                      name={field.name}
+                      onChange={handleChange}
+                      value={formData[field.name]}
+                      // isValid={isValid}
+                    />
+                  ) : (
+                    ""
+                  );
+                })}{" "}
+              {(isLoading || !data) &&
+                [1, 2, 3, 4, 5, 6, 7, 8, 9].map((loader) => (
+                  <TextFieldSkeleton key={loader} />
+                ))}
             </div>
             <div className="space-x-3">
               <button
@@ -135,9 +176,10 @@ const ApplicationDetails = () => {
                 Back
               </button>
               <button
+                disabled={allfieldsNotFilled}
                 type="button"
                 onClick={navigateToNextStep}
-                className="px-6 py-2 bg-[#46B038] hover:opacity-70 text-white rounded-md"
+                className="lg:px-8 px-6 py-2 bg-[#46B038] hover:opacity-70 text-white rounded-md disabled:cursor-not-allowed disabled:opacity-70"
               >
                 Next
               </button>
@@ -149,4 +191,4 @@ const ApplicationDetails = () => {
   );
 };
 
-export default WithAuth(ApplicationDetails);
+export default WithAuth(ApplicationFormFields);

@@ -87,7 +87,6 @@ const ApplicationForm = () => {
 
   const allfieldsNotFilled = validator.whiteSpaces(formData);
 
-
   const createNewApplication = async () => {
     const files = await handleUpload();
     console.log(files);
@@ -199,7 +198,6 @@ const ApplicationForm = () => {
       setIsVisible(true);
     }
   }, [allfieldsNotFilled]);
-
 
   return (
     <>

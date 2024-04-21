@@ -3,7 +3,7 @@
 import DashboardLayout from "../../components/layouts/DashboardLayout";
 import { useEffect, useState } from "react";
 import Table from "../../components/Table";
-import { AddCircleIcon } from "@/svgs";
+import { AddCircleIcon, ApplicationAdd } from "@/svgs";
 import StatsCard from "@/components/StatsCard";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -47,7 +47,7 @@ const DashboardSuspenseBoundary = () => {
               href="user/new-application"
               className="bg-blue-700 mt-6 w-fit px-4 py-2.5 text-sm flex items-center gap-2 rounded-md text-white hover:bg-blue-600"
             >
-              <span className="">{AddCircleIcon}</span>
+              <span className="">{ApplicationAdd}</span>
               <span className="">New Application</span>
             </Link>
           )}
