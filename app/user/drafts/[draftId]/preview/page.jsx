@@ -180,6 +180,7 @@ const Preview = () => {
         <ImageUploadLoader
           isUploading={isUploading}
           isSubmitting={isApplicationLoading}
+          isLoading={isLoading}
         />
       )}
       <DashboardLayout header={`Application- ${draftId}`} icon="">

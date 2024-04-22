@@ -24,6 +24,7 @@ const Preview = () => {
   const applicationId = params.applicationId;
   const [isUploading, setIsUploading] = useState(false);
   const [documents, setDocuments] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getDocuments("applicationDocuments")
@@ -86,6 +87,7 @@ const Preview = () => {
 
       await Promise.all(
         formDatas.map(async (formData, index) => {
+          setIsLoading(true);
           setIsUploading(true);
           try {
             const response = await fetch(url, {
@@ -100,6 +102,8 @@ const Preview = () => {
             });
           } catch (err) {
             console.error("Error uploading file:", err);
+            setIsLoading(false);
+            toast.error(err, { autoClose: 30000 });
           } finally {
             console.log("done");
             setIsUploading(false);
@@ -145,8 +149,10 @@ const Preview = () => {
     if (applicationError) {
       const err = normalizeErrors(applicationError);
       toast.error(err, { autoClose: 30000 });
+      setIsLoading(false);
     }
     if (isApplicationSuccess) {
+      setIsLoading(false);
       toast.success("Successfully created form!", { autoClose: 5000 });
       // Delete all documents from indexDB after upload
       deleteAllDocuments("applicationDocuments")
@@ -165,7 +171,13 @@ const Preview = () => {
       {isApplicationSuccess && (
         <PaymentModal application_id={new_application_id} />
       )}
-      {isUploading && <ImageUploadLoader />}
+      {isLoading && (
+        <ImageUploadLoader
+          isUploading={isUploading}
+          isSubmitting={isApplicationLoading}
+          isLoading={isLoading}
+        />
+      )}
       <DashboardLayout header={`Application- ${applicationId}`} icon="">
         <div className="space-y- w-full">
           <div className="space-y-4">
