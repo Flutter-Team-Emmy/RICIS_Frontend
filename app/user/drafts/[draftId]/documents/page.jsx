@@ -148,10 +148,10 @@ const Documents = () => {
     getDocuments("draftDocuments")
       .then((documents) => {
         const singleDraftDocuments = documents?.filter(
-          (doc) => doc.draftId === draftId
+          (doc) => doc.docId === draftId && doc.applicationId === applicationId
         );
         setDocuments(singleDraftDocuments);
-        console.log(deleteSingleDocument);
+        console.log(singleDraftDocuments);
       })
       .catch((error) => {
         console.error("Failed to load documents from IndexedDB:", error);
@@ -164,10 +164,10 @@ const Documents = () => {
     getDocuments("draftDocuments")
       .then((documents) => {
         const singleDraftDocuments = documents?.filter(
-          (doc) => doc.docId === draftId
+          (doc) => doc.docId === draftId  && doc.applicationId === applicationId
         );
         setDocuments(singleDraftDocuments);
-        console.log(deleteSingleDocument);
+        console.log();
       })
       .catch((error) => {
         console.error("Failed to load documents from IndexedDB:", error);
@@ -270,7 +270,8 @@ const Documents = () => {
                 <div className="pt-20 space-x-3 text-sm">
                   <button
                     type="button"
-                    onClick={() => router.push("/user/drafts")}
+                    onClick={removeAllDocument}
+                    // onClick={() => router.push("/user/drafts")}
                     className="px-4 py-2 border border-[#46B038] text-gray-600 rounded-md hover:opacity-70"
                   >
                     Cancel

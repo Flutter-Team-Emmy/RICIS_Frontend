@@ -11,7 +11,7 @@ import TextArea from "../../application-type/[applicationId]/TextArea";
 import DatePicker from "../../application-type/[applicationId]/DatePicker";
 import { FieldTypes } from "../../application-type/[applicationId]";
 import useForm from "@/hooks/useForm";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Draft = () => {
   const router = useRouter();
@@ -83,9 +83,16 @@ const Draft = () => {
     localStorage.setItem("draftFormData", JSON.stringify(formData));
   }, [formData]);
 
+  const [isRefreshed, setIsRefreshed] = useState(false);
+
   useEffect(() => {
-    refetch();
-  }, []);
+    if (!isRefreshed) {
+      setIsRefreshed(true);
+      refetch();
+      // window.location.reload();
+    }
+    // refetch();
+  }, [isRefreshed]);
 
   console.log(draft);
 
