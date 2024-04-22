@@ -175,7 +175,8 @@ const Documents = () => {
   }, [selectedDocFiles]);
 
   const previewForm = () => {
-    router.push(`/user/drafts/${draftId}/preview`);
+    const id = `${draftId}-${applicationId}`;
+    router.push(`/user/drafts/${id}/preview`);
   };
 
   const addedDocs = JSON.parse(localStorage.getItem("documents"));
@@ -280,7 +281,7 @@ const Documents = () => {
                     onClick={previewForm}
                     className="px-6 py-2 bg-[#46B038] hover:opacity-70 text-white rounded-md disabled:cursor-not-allowed disabled:opacity-70"
                   >
-                    Next
+                    Preview
                   </button>
                 </div>
               </div>

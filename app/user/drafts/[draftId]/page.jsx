@@ -18,9 +18,11 @@ const Draft = () => {
   const params = useParams();
   const param = params.draftId;
   const draftId = param.split("-")[0];
+  const applicationId = param.split("-")[1];
   console.log(draftId);
 
-  const { data, isLoading, isSuccess } = useGetSingleDraftQuery(draftId);
+  const { data, isLoading, isSuccess, refetch } =
+    useGetSingleDraftQuery(draftId);
   const draft = data?.data.draft_application;
 
   const formFields = draft?.data?.filter(
@@ -81,10 +83,15 @@ const Draft = () => {
     localStorage.setItem("draftFormData", JSON.stringify(formData));
   }, [formData]);
 
+  useEffect(() => {
+    refetch();
+  }, []);
+
   console.log(draft);
 
   const navigateToNextStep = () => {
-    router.push(`/user/drafts/${draftId}/documents`);
+    const id = `${draftId}-${applicationId}`;
+    router.push(`/user/drafts/${id}/documents`);
   };
 
   const allfieldsNotFilled = validator.whiteSpaces(formData);
