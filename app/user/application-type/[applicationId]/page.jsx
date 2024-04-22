@@ -105,6 +105,7 @@ const ApplicationFormFields = () => {
       router.push(`/user/drafts`);
     }
   }, [isDraftSuccess]);
+  
 
   const createDraft = async (formData) => {
     const payload = {

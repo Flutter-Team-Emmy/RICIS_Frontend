@@ -1,14 +1,22 @@
 import { CalendarIcon } from "@/svgs";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { validator } from "@/utils/validator";
 
-const DatePicker = ({ name, value, onChange, id}) => {
+const DatePicker = ({ name, value, onChange, id }) => {
   const [isValid, setIsValid] = useState(true);
+  const [isFocus, setIsFocus] = useState(false);
 
   const handleFocus = () => {
+    setIsFocus(true);
     const notEmpty = validator.notEmpty(value);
     setIsValid(notEmpty);
   };
+
+  useEffect(() => {
+    if (isFocus) {
+      handleFocus();
+    }
+  }, [value]);
 
   return (
     <div class="w-full max-w-sm space-y-2 ">
@@ -27,6 +35,7 @@ const DatePicker = ({ name, value, onChange, id}) => {
         value={value}
         onFocus={handleFocus}
         required
+        autoComplete="off"
       />
       {!isValid && <p className="text-red-500 text-sm">Invalid field</p>}
     </div>

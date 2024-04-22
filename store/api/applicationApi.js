@@ -150,7 +150,7 @@ export const applicationApi = createApi({
           url: `/application/draft/${draftId}`,
         };
       },
-      invalidatesTags: [{ type: "Applications", id: "LIST" }],
+      // invalidatesTags: [{ type: "Applications", id: "LIST" }],
     }),
     mailCertificate: builder.query({
       query(application_id) {

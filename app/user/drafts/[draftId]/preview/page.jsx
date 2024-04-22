@@ -5,7 +5,7 @@ import DashboardLayout from "@/components/layouts/DashboardLayout";
 import WithAuth from "@/components/withAuth";
 import { Check } from "@/svgs";
 import { document } from "@/svgs";
-import Document from "./Document";
+import Document from "@/app/user/application-type/[applicationId]/preview/Document";
 import Btn from "@/components/Btn";
 import { cloud_name, upload_preset } from "@/lib/configs";
 import { useAddNewApplicationMutation } from "@/store/api/applicationApi";
@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { normalizeErrors } from "@/utils/helpers";
 import PaymentModal from "@/components/modals/paymentModal";
-import { getDocuments } from "@/lib/indexDB";
+import { deleteDocumentsByDraftId, getDocuments } from "@/lib/indexDB";
 import { ImageUpload } from "@/components/imageUpload";
 import ImageUploadLoader from "@/components/loaders/imageUpload";
 import { deleteAllDocuments } from "@/lib/indexDB";
@@ -21,15 +21,17 @@ import { deleteAllDocuments } from "@/lib/indexDB";
 const Preview = () => {
   const router = useRouter();
   const params = useParams();
-  const applicationId = params.applicationId;
+  const applicationId = params.draftId;
   const [isUploading, setIsUploading] = useState(false);
   const [documents, setDocuments] = useState([]);
 
   useEffect(() => {
-    getDocuments("applicationDocuments")
+    getDocuments("draftDocuments")
       .then((documents) => {
-        setDocuments(documents);
-        console.log(documents);
+        const singleDraftDocuments = documents?.filter(
+          (doc) => doc.docId === applicationId
+        );
+        setDocuments(singleDraftDocuments);
       })
       .catch((error) => {
         console.error("Failed to load documents from IndexedDB:", error);
@@ -37,7 +39,7 @@ const Preview = () => {
   }, []);
 
   // retrieve already stored data from localstorage
-  const storedFormData = JSON.parse(localStorage.getItem("formData"));
+  const storedFormData = JSON.parse(localStorage.getItem("draftFormData"));
   const formData = Object.keys(storedFormData);
 
   // const storedDocuments = JSON.parse(localStorage.getItem("documents"));
@@ -149,7 +151,7 @@ const Preview = () => {
     if (isApplicationSuccess) {
       toast.success("Successfully created form!", { autoClose: 5000 });
       // Delete all documents from indexDB after upload
-      deleteAllDocuments("applicationDocuments")
+      deleteDocumentsByDraftId(applicationId)
         .then(() => {
           console.log("All documents deleted successfully");
           // Optionally, update the state or perform any other actions after deletion

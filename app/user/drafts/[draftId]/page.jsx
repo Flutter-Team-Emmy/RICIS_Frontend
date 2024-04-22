@@ -2,10 +2,10 @@
 
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { useGetSingleDraftQuery } from "@/store/api/applicationApi";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import FPI from "../../FPI";
 import TextFieldSkeleton from "@/components/skeleton-loaders/TextFieldSkeleton";
-import Validator from "@/utils/validator";
+import { validator } from "@/utils/validator";
 import TextInput from "../../application-type/[applicationId]/TextInput";
 import TextArea from "../../application-type/[applicationId]/TextArea";
 import DatePicker from "../../application-type/[applicationId]/DatePicker";
@@ -14,9 +14,9 @@ import useForm from "@/hooks/useForm";
 import { useEffect } from "react";
 
 const Draft = () => {
+  const router = useRouter();
   const params = useParams();
   const draftId = params.draftId;
-  const applicationId = params.applicationId;
   console.log(draftId);
 
   const { data, isLoading, isSuccess } = useGetSingleDraftQuery(draftId);
@@ -25,6 +25,21 @@ const Draft = () => {
   const formFields = draft?.data?.filter(
     (field) => field?.form_field?.page === 1 || field?.form_field?.page === 2
   );
+
+  // documents are on page 3 of fiels data
+  const generatedDraftDocuments = draft?.data?.filter(
+    (field) => field.form_field.page === 3
+  );
+  console.log(generatedDraftDocuments);
+
+  useEffect(() => {
+    if (generatedDraftDocuments?.length !== 0) {
+      localStorage.setItem(
+        "generatedDraftDocuments",
+        JSON.stringify(generatedDraftDocuments)
+      );
+    }
+  }, [draft]);
 
   let InitialData = {};
   // let fieldsInitialErrorStates = {};
@@ -67,6 +82,12 @@ const Draft = () => {
 
   console.log(draft);
 
+  const navigateToNextStep = () => {
+    router.push(`/user/drafts/${draftId}/documents`);
+  };
+
+  const allfieldsNotFilled = validator.whiteSpaces(formData);
+
   return (
     <DashboardLayout header="Drafts" icon="">
       <div className="space-y- w-full">
@@ -82,15 +103,18 @@ const Draft = () => {
               </p>
             </div>
           </div>
-          <div className="flex justify-auto mx-auto">
+          {/* <div className="flex justify-auto mx-auto">
             <FPI length={4} shade={3} />
-          </div>
+          </div> */}
           <div className="bg-white w-full shadow-md rounded-md space-y-16 p-6 h-fit">
             <div className="flex items-center gap-2">
-              <h1 className="text-[#46B038] font-bold">APPLICATION DETAILS:</h1>
-              <span className="">{applicationId}</span>
+              <h1 className="text-[#46B038] font-bold">Draft's Form:</h1>
+              <span className="">{draftId}</span>
             </div>
-            <div className="grid lg:grid-cols-2 grid-cols-1 gap-y-8 lg:gap-y-10 w-full">
+            <form
+              autoComplete="off"
+              className="grid lg:grid-cols-2 grid-cols-1 gap-y-8 lg:gap-y-10 w-full"
+            >
               {isSuccess &&
                 draft?.data?.map((field) => {
                   return field.form_field.type === "SHORT_TEXT" ||
@@ -133,7 +157,7 @@ const Draft = () => {
                 [1, 2, 3, 4, 5, 6, 7, 8, 9].map((loader) => (
                   <TextFieldSkeleton key={loader} />
                 ))}
-            </div>
+            </form>
             <div className="space-x-3">
               <button
                 type="button"
@@ -143,9 +167,9 @@ const Draft = () => {
                 Back
               </button>
               <button
-                // disabled={allfieldsNotFilled}
+                disabled={allfieldsNotFilled}
                 type="button"
-                // onClick={navigateToNextStep}
+                onClick={navigateToNextStep}
                 className="lg:px-8 px-6 py-2 bg-[#46B038] hover:opacity-70 text-white rounded-md disabled:cursor-not-allowed disabled:opacity-70"
               >
                 Next

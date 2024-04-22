@@ -12,25 +12,24 @@ import TableSkeleton from "@/components/skeleton-loaders/TableSkeleton";
 import { useEffect } from "react";
 
 const tableColumn = [
-  "Ref No",
+  "Application ID",
   "Applicant Name",
-  "Payment Status",
+  "Payment Kind",
+  "Amount",
   "Application Name",
-  "Status",
+  // "Status",
   "Date Applied",
 ];
 
 const Table = () => {
-
   const router = useRouter();
 
   const draftRouter = (id) => {
-    console.log("Hii")
+    console.log("Hii");
     router.push(`/user/drafts/${id}`);
   };
 
-  const { isLoading, isSuccess, isError, error, data } =
-    useGetAllDraftsQuery();
+  const { isLoading, isSuccess, isError, error, data } = useGetAllDraftsQuery();
 
   const drafts = data?.data.draft_applications;
 
@@ -57,7 +56,7 @@ const Table = () => {
   return drafts?.length > 0 ? (
     <div className="relative overflow-x-auto lg:overflow-x-hidden shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-        <thead className="text-sm text-gray-500 uppercas bg-gray-50">
+        <thead className="w-full text-sm text-gray-500 uppercas bg-gray-50">
           <tr className="whitespace-nowrap">
             {tableColumn.map((column) => (
               <th key={column} scope="col" className="px-6 py-3">
@@ -72,9 +71,7 @@ const Table = () => {
         <tbody>
           {drafts?.map((drafts) => (
             <tr
-              onClick={() =>
-                draftRouter(drafts.id)
-              }
+              onClick={() => draftRouter(drafts.id)}
               key={drafts.id}
               className="whitespace-nowrap lg:whitespace-normal bg-white border-b w-full text-sm cursor-pointer hover:opacity-70"
             >
@@ -82,30 +79,22 @@ const Table = () => {
                 scope="row"
                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
               >
-                {cutString(drafts.reference_id, 10)}
+                {drafts.form.id}
               </th>
               <td className="px-6 py-4 w-80">
-                {drafts?.user?.first_name +
-                  " " +
-                  drafts?.user?.last_name}
+                {drafts?.user?.first_name + " " + drafts?.user?.last_name}
               </td>
               <td className="px-6 py-4">
-                <span
-                  className={`py-1.5 rounded-3xl ${drafts?.transactions?.length === 0
-                      ? "bg-red-100 text-red-600 px-3"
-                      : "bg-green-100 text-green-700 px-6"
-                    } `}
-                >
-                  {drafts?.transactions?.length === 0 ? "Unpaid" : "Paid"}
-                </span>
+                {drafts.form.payment_kind.split("_").join(" ")}
               </td>
+              <td className="px-6 py-4 w-80">{drafts?.form?.amount}</td>
               <td className="px-6 py-4 w-80">{drafts?.form?.name}</td>
               {/* <td className="px-6 py-4">
                 <span className={`px-2.5 py-1.5 text-sm bg-gray-200 rounded-3xl py-1 px-3`}>Draft</span>
               </td> */}
               <td className="px-6 py-4 space-y-1 flex flex-col items-end ">
-                <p className="">{time.formatDate(drafts?.updated_at)}</p>
-                <p className="">{time.formatTime(drafts?.updated_at)}</p>
+                <p className="">{time.formatDate(drafts?.createdAt)}</p>
+                <p className="">{time.formatTime(drafts?.createdAt)}</p>
               </td>
             </tr>
           ))}
