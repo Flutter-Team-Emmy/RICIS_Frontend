@@ -55,8 +55,8 @@ const Table = ({isLoading, drafts}) => {
 
   return drafts?.length > 0 ? (
     <div className="relative overflow-x-auto lg:overflow-x-hidden shadow-md sm:rounded-lg">
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-        <thead className="w-full text-sm text-gray-500 uppercas bg-gray-50">
+      <table className="w-full text-xs text-left rtl:text-right text-gray-500">
+        <thead className="w-full text-gray-500 uppercas bg-gray-50">
           <tr className="whitespace-nowrap">
             {tableColumn.map((column) => (
               <th key={column} scope="col" className="px-6 py-3">
@@ -75,7 +75,7 @@ const Table = ({isLoading, drafts}) => {
               <tr
                 onClick={() => draftRouter(id)}
                 key={drafts.id}
-                className="whitespace-nowrap lg:whitespace-normal bg-white border-b w-full text-sm cursor-pointer hover:opacity-70"
+                className="whitespace-nowrap lg:whitespace-normal bg-white border-b w-full cursor-pointer hover:opacity-70"
               >
                 <th
                   scope="row"

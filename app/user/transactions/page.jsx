@@ -16,9 +16,9 @@ const Transactions = () => {
   return (
     <DashboardLayout header="Transactions">
       <div className="w-full pb-8">
-        <h1 className="text-black font-bold text-2xl">Financial Management</h1>
+        <h1 className="text-black font-bold text-2xl">Payment Record</h1>
         <p className="text-gray-600 text-sm">
-          view all your previous transactions
+          view all your transactions
         </p>
       </div>
       <div className="bg-white rounded-lg">

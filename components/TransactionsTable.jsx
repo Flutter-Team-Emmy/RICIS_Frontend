@@ -25,8 +25,10 @@ const tableHeader = [
 ];
 
 const TransactionsTable = () => {
+  const router = useRouter();
   const currentUser = useSelector(selectUser);
   const role = useSelector(selectRole);
+  console.log(role);
 
   const transactions = useSelector(selectTransactons);
   const fetchingStates = useSelector(selectFetchingStates);
