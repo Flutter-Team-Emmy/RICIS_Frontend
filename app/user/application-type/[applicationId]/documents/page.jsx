@@ -381,7 +381,7 @@ const Documents = () => {
                         File size must be less than 10mb.
                       </p>
                       {sizeErrorFiles.map((file) => (
-                        <p className="italic">{file}</p>
+                        <p key={file} className="italic">{file}</p>
                       ))}
                     </div>
                   )}
