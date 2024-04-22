@@ -26,6 +26,7 @@ const Preview = () => {
   const applicationId = param.split("-")[1];
   const [isUploading, setIsUploading] = useState(false);
   const [documents, setDocuments] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getDocuments("draftDocuments")
@@ -90,6 +91,7 @@ const Preview = () => {
 
       await Promise.all(
         formDatas.map(async (formData, index) => {
+          setIsLoading(true);
           setIsUploading(true);
           try {
             const response = await fetch(url, {
@@ -104,6 +106,7 @@ const Preview = () => {
             });
           } catch (err) {
             console.error("Error uploading file:", err);
+            setIsLoading(false);
           } finally {
             console.log("done");
             setIsUploading(false);
@@ -138,8 +141,7 @@ const Preview = () => {
 
     const payload = {
       draft_id: draftId,
-      form_id: draftId,
-      as_draft: false,
+      form_id: applicationId,
       data: forms,
     };
     console.log(payload);
@@ -150,9 +152,11 @@ const Preview = () => {
     if (applicationError) {
       const err = normalizeErrors(applicationError);
       toast.error(err, { autoClose: 30000 });
+      setIsLoading(false);
     }
     if (isApplicationSuccess) {
       toast.success("Successfully created form!", { autoClose: 5000 });
+      setIsLoading(false);
       // Delete all documents from indexDB after upload
       deleteDocumentsByDraftId(draftId)
         .then(() => {
@@ -165,12 +169,19 @@ const Preview = () => {
     }
   }, [isApplicationSuccess, applicationError]);
 
+  // const isLoading = isUploading || isApplicationLoading;
+
   return (
     <>
       {isApplicationSuccess && (
         <PaymentModal application_id={new_application_id} />
       )}
-      {isUploading && <ImageUploadLoader />}
+      {isLoading && (
+        <ImageUploadLoader
+          isUploading={isUploading}
+          isSubmitting={isApplicationLoading}
+        />
+      )}
       <DashboardLayout header={`Application- ${draftId}`} icon="">
         <div className="space-y- w-full">
           <div className="space-y-4">
@@ -190,9 +201,7 @@ const Preview = () => {
                 <h1 className="text-[#46B038] font-bold">
                   APPLICATION DETAILS:
                 </h1>
-                <span className="font-semibold text-gray-500">
-                  {draftId}
-                </span>
+                <span className="font-semibold text-gray-500">{draftId}</span>
               </div>
               <div className="grid grid-cols-2 gap-y-6 text-sm">
                 {formData.map((name) => (
