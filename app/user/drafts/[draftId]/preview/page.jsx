@@ -21,7 +21,9 @@ import { deleteAllDocuments } from "@/lib/indexDB";
 const Preview = () => {
   const router = useRouter();
   const params = useParams();
-  const applicationId = params.draftId;
+  const param = params.draftId;
+  const draftId = param.split("-")[0];
+  const applicationId = param.split("-")[1];
   const [isUploading, setIsUploading] = useState(false);
   const [documents, setDocuments] = useState([]);
 
@@ -29,7 +31,7 @@ const Preview = () => {
     getDocuments("draftDocuments")
       .then((documents) => {
         const singleDraftDocuments = documents?.filter(
-          (doc) => doc.docId === applicationId
+          (doc) => doc.docId === draftId
         );
         setDocuments(singleDraftDocuments);
       })
@@ -135,7 +137,8 @@ const Preview = () => {
     console.log(forms);
 
     const payload = {
-      form_id: applicationId,
+      draft_id: draftId,
+      form_id: draftId,
       as_draft: false,
       data: forms,
     };
@@ -151,7 +154,7 @@ const Preview = () => {
     if (isApplicationSuccess) {
       toast.success("Successfully created form!", { autoClose: 5000 });
       // Delete all documents from indexDB after upload
-      deleteDocumentsByDraftId(applicationId)
+      deleteDocumentsByDraftId(draftId)
         .then(() => {
           console.log("All documents deleted successfully");
           // Optionally, update the state or perform any other actions after deletion
@@ -168,7 +171,7 @@ const Preview = () => {
         <PaymentModal application_id={new_application_id} />
       )}
       {isUploading && <ImageUploadLoader />}
-      <DashboardLayout header={`Application- ${applicationId}`} icon="">
+      <DashboardLayout header={`Application- ${draftId}`} icon="">
         <div className="space-y- w-full">
           <div className="space-y-4">
             <div className="flex justify-between items-center w-full">
@@ -188,7 +191,7 @@ const Preview = () => {
                   APPLICATION DETAILS:
                 </h1>
                 <span className="font-semibold text-gray-500">
-                  {applicationId}
+                  {draftId}
                 </span>
               </div>
               <div className="grid grid-cols-2 gap-y-6 text-sm">

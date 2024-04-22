@@ -5,11 +5,18 @@ import StatsCard from "@/components/StatsCard";
 import WithAuth from "@/components/withAuth";
 import { useGetStatsQuery } from "@/store/api/applicationApi";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectTotalPage } from "@/store/features/applicatonsSlice";
+import { setPage } from "@/store/features/applicatonsSlice";
+import Paginations from "@/components/Pagination";
 
 const Admin = () => {
   const { isLoading, isSuccess, error, data, refetch } = useGetStatsQuery();
   const stats = data?.data?.stats;
   console.log(data);
+
+  const dispatch = useDispatch();
+  const pageCount = useSelector(selectTotalPage) + 1;
 
   useEffect(() => {
     refetch();
@@ -41,6 +48,10 @@ const Admin = () => {
           ))}
         </div>
         <Table />
+        <Paginations
+          pageCount={pageCount}
+          setPage={(event) => dispatch(setPage(event.selected))}
+        />
       </div>
     </DashboardLayout>
   );

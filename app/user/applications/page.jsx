@@ -11,10 +11,14 @@ import Search from "@/components/search/Search";
 import Paginations from "@/components/Pagination";
 import { useSearchParams } from "next/navigation";
 import { capitalizeFirstLetter } from "@/utils/helpers";
+import { useDispatch, useSelector } from "react-redux";
+import { selectTotalPage, setPage } from "@/store/features/applicatonsSlice";
 
 const ApplicationsSuspense = () => {
   const param = useSearchParams();
   const status = param.get("tab");
+  const dispatch = useDispatch();
+  const pageCount = useSelector(selectTotalPage) + 1;
 
   return (
     <DashboardLayout header="Applications">
@@ -47,7 +51,10 @@ const ApplicationsSuspense = () => {
             <Table />
           </Suspense>
         </div>
-        <Paginations />
+        <Paginations
+          pageCount={pageCount}
+          setPage={(event) => dispatch(setPage(event.selected))}
+        />
       </div>
     </DashboardLayout>
   );

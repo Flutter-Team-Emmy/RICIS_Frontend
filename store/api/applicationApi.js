@@ -50,9 +50,11 @@ export const applicationApi = createApi({
       providesTags: (result, error, id) => [{ type: "Applications", id }],
     }),
     getAllApplications: builder.query({
-      query() {
+      query(param) {
         return {
           url: "/application",
+          params: param,
+          // params
         };
       },
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
@@ -84,9 +86,10 @@ export const applicationApi = createApi({
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
     }),
     getAllDrafts: builder.query({
-      query() {
+      query(param) {
         return {
           url: "/application/draft",
+          params: param
         };
       },
       invalidatesTags: [{ type: "Applications", id: "LIST" }],

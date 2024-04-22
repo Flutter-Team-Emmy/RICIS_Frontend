@@ -128,7 +128,7 @@ const Documents = () => {
             saveDocumentData("applicationDocuments", {
               name: selectedDoc,
               data: updatedSelectedDocFiles,
-              docId: applicationId
+              applicationId,
             })
               .then(() => {
                 console.log("Document data saved successfully");
@@ -284,7 +284,8 @@ const Documents = () => {
       console.log(draftData);
       router.push(`/user/drafts`);
       // Transfer all curent application documents to draft documents when save as draft is triggered
-      transferDocuments(applicationId, documents)
+      const draftId = draftData?.data.draftApplicationBatch.id;
+      transferDocuments(applicationId, draftId)
         .then(() => {
           console.log("Documents transfer successfull");
         })
@@ -381,7 +382,9 @@ const Documents = () => {
                         File size must be less than 10mb.
                       </p>
                       {sizeErrorFiles.map((file) => (
-                        <p key={file} className="italic">{file}</p>
+                        <p key={file} className="italic">
+                          {file}
+                        </p>
                       ))}
                     </div>
                   )}

@@ -9,6 +9,10 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import { useGetStatsQuery } from "@/store/api/applicationApi";
+import Paginations from "@/components/Pagination";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { selectTotalPage, setPage } from "@/store/features/applicatonsSlice";
 
 const DashboardSuspenseBoundary = () => {
   const router = useRouter();
@@ -16,6 +20,9 @@ const DashboardSuspenseBoundary = () => {
   const pathname = usePathname();
   const isAdmin = pathname.includes("admin");
   const transactionStatus = param.get("status");
+
+  const dispatch = useDispatch();
+  const pageCount = useSelector(selectTotalPage) + 1;
 
   const { isLoading, isSuccess, error, data, refetch } = useGetStatsQuery();
   const stats = data?.data?.stats;
@@ -37,7 +44,9 @@ const DashboardSuspenseBoundary = () => {
       <div className="space-y-10 w-full">
         <div className="lg:flex lg:justify-between w-full items-center">
           <div className="space-y-1">
-            <h1 className="text-gray-900 text-2xl font-semibold">Welcome Back</h1>
+            <h1 className="text-gray-900 text-2xl font-semibold">
+              Welcome Back
+            </h1>
             <p className="text-gray-500 text-sm">
               Here is a preview of your activities and information
             </p>
@@ -71,6 +80,10 @@ const DashboardSuspenseBoundary = () => {
           ))}
         </div>
         <Table />
+        <Paginations
+          pageCount={pageCount}
+          setPage={(event) => dispatch(setPage(event.selected))}
+        />
       </div>
     </DashboardLayout>
   );

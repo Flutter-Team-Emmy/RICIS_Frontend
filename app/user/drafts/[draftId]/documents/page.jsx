@@ -22,7 +22,9 @@ import { getDocuments } from "@/lib/indexDB";
 const Documents = () => {
   const router = useRouter();
   const params = useParams();
-  const draftId = params.draftId;
+  const param = params.draftId;
+  const draftId = param.split("-")[0];
+  const applicationId = param.split("-")[1];
 
   const generatedDraftDocuments = JSON.parse(
     localStorage.getItem("generatedDraftDocuments")
@@ -100,6 +102,7 @@ const Documents = () => {
               name: selectedDoc,
               data: updatedSelectedDocFiles,
               docId: draftId,
+              applicationId,
             })
               .then(() => {
                 console.log("Document data saved successfully");
@@ -239,7 +242,9 @@ const Documents = () => {
                       File size must be less than 10mb.
                     </p>
                     {sizeErrorFiles.map((file) => (
-                      <p key={file} className="italic">{file}</p>
+                      <p key={file} className="italic">
+                        {file}
+                      </p>
                     ))}
                   </div>
                 )}

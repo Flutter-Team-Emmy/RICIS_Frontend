@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import ProgressBar from "@/components/ProgressBar";
 import ApplicationsProvider from "@/components/contexts/applicationsProvider";
 import UserProvider from "@/components/contexts/userProvider";
+import TransactionsProvider from "@/components/contexts/transactionsProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,9 +31,11 @@ export default function RootLayout({ children }) {
           />
           <UserProvider>
             <ApplicationsProvider>
-              <div>
-                <div>{children}</div>
-              </div>
+              <TransactionsProvider>
+                <div>
+                  <div>{children}</div>
+                </div>
+              </TransactionsProvider>
             </ApplicationsProvider>
           </UserProvider>
         </Provider>

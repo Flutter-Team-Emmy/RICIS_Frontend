@@ -6,6 +6,14 @@ import { cutString } from "@/utils/helpers";
 import { time } from "@/utils/time&dates";
 import { useRouter } from "next/navigation";
 import { useGetCurrentUserQuery } from "@/store/api/userApi";
+import { useSelector } from "react-redux";
+import {
+  selectFetchingStates,
+  selectTransactons,
+} from "@/store/features/transactionSlice";
+import { useDispatch } from "react-redux";
+import { selectUser } from "@/store/features/userSlice";
+import { selectRole } from "@/store/features/userSlice";
 
 const tableHeader = [
   "Ref No",
@@ -17,13 +25,13 @@ const tableHeader = [
 ];
 
 const TransactionsTable = () => {
-  const { isLoading, isSuccess, isError, error, data } =
-    useGetTransactionsQuery();
-  const { data: currentUser } = useGetCurrentUserQuery();
-  const role = currentUser?.data?.role;
-  const router = useRouter();
+  const currentUser = useSelector(selectUser);
+  const role = useSelector(selectRole);
 
-  const transactions = data?.data?.transactions;
+  const transactions = useSelector(selectTransactons);
+  const fetchingStates = useSelector(selectFetchingStates);
+  const isLoading = fetchingStates?.isLoading;
+  // const dispatch = useDispatch();
   console.log(transactions);
 
   const openTransactionInvoice = (InvoiceId) => {
@@ -50,8 +58,8 @@ const TransactionsTable = () => {
           </tr>
         </thead>
         <tbody className="">
-          {transactions.map((transaction, index) => {
-            const columns = Object.keys(data);
+          {transactions?.map((transaction, index) => {
+            // const columns = Object.keys(data);
             return (
               <tr
                 onClick={() => openTransactionInvoice(transaction?.id)}

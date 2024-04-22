@@ -21,7 +21,7 @@ const tableColumn = [
   "Date Applied",
 ];
 
-const Table = () => {
+const Table = ({isLoading, drafts}) => {
   const router = useRouter();
 
   const draftRouter = (id) => {
@@ -29,9 +29,9 @@ const Table = () => {
     router.push(`/user/drafts/${id}`);
   };
 
-  const { isLoading, isSuccess, isError, error, data } = useGetAllDraftsQuery();
+  // const { isLoading, isSuccess, isError, error, data } = useGetAllDraftsQuery();
 
-  const drafts = data?.data.draft_applications;
+  // const drafts = data?.data.draft_applications;
 
   console.log(drafts);
   //   console.log(data);
@@ -69,35 +69,38 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {drafts?.map((drafts) => (
-            <tr
-              onClick={() => draftRouter(drafts.id)}
-              key={drafts.id}
-              className="whitespace-nowrap lg:whitespace-normal bg-white border-b w-full text-sm cursor-pointer hover:opacity-70"
-            >
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+          {drafts?.map((drafts) => {
+            const id = `${drafts.id}-${drafts.formId}`;
+            return (
+              <tr
+                onClick={() => draftRouter(id)}
+                key={drafts.id}
+                className="whitespace-nowrap lg:whitespace-normal bg-white border-b w-full text-sm cursor-pointer hover:opacity-70"
               >
-                {drafts.form.id}
-              </th>
-              <td className="px-6 py-4 w-80">
-                {drafts?.user?.first_name + " " + drafts?.user?.last_name}
-              </td>
-              <td className="px-6 py-4">
-                {drafts.form.payment_kind.split("_").join(" ")}
-              </td>
-              <td className="px-6 py-4 w-80">{drafts?.form?.amount}</td>
-              <td className="px-6 py-4 w-80">{drafts?.form?.name}</td>
-              {/* <td className="px-6 py-4">
-                <span className={`px-2.5 py-1.5 text-sm bg-gray-200 rounded-3xl py-1 px-3`}>Draft</span>
-              </td> */}
-              <td className="px-6 py-4 space-y-1 flex flex-col items-end ">
-                <p className="">{time.formatDate(drafts?.createdAt)}</p>
-                <p className="">{time.formatTime(drafts?.createdAt)}</p>
-              </td>
-            </tr>
-          ))}
+                <th
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                >
+                  {drafts.form.id}
+                </th>
+                <td className="px-6 py-4 w-80">
+                  {drafts?.user?.first_name + " " + drafts?.user?.last_name}
+                </td>
+                <td className="px-6 py-4">
+                  {drafts.form.payment_kind.split("_").join(" ")}
+                </td>
+                <td className="px-6 py-4 w-80">{drafts?.form?.amount}</td>
+                <td className="px-6 py-4 w-80">{drafts?.form?.name}</td>
+                {/* <td className="px-6 py-4">
+              <span className={`px-2.5 py-1.5 text-sm bg-gray-200 rounded-3xl py-1 px-3`}>Draft</span>
+            </td> */}
+                <td className="px-6 py-4 space-y-1 flex flex-col items-end ">
+                  <p className="">{time.formatDate(drafts?.createdAt)}</p>
+                  <p className="">{time.formatTime(drafts?.createdAt)}</p>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

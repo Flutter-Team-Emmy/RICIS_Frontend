@@ -1011,3 +1011,35 @@ export const CalendarIcon = (
     <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
   </svg>
 );
+
+export const ArrowLeftCircle = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="2em"
+    height="2em"
+    viewBox="0 0 16 16"
+  >
+    <path
+      fill="currentColor"
+      d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"
+    />
+  </svg>
+);
+
+export const ArrowRightCircle = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="2em"
+    height="2em"
+    viewBox="0 0 16 16"
+  >
+    <path
+      fill="currentColor"
+      d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"
+    />
+  </svg>
+);
+
+// const ArrowRight(
+//   //
+// )

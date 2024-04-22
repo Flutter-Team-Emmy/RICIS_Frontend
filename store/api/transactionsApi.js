@@ -19,9 +19,10 @@ export const transactionsApi = createApi({
   tagTypes: ["Transactions"],
   endpoints: (builder) => ({
     getTransactions: builder.query({
-      query() {
+      query(param) {
         return {
           url: "/transactions",
+          params: param,
         };
       },
       invalidatesTags: [{ type: "Transactions", id: "LIST" }],
@@ -30,6 +31,7 @@ export const transactionsApi = createApi({
       query(InvoiceId) {
         return {
           url: `/transactions/${InvoiceId}`,
+          // params: param,
         };
       },
       invalidatesTags: [{ type: "Transactions", id: "LIST" }],

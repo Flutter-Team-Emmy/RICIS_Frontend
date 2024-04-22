@@ -7,6 +7,11 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { ArrowLeft, ArrowLeftCircle, ArrowRightCircle } from "@/svgs";
+// import { ArrowLeftCircle, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import ReactPaginate from "react-paginate";
+import { useDispatch } from "react-redux";
 
 // import {useRouter } from "next/navigation";
 
@@ -93,32 +98,55 @@ import {
 
 // export default Pagination;
 
-const Paginations = () => {
+const Paginations = ({ pageCount, setPage }) => {
+  // const dispatch = useDispatch();
+  // const
+  // const [page, setPage] = useState(1);
+  // return (
+  //   <Pagination>
+  //     <PaginationContent>
+  //       <PaginationItem>
+  //         <PaginationPrevious href="#" />
+  //       </PaginationItem>
+  //       <PaginationItem>
+  //         <PaginationLink href="#">1</PaginationLink>
+  //       </PaginationItem>
+  //       <PaginationItem>
+  //         <PaginationLink href="#" isActive>
+  //           2
+  //         </PaginationLink>
+  //       </PaginationItem>
+  //       <PaginationItem>
+  //         <PaginationLink href="#">3</PaginationLink>
+  //       </PaginationItem>
+  //       <PaginationItem>
+  //         <PaginationEllipsis />
+  //       </PaginationItem>
+  //       <PaginationItem>
+  //         <PaginationNext href="#" />
+  //       </PaginationItem>
+  //     </PaginationContent>
+  //   </Pagination>
+  // );
+
+  // const { isLoading, isSuccess, error, data, refetch } =
+  //   useGetAllApplicationsQuery();
+  // const applications = data?.data.applications.data;
+  // const dispatch = useDispatch();
+  // const token = getToken();
+  // console.log(data.data);
+
   return (
-    <Pagination>
-      <PaginationContent>
-        <PaginationItem>
-          <PaginationPrevious href="#" />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#">1</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#" isActive>
-            2
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#">3</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationEllipsis />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationNext href="#" />
-        </PaginationItem>
-      </PaginationContent>
-    </Pagination>
+    <ReactPaginate
+      containerClassName={"pagination text-gray-500"}
+      pageClassName={"page-item"}
+      activeClassName={"active shadow-md text-white"}
+      onPageChange={setPage}
+      pageCount={pageCount}
+      breakLabel="..."
+      previousLabel={<span>{ArrowLeftCircle}</span>}
+      nextLabel={<span>{ArrowRightCircle}</span>}
+    />
   );
 };
 

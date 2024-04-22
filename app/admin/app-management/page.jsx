@@ -6,8 +6,14 @@ import DashboardLayout from "@/components/layouts/DashboardLayout";
 import WithAuth from "@/components/withAuth";
 import { applicationsTabs } from "@/utils/data";
 import { Suspense } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectTotalPage } from "@/store/features/applicatonsSlice";
+import { setPage } from "@/store/features/applicatonsSlice";
+import Paginations from "@/components/Pagination";
 
 const AppManagement = () => {
+  const dispatch = useDispatch();
+  const pageCount = useSelector(selectTotalPage) + 1;
   return (
     <DashboardLayout header="Admin">
       <div className="w-full space-y-6">
@@ -20,12 +26,16 @@ const AppManagement = () => {
           </p>
         </div>
         <TabSwitcher applicationsTabs={applicationsTabs} />
-        <div className="space-y-8 bg-white py-4">
+        <div className="space-y-8 bg-white py-4 px-4">
           <Search />
           <Suspense>
             <Table />
           </Suspense>
         </div>
+        <Paginations
+          pageCount={pageCount}
+          setPage={(event) => dispatch(setPage(event.selected))}
+        />
       </div>
     </DashboardLayout>
   );

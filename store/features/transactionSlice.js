@@ -10,15 +10,15 @@ const initialState = {
     error: "",
     // refetch:,
   },
-  applications: [],
+  transactions: [],
 };
 
-const applicationsSlice = createSlice({
-  name: "applications",
+const transactionsSlice = createSlice({
+  name: "transactions",
   initialState,
   reducers: {
-    setApplications: (state, action) => {
-      state.applications = action.payload;
+    setTransactions: (state, action) => {
+      state.transactions = action.payload;
     },
     setFetchingStates: (state, action) => {
       state.fetchingStates = action.payload;
@@ -32,11 +32,11 @@ const applicationsSlice = createSlice({
   },
 });
 
-export const { setApplications, setFetchingStates, setPage, setTotalPages } =
-  applicationsSlice.actions;
-export const selectApplications = (state) => state.applications.applications;
-export const selectPage = (state) => state.applications.page;
-export const selectTotalPage = (state) => state.applications.totalPages;
+export const { setTransactions, setFetchingStates, setPage, setTotalPages } =
+  transactionsSlice.actions;
+export const selectTransactons = (state) => state.transactions.transactions;
+export const selectPage = (state) => state.transactions.page;
+export const selectTotalPage = (state) => state.transactions.totalPages;
 export const selectFetchingStates = (state) =>
-  state.applications.fetchingStates;
-export default applicationsSlice.reducer;
+  state.transactions.fetchingStates;
+export default transactionsSlice.reducer;

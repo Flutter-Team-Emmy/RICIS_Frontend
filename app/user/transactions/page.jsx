@@ -5,8 +5,14 @@ import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { SearchIcon } from "@/svgs";
 import TransactionsTable from "@/components/TransactionsTable";
 import WithAuth from "@/components/withAuth";
+import { useDispatch, useSelector } from "react-redux";
+import Paginations from "@/components/Pagination";
+import { selectTotalPage, setPage } from "@/store/features/transactionSlice";
 
 const Transactions = () => {
+  const dispatch = useDispatch();
+  const pageCount = useSelector(selectTotalPage) + 1;
+
   return (
     <DashboardLayout header="Transactions">
       <div className="w-full pb-8">
@@ -31,6 +37,12 @@ const Transactions = () => {
           </div>
         </form>
         <TransactionsTable />
+      </div>
+      <div className="mt-8">
+        <Paginations
+          pageCount={pageCount}
+          setPage={(event) => dispatch(setPage(event.selected))}
+        />
       </div>
     </DashboardLayout>
   );

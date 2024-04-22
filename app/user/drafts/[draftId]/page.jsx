@@ -16,7 +16,8 @@ import { useEffect } from "react";
 const Draft = () => {
   const router = useRouter();
   const params = useParams();
-  const draftId = params.draftId;
+  const param = params.draftId;
+  const draftId = param.split("-")[0];
   console.log(draftId);
 
   const { data, isLoading, isSuccess } = useGetSingleDraftQuery(draftId);
