@@ -12,16 +12,15 @@ import TableSkeleton from "@/components/skeleton-loaders/TableSkeleton";
 import { useEffect } from "react";
 
 const tableColumn = [
-  "Application ID",
-  "Applicant Name",
-  "Payment Kind",
-  "Amount",
   "Application Name",
+  "Applicant Name",
+  "Status",
+  "Amount",
   // "Status",
   "Date Applied",
 ];
 
-const Table = ({isLoading, drafts}) => {
+const Table = ({ isLoading, drafts }) => {
   const router = useRouter();
 
   const draftRouter = (id) => {
@@ -81,20 +80,23 @@ const Table = ({isLoading, drafts}) => {
                   scope="row"
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                 >
-                  {drafts.form.id}
+                  {drafts?.form?.name}
                 </th>
-                <td className="px-6 py-4 w-80">
+                <td className="px-6 py-4 w-64">
+                  {" "}
                   {drafts?.user?.first_name + " " + drafts?.user?.last_name}
                 </td>
-                <td className="px-6 py-4">
-                  {drafts.form.payment_kind.split("_").join(" ")}
+                {/* <td className="px-6 py-4 w-80">
+                  {drafts?.user?.first_name + " " + drafts?.user?.last_name}
+                </td> */}
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className="bg-gray-100 text-gray-600 py-2 px-6 font-semibold rounded-3xl">Draft</span>
                 </td>
-                <td className="px-6 py-4 w-80">{drafts?.form?.amount}</td>
-                <td className="px-6 py-4 w-80">{drafts?.form?.name}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{drafts?.form?.amount}</td>
                 {/* <td className="px-6 py-4">
               <span className={`px-2.5 py-1.5 text-sm bg-gray-200 rounded-3xl py-1 px-3`}>Draft</span>
             </td> */}
-                <td className="px-6 py-4 space-y-1 flex flex-col items-end ">
+                <td className="px-6 py-4 space-y-1 flex flex-col items-en whitespace-nowra ">
                   <p className="">{time.formatDate(drafts?.createdAt)}</p>
                   <p className="">{time.formatTime(drafts?.createdAt)}</p>
                 </td>

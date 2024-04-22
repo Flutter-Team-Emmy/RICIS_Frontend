@@ -17,9 +17,7 @@ const Transactions = () => {
     <DashboardLayout header="Transactions">
       <div className="w-full pb-8">
         <h1 className="text-black font-bold text-2xl">Payment Record</h1>
-        <p className="text-gray-600 text-sm">
-          view all your transactions
-        </p>
+        <p className="text-gray-600 text-sm">view all your transactions</p>
       </div>
       <div className="bg-white rounded-lg">
         <h1 className="text-black font-bold py-6 pl-6">Payment Information</h1>

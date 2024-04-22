@@ -10,7 +10,7 @@ import {
   getDateModified,
   removeEmptyFields,
 } from "@/utils/helpers";
-import { useLazySearchApplicationsQuery } from "@/store/api/applicationApi";
+import { useLazyGetAllApplicationsQuery } from "@/store/api/applicationApi"; 
 import { ClipLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
 import { setApplications } from "@/store/features/applicatonsSlice";
@@ -31,7 +31,7 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
   const [
     searchApplications,
     { isLoading, isFetching, isSuccess, error, data },
-  ] = useLazySearchApplicationsQuery();
+  ] = useLazyGetAllApplicationsQuery();
 
   const dispatch = useDispatch();
 
@@ -93,7 +93,7 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
   useEffect(() => {
     if (isSuccess) {
       setOpenFilter(false);
-      dispatch(setApplications(data?.data.applications));
+      dispatch(setApplications(data?.data.applications?.data));
       console.log(data);
     }
   }, [isSuccess]);
