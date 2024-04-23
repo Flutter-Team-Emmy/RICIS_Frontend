@@ -83,7 +83,7 @@ const Documents = () => {
             ...updatedSelectedDocFiles,
           ]);
           const isExist = documents?.find(
-            (doc) => doc?.name === selectedDoc && doc?.draftId === draftId
+            (doc) => doc?.name === selectedDoc && doc?.docId === draftId
           );
           if (isExist) {
             updateSingleDocument(

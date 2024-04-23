@@ -2,7 +2,7 @@ import { Cancel } from "@/svgs";
 import Options from "../search/Options";
 import { Input } from "../ui/input";
 import DatePicker from "../search/DatePicker";
-import { date_modified, filterStatus } from "../search/filters";
+import { dateModified, filterStatus } from "../search/filters";
 import { useEffect, useState } from "react";
 import useForm from "@/hooks/useForm";
 import {
@@ -10,40 +10,70 @@ import {
   getDateModified,
   removeEmptyFields,
 } from "@/utils/helpers";
-import { useLazyGetAllApplicationsQuery } from "@/store/api/applicationApi"; 
+import { useLazyGetAllApplicationsQuery } from "@/store/api/applicationApi";
 import { ClipLoader } from "react-spinners";
-import { useDispatch } from "react-redux";
-import { setApplications } from "@/store/features/applicatonsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectPage, setApplications } from "@/store/features/applicatonsSlice";
+import { baseUrl } from "@/lib/configs";
+import { getToken } from "@/utils/authHelpers";
 
 const InitialData = {
   application_name: "",
   applicant_name: "",
   reference_id: "",
+  date_modified: "",
 };
 
 const FilterOptionsModal = ({ setOpenFilter }) => {
   const [beforeDate, setBeforeDate] = useState();
   const [afterDate, setAfterDate] = useState();
-  const [dateModified, setDateModified] = useState("");
-  const { formData, setFormData, handleChange } = useForm(InitialData);
-  const isCustomDate = dateModified === "Custom";
+  // const { formData, setFormData, handleChange } = useForm(InitialData);
+  // const isCustomDate = formData.date_modified === "Custom";
 
-  const [
-    searchApplications,
-    { isLoading, isFetching, isSuccess, error, data },
-  ] = useLazyGetAllApplicationsQuery();
+  // const options =
+  // persist form fields object
+  const initializer = () =>
+    JSON.parse(localStorage.getItem("options")) || InitialData;
+  const { formData, setFormData, handleChange } = useForm(initializer);
+  const isCustomDate = formData.date_modified === "Custom";
+  console.log(isCustomDate);
+  // fetch persisted data from local storage
+  useEffect(() => {
+    const storedSearchOptions = localStorage.getItem("options");
+    if (storedSearchOptions) {
+      setFormData(JSON.parse(storedSearchOptions));
+    }
+  }, []);
+
+  // Save form data to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("options", JSON.stringify(formData));
+  }, [formData]);
+
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // const [
+  //   searchApplications,
+  //   { isLoading, isFetching, isSuccess, error, data },
+  // ] = useLazyGetAllApplicationsQuery();
 
   const dispatch = useDispatch();
 
-  // console.log(getDateModified("Today"));
-  console.log(dateModified);
+  const page = useSelector(selectPage);
+  const token = getToken();
+  // const
 
-  const submitForm = async (event) => {
-    event.preventDefault();
+  // console.log(getDateModified("Today"));
+  // console.log(dateModified);
+
+  const searchApplication = async () => {
     let payload;
 
     if (isCustomDate) {
       payload = {
+        page: page === 0 ? 1 : page,
+        limit: 20,
         application_name: formData.application_name,
         applicant_name: formData.applicant_name,
         start_date: EnLocalDateFormat(beforeDate),
@@ -51,57 +81,63 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
         reference_id: formData.reference_id,
       };
     } else {
-      const filterDate = getDateModified(dateModified);
+      const filterDate = getDateModified(formData.date_modified);
+      console.log(filterDate);
       payload = {
+        page: page === 0 ? 1 : page,
+        limit: 20,
         application_name: formData.application_name,
         applicant_name: formData.applicant_name,
         start_date: filterDate.start_date,
         end_date: filterDate.end_date,
         reference_id: formData.reference_id,
       };
-      // const
-      // setFormData((prev) => {
-      //   return { ...prev, ...filterDate };
-      // });
     }
-
-    // send non Empty Fields to search api
-    // console.log(formData);
-    // const { applicant_name, applicant_name } = formData;
-    // payload = {
-    //   application_name: formData.application_name,
-    //   applicant_name: formData.applicant_name,
-    //   //   status: "",
-    //   start_date: "",
-    //   end_date: "",
-    //   reference_id: "",
-    // };
-    // const payload = removeEmptyFields(formData);
-    // console.log(formData)
-    console.log(payload);
-    await searchApplications(payload);
+    try {
+      setIsLoading(true);
+      console.log(payload);
+      const response = await fetch(
+        `${baseUrl}/application?${new URLSearchParams(payload)}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      // if (response.ok) {
+      setIsSuccess(true);
+      // }
+      dispatch(setApplications(data?.data.applications?.data));
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+      // setOpenFilter(false);
+    }
   };
 
   const resetFilter = () => {
     setFormData(InitialData);
     setBeforeDate();
     setAfterDate();
-    setDateModified("");
-    // setStatus("");
   };
 
   useEffect(() => {
     if (isSuccess) {
       setOpenFilter(false);
-      dispatch(setApplications(data?.data.applications?.data));
-      console.log(data);
+      resetFilter();
     }
   }, [isSuccess]);
 
+  console.log(formData);
+
   return (
     <div className="flex justify-center items-center fixed top bottom-0 left-0 right-0  inset-0 bg-[rgb(0,0,0,0.8)] overflow-y-auto bg-opacity-50 z-[9999] h-full">
-      <form
-        onSubmit={submitForm}
+      <div
+        // onSubmit={submitForm}
         className="bg-white px-6 py-6 rounded shadow-md md:w-[500px] z-[9999] lg:space-y-6 space-y-6 w-[95%] lg:w-[40rem]"
       >
         <div className="flex justify-between items-center gap-4">
@@ -159,11 +195,22 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
         </div>
         <div className="flex lg:flex-row flex-col lg:justify-between gap-4 lg:items-center">
           <p className="text-sm font-semibold">Date Modified</p>
-          <Options
-            options={date_modified}
-            selected={dateModified}
-            setSelected={setDateModified}
-          />
+          <select
+            name="date_modified"
+            value={formData.date_modified}
+            onChange={handleChange}
+            id=""
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg lg:w-[70%] p-2.5"
+          >
+            <option selected className="">
+              Select Date
+            </option>
+            {dateModified?.map((option) => (
+              <option key={option.id} value={option.value}>
+                {option.value.split("_").join(" ")}
+              </option>
+            ))}
+          </select>
         </div>
         {isCustomDate && (
           <div className="flex flex-col gap-2 w-full">
@@ -193,14 +240,15 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
             Reset
           </button>
           <button
-            type="submit"
+            type="button"
+            onClick={searchApplication}
             className="flex items-center gap-2 justify-center bg-blue-700 w-36 py-4 px-4 text-sm rounded-md text-white hover:bg-blue-600"
           >
-            {isFetching && <ClipLoader size={20} color="#fff" />}
-            <span className="">{isFetching ? "Applying..." : "Apply"}</span>
+            {isLoading && <ClipLoader size={20} color="#fff" />}
+            <span className="">{isLoading ? "Applying..." : "Apply"}</span>
           </button>
         </div>
-      </form>
+      </div>
     </div>
   );
 };

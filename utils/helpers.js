@@ -79,8 +79,8 @@ export const getDateModified = (date) => {
 
     default:
       return {
-        start_date: EnLocalDateFormat(today),
-        end_date: EnLocalDateFormat(today),
+        start_date: "",
+        end_date: "",
       };
   }
 };

@@ -64,7 +64,7 @@ const ApplicationTypesSuspense = () => {
                 name="application_type"
                 value={formData.application_type}
                 id=""
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg lg:w-[70%] p-2.5"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg lg:w-[70%] p-2.5"
               >
                 <option selected className="">
                   Select a Type

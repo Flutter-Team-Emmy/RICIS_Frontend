@@ -17,7 +17,7 @@ export const filterStatus = [
   },
 ];
 
-export const date_modified = [
+export const dateModified = [
   {
     id: "d1",
     value: "Anytime",
