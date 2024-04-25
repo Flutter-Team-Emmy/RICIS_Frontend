@@ -122,7 +122,7 @@ const Footer = () => {
             ]}
           />
         </div>
-        <div className="">
+        <div className="w-fit">
           <FooterText
             header="Information"
             data={[

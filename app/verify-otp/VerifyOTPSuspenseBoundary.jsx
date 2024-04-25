@@ -37,7 +37,7 @@ const VerifyOTPSuspenseBoundary = () => {
   const handleVerifyOTP = async () => {
     const payload = { email, otp };
     if (!validator.validateOTPCode(otp)) {
-      toast.error("Enter valid otp codes!", { autoClose: 2000 });
+      toast.error("Enter valid otp codes!", { autoClose: 10000 });
       return;
     }
     await verifyOTP(payload);
@@ -49,7 +49,7 @@ const VerifyOTPSuspenseBoundary = () => {
       toast.error(err, { autoClose: 30000 });
     }
     if (isSuccess) {
-      toast.success(data?.message, { autoClose: 2000 });
+      toast.success(data?.message, { autoClose: 7000 });
       router.push(`/create-account?email=${email}&otp=${otp}`);
     }
   }, [isSuccess, data?.message, email, error, otp, router]);

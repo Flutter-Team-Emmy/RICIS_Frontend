@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   page: 0,
+  firstPae: 1,
+  lastPage: 1,
   totalPages: 1,
   fetchingStates: {
     isLoading: false,
@@ -26,17 +28,26 @@ const applicationsSlice = createSlice({
     setPage: (state, action) => {
       state.page = action.payload;
     },
-    setTotalPages: (state, action) => {
-      state.totalPages = action.payload;
+    setFirstPage: (state, action) => {
+      state.firstPae = action.payload;
+    },
+    setLastPage: (state, action) => {
+      state.lastPage = action.payload;
     },
   },
 });
 
-export const { setApplications, setFetchingStates, setPage, setTotalPages } =
-  applicationsSlice.actions;
+export const {
+  setApplications,
+  setFetchingStates,
+  setPage,
+  setFirstPage,
+  setLastPage,
+} = applicationsSlice.actions;
 export const selectApplications = (state) => state.applications.applications;
 export const selectPage = (state) => state.applications.page;
-export const selectTotalPage = (state) => state.applications.totalPages;
+export const selectFirstPage = (state) => state.applications.firstPae;
+export const selectLastPage = (state) => state.applications.lastPage;
 export const selectFetchingStates = (state) =>
   state.applications.fetchingStates;
 export default applicationsSlice.reducer;

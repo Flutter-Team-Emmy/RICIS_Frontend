@@ -14,7 +14,7 @@ const DashboardLayout = ({ children, header, icon }) => {
   const [showSidebar, setShowSidebar] = useState("hidden");
 
   const currentUser = useSelector(selectUser);
-  const role = useSelector(selectRole)
+  const role = useSelector(selectRole);
 
   // const { isLoading, isSuccess, isError, error, data } =
   //   useGetCurrentUserQuery();
@@ -29,6 +29,9 @@ const DashboardLayout = ({ children, header, icon }) => {
         <Sidebar display="block" lg_display="hidden" zIndex="z-[999]" />
       )} */}
       <div className={`h-full w-full mt-28`}>
+        {showSidebar === "block" && (
+          <div className="items-center gap-4 fixed inset-0 bg-[rgb(0,0,0,0.8)] bg-opacity-50 z-[999]"></div>
+        )}
         <Sidebar
           display="block"
           setShowSidebar={setShowSidebar}

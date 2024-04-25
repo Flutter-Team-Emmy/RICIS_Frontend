@@ -12,6 +12,7 @@ import { validator } from "@/utils/validator";
 import { toast } from "react-toastify";
 import TextFieldSkeleton from "@/components/skeleton-loaders/TextFieldSkeleton";
 import WithAuth from "@/components/withAuth";
+import { useRouter } from "next/navigation";
 
 const InitialData = {
   first_name: "",
@@ -25,6 +26,7 @@ const InitialData = {
 };
 
 const Profile = () => {
+  const router = useRouter();
   const { formData, setFormData, handleChange } = useForm(InitialData);
   const {
     isLoading,
@@ -78,10 +80,10 @@ const Profile = () => {
           view all user account details below
         </p>
       </div>
-      <div className="bg-white rounded-lg pl-6 pb-6">
+      <div className="bg-white rounded-lg px-3 lg:pl-6 pb-6">
         <h1 className="text-[#46B038] font-bold pt-4 pb-6">USER DETAILS:</h1>
         <div className="w-full space-y-6">
-          <div className="space-y-6 w-1/2">
+          <div className="space-y-6 lg:w-1/2 w-full">
             {isSuccess &&
               userBioData.map((bio_data, index) => (
                 <TextInput
@@ -93,6 +95,7 @@ const Profile = () => {
                   handleChange={handleChange}
                   name={bio_data.name}
                   disabled={bio_data.type === "email"}
+                  className="w-full"
                 />
               ))}
             {(isLoading || !data) &&
@@ -100,7 +103,7 @@ const Profile = () => {
                 <TextFieldSkeleton key={loader} />
               ))}
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col lg:flex-row w-full items-center gap-4">
             {/* <Btn text="cancel" bgColorClass="bg-gray-500"></Btn> */}
             <Btn
               text="Save changes"
@@ -108,6 +111,14 @@ const Profile = () => {
               loadingMsg="saving.."
               handleClick={updateBio}
               disabled={btnIsdisabled}
+              className="w-full"
+            ></Btn>
+            <Btn
+              text="Change Password"
+              // loading={isUpdatingBioData}
+              // loadingMsg="saving.."
+              handleClick={() => router.push("/user/profile/change-password")}
+              // disabled={btnIsdisabled}
             ></Btn>
           </div>
         </div>

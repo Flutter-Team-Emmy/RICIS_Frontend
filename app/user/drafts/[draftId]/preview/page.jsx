@@ -204,7 +204,7 @@ const Preview = () => {
                 </h1>
                 <span className="font-semibold text-gray-500">{draftId}</span>
               </div>
-              <div className="grid grid-cols-2 gap-y-6 text-sm">
+              <div className="grid grid-cols-2 grid-cols-1 gap-x-4 lg:gap-y-6 gap-y-4 text-sm">
                 {formData.map((name) => (
                   <div key={name} className="space-y-3">
                     <div className="flex items-center gap-2">
@@ -221,7 +221,7 @@ const Preview = () => {
               </div>
               <div className="pt-8 space-y-6">
                 <p className="font-semibold">Applicant's Documents</p>
-                <div className="grid grid-cols-2 gap-y-8 text-sm">
+                <div className="grid grid-cols-2 grid-cols-1 gap-x-4 lg:gap-y-8 gap-y-4 text-sm">
                   {documents?.map((doc) => (
                     <div key={doc} className="space-y-3">
                       <p className="text-[#69CB5C]">{doc?.name}</p>

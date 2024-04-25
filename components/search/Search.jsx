@@ -20,7 +20,7 @@ const Search = () => {
     <>
       {openFilter && <FilterOptionsModal setOpenFilter={setOpenFilter} />}
       <div className="space-y-3">
-        <form className="flex items-center gap-2 w-full">
+        {/* <form className="flex items-center gap-2 w-full">
           <div className="relative w-full">
             <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
               <span>{SearchIcon}</span>
@@ -36,7 +36,7 @@ const Search = () => {
           <button type="button" className="bg-blue-800 text-sm font-medium px-6 py-2 text-white shadow-md rounded-md hover:bg-blue-950">
             Search
           </button>
-        </form>
+        </form> */}
         <div className="text-sm flex items-center gap-4">
           <button
             onClick={() => setOpenFilter(true)}

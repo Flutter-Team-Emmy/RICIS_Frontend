@@ -5,6 +5,8 @@ import TextHeader from "./TextHeader";
 import CardCenter from "../components/CardCenter";
 import Link from "next/link";
 import { useGetServicesQuery } from "@/store/api/generalApi";
+import MotionComponent from "@/components/MotionComponent";
+import { textVariants, fadeInVariants } from "@/utils/variants";
 
 const Services = () => {
   const { data, isLoading, isSuccess } = useGetServicesQuery();
@@ -19,9 +21,10 @@ const Services = () => {
       />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[1.5rem] w-full">
         {isSuccess &&
-          results?.map((data) => (
+          results?.map((data, index) => (
             <CardCenter
               key={data.id}
+              index={index}
               header={data.name}
               subHeader={data.description}
               id={data.id}
@@ -30,12 +33,17 @@ const Services = () => {
             />
           ))}
         {(isLoading || results?.length === 0) &&
-          [0, 1, 2, 3, 4, 5].map((loader) => (
-            <div key={loader} className="">
+          [0, 1, 2, 3, 4, 5].map((loader, index) => (
+            <MotionComponent
+              as="div"
+              variants={fadeInVariants("up", (index + 1) / 10, 0.5)}
+              key={loader}
+              className=""
+            >
               <div className="rounded-t-[12px] bg-gray-200 w-[20rem] h-[180px]"></div>
               <h1 className="w-[20rem] mt-4 mb-4 h-4 bg-gray-200 animate-pulse"></h1>
               <h2 className="w-[20rem] h-4 bg-gray-200 animate-pulse"></h2>
-            </div>
+            </MotionComponent>
           ))}
       </div>
 

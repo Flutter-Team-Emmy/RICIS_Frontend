@@ -20,6 +20,9 @@ import {
 import { getDocuments } from "@/lib/indexDB";
 import { useCreateDraftMutation } from "@/store/api/applicationApi";
 import SaveDraftLoader from "@/components/loaders/saveDraftLoader";
+import useFiles from "@/hooks/useFiles";
+import useDND from "@/hooks/useDND";
+import { truncateWithEllipsisAndExtension } from "@/utils/helpers";
 
 const Documents = () => {
   const router = useRouter();
@@ -35,161 +38,29 @@ const Documents = () => {
     localStorage.getItem("generatedDocuments")
   );
   const defaultDoc = generatedDocuments[0]?.name;
-  let InitialDocs = {};
-
-  // // auto generate form Fields object of dynamic form field
-  // useEffect(() => {
-  //   const documentNames = documents.map((doc) => doc.name);
-  //   const createInitialObject = () => {
-  //     // if (formFields?.length !== 0) {
-  //     documentNames?.forEach((doc) => {
-  //       InitialDocs[doc] = [];
-  //     });
-  //     return InitialDocs;
-  //   };
-  //   if (documents?.length !== 0) {
-  //     const initialDocs = createInitialObject();
-  //     setFiles(initialDocs);
-  //   }
-  // }, []);
-
-  // const initializer = () => JSON.parse(localStorage.getItem("documents"));
-  const [files, setFiles] = useState([]);
   const [documents, setDocuments] = useState([]);
   const [selectedDoc, setSelectedDoc] = useState(defaultDoc);
+  const {
+    selectedDocFiles,
+    setSelectedDocFiles,
+    handleFileUpload,
+    sizeErrorFiles,
+    setSizeErrorFiles,
+  } = useFiles(documents, selectedDoc, applicationId);
 
-  const [selectedDocFiles, setSelectedDocFiles] = useState([]);
-  const [sizeErrorFiles, setSizeErrorFiles] = useState([]);
-  console.log(files[selectedDoc]);
-  //   console.log(currentDocument);
-  const currentDocuments = documents?.find((doc) => doc.name === selectedDoc);
+  const {
+    dragging,
+    handleDragEnter,
+    handleDragLeave,
+    handleDragOver,
+    handleDrop,
+  } = useDND(handleFileUpload);
 
-  const handleFileChange = (event) => {
-    // Clear the error state
-    setSizeErrorFiles([]);
-
-    const { name, value } = event.target;
-    const files = event.target.files;
-    console.log(files);
-    const fileTypeIsValid = validator.validateFileType(files[0]);
-    // console.log(Array.from(doc));
-
-    if (files.length > 1 || currentDocuments?.data?.length === 1) {
-      return toast.warning("Select just one file", { autoClose: 10000 });
-    }
-
-    if (!fileTypeIsValid) {
-      return toast.warning("Please upload a PDF or image file.", {
-        autoClose: 10000,
-      });
-    }
-
-    const updatedSelectedDocFiles = [];
-    // Loop through each selected file
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-
-      // Check if file size is less than or equal to 10MB (in bytes)
-      if (file.size <= 10 * 1024 * 1024) {
-        const reader = new FileReader();
-
-        // Read file content asynchronously
-        reader.onload = function (event) {
-          const fileContent = event.target.result;
-
-          // Add file data to the list
-          // setSelectedDocFiles((prevList) => [
-          //   ...prevList,
-          //   { name: file.name, type: file.type, content: fileContent },
-          // ]);
-          updatedSelectedDocFiles.push({
-            name: file.name,
-            type: file.type,
-            content: fileContent,
-          });
-          setSelectedDocFiles((prevDocs) => [
-            ...prevDocs,
-            ...updatedSelectedDocFiles,
-          ]);
-          const isExist = documents?.find((doc) => doc?.name === selectedDoc);
-          if (isExist) {
-            updateSingleDocument(
-              "applicationDocuments",
-              selectedDoc,
-              updatedSelectedDocFiles
-            )
-              .then(() => {
-                console.log("Item updated successfully");
-              })
-              .catch((error) => {
-                console.error("Failed to update item:", error);
-              });
-          } else {
-            saveDocumentData("applicationDocuments", {
-              name: selectedDoc,
-              data: updatedSelectedDocFiles,
-              applicationId,
-            })
-              .then(() => {
-                console.log("Document data saved successfully");
-              })
-              .catch((error) => {
-                console.error("Failed to save document data:", error);
-              });
-          }
-        };
-
-        // Read the file as data URL
-        reader.readAsDataURL(file);
-        // localStorage.setItem(
-        //   selectedDoc,
-        //   JSON.stringify([...selectedDocFiles])
-        // );
-      } else {
-        // Display error message for files larger than 10MB
-        setSizeErrorFiles((prevErrorFiles) => [...prevErrorFiles, file.name]);
-        // setErrorMessage(`${file.name} exceeds the maximum file size of 10MB.`);
-      }
-    }
-    // const filesArray = Array.from(docs).map((file) => {
-    //   if (file.size > 10 * 1024 * 1024) {
-    //     // File size exceeds 10MB
-    //     return {
-    //       name: file.name,
-    //       sizeError: true,
-    //     };
-    //   } else {
-    //     const reader = new FileReader();
-    //     reader.onload = function (event) {
-    //       const fileContent = event.target.result;
-    //       // Save file content to localStorage
-    //       localStorage.setItem("fileContent", fileContent);
-    //     };
-    //     reader.readAsText(selectedFile);
-    //     return {
-    //       name: file.name,
-    //       type: file.type,
-    //       size: file.size,
-    //       file: file,
-    //     };
-    //   }
-    // });
-    // const updatedFiles = filesArray.filter((file) => !file.sizeError);
-    // const updatedSizeErrorFiles = filesArray.filter((file) => file.sizeError);
-
-    // setSelectedDocFiles((prevState) => [...prevState, ...updatedFiles]);
-    // localStorage.setItem(
-    //   selectedDoc,
-    //   JSON.stringify([...selectedDocFiles, ...updatedFiles])
-    // );
-
-    // if (updatedSizeErrorFiles.length > 0) {
-    //   setSizeErrorFiles((prevErrors) => [
-    //     ...prevErrors,
-    //     ...updatedSizeErrorFiles.map((file) => file.name),
-    //   ]);
-    // }
+  const handleFileChange = (e) => {
+    handleFileUpload(e.target.files);
   };
+
+  const currentDocuments = documents?.find((doc) => doc.name === selectedDoc);
 
   //   Delete from selected document
   const removeAllDocument = () => {
@@ -206,7 +77,8 @@ const Documents = () => {
   // console
 
   const removeSingleDocument = (itemId) => {
-    deleteSingleDocument("applicationDocuments", itemId)
+    selectedDocFiles.forEach((docFile) => window.URL.revokeObjectURL(docFile));
+    deleteSingleDocument("applicationDocuments", selectedDoc, itemId)
       .then(() => {
         console.log("Item deleted successfully from document data");
       })
@@ -236,35 +108,6 @@ const Documents = () => {
         console.error("Failed to load documents from IndexedDB:", error);
       });
   }, [selectedDocFiles]);
-
-  // const currentDocuments = documents?.find((doc) => doc.name === selectedDoc);
-
-  // useEffect(() => {
-  //   setFiles((prevState) => {
-  //     return { ...prevState, [selectedDoc]: selectedDocFiles };
-  //   });
-  // }, [selectedDocFiles]);
-
-  // useEffect(() => {
-  //   const storedFiles = JSON.parse(localStorage.getItem(selectedDoc)) || [];
-  //   setSelectedDocFiles(storedFiles);
-  // }, [selectedDoc]);
-
-  // // fetch files from localstorage whenever it changes
-  // useEffect(() => {
-  //   const storedDocuments = localStorage.getItem("documents");
-  //   if (storedDocuments) {
-  //     setFiles(JSON.parse(storedDocuments));
-  //   }
-  // }, []);
-
-  // // Save form files to localStorage whenever it changes
-  // useEffect(() => {
-  //   localStorage.setItem(
-  //     "documents",
-  //     JSON.stringify({ ...files, [selectedDoc]: selectedDocFiles })
-  //   );
-  // }, [files]);
 
   const previewForm = () => {
     router.push(`/user/application-type/${applicationId}/preview`);
@@ -333,7 +176,7 @@ const Documents = () => {
             <div className="flex justify-auto mx-auto">
               <FPI length={4} shade={4} />
             </div>
-            <div className="bg-white w-full shadow-md rounded-md space-y-6 p-6 h-fit">
+            <div className="bg-white w-full shadow-md rounded-md space-y-6 lg:p-6 py-6 px-3 h-fit">
               <div className="flex items-center gap-1">
                 <h1 className="text-[#46B038] font-bold">
                   APPLICATION DETAILS:
@@ -375,6 +218,11 @@ const Documents = () => {
                   <Drop
                     documentName={selectedDoc}
                     onChange={handleFileChange}
+                    onDragEnter={handleDragEnter}
+                    onDragLeave={handleDragLeave}
+                    onDragOver={handleDragOver}
+                    onDrop={handleDrop}
+                    dragging={dragging}
                   />
                   {sizeErrorFiles.length > 0 && (
                     <div className="text-red-700 font-medium text-sm space-y-2">
@@ -401,7 +249,7 @@ const Documents = () => {
                     {currentDocuments?.data?.map((doc) => (
                       <Document
                         key={doc.name}
-                        name={doc?.name}
+                        name={truncateWithEllipsisAndExtension(doc?.name, 30)}
                         removeDocument={() => removeSingleDocument(doc.name)}
                       />
                     ))}

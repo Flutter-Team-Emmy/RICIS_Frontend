@@ -100,4 +100,29 @@ export const removeEmptyFields = (obj) => {
     }
   }
   return obj;
-}
+};
+
+export const truncateWithEllipsisAndExtension = (filename, maxLength) => {
+  // If filename is shorter than maxLength, return it as it is
+  if (filename.length <= maxLength) {
+    return filename;
+  }
+
+  // Determine the length of the filename without the extension
+  const extensionIndex = filename.lastIndexOf(".");
+  const filenameWithoutExtension =
+    extensionIndex !== -1 ? filename.slice(0, extensionIndex) : filename;
+
+  // Calculate how many characters should be taken from the start and end of the filename
+  const charsFromStart = Math.ceil((maxLength - 4) / 2); // 4 is the length of "...."
+  const charsFromEnd = maxLength - charsFromStart - 4;
+
+  // Construct the truncated filename with "...." in the middle and the file extension at the end
+  const truncatedFilename =
+    filenameWithoutExtension.slice(0, charsFromStart) +
+    "...." +
+    filenameWithoutExtension.slice(-charsFromEnd) +
+    (extensionIndex !== -1 ? filename.slice(extensionIndex) : "");
+
+  return truncatedFilename;
+};

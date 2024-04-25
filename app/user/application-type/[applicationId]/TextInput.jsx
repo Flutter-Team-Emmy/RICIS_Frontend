@@ -33,14 +33,21 @@ const TextInput = ({ id, name, type, value, onChange, fieldCustomType }) => {
     if (fieldCustomType === "PHONE") {
       setIsValid(notEmpty && phoneIsValid);
       // if (!no)
+      if (!notEmpty && !phoneIsValid) {
+        setError("Invalid field");
+      } else if (!emailIsValid) {
+        setError("Inavlid phone number");
+      } else {
+        setError("");
+      }
     }
   };
 
-  useEffect(() => {
-    if (isFocus) {
-      handleFocus();
-    }
-  }, [value]);
+  // useEffect(() => {
+  //   if (isFocus) {
+  //     handleFocus();
+  //   }
+  // }, [value]);
 
   return (
     <div className="space-y-2 w-full lg:max-w-sm items-center">
@@ -60,7 +67,7 @@ const TextInput = ({ id, name, type, value, onChange, fieldCustomType }) => {
             ? "focus:ring-2 focus:ring-red-600"
             : "focus-visible:ring-2 focus-visible:ring-[#46B038]"
         }`}
-        onFocus={handleFocus}
+        // onFocus={handleFocus}
         onBlur={handleFocus}
         autoComplete="off"
         // autoSave="false"

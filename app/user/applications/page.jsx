@@ -12,13 +12,23 @@ import Paginations from "@/components/Pagination";
 import { useSearchParams } from "next/navigation";
 import { capitalizeFirstLetter } from "@/utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
-import { selectTotalPage, setPage } from "@/store/features/applicatonsSlice";
+import {
+  selectFirstPage,
+  selectLastPage,
+  setPage,
+} from "@/store/features/applicatonsSlice";
 
 const ApplicationsSuspense = () => {
   const param = useSearchParams();
   const status = param.get("tab");
   const dispatch = useDispatch();
-  const pageCount = useSelector(selectTotalPage) + 1;
+  const firstPage = useSelector(selectFirstPage);
+  const lastPage = useSelector(selectLastPage);
+  const pageCount = lastPage + 1;
+
+  // const getTotalPages = () => {
+  //   if (first)
+  // }
 
   return (
     <DashboardLayout header="Applications">

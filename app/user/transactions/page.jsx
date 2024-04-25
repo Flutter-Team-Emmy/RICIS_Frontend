@@ -21,7 +21,7 @@ const Transactions = () => {
       </div>
       <div className="bg-white rounded-lg">
         <h1 className="text-black font-bold py-6 pl-6">Payment Information</h1>
-        <form className="p-4">
+        {/* <form className="p-4">
           <div className="relative">
             <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
               <span>{SearchIcon}</span>
@@ -33,7 +33,7 @@ const Transactions = () => {
               placeholder="Search"
             />
           </div>
-        </form>
+        </form> */}
         <TransactionsTable />
       </div>
       <div className="mt-8">

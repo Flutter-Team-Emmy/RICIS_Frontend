@@ -21,7 +21,7 @@ const tableHeader = [
   "Application Name",
   "Amount Paid",
   "Transaction Status",
-  "Date Applied",
+  "Date Created",
 ];
 
 const TransactionsTable = () => {

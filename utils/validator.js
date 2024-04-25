@@ -28,7 +28,7 @@ export class Validator {
 
   validatePhoneNumber(phone) {
     const regex = /^[0-9]+$/;
-    return regex.test(phone);
+    return regex.test(phone) && phone.length === 11;
   }
 
   atLeastOneValueNotEmpty(obj) {
@@ -57,6 +57,10 @@ export class Validator {
       return true;
     }
   };
+
+  confirmPassword(new_password, confirm_password) {
+    return new_password === confirm_password;
+  }
 }
 
 export const validator = new Validator();

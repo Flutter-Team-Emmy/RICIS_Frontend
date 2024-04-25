@@ -31,7 +31,7 @@ const Page = () => {
       !validator.validateEmail(formData.email) ||
       validator.whiteSpaces(formData);
     if (emailIsInValid) {
-      toast.warning("Enter a valid email!", { autoClose: 2000 });
+      toast.warning("Enter a valid email!", { autoClose: 10000 });
       return;
     }
     await requestRegistrationOTP(formData);
@@ -43,7 +43,7 @@ const Page = () => {
       toast.error(err, { autoClose: 30000 });
     }
     if (isSuccess) {
-      toast.success(data?.message, { autoClose: 1000 });
+      toast.success(data?.message, { autoClose: 7000 });
       router.push(`/verify-otp?email=${formData.email}`);
     }
   }, [isSuccess, isError, data?.message, error, formData.email, router]);

@@ -3,6 +3,8 @@ import Btn from "../components/Btn";
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
+import MotionComponent from "@/components/MotionComponent";
+import { textVariants } from "@/utils/variants";
 
 const ThirdSect = () => {
   return (
@@ -15,18 +17,26 @@ const ThirdSect = () => {
           className="rounded-[12px] w-full"
         />
         <div className="flex flex-col">
-          <h1 className="sf700 md:text-[2rem] md:leading-[48px]  mb-[1.25rem] pt-4 mx-auto lg:text-start text-center">
+          <MotionComponent
+            as="h1"
+            variants={textVariants}
+            className="sf700 md:text-[2rem] md:leading-[48px]  mb-[1.25rem] pt-4 mx-auto lg:text-start text-center"
+          >
             Legislation and Rule Overview Management and Guide
-          </h1>
-          <h2 className="sf400 text-[0.825rem] leading:[21px] mb-[2rem] text-gray-700 lg:text-start text-center">
+          </MotionComponent>
+          <MotionComponent
+            as="h2"
+            variants={textVariants}
+            className="sf400 text-[0.825rem] leading:[21px] mb-[2rem] text-gray-700 lg:text-start text-center"
+          >
             We understand the challenges businesses face when it comes to
             managing subscriptions and billing. That's why we offer intelligent
             software solutions that automate pricing, billing, and revenue
             recognition. Say goodbye to revenue leakage and hello to streamlined
             processes that will save you time and money.
-          </h2>
+          </MotionComponent>
 
-          <Link href="/legislation_rules" className="w-fit mx-auto">
+          <Link href="/legislation_rules" className="w-fit mx-aut">
             <Btn text="Learn more &rarr;" />
           </Link>
         </div>

@@ -10,7 +10,6 @@ import {
   getDateModified,
   removeEmptyFields,
 } from "@/utils/helpers";
-import { useLazyGetAllApplicationsQuery } from "@/store/api/applicationApi";
 import { ClipLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPage, setApplications } from "@/store/features/applicatonsSlice";
@@ -27,16 +26,19 @@ const InitialData = {
 const FilterOptionsModal = ({ setOpenFilter }) => {
   const [beforeDate, setBeforeDate] = useState();
   const [afterDate, setAfterDate] = useState();
-  // const { formData, setFormData, handleChange } = useForm(InitialData);
-  // const isCustomDate = formData.date_modified === "Custom";
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+  const page = useSelector(selectPage);
+  const token = getToken();
 
-  // const options =
-  // persist form fields object
+  // persist search options
   const initializer = () =>
     JSON.parse(localStorage.getItem("options")) || InitialData;
   const { formData, setFormData, handleChange } = useForm(initializer);
   const isCustomDate = formData.date_modified === "Custom";
   console.log(isCustomDate);
+
   // fetch persisted data from local storage
   useEffect(() => {
     const storedSearchOptions = localStorage.getItem("options");
@@ -49,23 +51,6 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
   useEffect(() => {
     localStorage.setItem("options", JSON.stringify(formData));
   }, [formData]);
-
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  // const [
-  //   searchApplications,
-  //   { isLoading, isFetching, isSuccess, error, data },
-  // ] = useLazyGetAllApplicationsQuery();
-
-  const dispatch = useDispatch();
-
-  const page = useSelector(selectPage);
-  const token = getToken();
-  // const
-
-  // console.log(getDateModified("Today"));
-  // console.log(dateModified);
 
   const searchApplication = async () => {
     let payload;
@@ -200,7 +185,7 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
             value={formData.date_modified}
             onChange={handleChange}
             id=""
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg lg:w-[70%] p-2.5"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg lg:w-[65%] p-2.5"
           >
             <option selected className="">
               Select Date
@@ -253,4 +238,4 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
   );
 };
 
-export default FilterOptionsModal;
+export default FilterOptionsModal; 

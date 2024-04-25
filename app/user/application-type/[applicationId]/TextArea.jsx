@@ -38,8 +38,9 @@ const TextArea = ({ name, id, value, onChange }) => {
             : "border-gray-300 focus:border-blue-700"
         } block p-2.5 w-full text-sm text-gray-900 bg-gray-50 focus:outline-none rounded-lg border focus:ring-blue-500`}
         placeholder="Write your thoughts here..."
-        onFocus={handleFocus}
+        // onFocus={handleFocus}
         autoComplete="off"
+        onBlur={handleFocus}
         // autoSave="false"
       ></textarea>
       {!isValid && <p className="text-red-500 text-sm">Invalid field</p>}

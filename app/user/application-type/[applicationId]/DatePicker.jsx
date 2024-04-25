@@ -33,7 +33,8 @@ const DatePicker = ({ name, value, onChange, id }) => {
         id="date-picker"
         onChange={onChange}
         value={value}
-        onFocus={handleFocus}
+        onBlur={handleFocus}
+        // onFocus={handleFocus}
         required
         autoComplete="off"
       />

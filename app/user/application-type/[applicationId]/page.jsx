@@ -105,7 +105,6 @@ const ApplicationFormFields = () => {
       router.push(`/user/drafts`);
     }
   }, [isDraftSuccess]);
-  
 
   const createDraft = async (formData) => {
     const payload = {
@@ -142,7 +141,7 @@ const ApplicationFormFields = () => {
             <div className="flex justify-auto mx-auto">
               <FPI length={4} shade={3} />
             </div>
-            <div className="bg-white w-full shadow-md rounded-md space-y-16 p-6 h-fit">
+            <div className="bg-white w-full shadow-md rounded-md space-y-16 lg:p-6 py-6 px-4 h-fit">
               <div className="flex items-center gap-2">
                 <h1 className="text-[#46B038] font-bold">
                   APPLICATION DETAILS:
@@ -196,26 +195,28 @@ const ApplicationFormFields = () => {
                     <TextFieldSkeleton key={loader} />
                   ))}
               </div>
-              <div className="space-x-3">
-                <button
-                  type="button"
-                  onClick={() => createDraft(formData)}
-                  className="px-4 py-2 border border-[#46B038] text-gray-600 rounded-md hover:opacity-70"
-                >
-                  Save as Draft
-                </button>
-                <button
-                  type="button"
-                  onClick={() => router.back()}
-                  className="px-6 py-2 bg-gray-900 text-white rounded-md hover:opacity-70"
-                >
-                  Back
-                </button>
+              <div className="flex lg:flex-row flex-col gap-2">
+                <div className="flex gap-3 lg:w-fit w-full">
+                  <button
+                    type="button"
+                    onClick={() => router.back()}
+                    className="px-6 py-2 bg-gray-900 text-white rounded-md hover:opacity-70 w-full lg:w-fit "
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => createDraft(formData)}
+                    className="w-full lg:w-fit  px-4 py-2 border border-[#46B038] text-gray-600 rounded-md hover:opacity-70"
+                  >
+                    Save as Draft
+                  </button>
+                </div>
                 <button
                   disabled={allfieldsNotFilled}
                   type="button"
                   onClick={navigateToNextStep}
-                  className="lg:px-8 px-6 py-2 bg-[#46B038] hover:opacity-70 text-white rounded-md disabled:cursor-not-allowed disabled:opacity-70"
+                  className="w-full lg:w-fit lg:px-8 px-6 py-2 bg-[#46B038] hover:opacity-70 text-white rounded-md disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   Next
                 </button>

@@ -90,18 +90,20 @@ const Profile = () => {
             {(isLoading || !data) &&
               [1, 2].map((loader) => <TextFieldSkeleton key={loader} />)}
           </div>
-          <div className="flex items-center gap-4">
-            {/* <Btn
-              text="cancel"
-              bgColorClass="bg-gray-500"
-              handleClick={cancelProcess}
-            ></Btn> */}
+          <div className="flex flex-col lg:flex-row w-full items-center gap-4">
             <Btn
               text="Save changes"
               loading={isUpdatingBioData}
               loadingMsg="saving..."
               disabled={btnIsdisabled}
               handleClick={updateBio}
+            ></Btn>
+            <Btn
+              text="Change Password"
+              // loading={isUpdatingBioData}
+              // loadingMsg="saving.."
+              handleClick={() => router.push("/admin/profile/change-password")}
+              // disabled={btnIsdisabled}
             ></Btn>
           </div>
         </div>
