@@ -142,6 +142,7 @@ const Paginations = ({ pageCount, setPage }) => {
       pageClassName={"page-item"}
       activeClassName={"active shadow-md text-white"}
       onPageChange={setPage}
+      // initialPage={1}
       pageCount={pageCount}
       breakLabel="..."
       previousLabel={<span>{ArrowLeftCircle}</span>}

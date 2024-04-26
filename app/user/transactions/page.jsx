@@ -11,7 +11,7 @@ import { selectTotalPage, setPage } from "@/store/features/transactionSlice";
 
 const Transactions = () => {
   const dispatch = useDispatch();
-  const pageCount = useSelector(selectTotalPage) + 1;
+  const pageCount = useSelector(selectTotalPage);
 
   return (
     <DashboardLayout header="Transactions">
@@ -39,7 +39,7 @@ const Transactions = () => {
       <div className="mt-8">
         <Paginations
           pageCount={pageCount}
-          setPage={(event) => dispatch(setPage(event.selected))}
+          setPage={(event) => dispatch(setPage(event.selected +1 ))}
         />
       </div>
     </DashboardLayout>

@@ -12,7 +12,7 @@ import {
 } from "@/utils/helpers";
 import { ClipLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
-import { selectPage, setApplications } from "@/store/features/applicatonsSlice";
+import { selectPage, setApplications, setLastPage, setPage } from "@/store/features/applicatonsSlice";
 import { baseUrl } from "@/lib/configs";
 import { getToken } from "@/utils/authHelpers";
 
@@ -99,8 +99,13 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
       const data = await response.json();
       // if (response.ok) {
       setIsSuccess(true);
+      console.log(data)
       // }
       dispatch(setApplications(data?.data.applications?.data));
+      dispatch(setLastPage(data?.data?.applications?.meta?.lastPage))
+      
+    dispatch(setFirstPage(data?.data?.applications?.meta?.firstPage));
+    dispatch(setPage(data?.data?.applications?.meta?.currentPage))
     } catch (error) {
       console.log(error);
       setIsLoading(false);

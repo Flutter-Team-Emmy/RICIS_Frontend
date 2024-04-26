@@ -26,7 +26,7 @@ const DashboardSuspenseBoundary = () => {
   const transactionStatus = param.get("status");
 
   const dispatch = useDispatch();
-  const pageCount = useSelector(selectLastPage) + 1;
+  const pageCount = useSelector(selectLastPage);
 
   const { isLoading, isSuccess, error, data, refetch } = useGetStatsQuery();
   const stats = data?.data?.stats;
@@ -86,7 +86,7 @@ const DashboardSuspenseBoundary = () => {
         <Table />
         <Paginations
           pageCount={pageCount}
-          setPage={(event) => dispatch(setPage(event.selected))}
+          setPage={(event) => dispatch(setPage(event.selected + 1))}
         />
       </div>
     </DashboardLayout>

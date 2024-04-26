@@ -13,7 +13,7 @@ import Paginations from "@/components/Pagination";
 
 const AppManagement = () => {
   const dispatch = useDispatch();
-  const pageCount = useSelector(selectLastPage) + 1;
+  const pageCount = useSelector(selectLastPage);
   return (
     <DashboardLayout header="Admin">
       <div className="w-full space-y-6">
@@ -34,7 +34,7 @@ const AppManagement = () => {
         </div>
         <Paginations
           pageCount={pageCount}
-          setPage={(event) => dispatch(setPage(event.selected))}
+          setPage={(event) => dispatch(setPage(event.selected+1))}
         />
       </div>
     </DashboardLayout>
