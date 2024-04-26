@@ -49,7 +49,7 @@ const Admin = () => {
         </div>
         <Table />
         <Paginations
-          pageCount={pageCount}
+          // pageCount={pageCount}
           setPage={(event) => dispatch(setPage(event.selected))}
         />
       </div>
