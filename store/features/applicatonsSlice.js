@@ -5,7 +5,7 @@ const initialState = {
   page: 0,
   firstPae: 1,
   lastPage: 1,
-  totalPages: 1,
+  // totalPages: 1,
   fetchingStates: {
     isLoading: false,
     isSuccess: false,

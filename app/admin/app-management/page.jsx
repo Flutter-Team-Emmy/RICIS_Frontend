@@ -7,13 +7,13 @@ import WithAuth from "@/components/withAuth";
 import { applicationsTabs } from "@/utils/data";
 import { Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectTotalPage } from "@/store/features/applicatonsSlice";
+import { selectLastPage } from "@/store/features/applicatonsSlice";
 import { setPage } from "@/store/features/applicatonsSlice";
 import Paginations from "@/components/Pagination";
 
 const AppManagement = () => {
   const dispatch = useDispatch();
-  const pageCount = useSelector(selectTotalPage) + 1;
+  const pageCount = useSelector(selectLastPage) + 1;
   return (
     <DashboardLayout header="Admin">
       <div className="w-full space-y-6">

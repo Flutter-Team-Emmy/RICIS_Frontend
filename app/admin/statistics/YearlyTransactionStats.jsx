@@ -69,6 +69,7 @@ const YearlyTransactionStats = () => {
       <div className="rounded-2xl bg-[#F8F8FF] lg:w-fit py-4 px-4 text-gray-400 space-x-4 w-full overflow-x-auto">
         {selects.map((value) => (
           <span
+            key={value}
             onClick={() => setSelected(value)}
             className={`${
               selected === value ? activeClass : InactiveClass

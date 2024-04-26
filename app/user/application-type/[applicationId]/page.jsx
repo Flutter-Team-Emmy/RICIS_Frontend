@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import WithAuth from "@/components/withAuth";
 import FPI from "../../FPI";
@@ -25,6 +25,7 @@ const ApplicationFormFields = () => {
   const { isLoading, isSuccess, isError, error, data } =
     useGetSingleFormFieldsQuery(applicationId);
   const fields = data?.data?.fields;
+  // const [errorFields, setErrorFields] = useState()
 
   const [
     createNewDraft,
@@ -114,12 +115,13 @@ const ApplicationFormFields = () => {
     await createNewDraft(payload);
   };
 
-  const validateForm = (type) => {
-    // const fieldsInitialErrorStates = {};
-    // formFields?.forEach((field) => {
-    //   InitialData[field?.name] = false;
-    // });
-  };
+
+  // const validateForm = (type) => {
+  //   const fieldsInitialErrorStates = {};
+  //   formFields?.forEach((field) => {
+  //     fieldsInitialErrorStates[field?.name] = false;
+  //   });
+  // };
 
   return (
     <>
