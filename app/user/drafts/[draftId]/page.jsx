@@ -12,6 +12,7 @@ import DatePicker from "../../application-type/[applicationId]/DatePicker";
 import { FieldTypes } from "../../application-type/[applicationId]";
 import useForm from "@/hooks/useForm";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const Draft = () => {
   const router = useRouter();
@@ -21,8 +22,7 @@ const Draft = () => {
   const applicationId = param.split("-")[1];
   console.log(draftId);
 
-  const { data, isLoading, isSuccess, refetch } =
-    useGetSingleDraftQuery(draftId);
+  const { data, isLoading, isSuccess, refetch } = useGetSingleDraftQuery(draftId);
   const draft = data?.data.draft_application;
 
   const formFields = draft?.data?.filter(
@@ -52,7 +52,8 @@ const Draft = () => {
     const createInitialObject = () => {
       if (formFields?.length !== 0) {
         formFields?.forEach((field) => {
-          InitialData[field?.form_field?.name] = field.value;
+          InitialData[field?.form_field?.name] =
+            field.value === null ? "" : field.value;
           fieldsInitialErrorStates[field?.form_field?.name] = {
             value: true,
             type: field?.form_field.type,
@@ -64,8 +65,6 @@ const Draft = () => {
       return {};
     };
     if (formFields?.length !== 0) {
-      // const initialData = createInitialObject();
-      // setFormData(initialData);
       const { InitialData, fieldsInitialErrorStates } = createInitialObject();
       setFormData(InitialData);
       setErrorFields(fieldsInitialErrorStates);
@@ -77,8 +76,22 @@ const Draft = () => {
     JSON.parse(localStorage.getItem("draftFormData")) || InitialData;
   const { formData, setFormData, handleChange } = useForm(initializer);
   const errorInitializer = () =>
-    JSON.parse(localStorage.getItem("errorFields")) || fieldsInitialErrorStates;
+    JSON.parse(localStorage.getItem("draftErrorFields")) ||
+    fieldsInitialErrorStates;
   const [errorFields, setErrorFields] = useState(errorInitializer);
+
+  // fetch persisted data from local storage
+  useEffect(() => {
+    const storedErrorStates = localStorage.getItem("draftErrorFields");
+    if (storedErrorStates) {
+      setFormData(JSON.parse(storedErrorStates));
+    }
+  }, []);
+
+  // Save form data to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("draftErrorFields", JSON.stringify(errorFields));
+  }, [formData, errorFields]);
 
   // fetch persisted data from local storage
   useEffect(() => {
@@ -99,7 +112,6 @@ const Draft = () => {
     if (!isRefreshed) {
       setIsRefreshed(true);
       refetch();
-      // window.location.reload();
     }
     // refetch();
   }, [isRefreshed]);
@@ -107,7 +119,7 @@ const Draft = () => {
   console.log(draft);
 
   const validateForm = () => {
-    const formDataValues = Object.keys(formData).forEach((key) => {
+    const formDataValues = Object?.keys(formData).forEach((key) => {
       const currentValue = formData[key];
       const notEmpty = validator.notEmpty(currentValue);
       const phoneIsValid = validator.validatePhoneNumber(currentValue);
@@ -163,14 +175,52 @@ const Draft = () => {
   };
 
   const navigateToNextStep = () => {
+    // toast.success(
+    //   "You're called me",
+    //   { autoClose: 10000 }
+    // );
     validateForm();
-    const allfieldsNotFilled = validator.whiteSpaces(formData);
-    if (allfieldsNotFilled) {
+
+    let validate=true;
+     Object?.keys(formData).forEach((key) => {
+      const currentValue = formData[key];
+      const notEmpty = validator.notEmpty(currentValue);
+      const phoneIsValid = validator.validatePhoneNumber(currentValue);
+      const emailIsValid = validator.validateEmail(currentValue);
+      const currentErrorKey = errorFields[key];
+      
+      if (validate) {
+        if (currentErrorKey?.type === "EMAIL") {
+          validate = notEmpty && emailIsValid;
+        } else if (currentErrorKey?.type === "PHONE") {
+          validate = notEmpty && phoneIsValid;
+        } else {
+          validate = notEmpty;
+        }
+        console.log(`validate ${key} : ${validate} `);
+      }
+
+      
+    });
+
+
+
+    const isValid = Object?.values(errorFields).every((field) => field.value);
+    console.log(isValid);
+    // const allfieldsNotFilled = validator.whiteSpaces(formData);
+    if (validate) {
+      const id = `${draftId}-${applicationId}`;
+      router.push(`/user/drafts/${id}/documents`);
       return;
+    } else {
+      toast.error(
+        "You're required to correctly fill all fields, before you proceed.",
+        { autoClose: 10000 }
+      );
     }
-    const id = `${draftId}-${applicationId}`;
-    router.push(`/user/drafts/${id}/documents`);
   };
+
+  console.log(formFields);
 
   // const allfieldsNotFilled = validator.whiteSpaces(formData);
 
@@ -181,7 +231,7 @@ const Draft = () => {
           <div className="flex justify-between items-center w-full">
             <div className="">
               <h1 className="text-black font-bold">
-                Personnel certification:{" "}
+                Application Name:{" "}
                 <span className="text-[#46B038]">CLEARANCE</span>
               </h1>
               <p className="text-gray-600 text-sm">
@@ -195,7 +245,7 @@ const Draft = () => {
           <div className="bg-white w-full shadow-md rounded-md space-y-16 p-6 h-fit">
             <div className="flex items-center gap-2">
               <h1 className="text-[#46B038] font-bold">Draft's Form:</h1>
-              <span className="">{draftId}</span>
+              {/* <span className="">{draftId}</span> */}
             </div>
             <form
               autoComplete="off"
@@ -216,6 +266,7 @@ const Draft = () => {
                       fieldCustomType={field.form_field.type}
                       isValid={errorFields[field?.form_field.name]?.value}
                       error={errorFields[field?.form_field.name]?.message}
+                      required={field.form_field.required}
                       // isValid={isValid}
                       // onFocus={}
                     />
@@ -228,6 +279,7 @@ const Draft = () => {
                       value={formData[field.form_field.name]}
                       isValid={errorFields[field?.form_field.name]?.value}
                       error={errorFields[field?.form_field.name]?.message}
+                      required={field.form_field.required}
                       // isValid={isValid}
                     />
                   ) : field.form_field.type === "DATE" ? (
@@ -239,6 +291,7 @@ const Draft = () => {
                       value={formData[field.form_field.name]}
                       isValid={errorFields[field?.form_field.name]?.value}
                       error={errorFields[field?.form_field.name]?.message}
+                      required={field.form_field.required}
                       // isValid={isValid}
                     />
                   ) : (

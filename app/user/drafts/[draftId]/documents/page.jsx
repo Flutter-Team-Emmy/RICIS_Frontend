@@ -213,7 +213,7 @@ const Documents = () => {
           <div className="flex justify-between items-center w-full">
             <div className="">
               <h1 className="text-black font-bold">
-                Personnel certification:{" "}
+                Application Name:{" "}
                 <span className="text-[#46B038]">CLEARANCE</span>
               </h1>
               <p className="text-gray-600 text-sm">
@@ -221,10 +221,10 @@ const Documents = () => {
               </p>
             </div>
           </div>
-          <div className="bg-white w-full shadow-md rounded-md space-y-6 lg:p-6 py-6 px-2 h-fit">
+          <div className="bg-white w-full shadow-md rounded-md space-y-6 lg:p-6 py-6 px-3 h-fit">
             <div className="flex items-center gap-1">
               <h1 className="text-[#46B038] font-bold">Draft's Documents:</h1>
-              <span className="font-semibold text-gray-500">{draftId}</span>
+              {/* <span className="font-semibold text-gray-500">{draftId}</span> */}
             </div>
             <div className="grid lg:grid-cols-[3fr_7fr] grid-cols-1 gap-4">
               <div className="bg-gray-100 space-y-3 px-3 py-2 text-[#0F5805] rounded-md text-sm">
@@ -294,13 +294,20 @@ const Documents = () => {
                   ))}
                 </div>
                 <div className="pt-20 space-x-3 text-sm">
-                  <button
+                  {/* <button
                     type="button"
                     onClick={removeAllDocument}
                     // onClick={() => router.push("/user/drafts")}
                     className="px-4 py-2 border border-[#46B038] text-gray-600 rounded-md hover:opacity-70"
                   >
                     Cancel
+                  </button> */}
+                  <button
+                    type="button"
+                    onClick={() => router.back()}
+                    className="px-6 py-2 bg-gray-900 text-white rounded-md hover:opacity-70"
+                  >
+                    Back
                   </button>
                   <button
                     disabled={documentsEmpty}

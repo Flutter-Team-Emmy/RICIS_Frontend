@@ -78,12 +78,20 @@ const ApplicationTypesSuspense = () => {
                   ))}
               </select>
             </form>
-            <button
-              onClick={proceedToNextStep}
-              className="bg-[#46B038] px-4 py-2 text-white text-sm font-medium rounded-md shadow-lg hover:bg-lime-700"
-            >
-              Proceed
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => router.back()}
+                className="bg-black px-6 py-2.5 text-white text-sm font-medium rounded-md shadow-lg hover:opacity-70"
+              >
+                Back
+              </button>
+              <button
+                onClick={proceedToNextStep}
+                className="bg-[#46B038] px-6 py-2.5 text-white text-sm font-medium rounded-md shadow-lg hover:bg-lime-700"
+              >
+                Proceed
+              </button>
+            </div>
           </div>
         </div>
       </div>

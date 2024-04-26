@@ -62,7 +62,7 @@ const StatsCard = ({
     colors: ["#69CB5C"],
   };
   return (
-    <div className="whitespace-nowrap border-2 border-gray-200 rounded-md bg-white flex-grow">
+    <div className="whitespace-nowra border-2 border-gray-200 rounded-md bg-white flex-grow basis-1/4">
       <p className="p-4 text-lg font-semibold text-gray-700">
         {capitalizeFirstLetter(status)} Applications
       </p>

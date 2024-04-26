@@ -12,12 +12,13 @@ const TextInput = ({
   fieldCustomType,
   isValid,
   error,
+  required,
 }) => {
-
   return (
     <div className="space-y-2 w-full lg:max-w-sm items-center">
       <Label className="text-gray-600 font-semibold" htmlFor={name}>
-        {name}
+        <span> {name}</span>
+        {required && <span className="text-red-500 text-xl">*</span>}
       </Label>
       <Input
         type={type}
@@ -26,7 +27,6 @@ const TextInput = ({
         name={name}
         onChange={onChange}
         value={value}
-        required
         className={`${
           !isValid
             ? "ring-2 ring-red-600 border border:red-600"
@@ -35,6 +35,7 @@ const TextInput = ({
         // onFocus={handleFocus}
         // onBlur={handleFocus}
         autoComplete="off"
+        required={required}
         // autoSave="false"
         // autoFill={false}
       />

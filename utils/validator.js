@@ -13,12 +13,12 @@ export class Validator {
   }
 
   notEmpty(value) {
-    return value && value.trim().length !== 0;
+    return Boolean(value && value.trim().length !== 0);
   }
 
   validateEmail(email) {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
+    return Boolean(regex.test(email));
   }
 
   validateOTPCode(code) {
@@ -28,7 +28,7 @@ export class Validator {
 
   validatePhoneNumber(phone) {
     const regex = /^[0-9]+$/;
-    return regex.test(phone) && phone.length === 11;
+    return Boolean(regex.test(phone) && phone.length === 11);
   }
 
   atLeastOneValueNotEmpty(obj) {

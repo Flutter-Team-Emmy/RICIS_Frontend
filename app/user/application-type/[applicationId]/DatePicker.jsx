@@ -2,7 +2,15 @@ import { CalendarIcon } from "@/svgs";
 import { useState, useEffect } from "react";
 import { validator } from "@/utils/validator";
 
-const DatePicker = ({ name, value, onChange, id, isValid, error }) => {
+const DatePicker = ({
+  name,
+  value,
+  onChange,
+  id,
+  isValid,
+  error,
+  required,
+}) => {
   // const [isValid, setIsValid] = useState(true);
   // const [isFocus, setIsFocus] = useState(false);
 
@@ -20,7 +28,10 @@ const DatePicker = ({ name, value, onChange, id, isValid, error }) => {
 
   return (
     <div class="w-full max-w-sm space-y-2 ">
-      <p className="text-sm lg:text-md text-gray-600 font-semibold">{name}</p>
+      <div className="">
+        <span> {name}</span>
+        {required && <span className="text-red-500 text-xl">*</span>}
+      </div>
       <input
         datepicker
         datepicker-autohide
@@ -33,9 +44,7 @@ const DatePicker = ({ name, value, onChange, id, isValid, error }) => {
         id="date-picker"
         onChange={onChange}
         value={value}
-        // onBlur={handleFocus}
-        // onFocus={handleFocus}
-        required
+        required={required}
         autoComplete="off"
       />
       {!isValid && <p className="text-red-500 text-sm">{error}</p>}

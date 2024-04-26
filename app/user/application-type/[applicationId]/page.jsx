@@ -17,6 +17,7 @@ import TextArea from "./TextArea";
 import DatePicker from "./DatePicker";
 import { FieldTypes } from ".";
 import SaveDraftLoader from "@/components/loaders/saveDraftLoader";
+import { toast } from "react-toastify";
 
 const ApplicationFormFields = () => {
   const router = useRouter();
@@ -78,7 +79,7 @@ const ApplicationFormFields = () => {
       setFormData(InitialData);
       setErrorFields(fieldsInitialErrorStates);
     }
-  }, [fields]);
+  }, []);
 
   // console.log(errorFields);
 
@@ -114,7 +115,6 @@ const ApplicationFormFields = () => {
     const storedFormData = localStorage.getItem("formData");
     if (storedFormData) {
       setFormData(JSON.parse(storedFormData));
-      validateForm();
     }
   }, []);
 
@@ -123,7 +123,7 @@ const ApplicationFormFields = () => {
     localStorage.setItem("formData", JSON.stringify(formData));
   }, [formData]);
 
-  const fieldNotEmpty = validator.notEmpty();
+  // const fieldNotEmpty = validator.notEmpty();
 
   useEffect(() => {
     if (isDraftSuccess) {
@@ -141,7 +141,7 @@ const ApplicationFormFields = () => {
   };
 
   const validateForm = () => {
-    const formDataValues = Object.keys(formData).forEach((key) => {
+    const formDataValues = Object?.keys(formData).forEach((key) => {
       const currentValue = formData[key];
       const notEmpty = validator.notEmpty(currentValue);
       const phoneIsValid = validator.validatePhoneNumber(currentValue);
@@ -183,12 +183,11 @@ const ApplicationFormFields = () => {
             ...prev,
             [key]: {
               value: notEmpty,
-              message: notEmpty ? "" : "Invalid Fields",
+              message: notEmpty ? "" : "Invalid Field",
               type: currentErrorKey?.type,
             },
           };
         });
-        setOverallFormIsValid(false);
         // }
         return;
       }
@@ -198,20 +197,46 @@ const ApplicationFormFields = () => {
   };
 
   const navigateToNextStep = () => {
-    console.log(formData);
+    // toast.success(
+    //   "You're called me",
+    //   { autoClose: 10000 }
+    // );
     validateForm();
-    const allfieldsNotFilled = validator.whiteSpaces(formData);
-    if (allfieldsNotFilled) {
-      return;
-    }
-    router.push(`/user/application-type/${applicationId}/documents`);
-  };
 
-  // useEffect(() => {
-  //   if (formData) {
-  //     validateForm();
-  //   }
-  // }, [formData, errorFields]);
+    let validate = true;
+    Object?.keys(formData).forEach((key) => {
+      const currentValue = formData[key];
+      const notEmpty = validator.notEmpty(currentValue);
+      const phoneIsValid = validator.validatePhoneNumber(currentValue);
+      const emailIsValid = validator.validateEmail(currentValue);
+      const currentErrorKey = errorFields[key];
+
+      if (validate) {
+        if (currentErrorKey?.type === "EMAIL") {
+          validate = notEmpty && emailIsValid;
+        } else if (currentErrorKey?.type === "PHONE") {
+          validate = notEmpty && phoneIsValid;
+        } else {
+          validate = notEmpty;
+        }
+        console.log(`validate ${key} : ${validate} `);
+      }
+    });
+
+    const isValid = Object?.values(errorFields).every((field) => field.value);
+    console.log(isValid);
+    // const allfieldsNotFilled = validator.whiteSpaces(formData);
+    if (validate) {
+      const id = `${applicationId}`;
+      router.push(`/user/drafts/${id}/documents`);
+      return;
+    } else {
+      toast.error(
+        "You're required to correctly fill all fields, before you proceed.",
+        { autoClose: 10000 }
+      );
+    }
+  };
 
   return (
     <>
@@ -222,7 +247,7 @@ const ApplicationFormFields = () => {
             <div className="flex justify-between items-center w-full">
               <div className="">
                 <h1 className="text-black font-bold">
-                  Personnel certification:{" "}
+                  Application Name:{" "}
                   <span className="text-[#46B038]">CLEARANCE</span>
                 </h1>
                 <p className="text-gray-600 text-sm">
@@ -238,7 +263,7 @@ const ApplicationFormFields = () => {
                 <h1 className="text-[#46B038] font-bold">
                   APPLICATION DETAILS:
                 </h1>
-                <span className="">{applicationId}</span>
+                {/* <span className="">{applicationId}</span> */}
               </div>
               <div className="grid lg:grid-cols-2 grid-cols-1 gap-y-8 lg:gap-y-10 w-full">
                 {isSuccess &&
@@ -259,6 +284,7 @@ const ApplicationFormFields = () => {
                         fieldCustomType={field.type}
                         isValid={errorFields[field.name]?.value}
                         error={errorFields[field.name]?.message}
+                        required={field.required}
                         // isValid={isValid}
                         // onFocus={}
                       />
@@ -271,6 +297,7 @@ const ApplicationFormFields = () => {
                         value={formData[field.name]}
                         isValid={errorFields[field.name]?.value}
                         error={errorFields[field.name]?.message}
+                        required={field.required}
                         // isValid={isValid}
                       />
                     ) : field.type === "DATE" ? (
@@ -282,6 +309,7 @@ const ApplicationFormFields = () => {
                         value={formData[field.name]}
                         isValid={errorFields[field.name]?.value}
                         error={errorFields[field.name]?.message}
+                        required={field.required}
                         // isValid={isValid}
                       />
                     ) : (

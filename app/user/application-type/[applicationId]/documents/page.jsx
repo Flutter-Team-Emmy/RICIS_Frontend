@@ -254,14 +254,21 @@ const Documents = () => {
                       />
                     ))}
                   </div>
-                  <div className="pt-20 space-x-3 text-sm">
+                  <div className="flex items-center pt-20 space-x-3 text-sm">
                     <button
+                      type="button"
+                      onClick={() => router.back()}
+                      className="px-6 py-2 bg-gray-900 text-white rounded-md hover:opacity-70 lg:w-fit "
+                    >
+                      Back
+                    </button>
+                    {/* <button
                       type="button"
                       onClick={createDraft}
                       className="px-4 py-2 border border-[#46B038] text-gray-600 rounded-md hover:opacity-70"
                     >
                       Save as Draft
-                    </button>
+                    </button> */}
                     <button
                       disabled={documentsEmpty}
                       type="button"

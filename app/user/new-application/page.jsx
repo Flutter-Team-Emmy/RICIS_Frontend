@@ -111,12 +111,20 @@ const NewApplication = () => {
               </div>
             }
           </div>
-          <Btn
-            handleClick={navigateToNextStep}
-            bgColorClass="bg-[#46B038]"
-            text="Next"
-            disabled={false}
-          />
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => router.back()}
+              className="bg-black px-6 py-2.5 text-white text-sm font-medium rounded-md shadow-lg hover:opacity-70"
+            >
+              Back
+            </button>
+            <Btn
+              handleClick={navigateToNextStep}
+              bgColorClass="bg-[#46B038]"
+              text="Next"
+              disabled={false}
+            />
+          </div>
         </div>
       </div>
     </DashboardLayout>

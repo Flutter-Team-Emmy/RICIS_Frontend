@@ -12,7 +12,11 @@ import { useGetStatsQuery } from "@/store/api/applicationApi";
 import Paginations from "@/components/Pagination";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { selectLastPage, selectTotalPage, setPage } from "@/store/features/applicatonsSlice";
+import {
+  selectLastPage,
+  selectTotalPage,
+  setPage,
+} from "@/store/features/applicatonsSlice";
 
 const DashboardSuspenseBoundary = () => {
   const router = useRouter();
@@ -61,7 +65,7 @@ const DashboardSuspenseBoundary = () => {
             </Link>
           )}
         </div>
-        <div className="flex w-full gap-6 ">
+        <div className="flex w-full gap-6 flex flex-col lg:flex-row ">
           {stats?.map((stat) => (
             <StatsCard
               key={stat.id}
