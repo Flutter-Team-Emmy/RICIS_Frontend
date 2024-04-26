@@ -1,17 +1,14 @@
 "use client";
 
-import { useGetTransactionsQuery } from "@/store/api/transactionsApi";
 import TableSkeleton from "./skeleton-loaders/TableSkeleton";
 import { cutString } from "@/utils/helpers";
 import { time } from "@/utils/time&dates";
 import { useRouter } from "next/navigation";
-import { useGetCurrentUserQuery } from "@/store/api/userApi";
 import { useSelector } from "react-redux";
 import {
   selectFetchingStates,
   selectTransactons,
 } from "@/store/features/transactionSlice";
-import { useDispatch } from "react-redux";
 import { selectUser } from "@/store/features/userSlice";
 import { selectRole } from "@/store/features/userSlice";
 

@@ -13,12 +13,14 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import TextFieldSkeleton from "@/components/skeleton-loaders/TextFieldSkeleton";
 import WithAuth from "@/components/withAuth";
+import { useRouter } from "next/navigation";
 
 const InitialData = {
   name: "",
 };
 
 const Profile = () => {
+  const router = useRouter();
   const { formData, setFormData, handleChange } = useForm(InitialData);
   const {
     isLoading,

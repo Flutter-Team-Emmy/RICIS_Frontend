@@ -2,15 +2,17 @@
 
 import Sidebar from "./Sidebar";
 import { useState } from "react";
-import { BellIcon } from "@/svgs";
+import { ArrowLeft, BellIcon } from "@/svgs";
 import Image from "next/image";
 import Hamburger from "../../public/images/hamburger.svg";
 import Avatar from "../Avatar";
 import { useGetCurrentUserQuery } from "@/store/api/userApi";
 import { useSelector } from "react-redux";
 import { selectRole, selectUser } from "@/store/features/userSlice";
+import { useRouter } from "next/navigation";
 
 const DashboardLayout = ({ children, header, icon }) => {
+  const router = useRouter();
   const [showSidebar, setShowSidebar] = useState("hidden");
 
   const currentUser = useSelector(selectUser);
@@ -50,8 +52,13 @@ const DashboardLayout = ({ children, header, icon }) => {
               src={Hamburger}
             />
             <div className="w-full flex justify-between items-center">
-              <div className="items-center gap-x-2 hidden lg:flex">
-                {icon}
+              <div className="items-center gap-x-3 hidden lg:flex">
+                <span
+                  className="cursor-pointer hover:opacity-70 p-1 rounded-full border-2 border-dashed"
+                  onClick={() => router.back()}
+                >
+                  {ArrowLeft}
+                </span>
                 <h1 className="text-slate-800 text-lg font-semibold inline whitespace-nowrap">
                   {header}
                 </h1>

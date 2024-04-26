@@ -61,7 +61,7 @@ const SignInForm = ({ heading, as_staff }) => {
   return (
     <FormLayout>
       <div className="w-full lg:w-[32rem] px-4 mx-auto mt-8 space-y-8">
-        <div className="bg-white rounded-[12px] py-[3rem] px-[3rem] border border-[#E6E8EC] space-y-8  ">
+        <div className="bg-white rounded-[12px] py-[3rem] lg:px-[3rem] px-4 border border-[#E6E8EC] space-y-8  ">
           <div className="flex items-center gap-1">
             <span onClick={() => router.back()} className="cursor-pointer">
               {ArrowLeft}
@@ -85,9 +85,12 @@ const SignInForm = ({ heading, as_staff }) => {
               placeholder="Enter Password"
               name="password"
             />
-            <h2 className="inter600 text-[12px] text-center leading-[18px] text-[#0000008A] ">
+            <Link
+              href="/reset-password"
+              className="inter600 text-[12px] text-center leading-[18px] text-[#0000008A] "
+            >
               Forgot Password?
-            </h2>
+            </Link>
           </div>
 
           <div className="mt-[2.5rem] flex flex-col  space-y-[18px] w-full ">

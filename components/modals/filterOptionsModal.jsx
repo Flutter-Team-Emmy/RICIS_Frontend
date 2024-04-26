@@ -52,6 +52,12 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
     localStorage.setItem("options", JSON.stringify(formData));
   }, [formData]);
 
+  const resetFilter = () => {
+    setFormData(InitialData);
+    setBeforeDate();
+    setAfterDate();
+  };
+
   const searchApplication = async () => {
     let payload;
 
@@ -100,14 +106,9 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
       setIsLoading(false);
     } finally {
       setIsLoading(false);
+      resetFilter();
       // setOpenFilter(false);
     }
-  };
-
-  const resetFilter = () => {
-    setFormData(InitialData);
-    setBeforeDate();
-    setAfterDate();
   };
 
   useEffect(() => {
@@ -238,4 +239,4 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
   );
 };
 
-export default FilterOptionsModal; 
+export default FilterOptionsModal;

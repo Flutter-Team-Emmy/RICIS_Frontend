@@ -4,6 +4,7 @@ import Invoice from "@/components/Invoice";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import WithAuth from "@/components/withAuth";
 import { useParams } from "next/navigation";
+import ApprovalFlow from "./ApprovalFlow";
 
 const TransactionInvoice = () => {
   const params = useParams();
@@ -14,7 +15,10 @@ const TransactionInvoice = () => {
         <h1 className="text-black font-bold text-2xl">Account Invoices</h1>
         <p className="text-gray-600 text-sm">view all account purchase below</p>
       </div>
-      <Invoice />
+      <div className="grid lg:grid-cols-2 grid-cols-1 gap-8">
+        <Invoice />
+        <ApprovalFlow />
+      </div>
     </DashboardLayout>
   );
 };

@@ -7,6 +7,7 @@ import {
   tranactionIcon,
   RecordIcon,
   UserIcon,
+  Analytics,
 } from "@/svgs";
 
 export const UserSidebarLinks = [
@@ -78,6 +79,12 @@ export const AdminSidebarLinks = [
     name: "Financial Management",
     href: "/admin/financial-management",
     icon: draftsIcon,
+  },
+  {
+    id: "s6",
+    name: "Statistics",
+    href: "/admin/statistics",
+    icon: Analytics,
   },
 ];
 

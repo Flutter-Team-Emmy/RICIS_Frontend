@@ -9,9 +9,12 @@ import TextInput from "@/components/TextInput";
 import Btn from "@/components/Btn";
 import { validator } from "@/utils/validator";
 import { useEffect, useState } from "react";
+import { useChangePasswordMutation } from "@/store/api/authApi";
+import { toast } from "react-toastify";
+import { normalizeErrors } from "@/utils/helpers";
 
 const InitialData = {
-  current_password: "",
+  old_password: "",
   new_password: "",
   confirm_password: "",
 };
@@ -21,16 +24,24 @@ const ChangePassword = () => {
   const currentUser = useSelector(selectUser);
   const [isInvalid, setIsInvalid] = useState(false);
   console.log(currentUser);
+  const [changePassword, { isLoading, isSuccess, error, data }] =
+    useChangePasswordMutation();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // event.preventDefault();
-    const { current_password, new_password, confirm_password } = formData;
+    const { old_password, new_password, confirm_password } = formData;
     const isMatch = validator.confirmPassword(new_password, confirm_password);
+    const isInValid = validator.whiteSpaces(formData);
+
+    if (isInValid) {
+      return toast.warning("Enter all fields", {autoClose: 10000})
+    }
 
     if (!isMatch) {
       setIsInvalid(true);
       return;
     }
+    await changePassword({ old_password, new_password });
   };
 
   useEffect(() => {
@@ -41,10 +52,32 @@ const ChangePassword = () => {
     }
   }, [formData]);
 
+  useEffect(() => {
+    if (error) {
+      const err = normalizeErrors(error);
+      toast.error(err, { autoClose: 30000 });
+    }
+
+    if (isSuccess) {
+      toast.success("Password successfully changed", { autoClose: 5000 });
+      // refetchUser();
+      setFormData(InitialData);
+    }
+  }, [isSuccess, setFormData, error]);
+
+  // useEffect(() => {
+  //   if (error) {
+  //     const err = normalizeErrors(error);
+  //     toast.error(err, { autoClose: 30000 });
+  //   }
+  //   if (isSuccess) {
+  //     toast.success(data?.message, { autoClose: 7000 });
+  //     router.push(`/create-account?email=${email}&otp=${otp}`);
+  //   }
+  // }, [isSuccess, error];
+
   return (
-    <DashboardLayout
-    //   header={currentUser?.user.first_name + " " + currentUser?.user.last_name}
-    >
+    <DashboardLayout header={currentUser?.name}>
       <div className="w-full pb-8">
         <h1 className="text-black font-bold text-2xl">User Profile</h1>
         <p className="text-gray-600 text-sm">
@@ -88,7 +121,7 @@ const ChangePassword = () => {
             <Btn
               text="Save changes"
               type="submit"
-              //   loading={isUpdatingBioData}
+              loading={isLoading}
               loadingMsg="saving.."
               handleClick={handleSubmit}
               //   disabled={btnIsdisabled}

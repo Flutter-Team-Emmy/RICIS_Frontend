@@ -2,6 +2,7 @@ import { TrendArrow } from "@/svgs";
 import StatChart from "@/Chart";
 import { capitalizeFirstLetter } from "@/utils/helpers";
 import { ApexCharts } from "@/utils/chartHelpers";
+import Image from "next/image";
 
 const StatsCard = ({
   status,
@@ -83,6 +84,7 @@ const StatsCard = ({
             <span className="">{TrendArrow(`#${colorCode[0]}`)}</span>
           </div>
         </div>
+        <Image src="/images/graph.png" width={200} height={100} />
         {/* <ApexCharts
           type="Area"
           series={series}

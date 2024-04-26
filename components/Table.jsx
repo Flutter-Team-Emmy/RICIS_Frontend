@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { EmptyPagesIcon, SortIcon } from "@/svgs";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   useGetAllApplicationsQuery,
   useGetAllDraftsQuery,

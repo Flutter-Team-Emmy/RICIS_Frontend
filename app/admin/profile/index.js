@@ -15,11 +15,11 @@ export const adminBioData = [
 
 export const changePasswordFields = [
   {
-    id: "current_password",
-    name: "current_password",
-    placeholder: "Enter Current password",
+    id: "old_password",
+    name: "old_password",
+    placeholder: "Enter Old password",
     type: "password",
-    label: "Current Password",
+    label: "Old Password",
   },
   {
     id: "new_password",
