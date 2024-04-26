@@ -24,7 +24,7 @@ const ApplicationsProvider = ({ children }) => {
   const searchOptions =
     typeof window !== "undefined" &&
     JSON.parse(localStorage?.getItem("options"));
-  const isCustomDate = searchOptions.date_modified === "Custom";
+  const isCustomDate = searchOptions?.date_modified === "Custom";
 
   const getSearchPayload = () => {
     if (isCustomDate) {
@@ -38,15 +38,15 @@ const ApplicationsProvider = ({ children }) => {
         reference_id: searchOptions.reference_id,
       };
     } else {
-      const filterDate = getDateModified(searchOptions.date_modified);
+      const filterDate = getDateModified(searchOptions?.date_modified);
       return {
         page: page === 0 ? 1 : page,
         limit: 20,
-        application_name: searchOptions.application_name,
-        applicant_name: searchOptions.applicant_name,
+        application_name: searchOptions?.application_name,
+        applicant_name: searchOptions?.applicant_name,
         start_date: filterDate.start_date,
         end_date: filterDate.end_date,
-        reference_id: searchOptions.reference_id,
+        reference_id: searchOptions?.reference_id,
       };
     }
   };
