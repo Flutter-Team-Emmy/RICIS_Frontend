@@ -16,7 +16,7 @@ const Admin = () => {
   console.log(data);
 
   const dispatch = useDispatch();
-  const pageCount = useSelector(selectLastPage) + 1;
+  const pageCount = useSelector(selectLastPage); 
 
   useEffect(() => {
     refetch();
@@ -49,8 +49,8 @@ const Admin = () => {
         </div>
         <Table />
         <Paginations
-          // pageCount={pageCount}
-          setPage={(event) => dispatch(setPage(event.selected))}
+          pageCount={pageCount}
+          setPage={(event) => dispatch(setPage(event.selected+1))}
         />
       </div>
     </DashboardLayout>

@@ -60,7 +60,7 @@ const ResetPassword = () => {
       toast.success(data?.message, { autoClose: 7000 });
       router.push(`/reset-password/verify-otp?email=${formData.email}&as_staff=${as_staff}`);
     }
-  }, [isSuccess, isError, data?.message, error, formData.email, router]);
+  }, [isSuccess, isError, data?.message, error, router]);
 
   //   useEffect(() => {
   //     if (token) {

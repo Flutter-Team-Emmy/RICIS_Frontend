@@ -24,7 +24,7 @@ const ApplicationsSuspense = () => {
   const dispatch = useDispatch();
   const firstPage = useSelector(selectFirstPage);
   const lastPage = useSelector(selectLastPage);
-  const pageCount = lastPage + 1;
+  const pageCount = lastPage;
 
   // const getTotalPages = () => {
   //   if (first)
@@ -63,7 +63,7 @@ const ApplicationsSuspense = () => {
         </div>
         <Paginations
           pageCount={pageCount}
-          setPage={(event) => dispatch(setPage(event.selected))}
+          setPage={(event) => dispatch(setPage(event.selected+1))}
         />
       </div>
     </DashboardLayout>

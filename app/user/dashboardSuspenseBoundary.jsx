@@ -12,7 +12,11 @@ import { useGetStatsQuery } from "@/store/api/applicationApi";
 import Paginations from "@/components/Pagination";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { selectLastPage, selectTotalPage, setPage } from "@/store/features/applicatonsSlice";
+import {
+  selectLastPage,
+  selectTotalPage,
+  setPage,
+} from "@/store/features/applicatonsSlice";
 
 const DashboardSuspenseBoundary = () => {
   const router = useRouter();
@@ -22,7 +26,7 @@ const DashboardSuspenseBoundary = () => {
   const transactionStatus = param.get("status");
 
   const dispatch = useDispatch();
-  const pageCount = useSelector(selectLastPage) + 1;
+  const pageCount = useSelector(selectLastPage);
 
   const { isLoading, isSuccess, error, data, refetch } = useGetStatsQuery();
   const stats = data?.data?.stats;
@@ -82,7 +86,7 @@ const DashboardSuspenseBoundary = () => {
         <Table />
         <Paginations
           pageCount={pageCount}
-          setPage={(event) => dispatch(setPage(event.selected))}
+          setPage={(event) => dispatch(setPage(event.selected + 1))}
         />
       </div>
     </DashboardLayout>

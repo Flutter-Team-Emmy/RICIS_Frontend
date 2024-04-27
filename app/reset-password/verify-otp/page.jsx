@@ -5,7 +5,7 @@ import FormLayout from "@/components/FormLayout";
 import useForm from "@/hooks/useForm";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, Suspense } from "react";
+import React, { useEffect, Suspense, useState } from "react";
 import { toast } from "react-toastify";
 import { validator } from "@/utils/validator";
 import { useRouter } from "next/navigation";
@@ -13,6 +13,12 @@ import { useVerifyResetPasswordOTPMutation } from "@/store/api/authApi";
 import { otpNumbersFields } from ".";
 import { normalizeErrors } from "@/utils/helpers";
 import { getToken } from "@/utils/authHelpers";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 
 const InitialData = {
   first_number: "",
@@ -22,31 +28,36 @@ const InitialData = {
 };
 
 const VerifyOTPSuspenseBoundary = () => {
+
+  const [otpValue, setOtpValue] = useState("");
+
   const param = useSearchParams();
   const { formData, setFormData, handleChange } = useForm(InitialData);
   const [
     verifyResetPasswordOTP,
     { isLoading, isSuccess, isError, error, data },
   ] = useVerifyResetPasswordOTPMutation();
-  const disableBtn = validator.whiteSpaces(formData);
+  const disableBtn = !validator.notEmpty(otpValue);
   const router = useRouter();
   const email = param.get("email");
-  const as_staff = param.get("as_staff"); 
-  const otp = Object.values(formData)
-    .map((num) => num)
-    .join("");
+  const as_staff = param.get("as_staff");
+
+  // const otp = Object.values(formData)
+  //   .map((num) => num)
+  //   .join("");
+
   const token = getToken();
 
   const handleVerifyOTP = async () => {
-    const payload = { email, otp };
-    console.log(payload)
-    if (!validator.validateOTPCode(otp)) {
+    const payload = { email, otp: otpValue };
+    console.log(payload);
+    if (!validator.validateOTPCode(otpValue)) {
       toast.error("Enter valid otp codes!", { autoClose: 10000 });
       return;
     }
     await verifyResetPasswordOTP(payload);
   };
-  console.log(error)
+  console.log(error);
 
   useEffect(() => {
     if (error) {
@@ -56,10 +67,10 @@ const VerifyOTPSuspenseBoundary = () => {
     if (isSuccess) {
       toast.success(data?.message, { autoClose: 7000 });
       router.push(
-        `/reset-password/new-password?email=${email}&otp=${otp}&as_staff=${as_staff}`
+        `/reset-password/new-password?email=${email}&otp=${otpValue}&as_staff=${as_staff}`
       );
     }
-  }, [isSuccess, data?.message, email, error, otp, router]);
+  }, [isSuccess, data?.message, email, error, router]);
 
   //   useEffect(() => {
   //     if (token) {
@@ -77,17 +88,19 @@ const VerifyOTPSuspenseBoundary = () => {
 
           <div className="space-y-3">
             <h2 className=" text-md text-[#8D8D8D] ">OTP</h2>
-            <div className="flex justify-center gap-x-2">
-              {otpNumbersFields.map((field) => (
-                <input
-                  key={field.id}
-                  type="text"
-                  value={formData[field.name]}
-                  onChange={handleChange}
-                  name={field.name}
-                  className="w-16 lg:w-24 h-16 lg:h-20 outline-none border-[2px] rounded-[4px] border-[#F0F0F0] p-1 text-center font-semibold text-xl "
-                />
-              ))}
+            <div className="flex justify-center space-x-4">
+              <InputOTP
+                maxLength={6}
+                value={otpValue}
+                onChange={(otpValue) => setOtpValue(otpValue)}
+              >
+                <InputOTPGroup>
+                  <InputOTPSlot index={0} />
+                  <InputOTPSlot index={1} />
+                  <InputOTPSlot index={2} />
+                  <InputOTPSlot index={3} />
+                </InputOTPGroup>
+              </InputOTP>
             </div>
           </div>
 
