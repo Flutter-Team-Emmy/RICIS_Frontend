@@ -7,7 +7,7 @@ import WithAuth from "@/components/withAuth";
 import { applicationsTabs } from "@/utils/data";
 import { Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectLastPage, selectTotalPage } from "@/store/features/applicatonsSlice";
+import { selectLastPage } from "@/store/features/applicatonsSlice";
 import { setPage } from "@/store/features/applicatonsSlice";
 import Paginations from "@/components/Pagination";
 

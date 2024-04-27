@@ -52,7 +52,7 @@ const ChangePassword = () => {
       setIsInvalid(false);
     }
   }, [formData]);
-  console.log(error)
+  console.log(error);
 
   useEffect(() => {
     if (error) {
@@ -66,7 +66,6 @@ const ChangePassword = () => {
       setFormData(InitialData);
     }
   }, [isSuccess, setFormData, error]);
-
 
   return (
     <DashboardLayout header={currentUser?.fullName}>
@@ -85,9 +84,8 @@ const ChangePassword = () => {
         >
           <div className="space-y-8 lg:w-1/3 w-full">
             {changePasswordFields.map((data, index) => (
-              <div className="space-y-2">
+              <div key={data.id} className="space-y-2">
                 <TextInput
-                  key={data.id}
                   label={data.label}
                   placeholder={data.placeholder}
                   type={data.type}

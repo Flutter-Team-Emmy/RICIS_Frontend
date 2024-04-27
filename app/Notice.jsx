@@ -65,6 +65,7 @@ const Notice = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[1.5rem] w-full">
         {noticeData.map((data, index) => (
           <CardLeft
+            key={data.id}
             index={index}
             header={data.header}
             subHeader={data.subHeader}

@@ -8,7 +8,7 @@ import WithAuth from "@/components/withAuth";
 import Search from "@/components/search/Search";
 import { useDispatch, useSelector } from "react-redux";
 import Paginations from "@/components/Pagination";
-import { selectTotalPage, setPage } from "@/store/features/transactionSlice";
+import { setPage, selectTotalPage } from "@/store/features/transactionSlice";
 import { useRouter } from "next/navigation";
 
 const FinancialManagement = () => {

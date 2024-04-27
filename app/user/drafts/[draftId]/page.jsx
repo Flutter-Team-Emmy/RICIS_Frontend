@@ -45,7 +45,7 @@ const Draft = () => {
   }, [draft]);
 
   let InitialData = {};
-  // let fieldsInitialErrorStates = {};
+  let fieldsInitialErrorStates = {};
 
   // auto generate form Fields object of dynamic form field
   useEffect(() => {
@@ -53,15 +53,22 @@ const Draft = () => {
       if (formFields?.length !== 0) {
         formFields?.forEach((field) => {
           InitialData[field?.form_field?.name] = field.value;
-          // fieldsInitialErrorStates[field?.name] = false;
+          fieldsInitialErrorStates[field?.form_field?.name] = {
+            value: true,
+            type: field?.form_field.type,
+            message: "",
+          };
         });
-        return InitialData;
+        return { InitialData, fieldsInitialErrorStates };
       }
       return {};
     };
     if (formFields?.length !== 0) {
-      const initialData = createInitialObject();
-      setFormData(initialData);
+      // const initialData = createInitialObject();
+      // setFormData(initialData);
+      const { InitialData, fieldsInitialErrorStates } = createInitialObject();
+      setFormData(InitialData);
+      setErrorFields(fieldsInitialErrorStates);
     }
   }, [draft]);
 
@@ -69,6 +76,9 @@ const Draft = () => {
   const initializer = () =>
     JSON.parse(localStorage.getItem("draftFormData")) || InitialData;
   const { formData, setFormData, handleChange } = useForm(initializer);
+  const errorInitializer = () =>
+    JSON.parse(localStorage.getItem("errorFields")) || fieldsInitialErrorStates;
+  const [errorFields, setErrorFields] = useState(errorInitializer);
 
   // fetch persisted data from local storage
   useEffect(() => {
@@ -96,12 +106,73 @@ const Draft = () => {
 
   console.log(draft);
 
+  const validateForm = () => {
+    const formDataValues = Object.keys(formData).forEach((key) => {
+      const currentValue = formData[key];
+      const notEmpty = validator.notEmpty(currentValue);
+      const phoneIsValid = validator.validatePhoneNumber(currentValue);
+      const emailIsValid = validator.validateEmail(currentValue);
+      const currentErrorKey = errorFields[key];
+
+      if (currentErrorKey?.type === "EMAIL") {
+        const updatedErrorState = {
+          value: notEmpty && emailIsValid,
+          message:
+            !notEmpty && !emailIsValid
+              ? "Invalid Field"
+              : !emailIsValid
+              ? "Inavlid Email"
+              : "",
+          type: currentErrorKey?.type,
+        };
+        setErrorFields((prev) => {
+          return { ...prev, [key]: updatedErrorState };
+        });
+      } else if (currentErrorKey?.type === "PHONE") {
+        const updatedErrorState = {
+          value: notEmpty && phoneIsValid,
+          message:
+            !notEmpty && !phoneIsValid
+              ? "Invalid Field"
+              : !phoneIsValid
+              ? "Inavlid Phone"
+              : "",
+          type: currentErrorKey?.type,
+        };
+        setErrorFields((prev) => {
+          return { ...prev, [key]: updatedErrorState };
+        });
+      } else {
+        // if (!notEmpty) {
+        setErrorFields((prev) => {
+          return {
+            ...prev,
+            [key]: {
+              value: notEmpty,
+              message: notEmpty ? "" : "Invalid Fields",
+              type: currentErrorKey?.type,
+            },
+          };
+        });
+        // }
+        return;
+      }
+    });
+
+    return formDataValues;
+  };
+
   const navigateToNextStep = () => {
+    validateForm();
+    const allfieldsNotFilled = validator.whiteSpaces(formData);
+    if (allfieldsNotFilled) {
+      return;
+    }
     const id = `${draftId}-${applicationId}`;
     router.push(`/user/drafts/${id}/documents`);
   };
 
-  const allfieldsNotFilled = validator.whiteSpaces(formData);
+  // const allfieldsNotFilled = validator.whiteSpaces(formData);
 
   return (
     <DashboardLayout header="Drafts" icon="">
@@ -143,6 +214,8 @@ const Draft = () => {
                       onChange={handleChange}
                       value={formData[field.form_field.name]}
                       fieldCustomType={field.form_field.type}
+                      isValid={errorFields[field?.form_field.name]?.value}
+                      error={errorFields[field?.form_field.name]?.message}
                       // isValid={isValid}
                       // onFocus={}
                     />
@@ -153,6 +226,8 @@ const Draft = () => {
                       name={field.form_field.name}
                       onChange={handleChange}
                       value={formData[field.form_field.name]}
+                      isValid={errorFields[field?.form_field.name]?.value}
+                      error={errorFields[field?.form_field.name]?.message}
                       // isValid={isValid}
                     />
                   ) : field.form_field.type === "DATE" ? (
@@ -162,6 +237,8 @@ const Draft = () => {
                       name={field.form_field.name}
                       onChange={handleChange}
                       value={formData[field.form_field.name]}
+                      isValid={errorFields[field?.form_field.name]?.value}
+                      error={errorFields[field?.form_field.name]?.message}
                       // isValid={isValid}
                     />
                   ) : (
@@ -182,7 +259,7 @@ const Draft = () => {
                 Back
               </button>
               <button
-                disabled={allfieldsNotFilled}
+                // disabled={allfieldsNotFilled}
                 type="button"
                 onClick={navigateToNextStep}
                 className="lg:px-8 px-6 py-2 bg-[#46B038] hover:opacity-70 text-white rounded-md disabled:cursor-not-allowed disabled:opacity-70"

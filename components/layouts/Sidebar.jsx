@@ -100,7 +100,7 @@ const Sidebar = ({
           {crossIcon}
         </span>
         <div className="flex flex-col space-y-3 text-white mt-2">
-          <ul className="mt-28 space-y-3 text-sm">
+          <ul className="lg:mt-28 space-y-3 text-sm">
             {isSuccess &&
               (currentUserRole === "user"
                 ? UserSidebarLinks
@@ -135,7 +135,7 @@ const Sidebar = ({
           <div className="text-sm">
             <button
               onClick={logout}
-              className="flex items-center gap-1 mt-20 px-6 py-2 bg-blue-800 rounded-md hover:bg-blue-700"
+              className="flex items-center gap-1 lg:mt-20 mt-6 px-6 py-2 bg-blue-800 rounded-md hover:bg-blue-700"
             >
               <span>{LogoutIcon}</span>
               <span className="">Logout</span>

@@ -18,6 +18,8 @@ import {
   updateSingleDocument,
 } from "@/lib/indexDB";
 import { getDocuments } from "@/lib/indexDB";
+import useFiles from "@/hooks/useFiles";
+import useDND from "@/hooks/useDND";
 
 const Documents = () => {
   const router = useRouter();
