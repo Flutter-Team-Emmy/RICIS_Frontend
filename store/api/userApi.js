@@ -67,6 +67,14 @@ export const userApi = createApi({
       },
       invalidatesTags: [{ type: "Users", id: "LIST" }],
     }),
+    getSingleStaff: builder.query({
+      query(staffId) {
+        return {
+          url: `/staff/${staffId}`,
+        };
+      },
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
+    }),
     deleteStaff: builder.mutation({
       query(userId) {
         return {
@@ -95,5 +103,6 @@ export const {
   useGetCurrentUserQuery,
   useGetUserQuery,
   useGetAllStaffsQuery,
-  useUpdateStaffMutation
+  useUpdateStaffMutation,
+  useGetSingleStaffQuery,
 } = userApi;
