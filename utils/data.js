@@ -149,3 +149,19 @@ export const staffTabs = [
     tab: "suspended",
   },
 ];
+
+
+export const staffLogTabs = [
+  {
+    id: "s1",
+    tab: "Activity Log",
+  },
+  {
+    id: "s1",
+    tab: "active",
+  },
+  {
+    id: "s1",
+    tab: "suspended",
+  },
+];

@@ -14,7 +14,7 @@ import { staffTabs } from "@/utils/data";
 const StaffManagement = () => {
   return (
     <DashboardLayout header="Admin">
-      <div className="space-y-6">
+      <div className="space-y-6 px-4">
         <div className="lg:flex lg:justify-between w-full">
           <div className="w-full">
             <h1 className="text-black font-bold text-lg">Staff Management</h1>
@@ -33,7 +33,7 @@ const StaffManagement = () => {
         <Suspense>
           <TabSwitcher applicationsTabs={staffTabs} />
         </Suspense>
-        <div className="space-y-8 bg-white py-4">
+        <div className="space-y-8 bg-white py-4 px-4">
           <Search />
           <Suspense>
             <Table />

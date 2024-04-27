@@ -13,16 +13,16 @@ export const cutString = (str, length) => {
 export const normalizeErrors = (error) => {
   const isErrorObject = typeof error?.data === "object";
 
-  if (error?.data.message) {
-    return error?.data.message;
+  if (error?.data?.message) {
+    return error?.data?.message;
   }
 
   if (isErrorObject) {
-    if (error?.data.error) {
-      return error?.data.error?.message;
+    if (error?.data?.error) {
+      return error?.data?.error?.message;
     }
-    if (error?.data.errors) {
-      const err = error?.data.errors.map((err) => err.message).join(" ");
+    if (error?.data?.errors) {
+      const err = error?.data?.errors?.map((err) => err?.message).join(" ");
       return err;
     }
   } else {

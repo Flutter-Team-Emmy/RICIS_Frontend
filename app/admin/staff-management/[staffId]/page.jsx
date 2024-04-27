@@ -1,15 +1,20 @@
 "use client";
 
-const {
-  default: DashboardLayout,
-} = require("@/components/layouts/DashboardLayout");
-const { default: StaffDetails } = require("../staffDetails");
+import { Tabs } from "@/components/ui/tabs";
+import { TabsList } from "@/components/ui/tabs";
+import { TabsTrigger } from "@/components/ui/tabs";
+import { TabsContent } from "@/components/ui/tabs";
+import { Log } from "@/svgs";
+import StaffLogsTable from "./StaffLogsTable";
+import ActivityTable from "./ActivityTable";
+import DashboardLayout from "@/components/layouts/DashboardLayout";
+import StaffDetails from "../staffDetails";
 
 const StaffProfile = () => {
   return (
     <DashboardLayout header="Admin">
       <StaffDetails />
-      <div className="space-y-4 pt-12 pb-20">
+      <div className="space-y-6 py-12">
         <div className="flex gap-x-16">
           <h1 className="font-bold">Status:</h1>
           <p className="relative px-2 py-1 rounded-lg bg-[#69CB5C] bg-opacity-15 text-[#69CB5C]">
@@ -26,6 +31,23 @@ const StaffProfile = () => {
             <p>Clearance</p>
             <p>Clearance</p>
           </div>
+        </div>
+        <div className="bg-white p-4 shadow-md">
+          <Tabs defaultValue="staff-logs" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 w-96 mb-8">
+              <TabsTrigger className="space-x-2" value="staff-logs">
+                <span className="">Staff Logs</span>
+                <span className="">{Log}</span>
+              </TabsTrigger>
+              <TabsTrigger value="activity">Activity</TabsTrigger>
+            </TabsList>
+            <TabsContent value="staff-logs">
+              <StaffLogsTable />
+            </TabsContent>
+            <TabsContent value="activity">
+              <ActivityTable />
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </DashboardLayout>

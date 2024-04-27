@@ -83,15 +83,15 @@ const CreateStaff = () => {
   return (
     <DashboardLayout header="Admin">
       <div className="">
-        <div className="w-[95%] m-auto pb-8">
+        <div className="w-full m-auto pb-8">
           <h1 className="text-black font-bold text-xl">Create Staff</h1>
           <p className="text-gray-600 text-sm">
             create a staff by filling their information below
           </p>
         </div>
-        <div className="bg-white min-w-[95%] m-auto shadow-md rounded-md space-y-8 py-6 pl-6 w-fit">
+        <div className="bg-white w-full m-auto shadow-md rounded-md space-y-8 py-6 pl-6 w-fit">
           <h1 className="text-[#46B038] font-bold">STAFF DETAILS</h1>
-          <div className="lg:flex gap-x-6 items-center flex-wrap space-y-6 ">
+          <div className="lg:flex gap-x-6 items-center">
             <form className="max-w-sm">
               <label htmlFor="applicationType" className="block mb-2 font-bold">
                 Staff Access
@@ -112,11 +112,10 @@ const CreateStaff = () => {
                   Select the staff access
                 </option>
                 <option value="admin-staff">Admin Staff</option>
-
                 <option value="Non-admin-staff">Non-admin Staff</option>
               </select>
             </form>
-            <div>
+            <div className="space-y-2.5">
               <p className="font-bold">Name</p>
               <input
                 type="text"
@@ -131,7 +130,7 @@ const CreateStaff = () => {
                 placeholder="Enter Name"
               />
             </div>
-            <div>
+            <div className="space-y-2.5">
               <p className="font-bold">Email Address</p>
               <input
                 type="text"
@@ -180,6 +179,8 @@ const CreateStaff = () => {
             <button className="text-sm bg-[#46B038] h-[50%] text-white py-2 px-4 w-fit rounded-md flex items-center justify-center">
               {btnLoad ? (
                 <ClipLoader color="#fff" size={20} />
+              ) : btnLoad ? (
+                "Creating..."
               ) : (
                 "Create Account"
               )}

@@ -13,7 +13,9 @@ const StaffDetails = () => {
 
   return (
     <>
-      {displayDeleteModal && <DeleteStaff setDisplayDeleteModal={setDisplayDeleteModal} />}
+      {displayDeleteModal && (
+        <DeleteStaff setDisplayDeleteModal={setDisplayDeleteModal} />
+      )}
       <div>
         <div className="w-full lg:flex justify-between pb-8">
           <div>
@@ -27,11 +29,14 @@ const StaffDetails = () => {
               onClick={() =>
                 router.push(`/admin/staff-management/${staffId}/edit`)
               }
-              className="bg-[#46B038] shadow-sm rounded-md text-sm text-white py-2 px-6"
+              className="bg-[#46B038] shadow-md rounded-md text-sm text-white py-2 px-6"
             >
               Edit
             </button>
-            <button onClick={() => setDisplayDeleteModal(true)} className="bg-[#F0F2F2] shadow-sm rounded-md flex gap-x-4 px-6 py-2">
+            <button
+              onClick={() => setDisplayDeleteModal(true)}
+              className="bg-[#F0F2F2] shadow-md rounded-md flex gap-x-4 px-6 py-2"
+            >
               <img
                 className="w-4 h-4"
                 src="/images/deleteStaffIcon.svg"
@@ -42,7 +47,7 @@ const StaffDetails = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 space-y-4 lg:space-y-0 lg:grid-cols-4 gap-x-8">
-          <div className="relative flex space-x-4 items-center py-4 px-2 bg-[#3361FF] bg-opacity-40">
+          <div className="shadow-md relative flex space-x-4 items-center py-4 px-2 bg-[#3361FF] bg-opacity-40">
             <img
               className="w-8 h-8 rounded-full"
               src="/images/user.jpg"
@@ -55,7 +60,7 @@ const StaffDetails = () => {
             <img className="w-4 h-4" src="/images/userIcon.svg" alt="" />
           </div>
 
-          <div className="relative flex space-x-4 items-center py-4 px-2 bg-[#46B038] bg-opacity-30">
+          <div className="shadow-md relative flex space-x-4 items-center py-4 px-2 bg-[#46B038] bg-opacity-30">
             <img className="w-6 h-6" src="/images/emailIcon.svg" alt="" />
             <div>
               <p className="text-sm">basseyesther@gmail.com</p>
@@ -63,7 +68,7 @@ const StaffDetails = () => {
             </div>
           </div>
 
-          <div className="relative flex space-x-4 items-center py-4 px-2 bg-[#C40E0E] bg-opacity-20">
+          <div className="shadow-md relative flex space-x-4 items-center py-4 px-2 bg-[#C40E0E] bg-opacity-20">
             <img className="w-6 h-6" src="/images/fingerprintIcon.svg" alt="" />
             <div>
               <p className="text-sm">EAD1234567890</p>
@@ -71,7 +76,7 @@ const StaffDetails = () => {
             </div>
           </div>
 
-          <div className="relative flex space-x-4 items-center py-4 px-2 bg-[#EABD52] bg-opacity-20">
+          <div className="shadow-md relative flex space-x-4 items-center py-4 px-2 bg-[#EABD52] bg-opacity-20">
             <img className="w-6 h-6" src="/images/calenderIcon.svg" alt="" />
             <div>
               <p className="text-sm">20th Sept 2023</p>

@@ -58,11 +58,29 @@ export const userApi = createApi({
       },
       invalidatesTags: [{ type: "Users", id: "LIST" }],
     }),
-    deleteUser: builder.mutation({
+    createStaff: builder.mutation({
+      query(staffId) {
+        return {
+          url: `/staff/${staffId}`,
+          method: "POST",
+        };
+      },
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
+    }),
+    deleteStaff: builder.mutation({
       query(userId) {
         return {
           url: `/users/${userId}`,
           method: "DELETE",
+        };
+      },
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
+    }),
+    updateStaff: builder.mutation({
+      query(staffId) {
+        return {
+          url: `/staff/${staffId}`,
+          method: "PUT  ",
         };
       },
       invalidatesTags: [{ type: "Users", id: "LIST" }],
@@ -77,4 +95,5 @@ export const {
   useGetCurrentUserQuery,
   useGetUserQuery,
   useGetAllStaffsQuery,
+  useUpdateStaffMutation
 } = userApi;
