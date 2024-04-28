@@ -6,79 +6,88 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
+import DashboardLayout from "@/components/layouts/DashboardLayout";
+import { useGetFormsQuery } from "@/store/api/applicationApi";
+import useForm from "@/hooks/useForm";
+import { Checkbox } from "@/components/ui/checkbox";
+import Btn from "@/components/Btn";
+import { useCreateStaffMutation } from "@/store/api/userApi";
+import { validator } from "@/utils/validator";
+import { normalizeErrors } from "@/utils/helpers";
+import { useRouter } from "next/navigation";
 
-const {
-  default: DashboardLayout,
-} = require("@/components/layouts/DashboardLayout");
+const InitialData = {
+  role: "",
+  staff_name: "",
+  staff_email: "",
+};
 
 const CreateStaff = () => {
-  const [form, setForm] = useState([]);
-  const [btnLoad, setBtnLoad] = useState(false);
+  const router = useRouter();
 
-  const [formData, setFormData] = useState({
-    is_admin: "",
-    name: "",
-    email: "",
-  });
+  const { data, isLoading, isSuccess, error } = useGetFormsQuery("");
+  const forms = data?.data?.forms;
 
-  const [checkedItems, setCheckedItems] = useState([]);
+  const [
+    createStaff,
+    {
+      isLoading: creatingStaff,
+      isSuccess: createStaffSuccess,
+      error: createStaffError,
+    },
+  ] = useCreateStaffMutation();
 
-  const fetchForm = async () => {
-    try {
-      const token = getToken();
-      const fetchData = await axios.get(`${baseUrl}/forms`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(fetchData);
-      setForm(fetchData?.data?.data?.forms);
-    } catch (error) {
-      console.log(error);
+  const [checkedCategories, setCheckedCategories] = useState([]);
+  const { formData, setFormData, handleChange } = useForm(InitialData);
+  // const [selectedIds, setSelectedIds] = useState([]);
+
+  // Function to handle checkbox change
+  const handleCheckboxChange = (value) => {
+    // Update the checkedItems array based on the checkbox state
+    if (!checkedCategories.includes(value)) {
+      setCheckedCategories([...checkedCategories, value]);
+      // setSelectedIds([...selectedIds, value]);
+    } else {
+      setCheckedCategories(checkedCategories.filter((item) => item !== value));
     }
   };
 
-  const createStaff = async () => {
-    setBtnLoad(true);
-    try {
-      const token = getToken();
-      const res = await axios.post(
-        `${baseUrl}/staff`,
-        {
-          name: formData.name,
-          email: formData.email,
-          is_admin: formData.is_admin === "admin-staff" ? true : false,
-          forms: checkedItems,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res) {
-        console.log(res);
-        toast.success(" created staff successfully", { autoClose: 2000 });
-        setBtnLoad(false);
-      }
-    } catch (error) {
-      setBtnLoad(false);
-      console.log(error);
-      toast.error(error.response.data.error.message, { autoClose: 2000 });
+  const createNewStaff = async () => {
+    const { role, staff_name, staff_email } = formData;
+    const is_admin = role === "admin-staff";
+    const isInValid = validator.whiteSpaces(formData);
+    const emailIsValid = validator.validateEmail(staff_email);
+    if (isInValid) {
+      return toast.error("Fill in all fields correctly", { autoClose: 10000 });
     }
+    if (!emailIsValid) {
+      return toast.error("Fill in a valid email address pls.", {
+        autoClose: 10000,
+      });
+    }
+    if (checkedCategories.length === 0) {
+      return toast.error("Add atleast one role", { autoClose: 10000 });
+    }
+    const payload = {
+      name: staff_name,
+      email: staff_email,
+      password: "",
+      is_admin,
+      forms: checkedCategories,
+    };
+    await createStaff(payload);
   };
 
   useEffect(() => {
-    fetchForm();
-  }, []);
-
-  const handleCheckboxChange = (id) => {
-    if (checkedItems.includes(id)) {
-      setCheckedItems((prevIds) => prevIds.filter((prevId) => prevId !== id));
-    } else {
-      setCheckedItems((prevIds) => [...prevIds, id]);
+    if (createStaffError) {
+      const err = normalizeErrors(createStaffError);
+      toast.error(err, { autoClose: 30000 });
     }
-  };
+    if (createStaffSuccess) {
+      toast.success("Successfully created new staff", { autoClose: 5000 });
+      router.push("/admin/staff-management");
+    }
+  }, [createStaffError, createStaffSuccess]);
 
   return (
     <DashboardLayout header="Admin">
@@ -89,94 +98,88 @@ const CreateStaff = () => {
             create a staff by filling their information below
           </p>
         </div>
-        <div className="bg-white w-full m-auto shadow-md rounded-md space-y-8 py-6 pl-6 w-fit">
+        <div className="bg-white w-full m-aut shadow-md rounded-md space-y-8 py-6 pl-6">
           <h1 className="text-[#46B038] font-bold">STAFF DETAILS</h1>
-          <div className="lg:flex gap-x-6 items-center">
-            <form className="max-w-sm">
+          <div className="lg:flex gap-x-6 items-center w-full">
+            <div className="max-w-s">
               <label htmlFor="applicationType" className="block mb-2 font-bold">
                 Staff Access
               </label>
               <select
-                name="application_details"
-                value={formData.is_admin}
-                onChange={(e) => {
-                  setFormData((prevData) => ({
-                    ...prevData,
-                    is_admin: e.target.value,
-                  }));
-                }}
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
                 id="countries"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               >
                 <option selected disabled>
                   Select the staff access
                 </option>
                 <option value="admin-staff">Admin Staff</option>
-                <option value="Non-admin-staff">Non-admin Staff</option>
+                <option value="non-admin-staff">Non-admin Staff</option>
               </select>
-            </form>
+            </div>
             <div className="space-y-2.5">
               <p className="font-bold">Name</p>
               <input
                 type="text"
+                name="staff_name"
                 className="py-2 px-4 border-[1px] border-solid border-gray-300 rounded-lg"
-                value={formData.name}
-                onChange={(e) => {
-                  setFormData((prevData) => ({
-                    ...prevData,
-                    name: e.target.value,
-                  }));
-                }}
+                value={formData.staff_name}
+                onChange={handleChange}
                 placeholder="Enter Name"
               />
             </div>
             <div className="space-y-2.5">
               <p className="font-bold">Email Address</p>
               <input
-                type="text"
+                type="email"
+                name="staff_email"
                 className="py-2 px-4 border-[1px] border-solid border-gray-300 rounded-lg"
                 placeholder="Enter Email Address"
-                value={formData.email}
-                onChange={(e) => {
-                  setFormData((prevData) => ({
-                    ...prevData,
-                    email: e.target.value,
-                  }));
-                }}
+                value={formData.staff_email}
+                onChange={handleChange}
               />
             </div>
           </div>
           <div className="space-y-4 w-[60%]">
             <h1 className="font-bold">Roles</h1>
-            {form.length > 0 &&
-              form.map((formObj, i) => (
-                <div
-                  key={i}
-                  className="flex gap-x-2 text-sm items-center"
-                  onClick={() => {
-                    handleCheckboxChange(formObj.id);
-                  }}
-                >
-                  <input
-                    type="checkbox"
-                    checked={checkedItems.some((id) => id === formObj.id)}
-                    className=" appearance-none w-4 h-4 border-[0.5px] border-gray-300 rounded-md checked:bg-green-500 checked:border-transparent focus:outline-none "
-                    style={{
-                      "--tw-ring-color": "transparent", // Optional: Remove focus ring
-                    }}
-                    onChange={() => handleCheckboxChange(formObj.id)}
-                  />
-                  <label htmlFor="">{formObj.name}</label>
-                </div>
-              ))}
+            <div className="space-y-3">
+              {isLoading ? (
+                <ClipLoader size={40} />
+              ) : (
+                forms?.map((form) => (
+                  <div key={form.id} className="flex items-center gap-4">
+                    <Checkbox
+                      value={form.id}
+                      checked={checkedCategories.includes(form.id)}
+                      onCheckedChange={() => handleCheckboxChange(form.id)}
+                    />
+                    <label
+                      htmlFor="terms"
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      {form.name}
+                    </label>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
           <div
             className="flex gap-x-4 w-full cursor-pointer"
-            onClick={() => {
-              createStaff();
-            }}
+            // onClick={() => {
+            //   // createStaff();
+            // }}
           >
-            <button className="text-sm bg-[#46B038] h-[50%] text-white py-2 px-4 w-fit rounded-md flex items-center justify-center">
+            <Btn
+              text="Create staff"
+              loading={creatingStaff}
+              loadingMsg="creating staff..."
+              bgColorClass="bg-[#46B038]"
+              handleClick={createNewStaff}
+            />
+            {/* <button className="text-sm bg-[#46B038] h-[50%] text-white py-2 px-4 w-fit rounded-md flex items-center justify-center">
               {btnLoad ? (
                 <ClipLoader color="#fff" size={20} />
               ) : btnLoad ? (
@@ -184,7 +187,7 @@ const CreateStaff = () => {
               ) : (
                 "Create Account"
               )}
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

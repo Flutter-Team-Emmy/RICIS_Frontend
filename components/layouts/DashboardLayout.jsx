@@ -6,10 +6,11 @@ import { ArrowLeft, BellIcon } from "@/svgs";
 import Image from "next/image";
 import Hamburger from "../../public/images/hamburger.svg";
 import Avatar from "../Avatar";
-import { useGetCurrentUserQuery } from "@/store/api/userApi";
 import { useSelector } from "react-redux";
 import { selectRole, selectUser } from "@/store/features/userSlice";
 import { useRouter } from "next/navigation";
+import useNetworkStatus from "@/hooks/useNetworkStatus";
+import { Offline } from "@/svgs";
 
 const DashboardLayout = ({ children, header, icon }) => {
   const router = useRouter();
@@ -17,19 +18,16 @@ const DashboardLayout = ({ children, header, icon }) => {
 
   const currentUser = useSelector(selectUser);
   const role = useSelector(selectRole);
-
-  // const { isLoading, isSuccess, isError, error, data } =
-  //   useGetCurrentUserQuery();
-  // const currentUser = data?.data.user;
-  // const role = data?.data.role;
+  const isOnline = useNetworkStatus();
 
   console.log("gottend here ", role);
 
+  const refreshPage = () => {
+    window.location.reload(false);
+  };
+
   return (
     <>
-      {/* {isVisible && (
-        <Sidebar display="block" lg_display="hidden" zIndex="z-[999]" />
-      )} */}
       <div className={`h-full w-full mt-28`}>
         {showSidebar === "block" && (
           <div className="items-center gap-4 fixed inset-0 bg-[rgb(0,0,0,0.8)] bg-opacity-50 z-[999]"></div>
@@ -59,9 +57,16 @@ const DashboardLayout = ({ children, header, icon }) => {
                 >
                   {ArrowLeft}
                 </span>
-                <h1 className="text-slate-800 text-lg font-semibold inline whitespace-nowrap">
-                  {header}
-                </h1>
+                {isOnline ? (
+                  <h1 className="text-slate-800 text-lg font-semibold inline whitespace-nowrap">
+                    {header}
+                  </h1>
+                ) : (
+                  <div className="flex items-center gap-2 text-slate-800 text-lg font-semibold inline whitespace-nowrap">
+                    <span className="">{Offline}</span>
+                    <span className="">Offline</span>
+                  </div>
+                )}
               </div>
               <div className="flex items-center w-full justify-end gap-4">
                 <div className="p-2 border-2 rounded-full">
@@ -74,7 +79,22 @@ const DashboardLayout = ({ children, header, icon }) => {
             </div>
           </div>
           <main className="lg:w-[calc(100%-8.5rem)] overflow-none lg:ml-[12rem]">
-            {children}
+            {isOnline ? (
+              children
+            ) : (
+              <div className="w-full bg-white h-screen justify-center flex flex-col items-center gap-2 text-slate-800 text-lg font-semibold inline whitespace-nowrap">
+                <div className="flex items-center gap-3">
+                  <span className="">{Offline}</span>
+                  <span className="">No Internet Connection</span>
+                </div>
+                <button
+                  onClick={refreshPage}
+                  className="bg-blue-800 px-4 py-2 text-white text-sm rounded-md shadow-md hover:opacity-70"
+                >
+                  Refresh
+                </button>
+              </div>
+            )}
           </main>
         </div>
       </div>

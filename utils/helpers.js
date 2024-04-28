@@ -130,3 +130,31 @@ export const truncateWithEllipsisAndExtension = (filename, maxLength) => {
 
   return truncatedFilename;
 };
+
+export const getActionStatement = (member, action, executor) => {
+  switch (action) {
+    case "CREATE_ACCOUNT":
+      return member === "Staff"
+        ? `Staff account was created by ${executor}`
+        : "User account was created";
+
+    case "LOGIN":
+      return `${member} logged into account`;
+
+    case "LOGOUT":
+      return `${member} logged out of account`;
+
+    case "SUSPENDED":
+      return `${member} account was suspended by ${executor}`;
+
+    case "ACTIVATE":
+      return `${member} account was activated by ${executor}`;
+
+    case "RESET_PASSWORD":
+      return `${member} password was updated`;
+    // break;
+
+    default:
+      break;
+  }
+};

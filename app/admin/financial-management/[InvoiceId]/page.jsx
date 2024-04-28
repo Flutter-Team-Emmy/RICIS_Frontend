@@ -12,7 +12,7 @@ const TransactionInvoice = () => {
   return (
     <DashboardLayout header={`Invoice #${InvoiceId}`}>
       <div className="w-full pb-8">
-        <h1 className="text-black font-bold text-2xl">Account Invoices</h1>
+        <h1 className="text-black font-bold text-lg">Account Invoices</h1>
         <p className="text-gray-600 text-sm">view all account purchase below</p>
       </div>
       <div className="grid lg:grid-cols-2 grid-cols-1 gap-8">

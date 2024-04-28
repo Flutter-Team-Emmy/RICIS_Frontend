@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import TextFieldSkeleton from "@/components/skeleton-loaders/TextFieldSkeleton";
 import WithAuth from "@/components/withAuth";
 import { useRouter } from "next/navigation";
+import { normalizeErrors } from "@/utils/helpers";
 
 const InitialData = {
   name: "",
@@ -48,8 +49,12 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    if (bioError) {
+      const err = normalizeErrors(bioError);
+      toast.error(err, { autoClose: 10000 });
+    }
     if (isUpdated) {
-      toast.success("Bio data updated successfully", { autoClose: 2000 });
+      toast.success("Bio data updated successfully", { autoClose: 5000 });
       refetchUser();
       setFormData(InitialData);
     }

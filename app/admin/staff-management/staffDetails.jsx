@@ -5,18 +5,10 @@ import { useGetSingleStaffQuery } from "@/store/api/userApi";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
-const StaffDetails = () => {
+const StaffDetails = ({staff, staffId}) => {
   const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
 
   const router = useRouter();
-  const params = useParams();
-  const staffId = params.staffId;
-
-  const { data, isLoading, isSuccess, isError } =
-    useGetSingleStaffQuery(staffId);
-  const staff = data?.data.staff[0];
-
-  console.log(data?.data.staff);
 
   const formatDate = (dateString) => {
     const options = { day: "numeric", month: "short", year: "numeric" };
@@ -24,8 +16,8 @@ const StaffDetails = () => {
     const formattedDate = date.toLocaleDateString("en-GB", options);
     return formattedDate;
   };
-  
-  const formattedDate = formatDate(staff?.created_at);
+
+  const formattedDate = formatDate(staff?.created_at); 
 
   return (
     <>
@@ -71,7 +63,7 @@ const StaffDetails = () => {
             />
             <div>
               <p className="text-sm">{staff?.name}</p>
-              <p className="text-sm">Staff Name</p>
+              <p className="text-sm font-semibold text-gray-700">Staff Name</p>
             </div>
             <img className="w-4 h-4" src="/images/userIcon.svg" alt="" />
           </div>
@@ -80,7 +72,7 @@ const StaffDetails = () => {
             <img className="w-6 h-6" src="/images/emailIcon.svg" alt="" />
             <div className="w-[70%]">
               <p className="text-sm truncate">{staff?.email}</p>
-              <p className="text-sm">Staff Email</p>
+              <p className="text-sm font-semibold text-gray-700">Staff Email</p>
             </div>
           </div>
 
@@ -88,7 +80,7 @@ const StaffDetails = () => {
             <img className="w-6 h-6" src="/images/fingerprintIcon.svg" alt="" />
             <div>
               <p className="text-sm">EAD1234567890</p>
-              <p className="text-sm">Staff ID</p>
+              <p className="text-sm font-semibold text-gray-700">Staff ID</p>
             </div>
           </div>
 
@@ -96,7 +88,7 @@ const StaffDetails = () => {
             <img className="w-6 h-6" src="/images/calenderIcon.svg" alt="" />
             <div>
               <p className="text-sm">{formattedDate}</p>
-              <p className="text-sm">Staff Creation Date</p>
+              <p className="text-sm font-semibold text-gray-700">Staff Creation Date</p>
             </div>
           </div>
         </div>

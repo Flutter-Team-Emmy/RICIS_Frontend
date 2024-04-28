@@ -84,11 +84,48 @@ export const userApi = createApi({
       },
       invalidatesTags: [{ type: "Users", id: "LIST" }],
     }),
+    createStaff: builder.mutation({
+      query(payload) {
+        return {
+          url: "/staff",
+          method: "POST",
+          body: payload
+        };
+      },
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
+    }),
     updateStaff: builder.mutation({
-      query(staffId) {
+      query({ staffId, payload }) {
         return {
           url: `/staff/${staffId}`,
-          method: "PUT  ",
+          method: "PUT",
+          body: payload,
+        };
+      },
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
+    }),
+    updateStaffStatus: builder.mutation({
+      query({ staffId, payload }) {
+        return {
+          url: `/staff/${staffId}`,
+          method: "PUT",
+          body: payload,
+        };
+      },
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
+    }),
+    getStaffActivities: builder.query({
+      query(staffId) {
+        return {
+          url: `/activity/staff/${staffId}`,
+        };
+      },
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
+    }),
+    getUserActivities: builder.query({
+      query(userId) {
+        return {
+          url: `/activity/user/${userId}`,
         };
       },
       invalidatesTags: [{ type: "Users", id: "LIST" }],
@@ -105,4 +142,8 @@ export const {
   useGetAllStaffsQuery,
   useUpdateStaffMutation,
   useGetSingleStaffQuery,
+  useUpdateStaffStatusMutation,
+  useGetStaffActivitiesQuery,
+  useCreateStaffMutation,
+  useGetUserActivitiesQuery,
 } = userApi;

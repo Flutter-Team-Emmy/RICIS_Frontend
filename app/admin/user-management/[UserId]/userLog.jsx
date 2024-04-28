@@ -1,6 +1,9 @@
 import { useParams } from "next/navigation";
 import { time } from "@/utils/time&dates";
-import { useGetStaffActivitiesQuery } from "@/store/api/userApi";
+import {
+  useGetStaffActivitiesQuery,
+  useGetUserActivitiesQuery,
+} from "@/store/api/userApi";
 import TableSkeleton from "@/components/skeleton-loaders/TableSkeleton";
 import { EmptyLog } from "@/svgs";
 import { getActionStatement } from "@/utils/helpers";
@@ -59,17 +62,21 @@ const logs = [
   },
 ];
 
-const StaffLogsTable = () => {
-  const params = useParams();
-  const staffId = params.staffId;
-  const { data, isLoading, isSuccess, error } = 
-    useGetStaffActivitiesQuery(staffId);
-  const staff_activities_log = data?.data?.staff_activities;
+const UserLog = () => {
+  const param = useParams();
+  const userId = param.UserId;
+  const { data, isLoading, isSuccess, error } =
+    useGetUserActivitiesQuery(userId);
+  const user_activities_log = data?.data?.user_activities;
   console.log(data);
+  console.log(userId);
 
   if (isLoading) return <TableSkeleton />;
   return (
-    <div className="w-full overflow-x-scroll lg:overflow-x-hidden z-[-10] rounded-lg text-xs">
+    <div className="w-full overflow-x-scroll lg:overflow-x-hidden z-[-10] space-y-4 rounded-lg text-xs">
+      <h2 className="text-gray-600 lg:text-lg text-md font-semibold">
+        Activity Log History
+      </h2>
       <table className="w-full text-left rtl:text-right">
         <thead className={`bg-dark-gray text-gray-400 py-4`}>
           <tr className="whitespace-nowrap">
@@ -81,7 +88,7 @@ const StaffLogsTable = () => {
           </tr>
         </thead>
         <tbody className="">
-          {staff_activities_log?.map((log, index) => {
+          {user_activities_log?.map((log, index) => {
             // const columns = Object.keys(data);
             return (
               <tr
@@ -99,14 +106,14 @@ const StaffLogsTable = () => {
                   {time.formatTime(log.created_at)}
                 </td>
                 <td className="px-6 py-6 w-72">
-                  {getActionStatement("Staff", log.action, log.executor.name)}
+                  {getActionStatement("User", log.action)}
                 </td>
               </tr>
             );
           })}
         </tbody>
       </table>
-      {staff_activities_log.length === 0 && (
+      {user_activities_log?.length === 0 && (
         <div className="flex flex-col justify-center items-center gap-2 py-16">
           <p>{EmptyLog}</p>
           <p className="text-lg text-gray-500">No Log Record found on system</p>
@@ -116,4 +123,4 @@ const StaffLogsTable = () => {
   );
 };
 
-export default StaffLogsTable;
+export default UserLog;

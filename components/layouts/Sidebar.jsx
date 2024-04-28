@@ -11,8 +11,9 @@ import {
   getLoginTime,
 } from "@/utils/authHelpers";
 import { useGetCurrentUserQuery } from "@/store/api/userApi";
-import { LogoutIcon, crossIcon } from "@/svgs";
+import { LogoutIcon, Offline, crossIcon } from "@/svgs";
 import Avatar from "../Avatar";
+import useNetworkStatus from "@/hooks/useNetworkStatus";
 
 const activeClass = "bg-blue-700 hover:bg-blue-600";
 
@@ -32,6 +33,8 @@ const Sidebar = ({
   const role = data?.data.role;
   // alert(role)
   const currentUser = data?.data.user;
+
+  const isOnline = useNetworkStatus();
 
   const openProfilePage = () => {
     if (role === "ADMIN" || role === "STAFF") {
@@ -89,7 +92,7 @@ const Sidebar = ({
 
   return (
     <>
-    {/* <div className="lg:hidden fixed top-0 bottom-0 left-0 right-0  inset-0 bg-[rgb(0,0,0,0.8)] overflow-y-auto bg-opacity-50 z-[999] h-full w-full"></div> */}
+      {/* <div className="lg:hidden fixed top-0 bottom-0 left-0 right-0  inset-0 bg-[rgb(0,0,0,0.8)] overflow-y-auto bg-opacity-50 z-[999] h-full w-full"></div> */}
       <aside
         className={`h-screen bg-[#1A191B] px-2 fixed top-0 w-[12rem] z-[1000] lg:block ${showSidebar}`}
       >
@@ -133,6 +136,12 @@ const Sidebar = ({
               ))}
           </ul>
           <div className="text-sm">
+            {!isOnline && (
+              <div className="flex items-center gap-2">
+                <span className="">{Offline}</span>
+                <span className="">Offline</span>
+              </div>
+            )}
             <button
               onClick={logout}
               className="flex items-center gap-1 lg:mt-20 mt-6 px-6 py-2 bg-blue-800 rounded-md hover:bg-blue-700"

@@ -9,32 +9,53 @@ import StaffLogsTable from "./StaffLogsTable";
 import ActivityTable from "./ActivityTable";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import StaffDetails from "../staffDetails";
+import { useGetSingleStaffQuery } from "@/store/api/userApi";
+import { useParams } from "next/navigation";
 
 const StaffProfile = () => {
+  const params = useParams();
+  const staffId = params.staffId;
+
+  const { data, isLoading, isSuccess, isError } =
+    useGetSingleStaffQuery(staffId);
+
+  const staff = data?.data?.staff[0];
+  const processable_forms = staff?.processableForms;
+  const status = staff?.status;
+
+  console.log(data);
+
   return (
     <DashboardLayout header="Admin">
-      <StaffDetails />
+      <StaffDetails staff={staff} staffId={staffId} />
       <div className="space-y-6 py-12">
-        <div className="flex gap-x-16">
+        <div className="flex items-center gap-x-4">
           <h1 className="font-bold">Status:</h1>
-          <p className="relative px-2 py-1 rounded-lg bg-[#69CB5C] bg-opacity-15 text-[#69CB5C]">
-            Active
+          <p
+            className={`relative px-2 py-1 rounded-lg bg-[#69CB5C] bg-opacity-15 text-[#69CB5C] ${
+              status?.toLowerCase() === "active"
+                ? "text-[#69CB5C]"
+                : status?.toLowerCase() === "suspended"
+                ? "text-[#EABD52]"
+                : "text-black"
+            }  `}
+          >
+            {status}
           </p>
         </div>
         <div className="flex gap-x-4">
           <h1 className="font-bold">Role:</h1>
           <div className="text-sm text-[#555454]">
-            <p>Broiler inspection</p>
-            <p>Clearance</p>
-            <p>Clearance</p>
-            <p>Broiler inspection</p>
-            <p>Clearance</p>
-            <p>Clearance</p>
+            {processable_forms?.length > 0 ? (
+              processable_forms?.map((form) => <p key={form.id}>{form.name}</p>)
+            ) : (
+              <p className="text-gray-500">No Role assigned</p>
+            )}
           </div>
         </div>
         <div className="bg-white p-4 shadow-md">
           <Tabs defaultValue="staff-logs" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 w-96 mb-8">
+            <TabsList className="grid w-full grid-cols-2 lg:w-96 w-full mb-8">
               <TabsTrigger className="space-x-2" value="staff-logs">
                 <span className="">Staff Logs</span>
                 <span className="">{Log}</span>

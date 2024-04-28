@@ -160,24 +160,13 @@ const Table = () => {
             return (
               <tr
                 key={index}
-                className=" border-b-[1px] border-b-gray-300 border-b-solid cursor-pointer"
+                className=" border-b-[1px] border-b-gray-300 border-b-solid cursor-pointer hover:opacity-70"
                 onClick={() => {
                   router.push(
                     `/admin/staff-management/${data.id}?id=${data.id}`
                   );
                 }}
               >
-                {/* {columns.map((col, idx) =>
-                                    col === "dateApplied" ?
-                                        <td key={idx} className="px-6 py-4">
-                                            <p>{data.dateApplied.date}</p>
-                                            <p>{data.dateApplied.time}</p>
-                                        </td> :
-                                        <td key={idx}
-                                            className={`px-6 py-4 ${data[col] === "active" ? "text-[#69CB5C]" : data[col] === "inactive" ? "text-[#EABD52]" : "text-black"}  ${col === "status" && ""}`}>
-                                            <span className={`${data[col] === "active" ? "rounded-xl bg-green-100 p-1.5" : data[col] === "inactive" ? "rounded-xl bg-orange-50 p-1.5" : "rounded-0 bg-none"}`}>{data[col]}</span>
-                                        </td>
-                                )} */}
                 <td className={`px-6 py-4  `}>{data.name}</td>
                 <td className={`px-6 py-4  `}>
                   {data.is_admin ? "Admin" : "Staff"}

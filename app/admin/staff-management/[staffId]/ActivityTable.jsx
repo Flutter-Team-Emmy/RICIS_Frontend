@@ -1,3 +1,6 @@
+"use client";
+
+
 const columns = [
   "Date",
   "Time",
@@ -75,6 +78,8 @@ const activities = [
 ];
 
 const ActivityTable = () => {
+
+//   if (isLoading) return <TableSkeleton />;
   return (
     <div className="w-full overflow-x-scroll lg:overflow-x-hidden z-[-10] rounded-lg text-xs">
       <table className="w-full text-left rtl:text-right">
@@ -102,7 +107,7 @@ const ActivityTable = () => {
                 >
                   {activity.date}
                 </th>
-                <td className="px-6 py-6 w-72">{activity.time}</td>
+                <td className="px-6 py-6 w-72">{ activity.time}</td>
                 <td className="px-6 py-6 w-72">{activity.action}</td>
                 <td className="px-6 py-6 w-72">{activity.application_name}</td>
                 <td className="px-6 py-6 w-72">{activity.application_type}</td>

@@ -854,7 +854,7 @@ export const LinkedInIcon = (
     xmlns="http://www.w3.org/2000/svg"
   >
     <rect width="44" height="44" rx="5" fill="white" />
-    <g clip-path="url(#clip0_3_836)">
+    <g clipPath="url(#clip0_3_836)">
       <path
         d="M31.9951 32.0001V31.9993H32.0001V24.6643C32.0001 21.0759 31.2276 18.3118 27.0326 18.3118C25.0159 18.3118 23.6626 19.4184 23.1101 20.4676H23.0517V18.6468H19.0742V31.9993H23.2159V25.3876C23.2159 23.6468 23.5459 21.9634 25.7017 21.9634C27.8259 21.9634 27.8576 23.9501 27.8576 25.4993V32.0001H31.9951Z"
         fill="#0E76A8"
@@ -1099,6 +1099,48 @@ export const Log = (
       stroke="#C3C3C3"
       strokeLinecap="round"
       strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const Offline = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.5em"
+    height="1.5em"
+    viewBox="0 0 24 24"
+  >
+    <path
+      fill="currentColor"
+      d="M19.8 22.6L17.15 20H6.5q-2.3 0-3.9-1.6T1 14.5q0-1.92 1.19-3.42q1.19-1.51 3.06-1.93q.08-.2.15-.39q.1-.19.15-.41L1.4 4.2l1.4-1.4l18.4 18.4M6.5 18h8.65L7.1 9.95q-.05.28-.07.55q-.03.23-.03.5h-.5q-1.45 0-2.47 1.03Q3 13.05 3 14.5T4.03 17q1.02 1 2.47 1m15.1.75l-1.45-1.4q.43-.35.64-.81T21 15.5q0-1.05-.73-1.77q-.72-.73-1.77-.73H17v-2q0-2.07-1.46-3.54Q14.08 6 12 6q-.67 0-1.3.16q-.63.17-1.2.52L8.05 5.23q.88-.6 1.86-.92Q10.9 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5q1.14 1.28 1.14 3q0 1-.37 1.81q-.38.84-1.03 1.44m-6.77-6.72"
+    />
+  </svg>
+);
+
+export const Refresh = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    viewBox="0 0 24 24"
+  >
+    <path
+      fill="currentColor"
+      d="M12 20q-3.35 0-5.675-2.325T4 12t2.325-5.675T12 4q1.725 0 3.3.712T18 6.75V4h2v7h-7V9h4.2q-.8-1.4-2.187-2.2T12 6Q9.5 6 7.75 7.75T6 12t1.75 4.25T12 18q1.925 0 3.475-1.1T17.65 14h2.1q-.7 2.65-2.85 4.325T12 20"
+    />
+  </svg>
+);
+
+export const EmptyLog = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="6em"
+    height="6em"
+    viewBox="0 0 24 24"
+  >
+    <path
+      fill="#ccc"
+      d="M1 1h22v22H1zm2 8.667V21h18V9.667zm18-2V3H3v4.667zM5 4h2.004v2.004H5zm1 8h12v2H6zm0 4h6v2H6z"
     />
   </svg>
 );

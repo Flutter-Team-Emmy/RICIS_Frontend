@@ -35,7 +35,7 @@ const FinancialManagement = () => {
         </div>
         <div className="bg-white rounded-lg space-y-6 p-4">
           <h1 className="text-black font-bold">Payment Information</h1>
-          <Search />
+          {/* <Search /> */}
           <TransactionsTable />
         </div>
         <div className="mt-8">
