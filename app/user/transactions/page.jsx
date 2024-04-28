@@ -39,7 +39,7 @@ const Transactions = () => {
       <div className="mt-8">
         <Paginations
           pageCount={pageCount}
-          setPage={(event) => dispatch(setPage(event.selected +1 ))}
+          setPage={(event) => dispatch(setPage(event.selected + 1))}
         />
       </div>
     </DashboardLayout>

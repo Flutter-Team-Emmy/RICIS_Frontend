@@ -1,24 +1,31 @@
+"use client";
+
 import { useState, useEffect } from "react";
 
 const useNetworkStatus = () => {
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [isOnline, setIsOnline] = useState(false); // Default to offline state initially
 
   useEffect(() => {
-    const handleOnline = () => {
-      setIsOnline(true);
-    };
+    // Check if navigator is available (running in browser environment)
+    if (typeof window !== "undefined" && window.navigator) {
+      setIsOnline(window.navigator.onLine);
 
-    const handleOffline = () => {
-      setIsOnline(false);
-    };
+      const handleOnline = () => {
+        setIsOnline(true);
+      };
 
-    window.addEventListener("online", handleOnline);
-    window.addEventListener("offline", handleOffline);
+      const handleOffline = () => {
+        setIsOnline(false);
+      };
 
-    return () => {
-      window.removeEventListener("online", handleOnline);
-      window.removeEventListener("offline", handleOffline);
-    };
+      window.addEventListener("online", handleOnline);
+      window.addEventListener("offline", handleOffline);
+
+      return () => {
+        window.removeEventListener("online", handleOnline);
+        window.removeEventListener("offline", handleOffline);
+      };
+    }
   }, []);
 
   return isOnline;
