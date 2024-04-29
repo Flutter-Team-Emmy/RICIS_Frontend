@@ -4,6 +4,7 @@ import { useGetStaffActivitiesQuery } from "@/store/api/userApi";
 import TableSkeleton from "@/components/skeleton-loaders/TableSkeleton";
 import { EmptyLog } from "@/svgs";
 import { getActionStatement } from "@/utils/helpers";
+import NoActivity from "@/components/NoActivity";
 
 const columns = ["Date", "Time", "Action"];
 
@@ -62,7 +63,7 @@ const logs = [
 const StaffLogsTable = () => {
   const params = useParams();
   const staffId = params.staffId;
-  const { data, isLoading, isSuccess, error } = 
+  const { data, isLoading, isSuccess, error } =
     useGetStaffActivitiesQuery(staffId);
   const staff_activities_log = data?.data?.staff_activities;
   console.log(data);
@@ -106,12 +107,7 @@ const StaffLogsTable = () => {
           })}
         </tbody>
       </table>
-      {staff_activities_log?.length === 0 && (
-        <div className="flex flex-col justify-center items-center gap-2 py-16">
-          <p>{EmptyLog}</p>
-          <p className="text-lg text-gray-500">No Log Record found on system</p>
-        </div>
-      )}
+      {staff_activities_log?.length === 0 && <NoActivity />}
     </div>
   );
 };

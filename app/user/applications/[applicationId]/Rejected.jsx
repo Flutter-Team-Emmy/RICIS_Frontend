@@ -7,8 +7,16 @@ import { TabsList } from "@/components/ui/tabs";
 import { TabsTrigger } from "@/components/ui/tabs";
 import { TabsContent } from "@/components/ui/tabs";
 import ActivityTable from "./ActivityTable";
+import { useGetApplicationActivityQuery } from "@/store/api/applicationApi";
+import { useParams } from "next/navigation";
 
 const ApplicationRejected = ({ data, reason }) => {
+  const params = useParams();
+  const applicationId = params.applicationId;
+
+  const { data: applicationActivityData, isLoading } = useGetApplicationActivityQuery(applicationId);
+  const activities = applicationActivityData?.data.application_activities;
+
   console.log(reason);
   return (
     <DashboardLayout header="Application">
@@ -36,7 +44,7 @@ const ApplicationRejected = ({ data, reason }) => {
               <span className="">Application Details</span>
               {/* <span className="">{Log}</span> */}
             </TabsTrigger>
-            <TabsTrigger value="activity">Activity</TabsTrigger>
+            <TabsTrigger value="activity">Application Activity Log</TabsTrigger>
           </TabsList>
           <TabsContent value="staff-logs">
             {data ? (
@@ -52,7 +60,7 @@ const ApplicationRejected = ({ data, reason }) => {
             </div>
           </TabsContent>
           <TabsContent value="activity">
-            <ActivityTable />
+            <ActivityTable activities={activities} />
           </TabsContent>
         </Tabs>
       </div>

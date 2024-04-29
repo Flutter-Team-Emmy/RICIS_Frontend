@@ -11,7 +11,12 @@ import Router from "next/router";
 import { toast } from "react-toastify";
 import { baseUrl } from "@/lib/configs";
 import Btn from "@/components/Btn";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { normalizeErrors } from "@/utils/helpers";
 import PaymentModal from "@/components/modals/paymentModal";
 import { useGetCurrentUserQuery } from "@/store/api/userApi";
@@ -22,6 +27,7 @@ import { TabsList } from "@/components/ui/tabs";
 import { TabsTrigger } from "@/components/ui/tabs";
 import { TabsContent } from "@/components/ui/tabs";
 import ActivityTable from "./ActivityTable";
+import { useGetApplicationActivityQuery } from "@/store/api/applicationApi";
 
 const ApplicationPending = ({ data }) => {
   const [rejectBtnLoader, setRejectBtnLoader] = useState(false);
@@ -31,6 +37,11 @@ const ApplicationPending = ({ data }) => {
   const params = useSearchParams();
   const [reason, setReason] = useState("");
   const applicationId = params.get("id");
+  const Params = useParams();
+  const ApplicationId = Params.applicationId;
+
+  const { data: applicationActivityData, isLoading } = useGetApplicationActivityQuery(ApplicationId);
+  const activities = applicationActivityData?.data.application_activities;
   // alert(applicationId)
   const type = params.get("type");
   const [btnLoad, setBtnLoad] = useState(false);
@@ -165,7 +176,9 @@ const ApplicationPending = ({ data }) => {
                 <span className="">Application Details</span>
                 {/* <span className="">{Log}</span> */}
               </TabsTrigger>
-              <TabsTrigger value="activity">Activity</TabsTrigger>
+              <TabsTrigger value="activity">
+                Application Activity Log
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="staff-logs">
               {data ? (
@@ -216,7 +229,7 @@ const ApplicationPending = ({ data }) => {
                 ))}
             </TabsContent>
             <TabsContent value="activity">
-              <ActivityTable />
+              <ActivityTable activities={activities} />
             </TabsContent>
           </Tabs>
         </div>

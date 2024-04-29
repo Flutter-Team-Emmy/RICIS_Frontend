@@ -4,6 +4,7 @@ import { useGetUserLogsQuery } from "@/store/api/userApi";
 import TableSkeleton from "@/components/skeleton-loaders/TableSkeleton";
 import { EmptyLog } from "@/svgs";
 import { getActionStatement } from "@/utils/helpers";
+import NoActivity from "@/components/NoActivity";
 
 const columns = ["Date", "Time", "Action"];
 
@@ -61,7 +62,7 @@ const logs = [
 
 const UserLog = () => {
   const param = useParams();
-  const userId = param.UserId;
+  const userId = param.userId;
   const { data, isLoading, isSuccess, error } = useGetUserLogsQuery(userId);
   const user_activities_log = data?.data?.user_activities;
   console.log(data);
@@ -109,12 +110,7 @@ const UserLog = () => {
           })}
         </tbody>
       </table>
-      {user_activities_log?.length === 0 && (
-        <div className="flex flex-col justify-center items-center gap-2 py-16">
-          <p>{EmptyLog}</p>
-          <p className="text-lg text-gray-500">No Log Record found on system</p>
-        </div>
-      )}
+      {user_activities_log?.length === 0 && <NoActivity />}
     </div>
   );
 };
