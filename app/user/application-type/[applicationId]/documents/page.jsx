@@ -46,7 +46,7 @@ const Documents = () => {
     handleFileUpload,
     sizeErrorFiles,
     setSizeErrorFiles,
-  } = useFiles(documents, selectedDoc, applicationId);
+  } = useFiles("applicationDocuments", documents, selectedDoc, applicationId);
 
   const {
     dragging,

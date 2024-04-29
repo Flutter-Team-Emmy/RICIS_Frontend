@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 const FinancialManagement = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const pageCount = useSelector(selectTotalPage) + 1;
+  const pageCount = useSelector(selectTotalPage);
 
   return (
     <DashboardLayout header="Admin">
@@ -41,7 +41,7 @@ const FinancialManagement = () => {
         <div className="mt-8">
           <Paginations
             pageCount={pageCount}
-            setPage={(event) => dispatch(setPage(event.selected))}
+            setPage={(event) => dispatch(setPage(event.selected + 1))}
           />
         </div>
       </div>

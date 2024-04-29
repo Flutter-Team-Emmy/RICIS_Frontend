@@ -176,8 +176,7 @@ const Table = () => {
     <div className="flex flex-col items-center justify-center gap-4 bg-white rounded-[4px] py-10">
       <div className="animate-bounce">{EmptyPagesIcon}</div>
       <h1 className="text-gray-500 lg:text-lg text-sm text-center">
-        You currently dont have an application, create an application to get
-        started
+        No application found
       </h1>
       <button
         onClick={openNewApplication}

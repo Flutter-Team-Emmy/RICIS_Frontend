@@ -6,6 +6,7 @@ import {
   setTransactions,
   setFetchingStates,
   setTotalPages,
+  setPage,
 } from "@/store/features/transactionSlice";
 import { getToken } from "@/utils/authHelpers";
 import { useEffect } from "react";
@@ -21,6 +22,7 @@ const TransactionsProvider = ({ children }) => {
   const token = getToken();
   console.log(data);
   const totalPages = data?.data?.transactions?.meta?.lastPage;
+  const currentPage = data?.data?.transactions?.meta?.currentPage;
 
   useEffect(() => {
     const fetchingStates = {
@@ -32,6 +34,7 @@ const TransactionsProvider = ({ children }) => {
     dispatch(setTransactions(transactions));
     dispatch(setFetchingStates(fetchingStates));
     dispatch(setTotalPages(totalPages));
+    dispatch(setPage(currentPage));
   }, [transactions, isLoading, isSuccess, error]);
 
   useEffect(() => {

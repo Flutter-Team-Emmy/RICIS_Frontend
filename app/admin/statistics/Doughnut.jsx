@@ -3,6 +3,23 @@ import { ApexCharts } from "@/utils/chartHelpers";
 const Doughnut = ({ color, label, percentage, width }) => {
   const series = [60];
 
+  // const options = {
+  //   chart: {
+  //     height: 350,
+  //     type: "radialBar",
+  //   },
+  //   plotOptions: {
+  //     radialBar: {
+  //       hollow: {
+  //         size: "70%",
+  //       },
+  //     },
+  //   },
+  //   labels: ["Cricket"],
+  // };
+
+  // };
+
   const options = {
     chart: {
       dropShadow: {
@@ -37,6 +54,7 @@ const Doughnut = ({ color, label, percentage, width }) => {
       series={series}
       options={options}
       type="radialBar"
+      height={320}
       width={250}
     />
   );

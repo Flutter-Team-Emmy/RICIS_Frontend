@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { saveDocumentData } from "@/lib/indexDB";
 import { updateSingleDocument } from "@/lib/indexDB";
 
-const useFiles = (documents, selectedDoc, applicationId, draftId) => {
+const useFiles = (name, documents, selectedDoc, applicationId, draftId) => {
   const [selectedDocFiles, setSelectedDocFiles] = useState([]);
   const [sizeErrorFiles, setSizeErrorFiles] = useState([]);
 
@@ -55,7 +55,7 @@ const useFiles = (documents, selectedDoc, applicationId, draftId) => {
           const isExist = documents?.find((doc) => doc?.name === selectedDoc);
           if (isExist) {
             updateSingleDocument(
-              "applicationDocuments",
+              name,
               selectedDoc,
               updatedSelectedDocFiles
             )
@@ -66,7 +66,7 @@ const useFiles = (documents, selectedDoc, applicationId, draftId) => {
                 console.error("Failed to update item:", error);
               });
           } else {
-            saveDocumentData("applicationDocuments", {
+            saveDocumentData(name, {
               name: selectedDoc,
               data: updatedSelectedDocFiles,
               applicationId,
