@@ -24,34 +24,39 @@ const StaffProfile = () => {
   const status = staff?.status;
 
   console.log(staff);
- 
 
   return (
     <DashboardLayout header="Admin">
-      <StaffDetails staff={staff} staffId={staffId} />
-      <div className="space-y-6 py-12">
-        <div className="flex items-center gap-x-4">
-          <h1 className="font-bold">Status:</h1>
-          <p
-            className={`relative px-2 py-1 rounded-lg bg-[#69CB5C] bg-opacity-15 text-[#69CB5C] ${
-              status?.toLowerCase() === "active"
-                ? "text-[#69CB5C]"
-                : status?.toLowerCase() === "suspended"
-                ? "text-[#EABD52]"
-                : "text-black"
-            }  `}
-          >
-            {status}
-          </p>
-        </div>
-        <div className="flex gap-x-4">
-          <h1 className="font-bold">Role:</h1>
-          <div className="text-sm text-[#555454]">
-            {processable_forms?.length > 0 ? (
-              processable_forms?.map((form) => <p key={form.id}>{form.name}</p>)
-            ) : (
-              <p className="text-gray-500">No Role assigned</p>
-            )}
+      <div className="space-y-4">
+        <div className="bg-white px-4 py-6">
+          <StaffDetails staff={staff} staffId={staffId} />
+          <div className="space-y-6 py-12">
+            <div className="flex items-center gap-x-4">
+              <h1 className="font-bold">Status:</h1>
+              <p
+                className={`relative px-2 py-1 rounded-lg bg-[#69CB5C] bg-opacity-15 text-[#69CB5C] ${
+                  status?.toLowerCase() === "active"
+                    ? "text-[#69CB5C]"
+                    : status?.toLowerCase() === "suspended"
+                    ? "text-[#EABD52] bg-yellow-300"
+                    : "text-black"
+                }  `}
+              >
+                {status}
+              </p>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h1 className="font-bold">Role:</h1>
+              <div className="text-sm text-[#555454]">
+                {processable_forms?.length > 0 ? (
+                  processable_forms?.map((form) => (
+                    <p key={form.id}>{form.name}</p>
+                  ))
+                ) : (
+                  <p className="text-gray-500">No Role assigned</p>
+                )}
+              </div>
+            </div>
           </div>
         </div>
         <div className="bg-white p-4 shadow-md">

@@ -38,6 +38,7 @@ const Table = () => {
   const isLoading = fetchingStates?.isLoading;
   const dispatch = useDispatch();
   const [filteredAppliations, setFilteredApplications] = useState([]);
+  const [isEmpty, setIsEmpty] = useState({ name: "", value: false });
   // const [applications, setApplications] = useState([]);
   // const { isLoading, isSuccess, isError, error, data } =
   //   useGetAllApplicationsQuery();
@@ -59,6 +60,12 @@ const Table = () => {
   }, []); // Run once on initial render to set the applications
 
   useEffect(() => {
+    setIsEmpty({ name: "", value: false });
+    // if (tab === null) {
+    //   // No tab selected, show all applications
+    //   setFilteredApplications([]);
+    //   dispatch(setApplications(applications));
+    // }
     switch (tab) {
       case null:
         setFilteredApplications([]);
@@ -74,6 +81,9 @@ const Table = () => {
         const pendingApplications = applications?.filter(
           (application) => application.status === "PENDING"
         );
+        if (pendingApplications?.length === 0) {
+          setIsEmpty({ name: "Pending", value: true });
+        }
         setFilteredApplications(pendingApplications);
         break;
 
@@ -81,6 +91,9 @@ const Table = () => {
         const approvedApplications = applications?.filter(
           (application) => application.status === "APPROVED"
         );
+        if (approvedApplications?.length === 0) {
+          setIsEmpty({ name: "Approved", value: true });
+        }
         setFilteredApplications(approvedApplications);
         break;
 
@@ -88,10 +101,14 @@ const Table = () => {
         const rejectedApplications = applications?.filter(
           (application) => application.status === "REJECTED"
         );
+        if (rejectedApplications?.length === 0) {
+          setIsEmpty({ name: "Rejected", value: true });
+        }
         setFilteredApplications(rejectedApplications);
         break;
 
       default:
+        setApplications(applications);
         break;
     }
   }, [applications, tab]);
@@ -101,7 +118,7 @@ const Table = () => {
   return applications?.length > 0 ? (
     <div className="relative overflow-x-auto lg:overflow-x-hidden shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-        <thead className="text-xs text-gray-500 uppercas bg-gray-50">
+        <thead className="text-xs text-gray-500 uppercas bg-gray-100">
           <tr className="whitespace-nowrap">
             {tableColumn.map((column) => (
               <th key={column} scope="col" className="px-6 py-3">
@@ -114,61 +131,70 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {(filteredAppliations?.length > 0
-            ? filteredAppliations
-            : applications
-          )?.map((application) => (
-            <tr
-              onClick={() =>
-                openApplicationDetails(application.id, application.status)
-              }
-              key={application.id}
-              className="whitespace-nowrap lg:whitespace-normal bg-white border-b w-full text-xs cursor-pointer hover:opacity-70"
-            >
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+          {isEmpty.value ? (
+            <div className="text-gray-500 lg:text-lg whitespace-nowrap w-full text-sm text-center py-8">
+              {" "}
+              No {isEmpty.name} Applications on this page{" "}
+            </div>
+          ) : (
+            (filteredAppliations?.length > 0
+              ? filteredAppliations
+              : applications
+            )?.map((application) => (
+              <tr
+                onClick={() =>
+                  openApplicationDetails(application.id, application.status)
+                }
+                key={application.id}
+                className="whitespace-nowrap lg:whitespace-normal bg-white border-b w-full text-xs cursor-pointer hover:opacity-70"
               >
-                {cutString(application.reference_id, 10)}
-              </th>
-              <td className="px-6 py-4 w-80">
-                {application?.user?.first_name +
-                  " " +
-                  application?.user?.last_name}
-              </td>
-              <td className="px-6 py-4">
-                <span
-                  className={`py-1.5 rounded-3xl ${
-                    application?.transactions?.length === 0
-                      ? "bg-red-100 text-red-600 px-3"
-                      : "bg-green-100 text-green-700 px-6"
-                  } `}
+                <th
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                 >
-                  {application?.transactions?.length === 0 ? "Unpaid" : "Paid"}
-                </span>
-              </td>
-              <td className="px-6 py-4 w-80">{application?.form?.name}</td>
-              <td className="px-6 py-4">
-                <span
-                  className={`px-2.5 py-1.5 text-xs ${
-                    application?.isDraft
-                      ? "bg-gray-100 text-gray-500"
-                      : application?.status === "APPROVED"
-                      ? "bg-green-100 text-green-700"
-                      : application?.status === "PENDING"
-                      ? "bg-yellow-100 text-yellow-700"
-                      : "bg-red-100 text-red-600"
-                  } font-medium rounded-3xl`}
-                >
-                  {application?.isDraft ? "Draft" : application.status}
-                </span>
-              </td>
-              <td className="px-6 py-4 space-y-1 flex flex-col items-end ">
-                <p className="">{time.formatDate(application?.created_at)}</p>
-                <p className="">{time.formatTime(application?.created_at)}</p>
-              </td>
-            </tr>
-          ))}
+                  {cutString(application.reference_id, 10)}
+                </th>
+                <td className="px-6 py-4 w-80">
+                  {application?.user?.first_name +
+                    " " +
+                    application?.user?.last_name}
+                </td>
+                <td className="px-6 py-4">
+                  <span
+                    className={`py-1.5 rounded-3xl ${
+                      application?.transactions?.length === 0
+                        ? "bg-red-100 text-red-600 px-3"
+                        : "bg-green-100 text-green-700 px-6"
+                    } `}
+                  >
+                    {application?.transactions?.length === 0
+                      ? "Unpaid"
+                      : "Paid"}
+                  </span>
+                </td>
+                <td className="px-6 py-4 w-80">{application?.form?.name}</td>
+                <td className="px-6 py-4">
+                  <span
+                    className={`px-2.5 py-1.5 text-xs ${
+                      application?.isDraft
+                        ? "bg-gray-100 text-gray-500"
+                        : application?.status === "APPROVED"
+                        ? "bg-green-100 text-green-700"
+                        : application?.status === "PENDING"
+                        ? "bg-yellow-100 text-yellow-700"
+                        : "bg-red-100 text-red-600"
+                    } font-medium rounded-3xl`}
+                  >
+                    {application?.isDraft ? "Draft" : application.status}
+                  </span>
+                </td>
+                <td className="px-6 py-4 space-y-1 flex flex-col items-end ">
+                  <p className="">{time.formatDate(application?.created_at)}</p>
+                  <p className="">{time.formatTime(application?.created_at)}</p>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>

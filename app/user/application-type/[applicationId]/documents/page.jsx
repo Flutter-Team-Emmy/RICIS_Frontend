@@ -117,7 +117,8 @@ const Documents = () => {
 
   const documentsEmpty =
     documents?.length === 0
-  ;
+      ? true
+      : documents?.length !== generatedDocuments?.length;
   // console.log(documentsNotEmpty);
   console.log(currentDocuments);
 

@@ -41,6 +41,30 @@ const EditStaff = () => {
   const processable_forms_ids = processable_forms?.map((form) => form.id);
   console.log(staff);
 
+  const [existingFormCategories, setExistingFormCategories] = useState(
+    []
+  );
+
+  useEffect(() => {
+    if (processable_forms_ids?.length > 0) {
+      setExistingFormCategories(processable_forms_ids);
+    }
+  }, [processable_forms]);
+
+    // Function to handle checkbox change
+    const handleExistingCategories = (value) => {
+      // Update the checkedItems array based on the checkbox state
+      if (!existingFormCategories.includes(value)) {
+        setExistingFormCategories([...existingFormCategories, value]);
+        // setSelectedIds([...selectedIds, value]);
+      } else {
+        setExistingFormCategories(existingFormCategories.filter((item) => item !== value));
+      }
+    };
+
+  console.log(existingFormCategories);
+  console.log(processable_forms_ids);
+
   const [
     updateStaffStatus,
     {
@@ -71,7 +95,7 @@ const EditStaff = () => {
   console.log(checkedCategories);
 
   const updateStaffData = async () => {
-    const forms = [...processable_forms_ids, ...checkedCategories];
+    const forms = [...existingFormCategories, ...checkedCategories];
     const payload = {
       forms: forms,
       status: status,
@@ -120,69 +144,95 @@ const EditStaff = () => {
 
   return (
     <DashboardLayout header="Admin">
-      <StaffDetails staff={staff} staffId={staffId} />
-      <div className="pt-12 pb-20">
-        <h1 className="font-bold">Roles:</h1>
-        <div className="">
-          {processable_forms?.length > 0 ? (
-            processable_forms?.map((form) => (
-              <p key={form.id} className="text-[#46B038]">
-                {form?.name}
-              </p>
-            ))
-          ) : (
-            <p className="text-gray-500">No Role assigned</p>
-          )}
-        </div>
-      </div>
       <div className="space-y-4">
-        <h1 className="font-bold">Add available Staff roles</h1>
-        <div className="space-y-4">
-          <div className="space-y-3">
-            {isLoading ? (
-              <ClipLoader size={40} />
-            ) : (
-              availableForms?.map((form) => (
-                <div key={form.id} className="flex items-center gap-4">
-                  <Checkbox
-                    value={form.id}
-                    checked={checkedCategories.includes(form.id)}
-                    onCheckedChange={() => handleCheckboxChange(form.id)}
-                  />
-                  <label
-                    htmlFor="terms"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        <div className="bg-white px-4 py-6">
+          <StaffDetails staff={staff} staffId={staffId} />
+          <div className="pt-12 pb-20">
+            <h1 className="font-bold pb-3">Roles:</h1>
+            <div className="space-y-2">
+              {processable_forms?.length > 0 ? (
+                processable_forms?.map((form) => (
+                  <div
+                    key={form.id}
+                    className="flex text-[#46B038] items-center gap-4"
                   >
-                    {form.name}
-                  </label>
-                </div>
-              ))
-            )}
-            {availableForms?.length === 0 ? (
-              <p className="text-gray-500">Staff has all Roles</p>
-            ) : (
-              ""
-            )}
+                    <Checkbox
+                      value={form.id}
+                      checked={existingFormCategories?.includes(form.id)}
+                      onCheckedChange={() => handleExistingCategories(form?.id)}
+                    />
+                    <label
+                      htmlFor="terms"
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      {form.name}
+                    </label>
+                  </div>
+                  // <p key={form.id} className="text-[#46B038]">
+                  //   {form?.name}
+                  // </p>
+                ))
+              ) : (
+                <p className="text-gray-500">No Role assigned</p>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="flex lg:flex-row flex-col gap-x-8 gap-y-4 pt-20">
-        {availableForms?.length > 0 && (
-          <Btn
-            text="Save changes"
-            loading={isUpdating}
-            loadingMsg="updating data..."
-            bgColorClass="bg-[#46B038]"
-            handleClick={updateStaffData}
-          />
-        )}
-        <Btn
-          text={status === "ACTIVE" ? "Suspend" : "UnSuspend"}
-          loading={updatingStatus}
-          loadingMsg="updating data..."
-          bgColorClass="bg-[#46B038]"
-          handleClick={updateStaffCurrentStatus}
-        />
+        <div className="space-y-4 bg-white px-4 py-8">
+          <h1 className="font-bold">Add available Staff roles</h1>
+          <div className="space-y-4">
+            <div className="space-y-3">
+              {isLoading ? (
+                <ClipLoader size={40} />
+              ) : (
+                availableForms?.map((form) => (
+                  <div key={form.id} className="flex items-center gap-4">
+                    <Checkbox
+                      value={form.id}
+                      checked={checkedCategories.includes(form.id)}
+                      onCheckedChange={() => handleCheckboxChange(form.id)}
+                    />
+                    <label
+                      htmlFor="terms"
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      {form.name}
+                    </label>
+                  </div>
+                ))
+              )}
+              {availableForms?.length === 0 ? (
+                <p className="text-gray-500">Staff has all Roles</p>
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="flex lg:flex-row flex-col gap-x-8 gap-y-4 pt-20">
+          {availableForms?.length > 0 && (
+            <Btn
+              text="Save changes"
+              loading={isUpdating}
+              loadingMsg="updating data..."
+              bgColorClass="bg-[#46B038]"
+              handleClick={updateStaffData}
+            />
+          )}
+          <button
+            onClick={updateStaffCurrentStatus}
+            className="bg-[#F0F2F2] text-gray-600 shadow-md rounded-md flex gap-x-4 px-6 py-2"
+          >
+            {updatingStatus && <ClipLoader size={20} />}
+            <p className="font-medium text-sm">
+              {updatingStatus
+                ? "updating data..."
+                : status === "ACTIVE"
+                ? "Suspend"
+                : "UnSuspend"}
+            </p>
+          </button>
+        </div>
       </div>
     </DashboardLayout>
   );

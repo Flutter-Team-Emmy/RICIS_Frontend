@@ -79,7 +79,7 @@ const ApplicationFormFields = () => {
       setFormData(InitialData);
       setErrorFields(fieldsInitialErrorStates);
     }
-  }, []);
+  }, [fields]);
 
   // console.log(errorFields);
 

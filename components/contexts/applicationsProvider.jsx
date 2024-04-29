@@ -16,8 +16,10 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { baseUrl } from "@/lib/configs";
 import { getDateModified } from "@/utils/helpers";
+import { usePathname } from "next/navigation";
 
 const ApplicationsProvider = ({ children }) => {
+  const pathname = usePathname();
   const page = useSelector(selectPage);
   console.log(page);
 
@@ -80,7 +82,7 @@ const ApplicationsProvider = ({ children }) => {
 
   useEffect(() => {
     refetch();
-  }, [token]);
+  }, [token, pathname]);
 
   // const searchOptions = JSON.parse(localStorage.getItem("options"));
   // const isCustomDate = searchOptions.date_modified === "Custom";

@@ -8,10 +8,11 @@ const Btn = ({
   loading,
   loadingMsg,
   bgColorClass = "bg-[#3361FF]",
+  textColor,
 }) => {
   return (
     <button
-      className={`py-2 px-[1.725rem] h-10 cursor-pointer flex items-center justify-center hover:opacity-70 shadow-md ${
+      className={`${textColor} py-2 px-[1.725rem] h-10 cursor-pointer flex items-center justify-center hover:opacity-70 shadow-md ${
         disabled ? "bg-gray-200" : bgColorClass
       } rounded-[4px]`}
       onClick={handleClick}

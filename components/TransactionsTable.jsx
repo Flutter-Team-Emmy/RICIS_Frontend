@@ -47,7 +47,7 @@ const TransactionsTable = () => {
   return (
     <div className="w-full overflow-x-scroll lg:overflow-x-hidden z-[-10] rounded-lg text-xs">
       <table className="w-full text-left rtl:text-right">
-        <thead className={`bg-dark-gray text-gray-400 py-4`}>
+        <thead className={`bg-dark-gray text-gray-400 py-4 bg-gray-100`}>
           <tr className="whitespace-nowrap">
             {tableHeader.map((data, index) => (
               <th key={index} scope="col" className="lg:px-6 px-4 py-3">
