@@ -9,12 +9,29 @@ import StaffLogsTable from "./StaffLogsTable";
 import ActivityTable from "./ActivityTable";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import StaffDetails from "../staffDetails";
-import { useGetSingleStaffQuery } from "@/store/api/userApi";
+import {
+  useGetSingleStaffQuery,
+  useGetStaffActivitiesQuery,
+} from "@/store/api/userApi";
 import { useParams } from "next/navigation";
+ 
 
 const StaffProfile = () => {
   const params = useParams();
   const staffId = params.staffId;
+  console.log(staffId);
+
+  const {
+    data: staffActivityData,
+    isLoading: staffActivityIsLoading,
+    isSuccess: staffActivityIsSuccess,
+  } = useGetStaffActivitiesQuery(staffId);
+
+  const activities = staffActivityData?.data.application_activities;
+
+  console.log(staffActivityData);
+
+  // console.log(data?.data);
 
   const { data, isLoading, isSuccess, isError } =
     useGetSingleStaffQuery(staffId);
@@ -66,13 +83,15 @@ const StaffProfile = () => {
                 <span className="">Staff Logs</span>
                 <span className="">{Log}</span>
               </TabsTrigger>
-              <TabsTrigger value="activity">Activity</TabsTrigger>
+              <TabsTrigger value="activity">
+                Application Activity Log
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="staff-logs">
               <StaffLogsTable />
             </TabsContent>
             <TabsContent value="activity">
-              <ActivityTable />
+              <ActivityTable activities={activities} />
             </TabsContent>
           </Tabs>
         </div>

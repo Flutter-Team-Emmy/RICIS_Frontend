@@ -1,12 +1,8 @@
 "use client";
 
-import {
-  useGetStaffActivitiesQuery,
-  useGetUserActivitiesQuery,
-} from "@/store/api/userApi";
+import NoActivity from "@/components/NoActivity";
 import { time } from "@/utils/time&dates";
-
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const columns = [
   "Date",
@@ -16,21 +12,11 @@ const columns = [
   "Applicant Name",
 ];
 
-  
-
-const ActivityTable = () => {
-  const params = useParams();
-  const userId = params.userId;
-
+const ActivityTable = ({ activities }) => {
   const router = useRouter();
 
-  const { data, isLoading, isSuccess } = useGetUserActivitiesQuery(userId);
-  const activities = data?.data.application_activities;
-
-  console.log(data?.data);
-
-
   let action;
+  let actionColor;
 
   //   if (isLoading) return <TableSkeleton />;
   return (
@@ -57,19 +43,23 @@ const ActivityTable = () => {
 
             switch (activity.action) {
               case "REJECTED":
-                action = "Application was rejected by";
+                action = "rejected";
+                actionColor = "red";
                 break;
 
               case "CREATED":
-                action = "Application was created by";
+                action = "created";
+                actionColor = "blue";
                 break;
 
               case "APPROVED":
-                action = "Application was approved by";
+                action = "approved";
+                actionColor = "green";
                 break;
 
               case "RESUBMITTED":
-                action = "Application was resubmitted by";
+                action = "resubmitted";
+                actionColor = "yellow";
                 break;
 
               default:
@@ -77,7 +67,11 @@ const ActivityTable = () => {
             }
             return (
               <tr
-                // onClick={() => openTransactionInvoice(transaction?.id)}
+                onClick={() =>
+                  router.push(
+                    `/user/applications/${activity.applicationDetails.id}?status=${activity.applicationDetails.status}&id=${activity.applicationDetails.id}`
+                  )
+                }
                 key={activity.id}
                 className="whitespace-nowrap lg:whitespace-normal bg-white border-b w-full cursor-pointer hover:opacity-70"
               >
@@ -88,11 +82,16 @@ const ActivityTable = () => {
                   {formattedDate}
                 </th>
                 <td className="px-6 py-6 w-72">{formattedTime}</td>
-                <td className="px-6 py-6 w-72 space-x-2">
-                  <span>{action}</span>
+                <td className="px-6 py-6 w-72 space-x-1 whitespace-nowrap">
+                  <span>Application was</span>
+                  <span className={`text-${actionColor}-600`}>{action}</span>
+                  <span>by</span>
                   <span
-                    onClick={() => router.push(route)}
-                    className={`py-[1px] px-1 rounded-lg ${
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      router.push(route);
+                    }}
+                    className={`py-[1.7px] px-2 rounded-lg ${
                       isStaff
                         ? "bg-green-200 text-green-600"
                         : "bg-blue-200 text-blue-600"
@@ -104,7 +103,15 @@ const ActivityTable = () => {
                 <td className="px-6 py-6 w-72">
                   {activity.applicationDetails.form_name}
                 </td>
-                <td className="px-6 py-6 w-72">
+                <td
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    router.push(
+                      `/admin/user-management/${activity.applicationDetails.user_id}?id=${activity.applicationDetails.user_id}`
+                    );
+                  }}
+                  className="px-6 py-6 w-72"
+                >
                   {activity.applicationDetails.user_name}
                 </td>
               </tr>
@@ -112,6 +119,7 @@ const ActivityTable = () => {
           })}
         </tbody>
       </table>
+      {activities?.length === 0 && <NoActivity />}
     </div>
   );
 };

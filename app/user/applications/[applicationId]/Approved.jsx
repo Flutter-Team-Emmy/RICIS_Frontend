@@ -2,6 +2,7 @@ import ApplicationStatus from "./ApplicationStatus";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import {
   useDownloadCertificateQuery,
+  useGetApplicationActivityQuery,
   useLazyDownloadCertificateQuery,
   useLazyMailCertificateQuery,
 } from "@/store/api/applicationApi";
@@ -15,9 +16,12 @@ import { Tabs } from "@/components/ui/tabs";
 import { TabsList } from "@/components/ui/tabs";
 import { TabsTrigger } from "@/components/ui/tabs";
 import { TabsContent } from "@/components/ui/tabs";
- 
+import { useParams } from "next/navigation";
 
 const ApplicationApproved = ({ data }) => {
+  const params = useParams();
+  const applicationId = params.applicationId;
+
   const [
     downloadCertificate,
     { isLoading: isDownloading, isSuccess, isError, error, data: certificate },
@@ -31,6 +35,12 @@ const ApplicationApproved = ({ data }) => {
       data: mail,
     },
   ] = useLazyMailCertificateQuery();
+
+  const {
+    data: applicationActivityData,
+    isLoading: applicationActivityIsLoading,
+  } = useGetApplicationActivityQuery(applicationId);
+  const activities = applicationActivityData?.data.application_activities;
 
   useEffect(() => {
     if (mailingSuccess) {
@@ -99,7 +109,7 @@ const ApplicationApproved = ({ data }) => {
               <span className="">Application Details</span>
               {/* <span className="">{Log}</span> */}
             </TabsTrigger>
-            <TabsTrigger value="activity">Activity</TabsTrigger>
+            <TabsTrigger value="activity">Application Activity Log</TabsTrigger>
           </TabsList>
           <TabsContent value="staff-logs">
             {data ? (
@@ -111,7 +121,7 @@ const ApplicationApproved = ({ data }) => {
             )}
           </TabsContent>
           <TabsContent value="activity">
-            <ActivityTable />
+            <ActivityTable activities={activities} />
           </TabsContent>
         </Tabs>
       </div>
