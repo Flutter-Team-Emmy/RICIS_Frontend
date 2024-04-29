@@ -42,7 +42,13 @@ const Documents = () => {
     handleFileUpload,
     sizeErrorFiles,
     setSizeErrorFiles,
-  } = useFiles(documents, selectedDoc, applicationId, draftId);
+  } = useFiles(
+    "draftDocuments",
+    documents,
+    selectedDoc,
+    applicationId,
+    draftId
+  );
 
   const {
     dragging,
@@ -57,88 +63,6 @@ const Documents = () => {
   };
 
   const currentDocuments = documents?.find((doc) => doc.name === selectedDoc);
-
-  // const handleFileChange = (event) => {
-  //   // Clear the error state
-  //   setSizeErrorFiles([]);
-
-  //   const { name, value } = event.target;
-  //   const files = event.target.files;
-  //   console.log(files);
-  //   const fileTypeIsValid = validator.validateFileType(files[0]);
-  //   // console.log(Array.from(doc));
-
-  //   if (files.length > 1 || currentDocuments?.data?.length === 1) {
-  //     return toast.warning("Select just one file", { autoClose: 10000 });
-  //   }
-
-  //   if (!fileTypeIsValid) {
-  //     return toast.warning("Please upload a PDF or image file.", {
-  //       autoClose: 10000,
-  //     });
-  //   }
-
-  //   const updatedSelectedDocFiles = [];
-  //   // Loop through each selected file
-  //   for (let i = 0; i < files.length; i++) {
-  //     const file = files[i];
-
-  //     // Check if file size is less than or equal to 10MB (in bytes)
-  //     if (file.size <= 10 * 1024 * 1024) {
-  //       const reader = new FileReader();
-
-  //       // Read file content asynchronously
-  //       reader.onload = function (event) {
-  //         const fileContent = event.target.result;
-
-  //         updatedSelectedDocFiles.push({
-  //           name: file.name,
-  //           type: file.type,
-  //           content: fileContent,
-  //         });
-  //         setSelectedDocFiles((prevDocs) => [
-  //           ...prevDocs,
-  //           ...updatedSelectedDocFiles,
-  //         ]);
-  //         const isExist = documents?.find(
-  //           (doc) => doc?.name === selectedDoc && doc?.docId === draftId
-  //         );
-  //         if (isExist) {
-  //           updateSingleDocument(
-  //             "draftDocuments",
-  //             selectedDoc,
-  //             updatedSelectedDocFiles
-  //           )
-  //             .then(() => {
-  //               console.log("Item updated successfully");
-  //             })
-  //             .catch((error) => {
-  //               console.error("Failed to update item:", error);
-  //             });
-  //         } else {
-  //           saveDocumentData("draftDocuments", {
-  //             name: selectedDoc,
-  //             data: updatedSelectedDocFiles,
-  //             docId: draftId,
-  //             applicationId,
-  //           })
-  //             .then(() => {
-  //               console.log("Document data saved successfully");
-  //             })
-  //             .catch((error) => {
-  //               console.error("Failed to save document data:", error);
-  //             });
-  //         }
-  //       };
-
-  //       // Read the file as data URL
-  //       reader.readAsDataURL(file);
-  //     } else {
-  //       // Display error message for files larger than 10MB
-  //       setSizeErrorFiles((prevErrorFiles) => [...prevErrorFiles, file.name]);
-  //     }
-  //   }
-  // };
 
   //   Delete from selected document
   const removeAllDocument = () => {
@@ -155,7 +79,7 @@ const Documents = () => {
   // console
 
   const removeSingleDocument = (itemId) => {
-    deleteSingleDocument("draftDocuments", itemId)
+    deleteSingleDocument("draftDocuments", selectedDoc, itemId)
       .then(() => {
         console.log("Item deleted successfully from document data");
       })

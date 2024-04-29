@@ -46,7 +46,7 @@ const Documents = () => {
     handleFileUpload,
     sizeErrorFiles,
     setSizeErrorFiles,
-  } = useFiles(documents, selectedDoc, applicationId);
+  } = useFiles("applicationDocuments", documents, selectedDoc, applicationId);
 
   const {
     dragging,
@@ -113,12 +113,11 @@ const Documents = () => {
     router.push(`/user/application-type/${applicationId}/preview`);
   };
 
-  const addedDocs = JSON.parse(localStorage.getItem("documents"));
+  // const addedDocs = JSON.parse(localStorage.getItem("documents"));
 
   const documentsEmpty =
     documents?.length === 0
-      ? true
-      : documents?.length !== generatedDocuments?.length;
+  ;
   // console.log(documentsNotEmpty);
   console.log(currentDocuments);
 
@@ -159,7 +158,7 @@ const Documents = () => {
   return (
     <>
       {isDraftLoading && <SaveDraftLoader />}
-      <DashboardLayout header={`Application - ${applicationId}`} icon="">
+      <DashboardLayout header={`Application`} icon="">
         <div className="space-y- w-full">
           <div className="space-y-4">
             <div className="flex justify-between items-center w-full">

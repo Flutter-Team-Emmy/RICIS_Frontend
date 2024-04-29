@@ -228,7 +228,7 @@ const ApplicationFormFields = () => {
     // const allfieldsNotFilled = validator.whiteSpaces(formData);
     if (validate) {
       const id = `${applicationId}`;
-      router.push(`/user/drafts/${id}/documents`);
+      router.push(`/user/application-type/${id}/documents`);
       return;
     } else {
       toast.error(
