@@ -153,7 +153,6 @@ const Preview = () => {
     }
     if (isApplicationSuccess) {
       setIsLoading(false);
-      toast.success("Successfully created form!", { autoClose: 5000 });
       // Delete all documents from indexDB after upload
       deleteAllDocuments("applicationDocuments")
         .then(() => {
@@ -163,6 +162,8 @@ const Preview = () => {
         .catch((error) => {
           console.error("Failed to delete all documents:", error);
         });
+
+      toast.success("Successfully created form!", { autoClose: 5000 });
     }
   }, [isApplicationSuccess, applicationError]);
 
