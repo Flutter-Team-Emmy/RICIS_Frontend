@@ -114,7 +114,7 @@ export const userApi = createApi({
       },
       invalidatesTags: [{ type: "Users", id: "LIST" }],
     }),
-    getStaffActivities: builder.query({
+    getStaffLogs: builder.query({
       query(staffId) {
         return {
           url: `/activity/staff/${staffId}`,
@@ -122,10 +122,26 @@ export const userApi = createApi({
       },
       invalidatesTags: [{ type: "Users", id: "LIST" }],
     }),
-    getUserActivities: builder.query({
+    getUserLogs: builder.query({
       query(userId) {
         return {
           url: `/activity/user/${userId}`,
+        };
+      },
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
+    }),
+    getStaffActivities: builder.query({
+      query(staffId) {
+        return {
+          url: `/activity/user-application/staff/${staffId}`,
+        };
+      },
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
+    }),
+    getUserActivities: builder.query({
+      query(userId) {
+        return {
+          url: `/activity/user-application/user/${userId}`,
         };
       },
       invalidatesTags: [{ type: "Users", id: "LIST" }],
@@ -146,4 +162,6 @@ export const {
   useGetStaffActivitiesQuery,
   useCreateStaffMutation,
   useGetUserActivitiesQuery,
+  useGetStaffLogsQuery,
+  useGetUserLogsQuery,
 } = userApi;

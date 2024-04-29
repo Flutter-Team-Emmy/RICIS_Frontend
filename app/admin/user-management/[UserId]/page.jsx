@@ -9,6 +9,7 @@ import { useParams, useSearchParams } from "next/navigation";
 import UserProfileTab from "./userProfileTab";
 import UserLog from "./userLog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ActivityTable from "./ActivityTable";
 
 const UserProfile = () => {
 
@@ -37,6 +38,9 @@ const UserProfile = () => {
           <TabsContent value="user-log">
             <UserLog />
           </TabsContent>
+          <TabsContent value="activity">
+              <ActivityTable />
+            </TabsContent>
           {/* <TabsContent value="activity"><ActivityTable /></TabsContent> */}
         </Tabs>
       </div>

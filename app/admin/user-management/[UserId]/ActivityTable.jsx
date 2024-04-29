@@ -1,6 +1,9 @@
 "use client";
 
-import { useGetStaffActivitiesQuery } from "@/store/api/userApi";
+import {
+  useGetStaffActivitiesQuery,
+  useGetUserActivitiesQuery,
+} from "@/store/api/userApi";
 import { time } from "@/utils/time&dates";
 
 import { useParams, useRouter } from "next/navigation";
@@ -13,16 +16,15 @@ const columns = [
   "Applicant Name",
 ];
 
-
+  
 
 const ActivityTable = () => {
   const params = useParams();
-  const staffId = params.staffId;
+  const userId = params.userId;
 
   const router = useRouter();
-  console.log(staffId);
 
-  const { data, isLoading, isSuccess } = useGetStaffActivitiesQuery(staffId);
+  const { data, isLoading, isSuccess } = useGetUserActivitiesQuery(userId);
   const activities = data?.data.application_activities;
 
   console.log(data?.data);
@@ -51,7 +53,7 @@ const ActivityTable = () => {
             const isStaff = activity.actor.isStaff;
             const route = isStaff
               ? `/admin/staff-management/${activity.staff_id}`
-              : `/admin/user-management/${activity.applicationDetails.user_id}`;
+              : `/admin/user-management/${activity.user_id}?id=${activity.user_id}`;
 
             switch (activity.action) {
               case "REJECTED":

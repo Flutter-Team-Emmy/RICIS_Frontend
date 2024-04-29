@@ -1,5 +1,6 @@
 "use client";
 
+import Avatar from "@/components/Avatar";
 import DeleteStaff from "@/components/modals/DeleteStaff";
 import { useGetSingleStaffQuery } from "@/store/api/userApi";
 import { useParams, useRouter } from "next/navigation";
@@ -56,11 +57,7 @@ const StaffDetails = ({staff, staffId}) => {
         </div>
         <div className="grid grid-cols-1 space-y-4 lg:space-y-0 lg:grid-cols-4 gap-x-8">
           <div className="shadow-md relative flex space-x-4 items-center py-4 px-2 bg-[#3361FF] bg-opacity-40">
-            <img
-              className="w-8 h-8 rounded-full"
-              src="/images/user.jpg"
-              alt=""
-            />
+             <Avatar />
             <div>
               <p className="text-sm">{staff?.name}</p>
               <p className="text-sm font-semibold text-gray-700">Staff Name</p>
@@ -70,17 +67,17 @@ const StaffDetails = ({staff, staffId}) => {
 
           <div className="shadow-md relative flex space-x-4 items-center py-4 px-2 bg-[#46B038] bg-opacity-30">
             <img className="w-6 h-6" src="/images/emailIcon.svg" alt="" />
-            <div className="w-[70%]">
-              <p className="text-sm truncate">{staff?.email}</p>
+            <div className="w-[80%]">
+              <p className="text-sm break-words">{staff?.email}</p>
               <p className="text-sm font-semibold text-gray-700">Staff Email</p>
             </div>
           </div>
 
           <div className="shadow-md relative flex space-x-4 items-center py-4 px-2 bg-[#C40E0E] bg-opacity-20">
             <img className="w-6 h-6" src="/images/fingerprintIcon.svg" alt="" />
-            <div>
-              <p className="text-sm">EAD1234567890</p>
-              <p className="text-sm font-semibold text-gray-700">Staff ID</p>
+            <div className="w-[80%]">
+              <p className="text-sm break-words">{staff?.ref}</p>
+              <p className="text-sm font-semibold text-gray-700">Staff Ref</p>
             </div>
           </div>
 

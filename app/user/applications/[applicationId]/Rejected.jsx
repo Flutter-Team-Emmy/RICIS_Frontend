@@ -2,6 +2,11 @@ import ApplicationStatus from "./ApplicationStatus";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { DownloadIcon } from "@/svgs";
 import { ClipLoader } from "react-spinners";
+import { Tabs } from "@/components/ui/tabs";
+import { TabsList } from "@/components/ui/tabs";
+import { TabsTrigger } from "@/components/ui/tabs";
+import { TabsContent } from "@/components/ui/tabs";
+import ActivityTable from "./ActivityTable";
 
 const ApplicationRejected = ({ data, reason }) => {
   console.log(reason);
@@ -25,17 +30,31 @@ const ApplicationRejected = ({ data, reason }) => {
         </div>
       </div>
       <div className="bg-white lg:flex lg:justify-between rounded-md pt-12 px-6 pb-6">
-        {data ? (
-          <ApplicationStatus data={data} />
-        ) : (
-          <div className="flex items-center justify-center h-[40vh] w-full  ">
-            <ClipLoader color="#46B038" size={30} />
-          </div>
-        )}
-        <div className="lg:w-[45%] h-[80%] mt-8 pb-6 px-6 pt-8 bg-[#FFF6F6] text-[#7D3434] border-solid border-[1px] border-[#7D3434] rounded-md">
-          <p className="pb-4 font-bold">Reason:</p>
-          <p className="text-sm text-justify">{reason}</p>
-        </div>
+        <Tabs defaultValue="staff-logs" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 lg:w-96 w-full mb-8">
+            <TabsTrigger className="space-x-2" value="staff-logs">
+              <span className="">Application Details</span>
+              {/* <span className="">{Log}</span> */}
+            </TabsTrigger>
+            <TabsTrigger value="activity">Activity</TabsTrigger>
+          </TabsList>
+          <TabsContent value="staff-logs">
+            {data ? (
+              <ApplicationStatus data={data} />
+            ) : (
+              <div className="flex items-center justify-center h-[40vh] w-full  ">
+                <ClipLoader color="#46B038" size={30} />
+              </div>
+            )}
+            <div className="lg:w-[45%] h-[80%] mt-8 pb-6 px-6 pt-8 bg-[#FFF6F6] text-[#7D3434] border-solid border-[1px] border-[#7D3434] rounded-md">
+              <p className="pb-4 font-bold">Reason:</p>
+              <p className="text-sm text-justify">{reason}</p>
+            </div>
+          </TabsContent>
+          <TabsContent value="activity">
+            <ActivityTable />
+          </TabsContent>
+        </Tabs>
       </div>
     </DashboardLayout>
   );
