@@ -17,6 +17,11 @@ import PaymentModal from "@/components/modals/paymentModal";
 import { useGetCurrentUserQuery } from "@/store/api/userApi";
 import { useSelector } from "react-redux";
 import { selectRole } from "@/store/features/userSlice";
+import { Tabs } from "@/components/ui/tabs";
+import { TabsList } from "@/components/ui/tabs";
+import { TabsTrigger } from "@/components/ui/tabs";
+import { TabsContent } from "@/components/ui/tabs";
+import ActivityTable from "./ActivityTable";
 
 const ApplicationPending = ({ data }) => {
   const [rejectBtnLoader, setRejectBtnLoader] = useState(false);
@@ -154,53 +159,66 @@ const ApplicationPending = ({ data }) => {
         </div> */}
         </div>
         <div className="bg-white rounded-md pt-8 pl-6 pb-6">
-          {data ? (
-            <ApplicationStatus data={data} type={type} />
-          ) : (
-            <div className="flex items-center justify-center h-[40vh] w-full  ">
-              <ClipLoader color="#46B038" size={30} />
-            </div>
-          )}
-
-          {!type &&
-            (isAdmin ? (
-              <div className="flex gap-x-4 w-full lg:justify-start mt-8">
-                <button
-                  className="rounded-md h-[50%] text-sm text-[#fff] p-2  bg-[#46B038]"
-                  onClick={() => {
-                    setStatus("APPROVED");
-                    openModal();
-                  }}
-                >
-                  Approve
-                </button>
-                <button
-                  className="text-sm bg-red-500 h-[50%] text-white py-2 px-4 w-fit rounded-md"
-                  onClick={() => {
-                    setStatus("REJECTED");
-                    openModal();
-                    // setSaveBtnLoader(true);
-                  }}
-                >
-                  {rejectBtnLoader ? (
-                    <ClipLoader color="#fff" size={25} />
-                  ) : (
-                    "Reject"
-                  )}
-                </button>
-              </div>
-            ) : (
-              data?.application?.transactions?.length === 0 && (
-                <div className="mt-8">
-                  <Btn
-                    text="Make payment"
-                    // loading={isLoading}
-                    // loadingMsg="creating transaction..."
-                    handleClick={() => setPayementModalIsOpen(true)}
-                  />
+          <Tabs defaultValue="staff-logs" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 lg:w-96 w-full mb-8">
+              <TabsTrigger className="space-x-2" value="staff-logs">
+                <span className="">Application Details</span>
+                {/* <span className="">{Log}</span> */}
+              </TabsTrigger>
+              <TabsTrigger value="activity">Activity</TabsTrigger>
+            </TabsList>
+            <TabsContent value="staff-logs">
+              {data ? (
+                <ApplicationStatus data={data} type={type} />
+              ) : (
+                <div className="flex items-center justify-center h-[40vh] w-full  ">
+                  <ClipLoader color="#46B038" size={30} />
                 </div>
-              )
-            ))}
+              )}
+              {!type &&
+                (isAdmin ? (
+                  <div className="flex gap-x-4 w-full lg:justify-start mt-8">
+                    <button
+                      className="rounded-md h-[50%] text-sm text-[#fff] p-2  bg-[#46B038]"
+                      onClick={() => {
+                        setStatus("APPROVED");
+                        openModal();
+                      }}
+                    >
+                      Approve
+                    </button>
+                    <button
+                      className="text-sm bg-red-500 h-[50%] text-white py-2 px-4 w-fit rounded-md"
+                      onClick={() => {
+                        setStatus("REJECTED");
+                        openModal();
+                        // setSaveBtnLoader(true);
+                      }}
+                    >
+                      {rejectBtnLoader ? (
+                        <ClipLoader color="#fff" size={25} />
+                      ) : (
+                        "Reject"
+                      )}
+                    </button>
+                  </div>
+                ) : (
+                  data?.application?.transactions?.length === 0 && (
+                    <div className="mt-8">
+                      <Btn
+                        text="Make payment"
+                        // loading={isLoading}
+                        // loadingMsg="creating transaction..."
+                        handleClick={() => setPayementModalIsOpen(true)}
+                      />
+                    </div>
+                  )
+                ))}
+            </TabsContent>
+            <TabsContent value="activity">
+              <ActivityTable />
+            </TabsContent>
+          </Tabs>
         </div>
 
         {isOpen && (

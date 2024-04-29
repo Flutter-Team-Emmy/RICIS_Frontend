@@ -1,9 +1,6 @@
 import { useParams } from "next/navigation";
 import { time } from "@/utils/time&dates";
-import {
-  useGetStaffActivitiesQuery,
-  useGetUserActivitiesQuery,
-} from "@/store/api/userApi";
+import { useGetUserLogsQuery } from "@/store/api/userApi";
 import TableSkeleton from "@/components/skeleton-loaders/TableSkeleton";
 import { EmptyLog } from "@/svgs";
 import { getActionStatement } from "@/utils/helpers";
@@ -65,8 +62,7 @@ const logs = [
 const UserLog = () => {
   const param = useParams();
   const userId = param.UserId;
-  const { data, isLoading, isSuccess, error } =
-    useGetUserActivitiesQuery(userId);
+  const { data, isLoading, isSuccess, error } = useGetUserLogsQuery(userId);
   const user_activities_log = data?.data?.user_activities;
   console.log(data);
   console.log(userId);

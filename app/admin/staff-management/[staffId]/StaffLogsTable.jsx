@@ -106,7 +106,7 @@ const StaffLogsTable = () => {
           })}
         </tbody>
       </table>
-      {staff_activities_log.length === 0 && (
+      {staff_activities_log?.length === 0 && (
         <div className="flex flex-col justify-center items-center gap-2 py-16">
           <p>{EmptyLog}</p>
           <p className="text-lg text-gray-500">No Log Record found on system</p>

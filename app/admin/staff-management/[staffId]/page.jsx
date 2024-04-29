@@ -23,7 +23,8 @@ const StaffProfile = () => {
   const processable_forms = staff?.processableForms;
   const status = staff?.status;
 
-  console.log(data);
+  console.log(staff);
+ 
 
   return (
     <DashboardLayout header="Admin">

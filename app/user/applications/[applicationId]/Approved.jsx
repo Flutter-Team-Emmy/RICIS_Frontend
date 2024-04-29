@@ -10,6 +10,12 @@ import { useEffect } from "react";
 import { ClipLoader } from "react-spinners";
 import { normalizeErrors } from "@/utils/helpers";
 import { toast } from "react-toastify";
+import ActivityTable from "./ActivityTable";
+import { Tabs } from "@/components/ui/tabs";
+import { TabsList } from "@/components/ui/tabs";
+import { TabsTrigger } from "@/components/ui/tabs";
+import { TabsContent } from "@/components/ui/tabs";
+ 
 
 const ApplicationApproved = ({ data }) => {
   const [
@@ -87,13 +93,27 @@ const ApplicationApproved = ({ data }) => {
         </div>
       </div>
       <div className="bg-white rounded-md pt-8 pl-6 pb-6">
-        {data ? (
-          <ApplicationStatus data={data} />
-        ) : (
-          <div className="flex items-center justify-center h-[40vh] w-full  ">
-            <ClipLoader color="#46B038" size={30} />
-          </div>
-        )}
+        <Tabs defaultValue="staff-logs" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 lg:w-96 w-full mb-8">
+            <TabsTrigger className="space-x-2" value="staff-logs">
+              <span className="">Application Details</span>
+              {/* <span className="">{Log}</span> */}
+            </TabsTrigger>
+            <TabsTrigger value="activity">Activity</TabsTrigger>
+          </TabsList>
+          <TabsContent value="staff-logs">
+            {data ? (
+              <ApplicationStatus data={data} />
+            ) : (
+              <div className="flex items-center justify-center h-[40vh] w-full  ">
+                <ClipLoader color="#46B038" size={30} />
+              </div>
+            )}
+          </TabsContent>
+          <TabsContent value="activity">
+            <ActivityTable />
+          </TabsContent>
+        </Tabs>
       </div>
     </DashboardLayout>
   );
