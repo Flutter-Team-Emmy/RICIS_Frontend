@@ -146,6 +146,22 @@ export const userApi = createApi({
       },
       invalidatesTags: [{ type: "Users", id: "LIST" }],
     }),
+    getNotifications: builder.query({
+      query() {
+        return {
+          url: "/notifications",
+        };
+      },
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
+    }),
+    getSingleNotification: builder.query({
+      query(notificationId) {
+        return {
+          url: `/notifications/${notificationId}`,
+        };
+      },
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
+    }),
   }),
 });
 
@@ -164,4 +180,6 @@ export const {
   useGetUserActivitiesQuery,
   useGetStaffLogsQuery,
   useGetUserLogsQuery,
+  useGetNotificationsQuery,
+  useGetSingleNotificationQuery,
 } = userApi;

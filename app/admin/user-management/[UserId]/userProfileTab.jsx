@@ -6,9 +6,11 @@ import { time } from "@/utils/time&dates";
 import { useParams, useSearchParams } from "next/navigation";
 
 const UserProfileTab = () => {
+  
   const params = useSearchParams();
   const userId = params.get("id");
   console.log(userId);
+
   const { isLoading, isSuccess, isError, error, data } =
     useGetUserQuery(userId);
   const details = data?.data;

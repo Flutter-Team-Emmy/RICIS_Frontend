@@ -30,7 +30,7 @@ const StaffDetails = ({ staff, staffId }) => {
       <div>
         <div className="w-full lg:flex justify-between pb-8">
           <div>
-            <h1 className="text-black font-bold text-lg">Staff Profile</h1>
+            <h1 className="text-black font-bold text-lg">{staff?.name} Profile</h1>
             <p className="text-gray-600 text-sm">
               view staff account details below
             </p>
