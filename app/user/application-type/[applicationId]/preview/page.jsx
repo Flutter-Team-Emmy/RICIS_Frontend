@@ -116,33 +116,38 @@ const Preview = () => {
   };
 
   const createNewApplication = async () => {
-    const files = await handleUpload();
-    console.log(files);
-    // Assuming formData is an object and files is an array of objects
-    const forms = files.reduce(
-      (acc, file) => {
-        // Check if the file object has the same key as formData
-        if (acc.hasOwnProperty(file.name)) {
-          // If yes, replace the value with the file object's value
-          acc[file.name] = file.value;
-        } else {
-          // If not, add the file object to the accumulator
-          acc[file.name] = file.value;
-        }
-        return acc;
-      },
-      { ...storedFormData }
-    );
+    try {
+      const files = await handleUpload();
+      console.log(files);
+      // Assuming formData is an object and files is an array of objects
+      const forms = files.reduce(
+        (acc, file) => {
+          // Check if the file object has the same key as formData
+          if (acc.hasOwnProperty(file.name)) {
+            // If yes, replace the value with the file object's value
+            acc[file.name] = file.value;
+          } else {
+            // If not, add the file object to the accumulator
+            acc[file.name] = file.value;
+          }
+          return acc;
+        },
+        { ...storedFormData }
+      );
 
-    console.log(forms);
+      console.log(forms);
 
-    const payload = {
-      form_id: applicationId,
-      as_draft: false,
-      data: forms,
-    };
-    console.log(payload);
-    await addNewApplication(payload);
+      const payload = {
+        form_id: applicationId,
+        as_draft: false,
+        data: forms,
+      };
+      console.log(payload);
+      await addNewApplication(payload);
+    } catch (error) {
+      console.log(error);
+      toast.error(error, { autoClose: 30000 });
+    }
   };
 
   useEffect(() => {

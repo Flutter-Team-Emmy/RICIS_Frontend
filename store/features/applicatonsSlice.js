@@ -12,6 +12,8 @@ const initialState = {
     error: "",
     // refetch:,
   },
+  afterDate: null,
+  beforeDate: null,
   applications: [],
 };
 
@@ -34,6 +36,12 @@ const applicationsSlice = createSlice({
     setLastPage: (state, action) => {
       state.lastPage = action.payload;
     },
+    setBeforeDate: (state, action) => {
+      state.beforeDate = action.payload;
+    },
+    setAfterDate: (state, action) => {
+      state.afterDate = action.payload;
+    },
   },
 });
 
@@ -43,11 +51,15 @@ export const {
   setPage,
   setFirstPage,
   setLastPage,
+  setBeforeDate,
+  setAfterDate,
 } = applicationsSlice.actions;
 export const selectApplications = (state) => state.applications.applications;
 export const selectPage = (state) => state.applications.page;
 export const selectFirstPage = (state) => state.applications.firstPae;
 export const selectLastPage = (state) => state.applications.lastPage;
+export const selectBeforeDate = (state) => state.applications.beforeDate;
+export const selectAfterDate = (state) => state.applications.afterDate;
 export const selectFetchingStates = (state) =>
   state.applications.fetchingStates;
 export default applicationsSlice.reducer;

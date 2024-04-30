@@ -2,6 +2,8 @@
 
 import { useGetAllApplicationsQuery } from "@/store/api/applicationApi";
 import {
+  selectAfterDate,
+  selectBeforeDate,
   selectPage,
   selectTotalPage,
   setApplications,
@@ -28,6 +30,9 @@ const ApplicationsProvider = ({ children }) => {
     JSON.parse(localStorage?.getItem("options"));
   const isCustomDate = searchOptions?.date_modified === "Custom";
 
+  const beforeDate = useSelector(selectBeforeDate);
+  const afterDate = useSelector(selectAfterDate);
+
   const getSearchPayload = () => {
     if (isCustomDate) {
       return {
@@ -35,8 +40,8 @@ const ApplicationsProvider = ({ children }) => {
         limit: 20,
         application_name: searchOptions.application_name,
         applicant_name: searchOptions.applicant_name,
-        start_date: "",
-        end_date: "",
+        start_date: beforeDate,
+        end_date: afterDate,
         reference_id: searchOptions.reference_id,
       };
     } else {

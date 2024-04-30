@@ -270,7 +270,7 @@ const Documents = () => {
                       Save as Draft
                     </button> */}
                     <button
-                      disabled={documentsEmpty}
+                      // disabled={documentsEmpty}
                       type="button"
                       onClick={previewForm}
                       className="px-6 py-2 bg-[#46B038] hover:opacity-70 text-white rounded-md disabled:cursor-not-allowed disabled:opacity-70"

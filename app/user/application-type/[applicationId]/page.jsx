@@ -18,6 +18,7 @@ import DatePicker from "./DatePicker";
 import { FieldTypes } from ".";
 import SaveDraftLoader from "@/components/loaders/saveDraftLoader";
 import { toast } from "react-toastify";
+import EmptyApplication from "@/components/modals/EmptyApplication";
 
 const ApplicationFormFields = () => {
   const router = useRouter();
@@ -26,6 +27,8 @@ const ApplicationFormFields = () => {
   const { isLoading, isSuccess, isError, error, data } =
     useGetSingleFormFieldsQuery(applicationId);
   const fields = data?.data?.fields;
+  const isEmptyApplication = data?.data?.fields?.length === 0;
+  // console.log(data);
   const [overallFormIsValid, setOverallFormIsValid] = useState(true);
   // const [errorFields, setErrorFields] = useState()
 
@@ -242,114 +245,118 @@ const ApplicationFormFields = () => {
     <>
       {isDraftLoading && <SaveDraftLoader />}
       <DashboardLayout header="Application Details" icon="">
-        <div className="space-y- w-full">
-          <div className="space-y-6">
-            <div className="flex justify-between items-center w-full">
-              <div className="">
-                <h1 className="text-black font-bold">
-                  Application Name:{" "}
-                  <span className="text-[#46B038]">CLEARANCE</span>
-                </h1>
-                <p className="text-gray-600 text-sm">
-                  Please fill all information correctly
-                </p>
+        {isEmptyApplication ? (
+          <EmptyApplication />
+        ) : (
+          <div className="space-y- w-full">
+            <div className="space-y-6">
+              <div className="flex justify-between items-center w-full">
+                <div className="">
+                  <h1 className="text-black font-bold">
+                    Application Name:{" "}
+                    <span className="text-[#46B038]">CLEARANCE</span>
+                  </h1>
+                  <p className="text-gray-600 text-sm">
+                    Please fill all information correctly
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="flex justify-auto mx-auto">
-              <FPI length={4} shade={3} />
-            </div>
-            <div className="bg-white w-full shadow-md rounded-md space-y-16 lg:p-6 py-6 px-4 h-fit">
-              <div className="flex items-center gap-2">
-                <h1 className="text-[#46B038] font-bold">
-                  APPLICATION DETAILS:
-                </h1>
-                {/* <span className="">{applicationId}</span> */}
+              <div className="flex justify-auto mx-auto">
+                <FPI length={4} shade={3} />
               </div>
-              <div className="grid lg:grid-cols-2 grid-cols-1 gap-y-8 lg:gap-y-10 w-full">
-                {isSuccess &&
-                  formFields?.map((field) => {
-                    const fieldNotEmpty = validator.notEmpty(
-                      formData[field.name]
-                    );
-                    return field.type === "SHORT_TEXT" ||
-                      field.type === "EMAIL" ||
-                      field.type === "PHONE" ? (
-                      <TextInput
-                        key={field.id}
-                        id={field.id}
-                        type={FieldTypes[field.type]}
-                        name={field.name}
-                        onChange={handleChange}
-                        value={formData[field.name]}
-                        fieldCustomType={field.type}
-                        isValid={errorFields[field.name]?.value}
-                        error={errorFields[field.name]?.message}
-                        required={field.required}
-                        // isValid={isValid}
-                        // onFocus={}
-                      />
-                    ) : field.type === "LONG_TEXT" ? (
-                      <TextArea
-                        key={field.id}
-                        id={field.id}
-                        name={field.name}
-                        onChange={handleChange}
-                        value={formData[field.name]}
-                        isValid={errorFields[field.name]?.value}
-                        error={errorFields[field.name]?.message}
-                        required={field.required}
-                        // isValid={isValid}
-                      />
-                    ) : field.type === "DATE" ? (
-                      <DatePicker
-                        key={field.id}
-                        id={field.id}
-                        name={field.name}
-                        onChange={handleChange}
-                        value={formData[field.name]}
-                        isValid={errorFields[field.name]?.value}
-                        error={errorFields[field.name]?.message}
-                        required={field.required}
-                        // isValid={isValid}
-                      />
-                    ) : (
-                      ""
-                    );
-                  })}{" "}
-                {(isLoading || !data) &&
-                  [1, 2, 3, 4, 5, 6, 7, 8, 9].map((loader) => (
-                    <TextFieldSkeleton key={loader} />
-                  ))}
-              </div>
-              <div className="flex lg:flex-row flex-col gap-2">
-                <div className="flex gap-3 lg:w-fit w-full">
+              <div className="bg-white w-full shadow-md rounded-md space-y-16 lg:p-6 py-6 px-4 h-fit">
+                <div className="flex items-center gap-2">
+                  <h1 className="text-[#46B038] font-bold">
+                    APPLICATION DETAILS:
+                  </h1>
+                  {/* <span className="">{applicationId}</span> */}
+                </div>
+                <div className="grid lg:grid-cols-2 grid-cols-1 gap-y-8 lg:gap-y-10 w-full">
+                  {isSuccess &&
+                    formFields?.map((field) => {
+                      const fieldNotEmpty = validator.notEmpty(
+                        formData[field.name]
+                      );
+                      return field.type === "SHORT_TEXT" ||
+                        field.type === "EMAIL" ||
+                        field.type === "PHONE" ? (
+                        <TextInput
+                          key={field.id}
+                          id={field.id}
+                          type={FieldTypes[field.type]}
+                          name={field.name}
+                          onChange={handleChange}
+                          value={formData[field.name]}
+                          fieldCustomType={field.type}
+                          isValid={errorFields[field.name]?.value}
+                          error={errorFields[field.name]?.message}
+                          required={field.required}
+                          // isValid={isValid}
+                          // onFocus={}
+                        />
+                      ) : field.type === "LONG_TEXT" ? (
+                        <TextArea
+                          key={field.id}
+                          id={field.id}
+                          name={field.name}
+                          onChange={handleChange}
+                          value={formData[field.name]}
+                          isValid={errorFields[field.name]?.value}
+                          error={errorFields[field.name]?.message}
+                          required={field.required}
+                          // isValid={isValid}
+                        />
+                      ) : field.type === "DATE" ? (
+                        <DatePicker
+                          key={field.id}
+                          id={field.id}
+                          name={field.name}
+                          onChange={handleChange}
+                          value={formData[field.name]}
+                          isValid={errorFields[field.name]?.value}
+                          error={errorFields[field.name]?.message}
+                          required={field.required}
+                          // isValid={isValid}
+                        />
+                      ) : (
+                        ""
+                      );
+                    })}{" "}
+                  {(isLoading || !data) &&
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9].map((loader) => (
+                      <TextFieldSkeleton key={loader} />
+                    ))}
+                </div>
+                <div className="flex lg:flex-row flex-col gap-2">
+                  <div className="flex gap-3 lg:w-fit w-full">
+                    <button
+                      type="button"
+                      onClick={() => router.back()}
+                      className="px-6 py-2 bg-gray-900 text-white rounded-md hover:opacity-70 w-full lg:w-fit "
+                    >
+                      Back
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => createDraft(formData)}
+                      className="w-full lg:w-fit  px-4 py-2 border border-[#46B038] text-gray-600 rounded-md hover:opacity-70"
+                    >
+                      Save as Draft
+                    </button>
+                  </div>
                   <button
+                    // disabled={allfieldsNotFilled}
                     type="button"
-                    onClick={() => router.back()}
-                    className="px-6 py-2 bg-gray-900 text-white rounded-md hover:opacity-70 w-full lg:w-fit "
+                    onClick={navigateToNextStep}
+                    className="w-full lg:w-fit lg:px-8 px-6 py-2 bg-[#46B038] hover:opacity-70 text-white rounded-md disabled:cursor-not-allowed disabled:opacity-70"
                   >
-                    Back
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => createDraft(formData)}
-                    className="w-full lg:w-fit  px-4 py-2 border border-[#46B038] text-gray-600 rounded-md hover:opacity-70"
-                  >
-                    Save as Draft
+                    Next
                   </button>
                 </div>
-                <button
-                  // disabled={allfieldsNotFilled}
-                  type="button"
-                  onClick={navigateToNextStep}
-                  className="w-full lg:w-fit lg:px-8 px-6 py-2 bg-[#46B038] hover:opacity-70 text-white rounded-md disabled:cursor-not-allowed disabled:opacity-70"
-                >
-                  Next
-                </button>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </DashboardLayout>
     </>
   );

@@ -12,7 +12,16 @@ import {
 } from "@/utils/helpers";
 import { ClipLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
-import { selectPage, setApplications, setLastPage, setPage } from "@/store/features/applicatonsSlice";
+import {
+  selectAfterDate,
+  selectBeforeDate,
+  selectPage,
+  setAfterDate,
+  setApplications,
+  setBeforeDate,
+  setLastPage,
+  setPage,
+} from "@/store/features/applicatonsSlice";
 import { baseUrl } from "@/lib/configs";
 import { getToken } from "@/utils/authHelpers";
 
@@ -24,13 +33,17 @@ const InitialData = {
 };
 
 const FilterOptionsModal = ({ setOpenFilter }) => {
-  const [beforeDate, setBeforeDate] = useState();
-  const [afterDate, setAfterDate] = useState();
+  // const [beforeDate, setBeforeDate] = useState();
+  // const [afterDate, setAfterDate] = useState();
   const [isSuccess, setIsSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const page = useSelector(selectPage);
+  const beforeDate = useSelector(selectBeforeDate);
+  const afterDate = useSelector(selectAfterDate);
   const token = getToken();
+
+  console.log({ beforeDate, afterDate });
 
   // persist search options
   const initializer = () =>
@@ -99,13 +112,13 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
       const data = await response.json();
       // if (response.ok) {
       setIsSuccess(true);
-      console.log(data)
+      console.log(data);
       // }
       dispatch(setApplications(data?.data.applications?.data));
-      dispatch(setLastPage(data?.data?.applications?.meta?.lastPage))
-      
-    dispatch(setFirstPage(data?.data?.applications?.meta?.firstPage));
-    dispatch(setPage(data?.data?.applications?.meta?.currentPage))
+      dispatch(setLastPage(data?.data?.applications?.meta?.lastPage));
+
+      dispatch(setFirstPage(data?.data?.applications?.meta?.firstPage));
+      dispatch(setPage(data?.data?.applications?.meta?.currentPage));
     } catch (error) {
       console.log(error);
       setIsLoading(false);
@@ -212,12 +225,12 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
               <DatePicker
                 text="Before Date"
                 date={beforeDate}
-                setDate={setBeforeDate}
+                setDate={(value)=> dispatch(setBeforeDate(value))}
               />
               <DatePicker
                 text="After Date"
                 date={afterDate}
-                setDate={setAfterDate}
+                setDate={(value)=> dispatch(setAfterDate(value))}
               />
             </div>
           </div>

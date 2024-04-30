@@ -131,7 +131,7 @@ const Documents = () => {
   console.log(currentDocuments);
 
   return (
-    <DashboardLayout header={`Application - ${draftId}`} icon="">
+    <DashboardLayout header={`Application`} icon="">
       <div className="space-y- w-full">
         <div className="space-y-4">
           <div className="flex justify-between items-center w-full">
@@ -234,7 +234,7 @@ const Documents = () => {
                     Back
                   </button>
                   <button
-                    disabled={documentsEmpty}
+                    // disabled={documentsEmpty}
                     type="button"
                     onClick={previewForm}
                     className="px-6 py-2 bg-[#46B038] hover:opacity-70 text-white rounded-md disabled:cursor-not-allowed disabled:opacity-70"

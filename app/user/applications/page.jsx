@@ -17,6 +17,9 @@ import {
   selectLastPage,
   setPage,
 } from "@/store/features/applicatonsSlice";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { ApplicationAdd } from "@/svgs";
 
 const ApplicationsSuspense = () => {
   const param = useSearchParams();
@@ -25,6 +28,9 @@ const ApplicationsSuspense = () => {
   const firstPage = useSelector(selectFirstPage);
   const lastPage = useSelector(selectLastPage);
   const pageCount = lastPage;
+
+  const pathname = usePathname();
+  const isAdmin = pathname.includes("admin");
 
   // const getTotalPages = () => {
   //   if (first)
@@ -56,14 +62,26 @@ const ApplicationsSuspense = () => {
           <span>Applications</span>
         </div>
         <div className="space-y-8 bg-white py-4 px-4">
-          <Search />
+          <div className="flex justify-between w-full items-center">
+            {" "}
+            <Search />
+            {!isAdmin && (
+              <Link
+                href="/user/new-application"
+                className="bg-[#46B038] mt-6 w-fit px-4 py-2.5 text-sm flex items-center gap-2 rounded-md text-white hover:opacity-70"
+              >
+                <span className="">{ApplicationAdd}</span>
+                <span className="">New Application</span>
+              </Link>
+            )}
+          </div>
           <Suspense>
             <Table />
           </Suspense>
         </div>
         <Paginations
           pageCount={pageCount}
-          setPage={(event) => dispatch(setPage(event.selected+1))}
+          setPage={(event) => dispatch(setPage(event.selected + 1))}
         />
       </div>
     </DashboardLayout>
