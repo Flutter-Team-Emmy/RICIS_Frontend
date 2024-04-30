@@ -148,4 +148,12 @@ body {
 } */
 
 
+
+.message-container {
+  overflow: hidden;  
+  width: calc(100% - 4rem); 
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
  

@@ -84,18 +84,21 @@ const ActivityTable = ({ activities }) => {
                 <td className="px-6 py-6 w-72">{formattedTime}</td>
                 <td className="px-6 py-6 w-72 space-x-1 whitespace-nowrap">
                   <span>Application was</span>
-                  <span className={`text-${actionColor}-600`}>{action}</span>
+                  <span
+                    style={{
+                      color: `${actionColor}`
+                    }}
+                  >{action}</span>
                   <span>by</span>
                   <span
                     onClick={(e) => {
                       e.stopPropagation();
                       router.push(route);
                     }}
-                    className={`py-[1.7px] px-2 rounded-lg ${
-                      isStaff
-                        ? "bg-green-200 text-green-600"
-                        : "bg-blue-200 text-blue-600"
-                    }`}
+                    className={`py-[1.7px] px-2 rounded-lg ${isStaff
+                      ? "bg-green-200 text-green-600"
+                      : "bg-blue-200 text-blue-600"
+                      }`}
                   >
                     {actor}
                   </span>
