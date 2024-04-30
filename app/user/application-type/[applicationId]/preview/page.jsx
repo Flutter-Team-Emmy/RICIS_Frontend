@@ -184,7 +184,7 @@ const Preview = () => {
           isLoading={isLoading}
         />
       )}
-      <DashboardLayout header={`Application- ${applicationId}`} icon="">
+      <DashboardLayout header={`Application`} icon="">
         <div className="space-y- w-full">
           <div className="space-y-4">
             <div className="flex justify-between items-center w-full">

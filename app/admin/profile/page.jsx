@@ -74,13 +74,13 @@ const Profile = () => {
           {isLoading || !data ? (
             <h1 className="w-32 h-8 bg-gray-200 animate-pulse"></h1>
           ) : (
-            <h1 className="text-gray-400 font-medium text-2xl">
+            <h1 className="text-gray-400 font-medium lg:text-xl text-lg">
               {currentUser?.role}
             </h1>
           )}
         </div>
         <div className="w-full space-y-6">
-          <div className="space-y-6 w-1/2">
+          <div className="space-y-6 lg:w-1/2 w-full">
             {isSuccess &&
               adminBioData.map((bio_data, index) => (
                 <TextInput
@@ -97,7 +97,7 @@ const Profile = () => {
             {(isLoading || !data) &&
               [1, 2].map((loader) => <TextFieldSkeleton key={loader} />)}
           </div>
-          <div className="flex flex-col lg:flex-row w-full items-center gap-4">
+          <div className="flex flex-col lg:flex-row w-full lg:items-center gap-4">
             <Btn
               text="Save changes"
               loading={isUpdatingBioData}

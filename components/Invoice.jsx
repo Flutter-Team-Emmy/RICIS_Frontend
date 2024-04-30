@@ -11,6 +11,9 @@ const Invoice = () => {
   const { isLoading, isSuccess, isError, error, data } =
     useGetSingleTransactionQuery(InvoiceId);
   const invoice = data?.data?.transaction;
+  const status = invoice?.status;
+  const reason = invoice?.note;
+  console.log(data);
 
   if (isLoading)
     return (
@@ -66,10 +69,12 @@ const Invoice = () => {
             {invoice?.status}
           </p>
         </div>
-        {isUser && (
+        {isUser && status === "FAILED" && (
           <div className="">
             <h1 className="text-red-500 font-bold">Reason</h1>
-            <p className="text-gray-400 text-sm">Insuffienct Balance</p>
+            <p className="text-gray-400 text-sm">{`${
+              reason ? reason : "Insufficient Balance"
+            }`}</p>
           </div>
         )}
         <div className="space-y-2">
