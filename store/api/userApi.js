@@ -147,9 +147,9 @@ export const userApi = createApi({
       invalidatesTags: [{ type: "Users", id: "LIST" }],
     }),
     getNotifications: builder.query({
-      query() {
+      query({ page, limit }) {
         return {
-          url: "/notifications",
+          url: `/notifications/?page=${page}&limit=${limit}`,
         };
       },
       invalidatesTags: [{ type: "Users", id: "LIST" }],

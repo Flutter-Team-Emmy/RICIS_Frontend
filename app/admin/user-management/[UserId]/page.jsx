@@ -1,14 +1,12 @@
 "use client";
 
 import DashboardLayout from "@/components/layouts/DashboardLayout";
-import TextFieldSkeleton from "@/components/skeleton-loaders/TextFieldSkeleton";
 import WithAuth from "@/components/withAuth";
 import {
   useGetUserActivitiesQuery,
   useGetUserQuery,
 } from "@/store/api/userApi";
-import { time } from "@/utils/time&dates";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import UserProfileTab from "./userProfileTab";
 import UserLog from "./userLog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -55,7 +53,6 @@ const UserProfile = () => {
           <TabsContent value="activity">
             <ActivityTable activities={activities} />
           </TabsContent>
-          {/* <TabsContent value="activity"><ActivityTable /></TabsContent> */}
         </Tabs>
       </div>
     </DashboardLayout>

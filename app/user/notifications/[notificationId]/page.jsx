@@ -10,34 +10,51 @@ const Notification = () => {
   const params = useParams();
   const notificationId = params.notificationId;
 
-  const { data } = useGetSingleNotificationQuery(notificationId);
+  const { data, isLoading } = useGetSingleNotificationQuery(notificationId);
   const notification = data?.data.notification;
 
   console.log(data)
 
+  const loader = (
+    <div className="pb-4 bg-gray-100 w-full space-y-6 bg-white px-4 py-8 space-y-10 w-full h-screen">
+      <div className="lg:flex lg:justify-between">
+        <p className="px-8 py-4 bg-gray-100 rounded-md w-fit"></p>
+        <div className="flex items-center gap-x-2 space-y-2 w-full lg:w-[20%]">
+          <div className="h-4 w-4 bg-gray-100 animate-pulse" alt=""></div>
+          <p className="w-28 h-2 bg-gray-100 animate-pulse"></p>
+        </div>
+      </div>
+      <h3 className="w-40 h-4 bg-gray-100 animate-pulse"></h3>
+      <p className="w-[90%] h-12 bg-gray-100 animate-pulse"></p>
+    </div>
+  );
+
   return (
     <DashboardLayout header="Notification" icon="">
-      <div className="pb-4 bg-gray-100 w-full space-y-6 bg-white px-4 py-8 space-y-10 w-full h-screen">
-
-        <div className="lg:flex lg:justify-between">
-          <p
-            className="px-4 py-1 text-[0.7rem] font-bold rounded-md w-fit"
-            style={{
-              backgroundColor: `#${notification?.bgColor}`,
-              color: `#${notification?.textColor}`
-            }}
-          >
-            {notification?.type}
-          </p>
-          <div className="flex text-sm items-center gap-x-2 space-y-2 w-full lg:w-[20%]">
-            <img src="/images/timeIcon.svg" alt="" />
-            <p>{time.formatDate(notification?.created_at)}</p>
-            <p>at {time.formatTime(notification?.created_at)}</p>
+      {isLoading ?
+        loader
+        :
+        <div className="pb-4 bg-gray-100 w-full space-y-6 bg-white px-4 py-8 space-y-10 w-full h-screen">
+          <div className="lg:flex lg:justify-between">
+            <p
+              className="px-4 py-1 text-[0.7rem] font-bold rounded-md w-fit"
+              style={{
+                backgroundColor: `#${notification?.bgColor}`,
+                color: `#${notification?.textColor}`
+              }}
+            >
+              {notification?.type}
+            </p>
+            <div className="flex text-sm items-center gap-x-2 space-y-2 w-full lg:w-[20%]">
+              <img src="/images/timeIcon.svg" alt="" />
+              <p>{time.formatDate(notification?.created_at)}</p>
+              <p>at {time.formatTime(notification?.created_at)}</p>
+            </div>
           </div>
+          <h3 className="font-bold text-sm">{notification?.title}</h3>
+          <p className="text-sm ">{notification?.message}</p>
         </div>
-        <h3 className="font-bold text-sm">{notification?.title}</h3>
-        <p className="text-sm ">{notification?.message}</p>
-      </div>
+      }
     </DashboardLayout>
   );
 };
