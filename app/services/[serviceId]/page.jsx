@@ -19,11 +19,11 @@ const Service = () => {
     return (
         <MainLayout>
             <BgImgText text={headerName} url={headerImgurl} />
-            <div className="pb-20">
+            <div className="pb-20 pt-12">
                 {results?.map((data) =>
                     <div key={data.id} className="px-8 py-4">
                         {(data.image && data.image_location === "TOP") &&
-                            <div className="w-full lg:w-[60%] mt-12 h-[16rem] lg:h-[25rem]">
+                            <div className="w-full lg:w-[60%] mt-4 mb-16 h-[16rem] lg:h-[25rem] mx-auto">
                                 <img src={data.image} alt="" />
                             </div>
                         }

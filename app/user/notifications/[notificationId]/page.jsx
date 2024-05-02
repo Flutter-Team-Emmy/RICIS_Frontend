@@ -45,7 +45,7 @@ const Notification = () => {
             >
               {notification?.type}
             </p>
-            <div className="flex text-sm items-center gap-x-2 space-y-2 w-full lg:w-[20%]">
+            <div className="flex text-sm items-center gap-x-2 mt-6 lg:mt-0 w-full lg:w-[20%]">
               <img src="/images/timeIcon.svg" alt="" />
               <p>{time.formatDate(notification?.created_at)}</p>
               <p>at {time.formatTime(notification?.created_at)}</p>
