@@ -8,6 +8,7 @@ import {
   RecordIcon,
   UserIcon,
   Analytics,
+  cerificateIcon,
 } from "@/svgs";
 
 export const UserSidebarLinks = [
@@ -43,6 +44,12 @@ export const UserSidebarLinks = [
   },
   {
     id: "s6",
+    name: "Certification",
+    href: "/user/certification",
+    icon: cerificateIcon,
+  },
+  {
+    id: "s7",
     name: "User Profile",
     href: "/user/profile",
     icon: UserIcon,

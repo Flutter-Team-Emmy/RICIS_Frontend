@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import useNetworkStatus from "@/hooks/useNetworkStatus";
 import { Offline } from "@/svgs";
 
-const DashboardLayout = ({ children, header, icon }) => {
+const DashboardLayout = ({ children, header, icon, isSidebarLink }) => {
   const router = useRouter();
   const [showSidebar, setShowSidebar] = useState("hidden");
 
@@ -51,12 +51,13 @@ const DashboardLayout = ({ children, header, icon }) => {
             />
             <div className="w-full flex justify-between items-center">
               <div className="items-center gap-x-3 hidden lg:flex">
-                <span
+                {!isSidebarLink && <span
                   className="cursor-pointer hover:opacity-70 p-1 rounded-full border-2 border-dashed"
                   onClick={() => router.back()}
                 >
                   {ArrowLeft}
                 </span>
+                }
                 {isOnline ? (
                   <h1 className="text-slate-800 text-lg font-semibold inline whitespace-nowrap">
                     {header}

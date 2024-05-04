@@ -10,6 +10,7 @@ import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import { baseUrl } from "@/lib/configs";
 import { getToken } from "@/utils/authHelpers";
+import NoNotification from "@/components/NoNotification";
 
 
 const NotificationsAdmin = () => {
@@ -62,7 +63,7 @@ const NotificationsAdmin = () => {
 
 
     return (
-        <DashboardLayout header="Notifications" icon="">
+        <DashboardLayout header="Notifications" icon="" isSidebarLink={true}>
             <div className="">
                 <div className="w-full pb-8">
                     <h1 className="text-black font-bold">NOTIFICATIONS</h1>
@@ -93,12 +94,12 @@ const NotificationsAdmin = () => {
                             <p className="text-sm message-container">{notification?.message}</p>
                         </div>
                     )}
-                    <InfiniteScroll
-                        dataLength={items?.length}
-                        next={fetchMoreData}
-                        hasMore={hasMore}
-                        loader={scrollLoader}
-                    />
+                        <InfiniteScroll
+                            dataLength={items?.length}
+                            next={fetchMoreData}
+                            hasMore={hasMore}
+                            loader={(items?.length >= 5 && hasMore) && scrollLoader}
+                        />
                 </div>
             </div>
         </DashboardLayout>

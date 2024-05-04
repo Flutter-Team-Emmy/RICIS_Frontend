@@ -72,6 +72,7 @@ const Profile = () => {
 
   return (
     <DashboardLayout
+      isSidebarLink={true}
       header={currentUser?.user?.fullName || currentUser?.user?.name}
     >
       <div className="w-full pb-6">
@@ -119,7 +120,7 @@ const Profile = () => {
               // loading={isUpdatingBioData}
               // loadingMsg="saving.."
               handleClick={() => router.push("/user/profile/change-password")}
-              // disabled={btnIsdisabled}
+            // disabled={btnIsdisabled}
             ></Btn>
           </div>
         </div>
