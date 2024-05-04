@@ -44,7 +44,7 @@ const DashboardSuspenseBoundary = () => {
   }, [transactionStatus]);
 
   return (
-    <DashboardLayout header="Dashboard" icon="">
+    <DashboardLayout isSidebarLink={true} header="Dashboard" icon="">
       <div className="space-y-10 w-full">
         <div className="lg:flex lg:justify-between w-full items-center">
           <div className="space-y-1">

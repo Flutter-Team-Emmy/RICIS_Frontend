@@ -21,7 +21,7 @@ const Drafts = () => {
   const drafts = data?.data.draft_applications.data;
 
   return (
-    <DashboardLayout header="Drafts" icon="">
+    <DashboardLayout header="Drafts" icon="" isSidebarLink={true}>
       <div className="space-y-10 w-full text-sm">
         <div className="bg-gray-100">
           <div className="w-full pb-8">

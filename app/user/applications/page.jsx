@@ -37,7 +37,7 @@ const ApplicationsSuspense = () => {
   // }
 
   return (
-    <DashboardLayout header="Applications">
+    <DashboardLayout header="Applications" isSidebarLink={true}>
       <div className="space-y-6 w-full">
         <Suspense>
           <TabSwitcher applicationsTabs={applicationsTabs} />

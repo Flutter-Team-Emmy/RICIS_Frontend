@@ -14,7 +14,7 @@ const Transactions = () => {
   const pageCount = useSelector(selectTotalPage);
 
   return (
-    <DashboardLayout header="Transactions">
+    <DashboardLayout header="Transactions" isSidebarLink={true}>
       <div className="w-full pb-8">
         <h1 className="text-black font-bold text-2xl">Payment Record</h1>
         <p className="text-gray-600 text-sm">view all your transactions</p>
