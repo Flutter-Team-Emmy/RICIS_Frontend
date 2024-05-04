@@ -1144,6 +1144,95 @@ export const EmptyLog = (
     />
   </svg>
 );
+
+export const CalendarEdit = (
+  <svg
+    width="23"
+    height="23"
+    viewBox="0 0 23 23"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M7.66602 1.9165V4.7915"
+      stroke="#292D32"
+      strokeOpacity="0.9"
+      strokeWidth="1.5"
+      strokeMiterlimit="10"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M15.334 1.9165V4.7915"
+      stroke="#292D32"
+      strokeOpacity="0.9"
+      strokeWidth="1.5"
+      strokeMiterlimit="10"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M3.35352 8.71094H19.6452"
+      stroke="#292D32"
+      strokeOpacity="0.9"
+      strokeWidth="1.5"
+      strokeMiterlimit="10"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M18.4099 15.1126L15.0175 18.5051C14.8833 18.6392 14.7586 18.8884 14.7299 19.0705L14.5478 20.3642C14.4807 20.8338 14.8066 21.1597 15.2761 21.0927L16.5699 20.9105C16.752 20.8817 17.0107 20.7572 17.1353 20.623L20.5279 17.2306C21.1125 16.646 21.3904 15.9656 20.5279 15.1031C19.675 14.2502 18.9945 14.528 18.4099 15.1126Z"
+      stroke="#292D32"
+      strokeOpacity="0.9"
+      strokeWidth="1.5"
+      strokeMiterlimit="10"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M17.9219 15.6016C18.2094 16.6366 19.0144 17.4416 20.0494 17.7291"
+      stroke="#292D32"
+      strokeOpacity="0.9"
+      strokeWidth="1.5"
+      strokeMiterlimit="10"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M11.5 21.0832H7.66667C4.3125 21.0832 2.875 19.1665 2.875 16.2915V8.14567C2.875 5.27067 4.3125 3.354 7.66667 3.354H15.3333C18.6875 3.354 20.125 5.27067 20.125 8.14567V11.4998"
+      stroke="#292D32"
+      strokeOpacity="0.9"
+      strokeWidth="1.5"
+      strokeMiterlimit="10"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M11.4961 13.1289H11.5051"
+      stroke="#292D32"
+      strokeOpacity="0.9"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M7.94922 13.1289H7.9582"
+      stroke="#292D32"
+      strokeOpacity="0.9"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M7.94922 16.0039H7.9582"
+      stroke="#292D32"
+      strokeOpacity="0.9"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
 // const ArrowRight(
 //   //
 // )

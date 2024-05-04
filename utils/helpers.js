@@ -1,3 +1,5 @@
+import { validator } from "./validator";
+
 export const capitalizeFirstLetter = (word) => {
   return word?.charAt(0).toUpperCase() + word?.substring(1).toLowerCase();
 };
@@ -97,14 +99,14 @@ export const EnLocalDateFormat = (date) => {
   return formattedDate;
 };
 
-export const removeEmptyFields = (obj) => {
-  for (let key in obj) {
-    if (obj[key] === null || obj[key] === undefined || obj[key] === "") {
-      delete obj[key];
-    }
-  }
-  return obj;
-};
+// export const removeEmptyFields = (obj) => {
+//   for (let key in obj) {
+//     if (obj[key] === null || obj[key] === undefined || obj[key] === "") {
+//       delete obj[key];
+//     }
+//   }
+//   return obj;
+// };
 
 export const truncateWithEllipsisAndExtension = (filename, maxLength) => {
   // If filename is shorter than maxLength, return it as it is
@@ -157,4 +159,24 @@ export const getActionStatement = (member, action, executor) => {
     default:
       break;
   }
+};
+
+export const removeEmptyFields = (obj) => {
+  let result = {};
+  for (let key in obj) {
+    if (obj[key] !== null && obj[key] !== undefined && obj[key] !== "") {
+      result[key] = obj[key];
+    }
+  }
+  return result;
+};
+
+export const convertToValidNumberType = (data) => {
+  for (let key in data) {
+    const isNumber = validator.validateNumber(data[key]);
+    if (isNumber) {
+      data[key] = Number(data[key]);
+    }
+  }
+  return data;
 };

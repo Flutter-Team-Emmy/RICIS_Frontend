@@ -19,6 +19,8 @@ import { FieldTypes } from ".";
 import SaveDraftLoader from "@/components/loaders/saveDraftLoader";
 import { toast } from "react-toastify";
 import EmptyApplication from "@/components/modals/EmptyApplication";
+import useValidateForm from "@/hooks/useValidateForm";
+import { convertToValidNumberType, removeEmptyFields } from "@/utils/helpers";
 
 const ApplicationFormFields = () => {
   const router = useRouter();
@@ -90,15 +92,10 @@ const ApplicationFormFields = () => {
   const initializer = () =>
     JSON.parse(localStorage.getItem("formData")) || InitialData;
   const { formData, setFormData, handleChange } = useForm(initializer);
-  const errorInitializer = () =>
-    JSON.parse(localStorage.getItem("errorFields")) || fieldsInitialErrorStates;
-  const [errorFields, setErrorFields] = useState(errorInitializer);
-  const allfieldsNotFilled = validator.whiteSpaces(formData);
-
-  // const navigateToNextStep = () => {
-  //   console.log(formData);
-  //   router.push(`/user/application-type/${applicationId}/documents`);
-  // };
+  const { validateForm, errorFields, setErrorFields } = useValidateForm(
+    fieldsInitialErrorStates,
+    "errorFields"
+  );
 
   // fetch persisted data from local storage
   useEffect(() => {
@@ -135,104 +132,40 @@ const ApplicationFormFields = () => {
     }
   }, [isDraftSuccess]);
 
-  const createDraft = async (formData) => {
-    const payload = {
-      form_id: applicationId,
-      data: formData,
-    };
-    await createNewDraft(payload);
-  };
+  const createDraft = async () => {
+    const nonEmptyFields = removeEmptyFields(formData);
+    const validate = validateForm(nonEmptyFields);
+    const isInValidDraft = validator.atLeastOneValueNotEmpty(nonEmptyFields);
 
-  const validateForm = () => {
-    const formDataValues = Object?.keys(formData).forEach((key) => {
-      const currentValue = formData[key];
-      const notEmpty = validator.notEmpty(currentValue);
-      const phoneIsValid = validator.validatePhoneNumber(currentValue);
-      const emailIsValid = validator.validateEmail(currentValue);
-      const currentErrorKey = errorFields[key];
+    if (isInValidDraft) {
+      return toast.error("Fill at least one field to save as draft", {
+        autoClose: 20000,
+      });
+    }
 
-      if (currentErrorKey?.type === "EMAIL") {
-        const updatedErrorState = {
-          value: notEmpty && emailIsValid,
-          message:
-            !notEmpty && !emailIsValid
-              ? "Invalid Field"
-              : !emailIsValid
-              ? "Inavlid Email"
-              : "",
-          type: currentErrorKey?.type,
-        };
-        setErrorFields((prev) => {
-          return { ...prev, [key]: updatedErrorState };
-        });
-      } else if (currentErrorKey?.type === "PHONE") {
-        const updatedErrorState = {
-          value: notEmpty && phoneIsValid,
-          message:
-            !notEmpty && !phoneIsValid
-              ? "Invalid Field"
-              : !phoneIsValid
-              ? "Inavlid Phone"
-              : "",
-          type: currentErrorKey?.type,
-        };
-        setErrorFields((prev) => {
-          return { ...prev, [key]: updatedErrorState };
-        });
-      } else {
-        // if (!notEmpty) {
-        setErrorFields((prev) => {
-          return {
-            ...prev,
-            [key]: {
-              value: notEmpty,
-              message: notEmpty ? "" : "Invalid Field",
-              type: currentErrorKey?.type,
-            },
-          };
-        });
-        // }
-        return;
-      }
-    });
-
-    return formDataValues;
+    if (validate) {
+      const transformedFormData = convertToValidNumberType(nonEmptyFields);
+      const payload = {
+        form_id: applicationId,
+        data: transformedFormData,
+      };
+      await createNewDraft(payload);
+    } else {
+      toast.error("Fill entered fields correctly", { autoClose: 20000 });
+    }
+    console.log(nonEmptyFields);
   };
 
   const navigateToNextStep = () => {
-    // toast.success(
-    //   "You're called me",
-    //   { autoClose: 10000 }
-    // );
-    validateForm();
-
-    let validate = true;
-    Object?.keys(formData).forEach((key) => {
-      const currentValue = formData[key];
-      const notEmpty = validator.notEmpty(currentValue);
-      const phoneIsValid = validator.validatePhoneNumber(currentValue);
-      const emailIsValid = validator.validateEmail(currentValue);
-      const currentErrorKey = errorFields[key];
-
-      if (validate) {
-        if (currentErrorKey?.type === "EMAIL") {
-          validate = notEmpty && emailIsValid;
-        } else if (currentErrorKey?.type === "PHONE") {
-          validate = notEmpty && phoneIsValid;
-        } else {
-          validate = notEmpty;
-        }
-        console.log(`validate ${key} : ${validate} `);
-      }
-    });
-
-    const isValid = Object?.values(errorFields).every((field) => field.value);
-    console.log(isValid);
-    // const allfieldsNotFilled = validator.whiteSpaces(formData);
+    const validate = validateForm(formData);
     if (validate) {
-      const id = `${applicationId}`;
-      router.push(`/user/application-type/${id}/documents`);
-      return;
+      if (generatedDocuments?.length === 0) {
+        router.push(`/user/application-type/${applicationId}/preview`);
+        return;
+      } else {
+        router.push(`/user/application-type/${applicationId}/documents`);
+        return;
+      }
     } else {
       toast.error(
         "You're required to correctly fill all fields, before you proceed.",
@@ -279,6 +212,7 @@ const ApplicationFormFields = () => {
                       );
                       return field.type === "SHORT_TEXT" ||
                         field.type === "EMAIL" ||
+                        field.type === "NUMBER" ||
                         field.type === "PHONE" ? (
                         <TextInput
                           key={field.id}
@@ -338,7 +272,7 @@ const ApplicationFormFields = () => {
                     </button>
                     <button
                       type="button"
-                      onClick={() => createDraft(formData)}
+                      onClick={createDraft}
                       className="w-full lg:w-fit  px-4 py-2 border border-[#46B038] text-gray-600 rounded-md hover:opacity-70"
                     >
                       Save as Draft

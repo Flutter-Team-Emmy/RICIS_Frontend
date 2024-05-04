@@ -17,6 +17,7 @@ import { deleteDocumentsByDraftId, getDocuments } from "@/lib/indexDB";
 import { ImageUpload } from "@/components/imageUpload";
 import ImageUploadLoader from "@/components/loaders/imageUpload";
 import { deleteAllDocuments } from "@/lib/indexDB";
+import { convertToValidNumberType } from "@/utils/helpers";
 
 const Preview = () => {
   const router = useRouter();
@@ -119,6 +120,7 @@ const Preview = () => {
   };
 
   const createNewApplication = async () => {
+    const formData = convertToValidNumberType(storedFormData);
     try {
       const files = await handleUpload();
       console.log(files);
@@ -135,7 +137,7 @@ const Preview = () => {
           }
           return acc;
         },
-        { ...storedFormData }
+        { ...formData }
       );
 
       console.log(forms);
@@ -224,28 +226,30 @@ const Preview = () => {
                   </div>
                 ))}
               </div>
-              <div className="pt-8 space-y-6">
-                <p className="font-semibold">Applicant's Documents</p>
-                <div className="grid grid-cols-2 grid-cols-1 gap-x-4 lg:gap-y-8 gap-y-4 text-sm">
-                  {documents?.map((doc) => (
-                    <div key={doc} className="space-y-3">
-                      <p className="text-[#69CB5C]">{doc?.name}</p>
-                      <div className="space-y-3">
-                        {doc?.data?.length === 0 ? (
-                          <p className="text-gray-500">No file selected.</p>
-                        ) : (
-                          doc?.data?.map((file) => (
-                            <Document
-                              key={file.name}
-                              documentName={file.name}
-                            />
-                          ))
-                        )}
+              {documents?.length > 0 && (
+                <div className="pt-8 space-y-6">
+                  <p className="font-semibold">Applicant's Documents</p>
+                  <div className="grid grid-cols-2 grid-cols-1 gap-x-4 lg:gap-y-8 gap-y-4 text-sm">
+                    {documents?.map((doc) => (
+                      <div key={doc} className="space-y-3">
+                        <p className="text-[#69CB5C]">{doc?.name}</p>
+                        <div className="space-y-3">
+                          {doc?.data?.length === 0 ? (
+                            <p className="text-gray-500">No file selected.</p>
+                          ) : (
+                            doc?.data?.map((file) => (
+                              <Document
+                                key={file.name}
+                                documentName={file.name}
+                              />
+                            ))
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
               <div className="pt-12 space-x-3 flex items-center">
                 <button
                   type="button"

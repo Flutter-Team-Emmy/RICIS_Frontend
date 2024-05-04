@@ -13,6 +13,7 @@ import { FieldTypes } from "../../application-type/[applicationId]";
 import useForm from "@/hooks/useForm";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import useValidateForm from "@/hooks/useValidateForm";
 
 const Draft = () => {
   const router = useRouter();
@@ -22,7 +23,8 @@ const Draft = () => {
   const applicationId = param.split("-")[1];
   console.log(draftId);
 
-  const { data, isLoading, isSuccess, refetch } = useGetSingleDraftQuery(draftId);
+  const { data, isLoading, isSuccess, refetch } =
+    useGetSingleDraftQuery(draftId);
   const draft = data?.data.draft_application;
 
   const formFields = draft?.data?.filter(
@@ -75,10 +77,10 @@ const Draft = () => {
   const initializer = () =>
     JSON.parse(localStorage.getItem("draftFormData")) || InitialData;
   const { formData, setFormData, handleChange } = useForm(initializer);
-  const errorInitializer = () =>
-    JSON.parse(localStorage.getItem("draftErrorFields")) ||
-    fieldsInitialErrorStates;
-  const [errorFields, setErrorFields] = useState(errorInitializer);
+  const { validateForm, errorFields, setErrorFields } = useValidateForm(
+    fieldsInitialErrorStates,
+    "draftErrorFields"
+  );
 
   // fetch persisted data from local storage
   useEffect(() => {
@@ -118,99 +120,19 @@ const Draft = () => {
 
   console.log(draft);
 
-  const validateForm = () => {
-    const formDataValues = Object?.keys(formData).forEach((key) => {
-      const currentValue = formData[key];
-      const notEmpty = validator.notEmpty(currentValue);
-      const phoneIsValid = validator.validatePhoneNumber(currentValue);
-      const emailIsValid = validator.validateEmail(currentValue);
-      const currentErrorKey = errorFields[key];
-
-      if (currentErrorKey?.type === "EMAIL") {
-        const updatedErrorState = {
-          value: notEmpty && emailIsValid,
-          message:
-            !notEmpty && !emailIsValid
-              ? "Invalid Field"
-              : !emailIsValid
-              ? "Inavlid Email"
-              : "",
-          type: currentErrorKey?.type,
-        };
-        setErrorFields((prev) => {
-          return { ...prev, [key]: updatedErrorState };
-        });
-      } else if (currentErrorKey?.type === "PHONE") {
-        const updatedErrorState = {
-          value: notEmpty && phoneIsValid,
-          message:
-            !notEmpty && !phoneIsValid
-              ? "Invalid Field"
-              : !phoneIsValid
-              ? "Inavlid Phone"
-              : "",
-          type: currentErrorKey?.type,
-        };
-        setErrorFields((prev) => {
-          return { ...prev, [key]: updatedErrorState };
-        });
-      } else {
-        // if (!notEmpty) {
-        setErrorFields((prev) => {
-          return {
-            ...prev,
-            [key]: {
-              value: notEmpty,
-              message: notEmpty ? "" : "Invalid Fields",
-              type: currentErrorKey?.type,
-            },
-          };
-        });
-        // }
-        return;
-      }
-    });
-
-    return formDataValues;
-  };
 
   const navigateToNextStep = () => {
-    // toast.success(
-    //   "You're called me",
-    //   { autoClose: 10000 }
-    // );
-    validateForm();
 
-    let validate=true;
-     Object?.keys(formData).forEach((key) => {
-      const currentValue = formData[key];
-      const notEmpty = validator.notEmpty(currentValue);
-      const phoneIsValid = validator.validatePhoneNumber(currentValue);
-      const emailIsValid = validator.validateEmail(currentValue);
-      const currentErrorKey = errorFields[key];
-      
-      if (validate) {
-        if (currentErrorKey?.type === "EMAIL") {
-          validate = notEmpty && emailIsValid;
-        } else if (currentErrorKey?.type === "PHONE") {
-          validate = notEmpty && phoneIsValid;
-        } else {
-          validate = notEmpty;
-        }
-        console.log(`validate ${key} : ${validate} `);
-      }
+    const validate = validateForm(formData);
 
-      
-    });
-
-
-
-    const isValid = Object?.values(errorFields).every((field) => field.value);
-    console.log(isValid);
+    const id = `${draftId}-${applicationId}`;
     // const allfieldsNotFilled = validator.whiteSpaces(formData);
     if (validate) {
-      const id = `${draftId}-${applicationId}`;
-      router.push(`/user/drafts/${id}/documents`);
+      if (generatedDraftDocuments?.length === 0) {
+        router.push(`/user/drafts/${id}/preview`);
+      } else {
+        router.push(`/user/drafts/${id}/documents`);
+      }
       return;
     } else {
       toast.error(
@@ -255,6 +177,7 @@ const Draft = () => {
                 draft?.data?.map((field) => {
                   return field.form_field.type === "SHORT_TEXT" ||
                     field.form_field.type === "EMAIL" ||
+                    field.form_field.type === "NUMBER" ||
                     field.form_field.type === "PHONE" ? (
                     <TextInput
                       key={field.id}

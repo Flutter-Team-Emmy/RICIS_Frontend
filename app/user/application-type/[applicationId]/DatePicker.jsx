@@ -47,7 +47,7 @@ const DatePicker = ({
         required={required}
         autoComplete="off"
       />
-      {!isValid && <p className="text-red-500 text-sm">{error}</p>}
+      {!isValid && <p className="text-red-500 text-xs">{error}</p>}
     </div>
   );
 };

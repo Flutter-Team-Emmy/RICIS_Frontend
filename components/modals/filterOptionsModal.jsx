@@ -2,14 +2,10 @@ import { Cancel } from "@/svgs";
 import Options from "../search/Options";
 import { Input } from "../ui/input";
 import DatePicker from "../search/DatePicker";
-import { dateModified, filterStatus } from "../search/filters";
+import { dateModified } from "../search/filters";
 import { useEffect, useState } from "react";
 import useForm from "@/hooks/useForm";
-import {
-  EnLocalDateFormat,
-  getDateModified,
-  removeEmptyFields,
-} from "@/utils/helpers";
+import { EnLocalDateFormat, getDateModified } from "@/utils/helpers";
 import { ClipLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -24,6 +20,7 @@ import {
 } from "@/store/features/applicatonsSlice";
 import { baseUrl } from "@/lib/configs";
 import { getToken } from "@/utils/authHelpers";
+import { toast } from "react-toastify";
 
 const InitialData = {
   application_name: "",
@@ -33,17 +30,15 @@ const InitialData = {
 };
 
 const FilterOptionsModal = ({ setOpenFilter }) => {
-  // const [beforeDate, setBeforeDate] = useState();
-  // const [afterDate, setAfterDate] = useState();
   const [isSuccess, setIsSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-  const page = useSelector(selectPage);
+  const page = useSelector(selectPage); 
   const beforeDate = useSelector(selectBeforeDate);
   const afterDate = useSelector(selectAfterDate);
   const token = getToken();
 
-  console.log({ beforeDate, afterDate });
+  console.log({ beforeDate, afterDate }); 
 
   // persist search options
   const initializer = () =>
@@ -69,6 +64,10 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
     setFormData(InitialData);
     setBeforeDate();
     setAfterDate();
+    toast.info("search filter has been reset to default", {
+      autoClose: 1500,
+      hideProgressBar: true,
+    });
   };
 
   const searchApplication = async () => {
@@ -76,7 +75,7 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
 
     if (isCustomDate) {
       payload = {
-        page: page === 0 ? 1 : page,
+        page: 1,
         limit: 20,
         application_name: formData.application_name,
         applicant_name: formData.applicant_name,
@@ -88,7 +87,7 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
       const filterDate = getDateModified(formData.date_modified);
       console.log(filterDate);
       payload = {
-        page: page === 0 ? 1 : page,
+        page: 1,
         limit: 20,
         application_name: formData.application_name,
         applicant_name: formData.applicant_name,
@@ -150,14 +149,6 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
             {Cancel}
           </span>
         </div>
-        {/* <div className="flex justify-between gap-4 items-center">
-          <p className="">Status</p>
-          <Options
-            options={filterStatus}
-            selected={status}
-            setSelected={setStatus}
-          />
-        </div> */}
         <div className="flex lg:flex-row flex-col lg:justify-between gap-4 lg:items-center w-full">
           <p className="text-sm font-semibold">Reference ID</p>
           <div className="lg:w-96">
@@ -225,12 +216,12 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
               <DatePicker
                 text="Before Date"
                 date={beforeDate}
-                setDate={(value)=> dispatch(setBeforeDate(value))}
+                setDate={(value) => dispatch(setBeforeDate(value))}
               />
               <DatePicker
                 text="After Date"
                 date={afterDate}
-                setDate={(value)=> dispatch(setAfterDate(value))}
+                setDate={(value) => dispatch(setAfterDate(value))}
               />
             </div>
           </div>
@@ -239,7 +230,7 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
           <button
             type="button"
             onClick={resetFilter}
-            className="bg-white  px-10 py-4 text-sm rounded-md text-blue-700 font-semibold"
+            className="bg-white  px-10 py-4 text-sm rounded-md text-blue-700 font-semibold hover:bg-gray-100 hover:opacity-70"
           >
             Reset
           </button>

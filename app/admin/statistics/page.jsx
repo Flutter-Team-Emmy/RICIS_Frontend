@@ -1,12 +1,18 @@
 "use client";
 
-import { StatTrend, StatTrendDown, TrendArrow } from "@/svgs";
+import { CalendarEdit, StatTrend, StatTrendDown, TrendArrow } from "@/svgs";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import Image from "next/image";
 import { capitalizeFirstLetter } from "@/utils/helpers";
 import YearlyTransactionStats from "./YearlyTransactionStats";
 import YearlyIncome from "./YearlyIncome";
 import OverviewTable from "./OverviewTable";
+import Options from "./Options";
+import Filter from "./Filter";
+import { useSelector } from "react-redux";
+import { selectDate, selectOption } from "@/store/features/statisticsSlice";
+import { time } from "@/utils/time&dates";
+import { useState } from "react";
 
 const FirstStat = () => {
   return (
@@ -77,35 +83,61 @@ const SecondStat = ({ state }) => {
 };
 
 const Statistics = () => {
+  const selected = useSelector(selectOption);
+  const date = useSelector(selectDate);
+  console.log(time.formatDate(JSON.parse(date)));
+
+  // const curren 
+
+  // const current = ()
+
+  const [isEditing, setIsEditing] = useState(false);
   return (
-    <DashboardLayout header="Statistics" icon="">
-      <div className="space-y-10 w-full">
-        <div className="">
-          <h1 className="text-lg font-semibold">
-            Transactions Statistics Overview
-          </h1>
-          <p className="text-gray-500">View transaction stat below</p>
-        </div>
-        <section className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
-          <FirstStat />
-          <SecondStat state="highest" />
-          <SecondStat state="lowest" />
-        </section>
-        <section className="space-y-4">
-          <h1 className="font-semibold text-lg">Yearly Transaction Stats</h1>
-          <div className="grid lg:grid-cols-[7fr_3fr] gap-8 grid-cols-1">
-            <YearlyTransactionStats />
-            <YearlyIncome />
+    <>
+      {isEditing && <Filter setIsEditing={setIsEditing} />}
+      <DashboardLayout header="Statistics" icon="">
+        <div className="space-y-10 w-full">
+          <div className="flex justify-between items-center">
+            <div className="space-y-3">
+              <div className="">
+                <h1 className="text-lg font-semibold">
+                  Transactions Statistics Overview
+                </h1>
+                <p className="text-gray-500">View transaction stat below</p>
+              </div>
+              <div
+                onClick={() => setIsEditing(true)}
+                className="w-fit flex items-center gap-2 cursor-pointer border border-slate-600 rounded-md px-3 py-1"
+              >
+                <span className="text-slate-800 text-sm">
+                  {time.formatDate(JSON.parse(date))}
+                </span>
+                <span className="">{CalendarEdit}</span>
+              </div>
+            </div>
+            <Options />
           </div>
-        </section>
-        <section className="bg-white rounded-md">
-          <h1 className="font-semibold text-lg px-6 py-8">
-            Order by Application Overview
-          </h1>
-          <OverviewTable />
-        </section>
-      </div>
-    </DashboardLayout>
+          <section className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
+            <FirstStat />
+            <SecondStat state="highest" />
+            <SecondStat state="lowest" />
+          </section>
+          <section className="space-y-4">
+            <h1 className="font-semibold text-lg">Yearly Transaction Stats</h1>
+            <div className="grid lg:grid-cols-[7fr_3fr] gap-8 grid-cols-1">
+              <YearlyTransactionStats />
+              <YearlyIncome />
+            </div>
+          </section>
+          <section className="bg-white rounded-md">
+            <h1 className="font-semibold text-lg px-6 py-8">
+              Order by Application Overview
+            </h1>
+            <OverviewTable />
+          </section>
+        </div>
+      </DashboardLayout>
+    </>
   );
 };
 

@@ -44,7 +44,7 @@ const TextArea = ({ name, id, value, onChange, error, isValid, required }) => {
         // onBlur={handleFocus}
         // autoSave="false"
       ></textarea>
-      {!isValid && <p className="text-red-500 text-sm">{error}</p>}
+      {!isValid && <p className="text-red-500 text-xs">{error}</p>}
     </div>
   );
 };

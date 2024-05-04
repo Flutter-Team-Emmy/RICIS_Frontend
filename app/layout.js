@@ -23,12 +23,6 @@ export default function RootLayout({ children }) {
       <body className={`${inter.className} bg-gray-100`}>
         <ProgressBar />
         <Provider store={store}>
-          <ToastContainer
-            position="top-center"
-            pauseOnHover={false}
-            closeOnClick
-            closeButton={true}
-          />
           <UserProvider>
             <ApplicationsProvider>
               <TransactionsProvider>
@@ -38,6 +32,12 @@ export default function RootLayout({ children }) {
               </TransactionsProvider>
             </ApplicationsProvider>
           </UserProvider>
+          <ToastContainer
+            position="top-center"
+            pauseOnHover={false}
+            closeOnClick
+            closeButton={true}
+          />
         </Provider>
       </body>
     </html>

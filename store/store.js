@@ -8,12 +8,14 @@ import { transactionsApi } from "./api/transactionsApi";
 import userReducer from "./features/userSlice";
 import applicationsReducer from "./features/applicatonsSlice";
 import transactionsReducer from "./features/transactionSlice";
+import statisticsReducer from "./features/statisticsSlice";
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     applications: applicationsReducer,
     transactions: transactionsReducer,
+    statistics: statisticsReducer,
     [authApi.reducerPath]: authApi.reducer,
     [applicationApi.reducerPath]: applicationApi.reducer,
     [userApi.reducerPath]: userApi.reducer,

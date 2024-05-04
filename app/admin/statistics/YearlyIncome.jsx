@@ -7,7 +7,7 @@ const YearlyIncome = () => {
         <p className="text-gray-500">Percentage Increase in profit</p>
         <h1 className="text-lg font-semibold">Yearly Income</h1>
       </div>
-      <div className="">
+      <div className="flex justify-center">
         <Doughnut />
       </div>
     </div>

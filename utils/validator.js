@@ -26,6 +26,11 @@ export class Validator {
     return regex.test(code);
   }
 
+  validateNumber(code) {
+    const regex = /^[0-9]+$/;
+    return regex.test(code);
+  }
+
   validatePhoneNumber(phone) {
     const regex = /^[0-9]+$/;
     return Boolean(regex.test(phone) && phone.length === 11);

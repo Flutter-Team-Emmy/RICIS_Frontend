@@ -4,4 +4,5 @@ export const FieldTypes = {
   FILE: "file",
   PHONE: "text",
   EMAIL: "email",
+  NUMBER: "text",
 };
