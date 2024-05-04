@@ -126,7 +126,6 @@ const Draft = () => {
     const validate = validateForm(formData);
 
     const id = `${draftId}-${applicationId}`;
-    // const allfieldsNotFilled = validator.whiteSpaces(formData);
     if (validate) {
       if (generatedDraftDocuments?.length === 0) {
         router.push(`/user/drafts/${id}/preview`);
