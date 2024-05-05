@@ -162,6 +162,14 @@ export const userApi = createApi({
       },
       invalidatesTags: [{ type: "Users", id: "LIST" }],
     }),
+    getCertificates: builder.query({
+      query() {
+        return {
+          url: "/certificates",
+        };
+      },
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
+    }),
   }),
 });
 
@@ -182,4 +190,5 @@ export const {
   useGetUserLogsQuery,
   useGetNotificationsQuery,
   useGetSingleNotificationQuery,
+  useGetCertificatesQuery,
 } = userApi;
