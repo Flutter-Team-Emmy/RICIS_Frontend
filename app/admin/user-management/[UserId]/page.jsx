@@ -14,13 +14,16 @@ import ActivityTable from "./ActivityTable";
 
 
 const UserProfile = () => {
+
   const params = useParams();
   const userId = params.userId;
+  console.log(userId)
 
   const { data: userData } = useGetUserQuery(userId);
   const details = userData?.data;
 
   const { data, isLoading, isSuccess } = useGetUserActivitiesQuery(userId);
+
   const activities = data?.data.application_activities;
 
   return (

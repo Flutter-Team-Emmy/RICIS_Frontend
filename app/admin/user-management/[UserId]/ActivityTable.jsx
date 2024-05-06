@@ -18,7 +18,6 @@ const ActivityTable = ({ activities }) => {
   let action;
   let actionColor;
 
-  //   if (isLoading) return <TableSkeleton />;
   return (
     <div className="w-full overflow-x-scroll lg:overflow-x-hidden z-[-10] rounded-lg text-xs">
       <table className="w-full text-left rtl:text-right">

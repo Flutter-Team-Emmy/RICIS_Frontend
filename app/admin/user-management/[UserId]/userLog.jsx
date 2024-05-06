@@ -8,65 +8,14 @@ import NoActivity from "@/components/NoActivity";
 
 const columns = ["Date", "Time", "Action"];
 
-// const
-const logs = [
-  {
-    id: "k1",
-    date: "20 Sept 2023",
-    time: "10:30am",
-    action: "Staff account was created by Admin Tola",
-  },
-  {
-    id: "k2",
-    date: "20 Sept 2023",
-    time: "10:30am",
-    action: "Staff account was created by Admin Tola",
-  },
-  {
-    id: "k3",
-    date: "20 Sept 2023",
-    time: "10:30am",
-    action: "Staff account was created by Admin Tola",
-  },
-  {
-    id: "k4",
-    date: "20 Sept 2023",
-    time: "10:30am",
-    action: "Staff account was created by Admin Tola",
-  },
-  {
-    id: "k5",
-    date: "20 Sept 2023",
-    time: "10:30am",
-    action: "Staff account was created by Admin Tola",
-  },
-  {
-    id: "k6",
-    date: "20 Sept 2023",
-    time: "10:30am",
-    action: "Staff account was created by Admin Tola",
-  },
-  {
-    id: "k7",
-    date: "20 Sept 2023",
-    time: "10:30am",
-    action: "Staff account was created by Admin Tola",
-  },
-  {
-    id: "k8",
-    date: "20 Sept 2023",
-    time: "10:30am",
-    action: "Staff account was created by Admin Tola",
-  },
-];
-
 const UserLog = () => {
+
   const param = useParams();
   const userId = param.userId;
+  
   const { data, isLoading, isSuccess, error } = useGetUserLogsQuery(userId);
   const user_activities_log = data?.data?.user_activities;
   console.log(data);
-  console.log(userId);
 
   if (isLoading) return <TableSkeleton />;
   return (
@@ -86,10 +35,8 @@ const UserLog = () => {
         </thead>
         <tbody className="">
           {user_activities_log?.map((log, index) => {
-            // const columns = Object.keys(data);
             return (
               <tr
-                // onClick={() => openTransactionInvoice(transaction?.id)}
                 key={log.id}
                 className="whitespace-nowrap lg:whitespace-normal bg-white border-b w-full cursor-pointer hover:opacity-70"
               >
