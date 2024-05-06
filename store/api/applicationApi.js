@@ -42,9 +42,9 @@ export const applicationApi = createApi({
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
     }),
     getSingleApplication: builder.query({
-      query(token) {
+      query(applicationId) {
         return {
-          url: `users/${token}`,
+          url: `/application/${applicationId}`,
         };
       },
       providesTags: (result, error, id) => [{ type: "Applications", id }],

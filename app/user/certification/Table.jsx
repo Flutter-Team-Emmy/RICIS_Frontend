@@ -2,9 +2,9 @@
 
 import { useLazyDownloadCertificateQuery, useLazyMailCertificateQuery } from "@/store/api/applicationApi";
 import { useGetCertificatesQuery } from "@/store/api/userApi";
-import { DownloadIcon, MailIcon, Visibility } from "@/svgs";
+import { DownloadIcon, MailIcon } from "@/svgs";
 import { time } from "@/utils/time&dates";
-import { EyeIcon } from "lucide-react";
+import { BookMarked, EyeIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
@@ -83,7 +83,9 @@ const Table = () => {
                                     </div>
                                 </td>
                                 <td className={`px-6 py-4`}>
-                                    <p onClick={() => setDisplayOptions(prevValue => !prevValue)} className="px-4 py-2 rounded-medium border-gray-300 border-solid border-[1px] w-fit">Open</p>
+                                    <p onClick={() => setDisplayOptions(prevValue => !prevValue)} className="px-4 py-2 rounded-medium border-gray-300 border-solid border-[1px] w-fit">
+                                        {displayOptions ? "Close" : "Open"}
+                                    </p>
                                     {displayOptions &&
                                         <div className="absolute bg-white py-6 px-4 rounded-lg shadow-xl">
                                             {data.status === "ACTIVE" ?
@@ -120,7 +122,10 @@ const Table = () => {
                                                         <EyeIcon size={15} />
                                                         <span>View Application</span>
                                                     </p>
-                                                    <p onClick={() => router.push("/user/certification/renew-application")}>Renew Application</p>
+                                                    <p className="flex items-center gap-x-2" onClick={() => router.push(`/user/certification/${data.application_id}`)}>
+                                                        <BookMarked size={15} />
+                                                        <span> Renew Application</span>
+                                                    </p>
                                                     <p className="flex items-center gap-x-2" onClick={handleDownload}>
                                                         {isDownloading ? (
                                                             <ClipLoader color="#fff" size={20} />

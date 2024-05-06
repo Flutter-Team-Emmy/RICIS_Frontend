@@ -19,6 +19,7 @@ import { TabsContent } from "@/components/ui/tabs";
 import { useParams } from "next/navigation";
 
 const ApplicationApproved = ({ data }) => {
+  console.log(data)
   const params = useParams();
   const applicationId = params.applicationId;
 
