@@ -10,8 +10,8 @@ const columns = ["Date", "Time", "Action"];
 
 const UserLog = () => {
 
-  const param = useParams();
-  const userId = param.userId;
+  const params = useParams();
+  const userId = params.userId || params.UserId;
   
   const { data, isLoading, isSuccess, error } = useGetUserLogsQuery(userId);
   const user_activities_log = data?.data?.user_activities;

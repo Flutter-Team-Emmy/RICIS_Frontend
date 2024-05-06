@@ -16,7 +16,7 @@ import ActivityTable from "./ActivityTable";
 const UserProfile = () => {
 
   const params = useParams();
-  const userId = params.userId;
+  const userId  = params.userId || params.UserId;
   console.log(userId)
 
   const { data: userData } = useGetUserQuery(userId);
