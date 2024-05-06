@@ -29,6 +29,7 @@ import { TabsContent } from "@/components/ui/tabs";
 import ActivityTable from "./ActivityTable";
 import { useGetApplicationActivityQuery } from "@/store/api/applicationApi";
 
+
 const ApplicationPending = ({ data }) => {
   const [rejectBtnLoader, setRejectBtnLoader] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -40,13 +41,16 @@ const ApplicationPending = ({ data }) => {
   const Params = useParams();
   const ApplicationId = Params.applicationId;
 
+  const role = useSelector(selectRole);
+
+
   const { data: applicationActivityData, isLoading } = useGetApplicationActivityQuery(ApplicationId);
   const activities = applicationActivityData?.data.application_activities;
   // alert(applicationId)
   const type = params.get("type");
   const [btnLoad, setBtnLoad] = useState(false);
   const pathname = usePathname();
-  const role = useSelector(selectRole);
+
   // const isAdmin = pathname.includes("admin");
   // const router = useRouter();
   // const {
@@ -152,6 +156,57 @@ const ApplicationPending = ({ data }) => {
   //   }
   // }, [isSuccess]);
 
+  const applicationDetailsSection = (
+    <>
+      {data ? (
+        <ApplicationStatus data={data} type={type} />
+      ) : (
+        <div className="flex items-center justify-center h-[40vh] w-full  ">
+          <ClipLoader color="#46B038" size={30} />
+        </div>
+      )}
+      {!type &&
+        (isAdmin ? (
+          <div className="flex gap-x-4 w-full lg:justify-start mt-8">
+            <button
+              className="rounded-md h-[50%] text-sm text-[#fff] p-2  bg-[#46B038]"
+              onClick={() => {
+                setStatus("APPROVED");
+                openModal();
+              }}
+            >
+              Approve
+            </button>
+            <button
+              className="text-sm bg-red-500 h-[50%] text-white py-2 px-4 w-fit rounded-md"
+              onClick={() => {
+                setStatus("REJECTED");
+                openModal();
+                // setSaveBtnLoader(true);
+              }}
+            >
+              {rejectBtnLoader ? (
+                <ClipLoader color="#fff" size={25} />
+              ) : (
+                "Reject"
+              )}
+            </button>
+          </div>
+        ) : (
+          data?.application?.transactions?.length === 0 && (
+            <div className="mt-8">
+              <Btn
+                text="Make payment"
+                // loading={isLoading}
+                // loadingMsg="creating transaction..."
+                handleClick={() => setPayementModalIsOpen(true)}
+              />
+            </div>
+          )
+        ))}
+    </>
+  );
+
   return (
     <>
       {paymentModalIsOpen && <PaymentModal application_id={applicationId} />}
@@ -170,68 +225,27 @@ const ApplicationPending = ({ data }) => {
         </div> */}
         </div>
         <div className="bg-white rounded-md pt-8 pl-6 pb-6">
-          <Tabs defaultValue="staff-logs" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 lg:w-96 w-full mb-8">
-              <TabsTrigger className="space-x-2" value="staff-logs">
-                <span className="">Application Details</span>
-                {/* <span className="">{Log}</span> */}
-              </TabsTrigger>
-              <TabsTrigger value="activity">
-                Application Activity Log
-              </TabsTrigger>
-            </TabsList>
-            <TabsContent value="staff-logs">
-              {data ? (
-                <ApplicationStatus data={data} type={type} />
-              ) : (
-                <div className="flex items-center justify-center h-[40vh] w-full  ">
-                  <ClipLoader color="#46B038" size={30} />
-                </div>
-              )}
-              {!type &&
-                (isAdmin ? (
-                  <div className="flex gap-x-4 w-full lg:justify-start mt-8">
-                    <button
-                      className="rounded-md h-[50%] text-sm text-[#fff] p-2  bg-[#46B038]"
-                      onClick={() => {
-                        setStatus("APPROVED");
-                        openModal();
-                      }}
-                    >
-                      Approve
-                    </button>
-                    <button
-                      className="text-sm bg-red-500 h-[50%] text-white py-2 px-4 w-fit rounded-md"
-                      onClick={() => {
-                        setStatus("REJECTED");
-                        openModal();
-                        // setSaveBtnLoader(true);
-                      }}
-                    >
-                      {rejectBtnLoader ? (
-                        <ClipLoader color="#fff" size={25} />
-                      ) : (
-                        "Reject"
-                      )}
-                    </button>
-                  </div>
-                ) : (
-                  data?.application?.transactions?.length === 0 && (
-                    <div className="mt-8">
-                      <Btn
-                        text="Make payment"
-                        // loading={isLoading}
-                        // loadingMsg="creating transaction..."
-                        handleClick={() => setPayementModalIsOpen(true)}
-                      />
-                    </div>
-                  )
-                ))}
-            </TabsContent>
-            <TabsContent value="activity">
-              <ActivityTable activities={activities} />
-            </TabsContent>
-          </Tabs>
+          {isAdmin ?
+            <Tabs defaultValue="staff-logs" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 lg:w-96 w-full mb-8">
+                <TabsTrigger className="space-x-2" value="staff-logs">
+                  <span className="">Application Details</span>
+                  {/* <span className="">{Log}</span> */}
+                </TabsTrigger>
+                <TabsTrigger value="activity">
+                  Application Activity Log
+                </TabsTrigger>
+              </TabsList>
+              <TabsContent value="staff-logs">
+                {applicationDetailsSection}
+              </TabsContent>
+              <TabsContent value="activity">
+                <ActivityTable activities={activities} />
+              </TabsContent>
+            </Tabs>
+            :
+            applicationDetailsSection
+          }
         </div>
 
         {isOpen && (
@@ -246,8 +260,8 @@ const ApplicationPending = ({ data }) => {
               status === "APPROVED"
                 ? handleApprove
                 : reason.trim() === ""
-                ? () => {}
-                : handleReject
+                  ? () => { }
+                  : handleReject
             }
             text={status === "APPROVED" ? "approve" : "reject"}
           />

@@ -22,6 +22,8 @@ const ActivityTable = ({ activities }) => {
   const router = useRouter();
   console.log(applicationId);
 
+  console.log(activities)
+
   let action;
   let actionColor;
 

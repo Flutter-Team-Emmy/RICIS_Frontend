@@ -164,9 +164,9 @@ export const applicationApi = createApi({
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
     }),
     getApplicationActivity: builder.query({
-      query(application_id) {
+      query(id) {
         return {
-          url: `/activity/user-application/${application_id}`,
+          url: `/activity/user-application/${id}`,
         };
       },
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
