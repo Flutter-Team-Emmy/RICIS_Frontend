@@ -13,17 +13,15 @@ import useValidateForm from "@/hooks/useValidateForm";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
-
 const RenewApplication = () => {
-
   const params = useParams();
   const certificateId = params.certificateId;
-  const router = useRouter()
+  const router = useRouter();
 
-  const { data, isSuccess, isLoading } = useGetSingleApplicationQuery(certificateId);
+  const { data, isSuccess, isLoading } =
+    useGetSingleApplicationQuery(certificateId);
   const certificate = data?.data.application;
-  console.log(data)
-
+  console.log(data);
 
   const formFields = certificate?.data?.filter(
     (field) => field?.form_field?.page === 1 || field?.form_field?.page === 2
@@ -53,7 +51,11 @@ const RenewApplication = () => {
       if (formFields?.length !== 0) {
         formFields?.forEach((field) => {
           InitialData[field?.form_field?.name] =
-            field.value === null ? "" : (typeof field.value === "number" ? String(field.value) : field.value);
+            field.value === null
+              ? ""
+              : typeof field.value === "number"
+              ? String(field.value)
+              : field.value;
           fieldsInitialErrorStates[field?.form_field?.name] = {
             value: true,
             type: field?.form_field.type,
@@ -143,7 +145,6 @@ const RenewApplication = () => {
     }
   };
 
-
   return (
     <DashboardLayout header="Renew Application" icon="">
       <form
@@ -167,8 +168,8 @@ const RenewApplication = () => {
                 error={errorFields[field?.form_field.name]?.message}
                 fieldCustomType={field.form_field.type}
                 required={field.form_field.required}
-              // isValid={isValid}
-              // onFocus={}
+                // isValid={isValid}
+                // onFocus={}
               />
             ) : field.form_field.type === "LONG_TEXT" ? (
               <TextArea
@@ -180,7 +181,7 @@ const RenewApplication = () => {
                 isValid={errorFields[field?.form_field.name]?.value}
                 error={errorFields[field?.form_field.name]?.message}
                 required={field.form_field.required}
-              // isValid={isValid}
+                // isValid={isValid}
               />
             ) : field.form_field.type === "DATE" ? (
               <DatePicker
@@ -192,7 +193,7 @@ const RenewApplication = () => {
                 isValid={errorFields[field?.form_field.name]?.value}
                 error={errorFields[field?.form_field.name]?.message}
                 required={field.form_field.required}
-              // isValid={isValid}
+                // isValid={isValid}
               />
             ) : (
               ""

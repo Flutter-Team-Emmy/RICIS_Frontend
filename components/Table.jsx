@@ -20,10 +20,15 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import ReactPaginate from "react-paginate";
 
+const TypeColorClass = {
+  NEW: "bg-sky-200 text-sky-900",
+  RENEW: "bg-yellow-100 text-yellow-600",
+};
+
 const tableColumn = [
   "Ref No",
+  "Type",
   "Applicant Name",
-  "State",
   "Payment Status",
   "Application Name",
   "Status",
@@ -116,7 +121,7 @@ const Table = () => {
 
   if (isLoading) return <TableSkeleton />;
 
-  console.log(applications)
+  console.log(applications);
 
   return applications?.length > 0 ? (
     <div className="relative overflow-x-auto lg:overflow-x-hidden shadow-md sm:rounded-lg">
@@ -157,13 +162,19 @@ const Table = () => {
                 >
                   {cutString(application.reference_id, 10)}
                 </th>
+                <td className="px-6 py-4">
+                  <span
+                    className={`${
+                      TypeColorClass[application.state]
+                    } py-1.5 px-3 rounded-md`}
+                  >
+                    {application.state}
+                  </span>
+                </td>
                 <td className="px-6 py-4 w-80">
                   {application?.user?.first_name +
                     " " +
                     application?.user?.last_name}
-                </td>
-                <td>
-                  {application.state}
                 </td>
                 <td className="px-6 py-4">
                   <span

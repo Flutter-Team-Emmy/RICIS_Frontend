@@ -8,7 +8,7 @@ import { document } from "@/svgs";
 // import Document from "./Document";
 import Btn from "@/components/Btn";
 import { cloud_name, upload_preset } from "@/lib/configs";
-import { useAddNewApplicationMutation, useRenewApplicationMutation } from "@/store/api/applicationApi";
+import { useRenewApplicationMutation } from "@/store/api/applicationApi";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { normalizeErrors } from "@/utils/helpers";
@@ -24,45 +24,47 @@ const Preview = () => {
   const router = useRouter();
   const params = useParams();
   const certificateId = params.certificateId;
-//   const [isUploading, setIsUploading] = useState(false);
-//   const [documents, setDocuments] = useState([]);
-//   const [isLoading, setIsLoading] = useState(false);
+  //   const [isUploading, setIsUploading] = useState(false);
+  //   const [documents, setDocuments] = useState([]);
+  //   const [isLoading, setIsLoading] = useState(false);
   const [paynow, setPaynow] = useState(false);
   const form_name = JSON.parse(localStorage.getItem("form_name"));
 
-//   const generatedDocuments = localStorage.getItem("generatedDocuments");
+  //   const generatedDocuments = localStorage.getItem("generatedDocuments");
 
-//   useEffect(() => {
-//     if (generatedDocuments !== "undefined") {
-//       getDocuments("applicationDocuments")
-//         .then((documents) => {
-//           setDocuments(documents);
-//           console.log(documents);
-//           console.log(generatedDocuments);
-//         })
-//         .catch((error) => {
-//           console.error("Failed to load documents from IndexedDB:", error);
-//         });
-//     }
-//   }, []);
+  //   useEffect(() => {
+  //     if (generatedDocuments !== "undefined") {
+  //       getDocuments("applicationDocuments")
+  //         .then((documents) => {
+  //           setDocuments(documents);
+  //           console.log(documents);
+  //           console.log(generatedDocuments);
+  //         })
+  //         .catch((error) => {
+  //           console.error("Failed to load documents from IndexedDB:", error);
+  //         });
+  //     }
+  //   }, []);
 
   // retrieve already stored data from localstorage
-  const storedFormData = JSON.parse(localStorage.getItem("certificateFormData"));
+  const storedFormData = JSON.parse(
+    localStorage.getItem("certificateFormData")
+  );
   const formData = Object.keys(storedFormData);
 
   // const storedDocuments = JSON.parse(localStorage.getItem("documents"));
   // const documents = Object.keys(storedDocuments);
 
-//   // convert file content stored in local storage to blob to be uploaded to cloudinary
-//   const allFiles = documents
-//     ?.map((doc) => doc.data)
-//     .flat()
-//     .map((file) => new Blob([file.content], { type: file.type }));
-//   // );
-//   console.log(allFiles);
+  //   // convert file content stored in local storage to blob to be uploaded to cloudinary
+  //   const allFiles = documents
+  //     ?.map((doc) => doc.data)
+  //     .flat()
+  //     .map((file) => new Blob([file.content], { type: file.type }));
+  //   // );
+  //   console.log(allFiles);
 
-//   const documentNames = documents?.map((doc) => doc.name);
-//   console.log(documentNames);
+  //   const documentNames = documents?.map((doc) => doc.name);
+  //   console.log(documentNames);
 
   // add new application
   const [
@@ -74,92 +76,94 @@ const Preview = () => {
       data: newCertification,
     },
   ] = useRenewApplicationMutation();
-  console.log(newCertification)
+  console.log(newCertification);
 
   // get id of newly created application
   const new_application_id = newCertification?.data?.application?.id;
 
-//   // upload files to coudinary
-//   const handleUpload = async () => {
-//     const files = [];
-//     const formDatas = [];
+  //   // upload files to coudinary
+  //   const handleUpload = async () => {
+  //     const files = [];
+  //     const formDatas = [];
 
-//     const url = `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`;
+  //     const url = `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`;
 
-//     if (allFiles?.length !== 0 && documentNames?.length !== 0) {
-//       for (let i = 0; i < allFiles.length; i++) {
-//         let file = allFiles[i];
-//         let formData = new FormData();
-//         formData.append("file", file);
-//         formData.append("upload_preset", upload_preset);
-//         formDatas.push(formData);
-//       }
+  //     if (allFiles?.length !== 0 && documentNames?.length !== 0) {
+  //       for (let i = 0; i < allFiles.length; i++) {
+  //         let file = allFiles[i];
+  //         let formData = new FormData();
+  //         formData.append("file", file);
+  //         formData.append("upload_preset", upload_preset);
+  //         formDatas.push(formData);
+  //       }
 
-//       await Promise.all(
-//         formDatas.map(async (formData, index) => {
-//           setIsLoading(true);
-//           setIsUploading(true);
-//           try {
-//             const response = await fetch(url, {
-//               method: "POST",
-//               body: formData,
-//             });
-//             const data = await response.json();
-//             console.log(data);
-//             files.push({
-//               name: documentNames[index],
-//               value: data.secure_url,
-//             });
-//           } catch (err) {
-//             console.error("Error uploading file:", err);
-//             setIsLoading(false);
-//             toast.error(err, { autoClose: 30000 });
-//           } finally {
-//             console.log("done");
-//             setIsUploading(false);
-//           }
-//         })
-//       );
-//     }
+  //       await Promise.all(
+  //         formDatas.map(async (formData, index) => {
+  //           setIsLoading(true);
+  //           setIsUploading(true);
+  //           try {
+  //             const response = await fetch(url, {
+  //               method: "POST",
+  //               body: formData,
+  //             });
+  //             const data = await response.json();
+  //             console.log(data);
+  //             files.push({
+  //               name: documentNames[index],
+  //               value: data.secure_url,
+  //             });
+  //           } catch (err) {
+  //             console.error("Error uploading file:", err);
+  //             setIsLoading(false);
+  //             toast.error(err, { autoClose: 30000 });
+  //           } finally {
+  //             console.log("done");
+  //             setIsUploading(false);
+  //           }
+  //         })
+  //       );
+  //     }
 
-//     return files;
-//   };
+  //     return files;
+  //   };
 
   const renewApplicationRequest = async () => {
-    const formFieldTypesObj = JSON.parse(localStorage.getItem("certificateErrorFields"));
+    const formFieldTypesObj = JSON.parse(
+      localStorage.getItem("certificateErrorFields")
+    );
     const formData = convertToValidNumberType(
       storedFormData,
       formFieldTypesObj
     );
     try {
-    //   const files = await handleUpload();
-    //   console.log(files);
-    //   // Assuming formData is an object and files is an array of objects
-    //   const forms = files.reduce(
-    //     (acc, file) => {
-    //       // Check if the file object has the same key as formData
-    //       if (acc.hasOwnProperty(file.name)) {
-    //         // If yes, replace the value with the file object's value
-    //         acc[file.name] = file.value;
-    //       } else {
-    //         // If not, add the file object to the accumulator
-    //         acc[file.name] = file.value;
-    //       }
-    //       return acc;
-    //     },
-    //     { ...formData }
-    //   );
+      //   const files = await handleUpload();
+      //   console.log(files);
+      //   // Assuming formData is an object and files is an array of objects
+      //   const forms = files.reduce(
+      //     (acc, file) => {
+      //       // Check if the file object has the same key as formData
+      //       if (acc.hasOwnProperty(file.name)) {
+      //         // If yes, replace the value with the file object's value
+      //         acc[file.name] = file.value;
+      //       } else {
+      //         // If not, add the file object to the accumulator
+      //         acc[file.name] = file.value;
+      //       }
+      //       return acc;
+      //     },
+      //     { ...formData }
+      //   );
 
-    //   console.log(forms);
+      //   console.log(forms);
 
       const payload = {
         form_id: certificateId,
         as_draft: false,
         data: formData,
-        is_renew: true
+        is_renew: true,
       };
       console.log(payload);
-      await renewApplication(payload);
+      await renewApplication({ payload, applicationId: certificateId });
     } catch (error) {
       console.log(error);
       toast.error(error, { autoClose: 30000 });
@@ -170,22 +174,24 @@ const Preview = () => {
     if (renewError) {
       const err = normalizeErrors(renewError);
       toast.error(err, { autoClose: 30000 });
-    //   setIsLoading(false);
+      //   setIsLoading(false);
     }
     if (isRenewSuccess) {
-    //   setIsLoading(false);
+      //   setIsLoading(false);
       setPaynow(true);
       // Delete all documents from indexDB after upload
-    //   deleteAllDocuments("applicationDocuments")
-    //     .then(() => {
-    //       console.log("All documents deleted successfully");
-    //       // Optionally, update the state or perform any other actions after deletion
-    //     })
-    //     .catch((error) => {
-    //       console.error("Failed to delete all documents:", error);
-    //     });
+      //   deleteAllDocuments("applicationDocuments")
+      //     .then(() => {
+      //       console.log("All documents deleted successfully");
+      //       // Optionally, update the state or perform any other actions after deletion
+      //     })
+      //     .catch((error) => {
+      //       console.error("Failed to delete all documents:", error);
+      //     });
 
-      toast.success("Successfully renewed your application", { autoClose: 5000 });
+      toast.success("Successfully renewed your application", {
+        autoClose: 5000,
+      });
     }
   }, [isRenewSuccess, renewError]);
 

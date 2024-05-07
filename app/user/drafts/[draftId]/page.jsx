@@ -26,8 +26,8 @@ const Draft = () => {
   const { data, isLoading, isSuccess, refetch } =
     useGetSingleDraftQuery(draftId);
   const draft = data?.data.draft_application;
-  const form_name = data?.data?.form_name;
-  console.log(data)
+  const form_name = draft?.form?.name;
+  console.log(data);
 
   const formFields = draft?.data?.filter(
     (field) => field?.form_field?.page === 1 || field?.form_field?.page === 2

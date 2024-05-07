@@ -29,7 +29,6 @@ import { TabsContent } from "@/components/ui/tabs";
 import ActivityTable from "./ActivityTable";
 import { useGetApplicationActivityQuery } from "@/store/api/applicationApi";
 
-
 const ApplicationPending = ({ data }) => {
   const [rejectBtnLoader, setRejectBtnLoader] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -43,8 +42,8 @@ const ApplicationPending = ({ data }) => {
 
   const role = useSelector(selectRole);
 
-
-  const { data: applicationActivityData, isLoading } = useGetApplicationActivityQuery(ApplicationId);
+  const { data: applicationActivityData, isLoading } =
+    useGetApplicationActivityQuery(ApplicationId);
   const activities = applicationActivityData?.data.application_activities;
   // alert(applicationId)
   const type = params.get("type");
@@ -209,7 +208,12 @@ const ApplicationPending = ({ data }) => {
 
   return (
     <>
-      {paymentModalIsOpen && <PaymentModal application_id={applicationId} />}
+      {paymentModalIsOpen && (
+        <PaymentModal
+          setPaynow={setPayementModalIsOpen}
+          application_id={applicationId}
+        />
+      )}
       <DashboardLayout header="Application">
         <div className="lg:flex lg:justify-between w-[95%] pb-8">
           <div className="w-full pb-8">
@@ -225,7 +229,7 @@ const ApplicationPending = ({ data }) => {
         </div> */}
         </div>
         <div className="bg-white rounded-md pt-8 pl-6 pb-6">
-          {isAdmin ?
+          {isAdmin ? (
             <Tabs defaultValue="staff-logs" className="w-full">
               <TabsList className="grid w-full grid-cols-2 lg:w-96 w-full mb-8">
                 <TabsTrigger className="space-x-2" value="staff-logs">
@@ -243,9 +247,9 @@ const ApplicationPending = ({ data }) => {
                 <ActivityTable activities={activities} />
               </TabsContent>
             </Tabs>
-            :
+          ) : (
             applicationDetailsSection
-          }
+          )}
         </div>
 
         {isOpen && (
@@ -260,8 +264,8 @@ const ApplicationPending = ({ data }) => {
               status === "APPROVED"
                 ? handleApprove
                 : reason.trim() === ""
-                  ? () => { }
-                  : handleReject
+                ? () => {}
+                : handleReject
             }
             text={status === "APPROVED" ? "approve" : "reject"}
           />

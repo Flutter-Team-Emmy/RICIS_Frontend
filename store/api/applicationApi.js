@@ -42,9 +42,9 @@ export const applicationApi = createApi({
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
     }),
     renewApplication: builder.mutation({
-      query(payload) {
+      query({ payload, applicationId }) {
         return {
-          url: "/application",
+          url: `/application/${applicationId}`,
           method: "PUT",
           body: payload,
         };
@@ -99,7 +99,7 @@ export const applicationApi = createApi({
       query(param) {
         return {
           url: "/application/draft",
-          params: param
+          params: param,
         };
       },
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
@@ -202,5 +202,5 @@ export const {
   useLazyMailCertificateQuery,
   useCreateDraftMutation,
   useGetSingleDraftQuery,
-  useGetApplicationActivityQuery
+  useGetApplicationActivityQuery,
 } = applicationApi;
