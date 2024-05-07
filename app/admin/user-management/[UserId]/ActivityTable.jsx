@@ -18,7 +18,6 @@ const ActivityTable = ({ activities }) => {
   let action;
   let actionColor;
 
-  //   if (isLoading) return <TableSkeleton />;
   return (
     <div className="w-full overflow-x-scroll lg:overflow-x-hidden z-[-10] rounded-lg text-xs">
       <table className="w-full text-left rtl:text-right">
@@ -57,10 +56,15 @@ const ActivityTable = ({ activities }) => {
                 actionColor = "green";
                 break;
 
-              case "RESUBMITTED":
-                action = "resubmitted";
-                actionColor = "yellow";
-                break;
+                case "RESUBMITTED":
+                  action = "resubmitted";
+                  actionColor = "#F6BE00";
+                  break;
+  
+                  case "RENEW":
+                  action = "renewed";
+                  actionColor = "brown";
+                  break;  
 
               default:
                 break;

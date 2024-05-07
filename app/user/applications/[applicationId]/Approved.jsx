@@ -17,10 +17,18 @@ import { TabsList } from "@/components/ui/tabs";
 import { TabsTrigger } from "@/components/ui/tabs";
 import { TabsContent } from "@/components/ui/tabs";
 import { useParams } from "next/navigation";
+import { useSelector } from "react-redux";
+import { selectRole } from "@/store/features/userSlice";
 
 const ApplicationApproved = ({ data }) => {
+  console.log(data)
   const params = useParams();
   const applicationId = params.applicationId;
+  const userId = data?.application.user_id;
+  console.log(data)
+
+  const role = useSelector(selectRole);
+  const isAdmin = role === "ADMIN";
 
   const [
     downloadCertificate,
@@ -40,7 +48,10 @@ const ApplicationApproved = ({ data }) => {
     data: applicationActivityData,
     isLoading: applicationActivityIsLoading,
   } = useGetApplicationActivityQuery(applicationId);
+
   const activities = applicationActivityData?.data.application_activities;
+
+  console.log(applicationActivityData)
 
   useEffect(() => {
     if (mailingSuccess) {
@@ -59,6 +70,19 @@ const ApplicationApproved = ({ data }) => {
     document.body.appendChild(link);
     link.click();
   };
+
+  const applicationDetailsSection = (
+    <>
+      {
+        data ? (
+          <ApplicationStatus data={data} />
+        ) : (
+          <div className="flex items-center justify-center h-[40vh] w-full  ">
+            <ClipLoader color="#46B038" size={30} />
+          </div >
+        )}
+    </>
+  );
 
   return (
     <DashboardLayout header="Application">
@@ -103,27 +127,25 @@ const ApplicationApproved = ({ data }) => {
         </div>
       </div>
       <div className="bg-white rounded-md pt-8 pl-6 pb-6">
-        <Tabs defaultValue="staff-logs" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 lg:w-96 w-full mb-8">
-            <TabsTrigger className="space-x-2" value="staff-logs">
-              <span className="">Application Details</span>
-              {/* <span className="">{Log}</span> */}
-            </TabsTrigger>
-            <TabsTrigger value="activity">Application Activity Log</TabsTrigger>
-          </TabsList>
-          <TabsContent value="staff-logs">
-            {data ? (
-              <ApplicationStatus data={data} />
-            ) : (
-              <div className="flex items-center justify-center h-[40vh] w-full  ">
-                <ClipLoader color="#46B038" size={30} />
-              </div>
-            )}
-          </TabsContent>
-          <TabsContent value="activity">
-            <ActivityTable activities={activities} />
-          </TabsContent>
-        </Tabs>
+        {isAdmin ?
+          <Tabs defaultValue="staff-logs" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 lg:w-96 w-full mb-8">
+              <TabsTrigger className="space-x-2" value="staff-logs">
+                <span className="">Application Details</span>
+                {/* <span className="">{Log}</span> */}
+              </TabsTrigger>
+              <TabsTrigger value="activity">Application Activity Log</TabsTrigger>
+            </TabsList>
+            <TabsContent value="staff-logs">
+              {applicationDetailsSection}
+            </TabsContent>
+            <TabsContent value="activity">
+              <ActivityTable activities={activities} />
+            </TabsContent>
+          </Tabs>
+          :
+          applicationDetailsSection
+        }
       </div>
     </DashboardLayout>
   );

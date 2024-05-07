@@ -1,6 +1,6 @@
 import { useParams } from "next/navigation";
 import { time } from "@/utils/time&dates";
-import { useGetStaffActivitiesQuery } from "@/store/api/userApi";
+import { useGetStaffLogsQuery } from "@/store/api/userApi";
 import TableSkeleton from "@/components/skeleton-loaders/TableSkeleton";
 import { EmptyLog } from "@/svgs";
 import { getActionStatement } from "@/utils/helpers";
@@ -64,7 +64,7 @@ const StaffLogsTable = () => {
   const params = useParams();
   const staffId = params.staffId;
   const { data, isLoading, isSuccess, error } =
-    useGetStaffActivitiesQuery(staffId);
+    useGetStaffLogsQuery(staffId);
   const staff_activities_log = data?.data?.staff_activities;
   console.log(data);
 

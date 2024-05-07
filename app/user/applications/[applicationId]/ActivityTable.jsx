@@ -22,6 +22,8 @@ const ActivityTable = ({ activities }) => {
   const router = useRouter();
   console.log(applicationId);
 
+  console.log(activities)
+
   let action;
   let actionColor;
 
@@ -66,7 +68,12 @@ const ActivityTable = ({ activities }) => {
 
               case "RESUBMITTED":
                 action = "resubmitted";
-                actionColor = "yellow";
+                actionColor = "#F6BE00";
+                break;
+
+                case "RENEW":
+                action = "renewed";
+                actionColor = "brown";
                 break;
 
               default:

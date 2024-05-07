@@ -13,7 +13,7 @@ import { staffTabs } from "@/utils/data";
 
 const StaffManagement = () => {
   return (
-    <DashboardLayout header="Admin">
+    <DashboardLayout header="Admin" isSidebarLink={true}>
       <div className="space-y-6">
         <div className="lg:flex lg:justify-between w-full">
           <div className="w-full">

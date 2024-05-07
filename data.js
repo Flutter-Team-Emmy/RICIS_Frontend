@@ -21,8 +21,13 @@ export const headerDrop = () => {
 				id: "01"
 			},
 			{
+				header: "Search",
+				href: "/search",
+				id: "02"
+			},
+			{
 				header: "About Us",
-				id: "02",
+				id: "03",
 				drop: [
 					{
 						name: "Activities",
@@ -41,25 +46,25 @@ export const headerDrop = () => {
 
 			{
 				header: "Services",
-				id: "03",
+				id: "04",
 				drop: servicesDrop && [...servicesDrop],
 			},
 
 			{
 				header: "Legislation/Rules",
-				id: "04",
+				id: "05",
 				drop: legislationDrop && [...legislationDrop],
 			},
 
 			{
 				header: "Information",
-				id: "05",
+				id: "06",
 				drop: informationDrop && [...informationDrop],
 			},
 
 			{
 				header: "Notifications",
-				id: "06",
+				id: "07",
 				drop: [
 					{
 						name: "News",
@@ -78,13 +83,13 @@ export const headerDrop = () => {
 
 			{
 				header: "FAQs",
-				id: "07",
+				id: "08",
 				href: "/faq",
 			},
 
 			{
 				header: "Contact Us",
-				id: "08",
+				id: "09",
 				href: "/contact",
 			},
 		]

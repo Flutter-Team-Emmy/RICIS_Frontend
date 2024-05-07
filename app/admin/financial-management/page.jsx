@@ -17,7 +17,7 @@ const FinancialManagement = () => {
   const pageCount = useSelector(selectTotalPage);
 
   return (
-    <DashboardLayout header="Admin">
+    <DashboardLayout header="Admin" isSidebarLink={true}>
       <div className="space-y-8">
         <div className="flex flex-col lg:flex-row justify-between w-full ">
           <div className="w-full">

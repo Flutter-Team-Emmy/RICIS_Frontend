@@ -1,7 +1,9 @@
 import Link from "next/link";
 
 const ApplicationStatus = ({ data }) => {
+
   console.log(data);
+
   return (
     <div className="space-y-8">
       <div className="space-y-2">
@@ -25,7 +27,7 @@ const ApplicationStatus = ({ data }) => {
         {data?.application?.data?.map((status, index) => (
           <div key={index} className="space-y-2">
             <h1 className="font-bold">{status.form_field?.name}</h1>
-            {status?.value?.includes("http") ? (
+            { typeof status.value === "string" && status?.value.includes("http") ? (
               <Link className="text-gray-400 text-sm" href={status.value}>
                 {status.value}
               </Link>

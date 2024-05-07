@@ -76,7 +76,7 @@ const Profile = () => {
       header={currentUser?.user?.fullName || currentUser?.user?.name}
     >
       <div className="w-full pb-6">
-        <h1 className="text-black font-bold text-lg">User Profile</h1>
+        <h1 className="text-black font-bold text-lg">{currentUser?.user?.fullName || currentUser?.user?.name} Profile</h1>
         <p className="text-gray-600 text-sm">
           view all user account details below
         </p>
