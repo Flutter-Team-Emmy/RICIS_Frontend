@@ -75,7 +75,7 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
 
     if (isCustomDate) {
       payload = {
-        page: 1,
+        page: page === 0 ? 1 : page,
         limit: 20,
         application_name: formData.application_name,
         applicant_name: formData.applicant_name,
@@ -87,7 +87,7 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
       const filterDate = getDateModified(formData.date_modified);
       console.log(filterDate);
       payload = {
-        page: 1,
+        page: page === 0 ? 1 : page,
         limit: 20,
         application_name: formData.application_name,
         applicant_name: formData.applicant_name,

@@ -26,6 +26,8 @@ const Draft = () => {
   const { data, isLoading, isSuccess, refetch } =
     useGetSingleDraftQuery(draftId);
   const draft = data?.data.draft_application;
+  const form_name = data?.data?.form_name;
+  console.log(data)
 
   const formFields = draft?.data?.filter(
     (field) => field?.form_field?.page === 1 || field?.form_field?.page === 2
@@ -45,6 +47,12 @@ const Draft = () => {
       );
     }
   }, [draft]);
+
+  useEffect(() => {
+    if (form_name) {
+      localStorage.setItem("form_name", JSON.stringify(form_name));
+    }
+  }, [formFields]);
 
   let InitialData = {};
   let fieldsInitialErrorStates = {};
@@ -120,9 +128,7 @@ const Draft = () => {
 
   console.log(draft);
 
-
   const navigateToNextStep = () => {
-
     const validate = validateForm(formData);
 
     const id = `${draftId}-${applicationId}`;
@@ -153,7 +159,7 @@ const Draft = () => {
             <div className="">
               <h1 className="text-black font-bold">
                 Application Name:{" "}
-                <span className="text-[#46B038]">CLEARANCE</span>
+                <span className="text-[#46B038]"> {form_name}</span>
               </h1>
               <p className="text-gray-600 text-sm">
                 Please fill all information correctly

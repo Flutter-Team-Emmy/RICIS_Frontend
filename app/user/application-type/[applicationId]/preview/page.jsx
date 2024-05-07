@@ -27,16 +27,23 @@ const Preview = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [documents, setDocuments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [paynow, setPaynow] = useState(false);
+  const form_name = JSON.parse(localStorage.getItem("form_name"));
+
+  const generatedDocuments = localStorage.getItem("generatedDocuments");
 
   useEffect(() => {
-    getDocuments("applicationDocuments")
-      .then((documents) => {
-        setDocuments(documents);
-        console.log(documents);
-      })
-      .catch((error) => {
-        console.error("Failed to load documents from IndexedDB:", error);
-      });
+    if (generatedDocuments !== "undefined") {
+      getDocuments("applicationDocuments")
+        .then((documents) => {
+          setDocuments(documents);
+          console.log(documents);
+          console.log(generatedDocuments);
+        })
+        .catch((error) => {
+          console.error("Failed to load documents from IndexedDB:", error);
+        });
+    }
   }, []);
 
   // retrieve already stored data from localstorage
@@ -117,9 +124,12 @@ const Preview = () => {
     return files;
   };
 
-
   const createNewApplication = async () => {
-    const formData = convertToValidNumberType(storedFormData);
+    const formFieldTypesObj = JSON.parse(localStorage.getItem("errorFields"));
+    const formData = convertToValidNumberType(
+      storedFormData,
+      formFieldTypesObj
+    );
     try {
       const files = await handleUpload();
       console.log(files);
@@ -162,6 +172,7 @@ const Preview = () => {
     }
     if (isApplicationSuccess) {
       setIsLoading(false);
+      setPaynow(true);
       // Delete all documents from indexDB after upload
       deleteAllDocuments("applicationDocuments")
         .then(() => {
@@ -178,8 +189,11 @@ const Preview = () => {
 
   return (
     <>
-      {isApplicationSuccess && (
-        <PaymentModal application_id={new_application_id} />
+      {paynow && (
+        <PaymentModal
+          application_id={new_application_id}
+          setPaynow={setPaynow}
+        />
       )}
       {isLoading && (
         <ImageUploadLoader
@@ -194,11 +208,11 @@ const Preview = () => {
             <div className="flex justify-between items-center w-full">
               <div className="">
                 <h1 className="text-black font-bold">
-                  Personnel certification:{" "}
-                  <span className="text-[#46B038]">CLEARANCE</span>
+                  Application Name:{" "}
+                  <span className="text-[#46B038]"> {form_name}</span>
                 </h1>
                 <p className="text-gray-600 text-sm">
-                  Please fill all information correctly
+                  Preview all fields and documents before submission
                 </p>
               </div>
             </div>
@@ -207,9 +221,6 @@ const Preview = () => {
                 <h1 className="text-[#46B038] font-bold">
                   APPLICATION DETAILS:
                 </h1>
-                <span className="font-semibold text-gray-500">
-                  {applicationId}
-                </span>
               </div>
               <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-4 lg:gap-y-6 gap-y-4 text-sm">
                 {formData.map((name) => (
@@ -226,7 +237,7 @@ const Preview = () => {
                   </div>
                 ))}
               </div>
-              {documents?.length > 0 && (
+              {generatedDocuments !== "undefined" && (
                 <div className="pt-8 space-y-6">
                   <p className="font-semibold">Applicant's Documents</p>
                   <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-4 lg:gap-y-8 gap-y-6 text-sm">

@@ -1,24 +1,7 @@
 import { ApexCharts } from "@/utils/chartHelpers";
 
-const Doughnut = ({ color, label, percentage, width }) => {
-  const series = [60];
-
-  // const options = {
-  //   chart: {
-  //     height: 350,
-  //     type: "radialBar",
-  //   },
-  //   plotOptions: {
-  //     radialBar: {
-  //       hollow: {
-  //         size: "70%",
-  //       },
-  //     },
-  //   },
-  //   labels: ["Cricket"],
-  // };
-
-  // };
+const Doughnut = ({ color, label, width, percentage }) => {
+  const series = [percentage];
 
   const options = {
     chart: {

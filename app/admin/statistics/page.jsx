@@ -3,27 +3,52 @@
 import { CalendarEdit, StatTrend, StatTrendDown, TrendArrow } from "@/svgs";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import Image from "next/image";
-import { capitalizeFirstLetter } from "@/utils/helpers";
+import { capitalizeFirstLetter, formatNumber } from "@/utils/helpers";
 import YearlyTransactionStats from "./YearlyTransactionStats";
 import YearlyIncome from "./YearlyIncome";
 import OverviewTable from "./OverviewTable";
 import Options from "./Options";
 import Filter from "./Filter";
-import { useSelector } from "react-redux";
-import { selectDate, selectOption } from "@/store/features/statisticsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectDate,
+  selectEndDate,
+  selectOption,
+  selectPercentageProfileIncrease,
+  selectRevenueGenerated,
+  selectStartDate,
+  setPercentageProfileIncrease,
+  setHighestPerformingForm,
+  setLowestPerformingForm,
+  setRevenueGenerated,
+  selectLowestPerformingForm,
+  selectHighestPerformingForm,
+  setChart,
+} from "@/store/features/statisticsSlice";
 import { time } from "@/utils/time&dates";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { ApexCharts } from "@/utils/chartHelpers";
+import { useGetTransactionChartStatsQuery } from "@/store/api/transactionsApi";
+import { generateChartData } from "@/utils/helpers";
+import StatsLoader from "@/components/loaders/statsLoader";
 
 const FirstStat = () => {
+  const revenue_generated = useSelector(selectRevenueGenerated);
+  const percentage_profile_incease = useSelector(
+    selectPercentageProfileIncrease
+  );
+  console.log(revenue_generated);
   return (
     <div className="bg-white p-6 rounded-2xl space-y-6">
       <h1 className="text-gray-500 lg:text-lg text-md">
         Overall revenue generated
       </h1>
       <div className="flex justify-between items-end self-end">
-        <h2 className="font-semibold text-2xl text-[#46B038]">500,000</h2>
+        <h2 className="font-semibold text-2xl text-[#46B038]">
+          {formatNumber(revenue_generated)}
+        </h2>
         <div className="flex items-center self-end gap-1">
-          <span className="text-[#46B038]">+100%</span>
+          <span className="text-[#46B038]">+{percentage_profile_incease}%</span>
           <span className="">{StatTrend}</span>
         </div>
       </div>
@@ -31,7 +56,56 @@ const FirstStat = () => {
   );
 };
 
-const SecondStat = ({ state }) => {
+const SecondStat = ({ state, applicationName, amount }) => {
+  const series = [
+    { name: "dd", data: [2, 24, 19, 33, 15, 90, 20, 50, 80, 67, 9, 44] },
+  ];
+  const options = {
+    chart: {
+      group: "sparklines",
+      type: "area",
+      sparkline: {
+        enabled: true,
+      },
+      dropShadow: {
+        enabled: true,
+        top: 3,
+        left: 2,
+        blur: 4,
+        opacity: 1,
+        color: "transparent",
+      },
+    },
+    stroke: {
+      curve: "straight",
+    },
+    fill: {
+      opacity: 1,
+    },
+    yaxis: {
+      min: 0,
+      show: false,
+    },
+    xaxis: {
+      //   type: 'datetime',
+      categories: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+    },
+    colors: ["#69CB5C"],
+  };
+
   return (
     <div
       className={`bg-white rounded-2xl space-y-6 border-l-[1.6rem] w-fit ${
@@ -42,8 +116,8 @@ const SecondStat = ({ state }) => {
         <h1 className="text-gray-500 lg:text-lg text-md">
           {capitalizeFirstLetter(state)} revenue generating Application
         </h1>
-        <p className="text-gray-800 text-xs lg:text-sm">
-          Personnel Application
+        <p className="text-gray-800 font-semibold text-xs lg:text-sm">
+          {applicationName}
         </p>
       </div>
       <div className="flex lg:flex-row flex-col justify-between lg:gap-4 gap-2">
@@ -53,7 +127,8 @@ const SecondStat = ({ state }) => {
               state === "highest" ? "text-[#46B038]" : "text-[#C40E0E]"
             }`}
           >
-            500,000
+            {formatNumber(amount)}
+            {/* {amount} */}
           </h2>
           <div className="flex items-center gap-4">
             <span
@@ -68,15 +143,13 @@ const SecondStat = ({ state }) => {
             </span>
           </div>
         </div>
-        {/* <div className="w-full"> */}
-        <Image
-          src={`${
-            state === "highest" ? "/images/chart-1.png" : "/images/chart-2.png"
-          }`}
-          height={80}
-          width={180}
+        <ApexCharts
+          type="area"
+          series={series}
+          options={options}
+          width={200}
+          height={70}
         />
-        {/* </div> */}
       </div>
     </div>
   );
@@ -86,15 +159,83 @@ const Statistics = () => {
   const selected = useSelector(selectOption);
   const date = useSelector(selectDate);
   console.log(time.formatDate(JSON.parse(date)));
+  const dispatch = useDispatch();
 
-  // const curren 
+  const start_date = useSelector(selectStartDate);
+  const end_date = useSelector(selectEndDate);
+  const lowest_performing_form = useSelector(selectLowestPerformingForm);
+  const highest_performing_form = useSelector(selectHighestPerformingForm);
+  console.log(highest_performing_form);
 
-  // const current = ()
+  const defaultPayload = { start_date, end_date, filter_type: selected };
+  const { isLoading, isSuccess, error, data } =
+    useGetTransactionChartStatsQuery(defaultPayload);
+
+  useEffect(() => {
+    const chartData = data?.data?.chart;
+
+    const transformedChartData = generateChartData(chartData);
+
+    const highest_performing_form = {
+      name: data?.data?.highest_performing_form?.name,
+      total_amount: data?.data?.highest_performing_form?.total_amount,
+    };
+
+    const lowest_performing_form = {
+      name: data?.data?.lowest_performing_form?.name,
+      total_amount: data?.data?.lowest_performing_form?.total_amount,
+    };
+
+    dispatch(setChart(transformedChartData));
+    dispatch(
+      setPercentageProfileIncrease(data?.data?.percentage_profile_incease)
+    );
+    dispatch(setRevenueGenerated(data?.data?.revenue_generated));
+
+    dispatch(setHighestPerformingForm(highest_performing_form));
+    dispatch(setLowestPerformingForm(lowest_performing_form));
+  }, [data, isSuccess]);
 
   const [isEditing, setIsEditing] = useState(false);
+
+  const getCalendarDate = () => {
+    const months = [
+      "Janury",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const date = new Date(JSON.parse(start_date));
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    if (selected === "year") {
+      return date.getFullYear();
+    }
+    if (selected === "month") {
+      return `${month}, ${year}`;
+    }
+    if (selected === "week") {
+      const week = Math.ceil((date.getDate() + date.getDay()) / 7);
+      return `week ${week}, ${month} ${year}`;
+    }
+    if (selected === "day") {
+      return time.formatDate(date);
+    }
+  };
+
+  const calendarDate = getCalendarDate();
   return (
     <>
       {isEditing && <Filter setIsEditing={setIsEditing} />}
+      {isLoading && <StatsLoader />}
       <DashboardLayout header="Statistics" icon="">
         <div className="space-y-10 w-full">
           <div className="flex justify-between items-center">
@@ -110,7 +251,8 @@ const Statistics = () => {
                 className="w-fit flex items-center gap-2 cursor-pointer border border-slate-600 rounded-md px-3 py-1"
               >
                 <span className="text-slate-800 text-sm">
-                  {time.formatDate(JSON.parse(date))}
+                  {/* {time.formatDate(JSON.parse(date))} */}
+                  {calendarDate}
                 </span>
                 <span className="">{CalendarEdit}</span>
               </div>
@@ -119,11 +261,25 @@ const Statistics = () => {
           </div>
           <section className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
             <FirstStat />
-            <SecondStat state="highest" />
-            <SecondStat state="lowest" />
+            <SecondStat
+              state="highest"
+              applicationName={highest_performing_form?.name}
+              amount={highest_performing_form?.total_amount}
+            />
+            <SecondStat
+              state="lowest"
+              applicationName={lowest_performing_form?.name}
+              amount={lowest_performing_form?.total_amount}
+            />
           </section>
           <section className="space-y-4">
-            <h1 className="font-semibold text-lg">Yearly Transaction Stats</h1>
+            <h1 className="font-semibold text-lg">
+              {" "}
+              {`${
+                selected === "day" ? "Dai" : capitalizeFirstLetter(selected)
+              }ly`}{" "}
+              Transaction Stats
+            </h1>
             <div className="grid lg:grid-cols-[7fr_3fr] gap-8 grid-cols-1">
               <YearlyTransactionStats />
               <YearlyIncome />

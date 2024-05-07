@@ -45,6 +45,15 @@ export const transactionsApi = createApi({
       },
       invalidatesTags: [{ type: "Transactions", id: "LIST" }],
     }),
+    getTransactionChartStats: builder.query({
+      query(params) {
+        return {
+          url: "/transactions/stats/chart",
+          params: params,
+        };
+      },
+      invalidatesTags: [{ type: "Transactions", id: "LIST" }],
+    }),
     // createFlutterTransaction: builder.mutation({
     //   query(payload) {
     //     return {
@@ -61,6 +70,7 @@ export const transactionsApi = createApi({
 export const {
   useGetTransactionsQuery,
   useGetSingleTransactionQuery,
-  useGetTransactionsStatsQuery
+  useGetTransactionsStatsQuery,
+  useGetTransactionChartStatsQuery,
   //   useCreateFlutterTransactionMutation,
 } = transactionsApi;

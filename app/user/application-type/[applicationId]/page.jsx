@@ -21,18 +21,22 @@ import { toast } from "react-toastify";
 import EmptyApplication from "@/components/modals/EmptyApplication";
 import useValidateForm from "@/hooks/useValidateForm";
 import { convertToValidNumberType, removeEmptyFields } from "@/utils/helpers";
+import { useDispatch } from "react-redux";
+import { setFormName } from "@/store/features/formSlice";
 
 const ApplicationFormFields = () => {
   const router = useRouter();
   const params = useParams();
   const applicationId = params.applicationId;
+  const dispatch = useDispatch();
   const { isLoading, isSuccess, isError, error, data } =
     useGetSingleFormFieldsQuery(applicationId);
   const fields = data?.data?.fields;
   const isEmptyApplication = data?.data?.fields?.length === 0;
-  // console.log(data);
-  const [overallFormIsValid, setOverallFormIsValid] = useState(true);
   // const [errorFields, setErrorFields] = useState()
+  const form_name = data?.data?.form_name;
+
+  console.log(data);
 
   const [
     createNewDraft,
@@ -56,6 +60,12 @@ const ApplicationFormFields = () => {
         "generatedDocuments",
         JSON.stringify(generatedDocuments)
       );
+    }
+  }, [fields]);
+
+  useEffect(() => {
+    if (form_name) {
+      localStorage.setItem("form_name", JSON.stringify(form_name));
     }
   }, [fields]);
 
@@ -187,7 +197,7 @@ const ApplicationFormFields = () => {
                 <div className="">
                   <h1 className="text-black font-bold">
                     Application Name:{" "}
-                    <span className="text-[#46B038]">CLEARANCE</span>
+                    <span className="text-[#46B038]">{form_name}</span>
                   </h1>
                   <p className="text-gray-600 text-sm">
                     Please fill all information correctly

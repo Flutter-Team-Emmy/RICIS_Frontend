@@ -32,8 +32,13 @@ export class Validator {
   }
 
   validatePhoneNumber(phone) {
-    const regex = /^[0-9]+$/;
-    return Boolean(regex.test(phone) && phone.length === 11);
+    const trimmedNumber = phone.trim();
+    const regex = /^(?:\+)?\d{1,}$/;
+    return Boolean(
+      regex.test(trimmedNumber) &&
+        trimmedNumber.length >= 11 &&
+        trimmedNumber.length <= 14
+    );
   }
 
   atLeastOneValueNotEmpty(obj) {

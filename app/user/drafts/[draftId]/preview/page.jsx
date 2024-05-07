@@ -28,6 +28,9 @@ const Preview = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [documents, setDocuments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [paynow, setPaynow] = useState(false);
+
+  const form_name = JSON.parse(localStorage.getItem("form_name"));
 
   useEffect(() => {
     getDocuments("draftDocuments")
@@ -120,7 +123,13 @@ const Preview = () => {
   };
 
   const createNewApplication = async () => {
-    const formData = convertToValidNumberType(storedFormData);
+    const formFieldTypesObj = JSON.parse(
+      localStorage.getItem("draftErrorFields")
+    );
+    const formData = convertToValidNumberType(
+      storedFormData,
+      formFieldTypesObj
+    );
     try {
       const files = await handleUpload();
       console.log(files);
@@ -164,6 +173,7 @@ const Preview = () => {
     if (isApplicationSuccess) {
       toast.success("Successfully created form!", { autoClose: 5000 });
       setIsLoading(false);
+      setPaynow(true);
       // Delete all documents from indexDB after upload
       deleteDocumentsByDraftId(draftId)
         .then(() => {
@@ -180,8 +190,11 @@ const Preview = () => {
 
   return (
     <>
-      {isApplicationSuccess && (
-        <PaymentModal application_id={new_application_id} />
+      {paynow && (
+        <PaymentModal
+          application_id={new_application_id}
+          setPaynow={setPaynow}
+        />
       )}
       {isLoading && (
         <ImageUploadLoader
@@ -196,8 +209,8 @@ const Preview = () => {
             <div className="flex justify-between items-center w-full">
               <div className="">
                 <h1 className="text-black font-bold">
-                  Personnel certification:{" "}
-                  <span className="text-[#46B038]">CLEARANCE</span>
+                  Application Name:{" "}
+                  <span className="text-[#46B038]"> {form_name}</span>
                 </h1>
                 <p className="text-gray-600 text-sm">
                   Please fill all information correctly
@@ -209,7 +222,6 @@ const Preview = () => {
                 <h1 className="text-[#46B038] font-bold">
                   APPLICATION DETAILS:
                 </h1>
-                <span className="font-semibold text-gray-500">{draftId}</span>
               </div>
               <div className="grid grid-cols-2 grid-cols-1 gap-x-4 lg:gap-y-6 gap-y-4 text-sm">
                 {formData.map((name) => (

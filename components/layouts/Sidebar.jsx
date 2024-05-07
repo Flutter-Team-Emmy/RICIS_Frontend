@@ -94,7 +94,7 @@ const Sidebar = ({
     <>
       {/* <div className="lg:hidden fixed top-0 bottom-0 left-0 right-0  inset-0 bg-[rgb(0,0,0,0.8)] overflow-y-auto bg-opacity-50 z-[999] h-full w-full"></div> */}
       <aside
-        className={`h-screen bg-[#1A191B] px-2 fixed top-0 w-[12rem] z-[1000] lg:block ${showSidebar}`}
+        className={`h-screen bg-[#1A191B] px-2 fixed top-0 w-[12rem] z-[1000] overflow-y-auto lg:block ${showSidebar}`}
       >
         <span
           className="w-12 h-12 lg:hidden ml-32 mt-6"
@@ -135,7 +135,7 @@ const Sidebar = ({
                 ></div>
               ))}
           </ul>
-          <div className="text-sm">
+          <div className="text-sm py-8 lg:py-6">
             {!isOnline && (
               <div className="flex items-center gap-2">
                 <span className="">{Offline}</span>
@@ -144,7 +144,7 @@ const Sidebar = ({
             )}
             <button
               onClick={logout}
-              className="flex items-center gap-1 lg:mt-20 mt-6 px-6 py-2 bg-blue-800 rounded-md hover:bg-blue-700"
+              className="flex items-center gap-1 px-6 py-2 bg-blue-800 rounded-md hover:bg-blue-700"
             >
               <span>{LogoutIcon}</span>
               <span className="">Logout</span>
@@ -153,7 +153,7 @@ const Sidebar = ({
           {isSuccess && (
             <div
               onClick={openProfilePage}
-              className="fixed bottom-6 flex justify-center items-center gap-2 cursor-pointer"
+              className="flex items-center gap-2 cursor-pointer pb-4"
             >
               <Avatar currentUser={currentUser} role={role} />
               <div className="space-y-1">

@@ -9,6 +9,7 @@ import userReducer from "./features/userSlice";
 import applicationsReducer from "./features/applicatonsSlice";
 import transactionsReducer from "./features/transactionSlice";
 import statisticsReducer from "./features/statisticsSlice";
+import formReducer from "./features/formSlice"; 
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     applications: applicationsReducer,
     transactions: transactionsReducer,
     statistics: statisticsReducer,
+    form: formReducer,
     [authApi.reducerPath]: authApi.reducer,
     [applicationApi.reducerPath]: applicationApi.reducer,
     [userApi.reducerPath]: userApi.reducer,

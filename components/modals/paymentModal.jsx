@@ -4,8 +4,9 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { normalizeErrors } from "@/utils/helpers";
 import { toast } from "react-toastify";
+import { Cancel } from "@/svgs";
 
-const PaymentModal = ({ application_id }) => {
+const PaymentModal = ({ application_id, setPaynow }) => {
   const router = useRouter();
   const [
     createFlutterTransaction,
@@ -37,9 +38,14 @@ const PaymentModal = ({ application_id }) => {
 
   return (
     <div className="flex justify-center items-center fixed inset-0 bg-[rgb(0,0,0,0.8)] bg-opacity-50 z-[9999]">
-      <div className="bg-white px-4 py-6 rounded shadow-md md:w-[500px] z-[9999] space-y-10">
+      <div className="bg-white px-4 pb-6 pt-4 rounded shadow-md md:w-[500px] z-[9999] space-y-6">
+        <div onClick={() => setPaynow(false)} className="flex justify-end">
+          <span className="cursor-pointer">{Cancel}</span>
+        </div>
         <div className="space-y-2">
-          <h1 className="text-3xl text-gray-800">Proceed to payment</h1>
+          <h1 className="lg:text-2xl text-xl text-gray-800">
+            Proceed to payment
+          </h1>
           <p className="text-sm textgray-400">
             To complete your application submission, you're required to make
             payment.

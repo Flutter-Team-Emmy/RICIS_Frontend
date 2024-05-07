@@ -28,6 +28,8 @@ const Documents = () => {
   const draftId = param.split("-")[0];
   const applicationId = param.split("-")[1];
 
+  const form_name = JSON.parse(localStorage.getItem("form_name"));
+
   const generatedDraftDocuments = JSON.parse(
     localStorage.getItem("generatedDraftDocuments")
   );
@@ -138,7 +140,7 @@ const Documents = () => {
             <div className="">
               <h1 className="text-black font-bold">
                 Application Name:{" "}
-                <span className="text-[#46B038]">CLEARANCE</span>
+                <span className="text-[#46B038]"> {form_name}</span>
               </h1>
               <p className="text-gray-600 text-sm">
                 Please add all required documents

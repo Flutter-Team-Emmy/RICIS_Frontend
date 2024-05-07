@@ -171,12 +171,209 @@ export const removeEmptyFields = (obj) => {
   return result;
 };
 
-export const convertToValidNumberType = (data) => {
+export const convertToValidNumberType = (data, formFieldTypesObj) => {
+  // const
   for (let key in data) {
-    const isNumber = validator.validateNumber(data[key]);
+    const currentType = formFieldTypesObj[key]?.type;
+    // const isNumber = validator.validateNumber(data[key]);
+    const isNumber = currentType === "NUMBER";
     if (isNumber) {
       data[key] = Number(data[key]);
     }
   }
   return data;
+};
+
+export const filter_type_data = {
+  year: ["2024", "2023", "2022"],
+  month: [
+    "Jan",
+    "Feb",
+    "March",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ],
+  week: ["week 1", "week 2", "week 3", "week 4"],
+  day: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+};
+
+export const getStatisticsDate = (filter_type, formData) => {
+  let start_date;
+  let end_date;
+  console.log(formData);
+  if (filter_type === "year") {
+    const { year } = formData;
+    start_date = new Date(year, 0, 1);
+    end_date = new Date(year, 11, 31);
+  }
+  if (filter_type === "month") {
+    const { year, month } = formData;
+    const monthIndex = filter_type_data.month.indexOf(month);
+    start_date = new Date(year, monthIndex, 1);
+    end_date = new Date(year, monthIndex, 31);
+  }
+  if (filter_type === "week") {
+    const { year, month, week } = formData;
+    const monthIndex = filter_type_data.month.indexOf(month);
+    const weekIndex = filter_type_data.week.indexOf(week);
+    const start_day = 7 * (weekIndex + 1) - 6;
+    const end_day = (weekIndex + 1) * 7;
+    start_date = new Date(year, monthIndex, start_day);
+    end_date = new Date(year, monthIndex, end_day);
+  }
+  if (filter_type === "day") {
+    const { year, month, week, day } = formData;
+    const monthIndex = filter_type_data.month.indexOf(month);
+    const weekIndex = filter_type_data.week.indexOf(week);
+    const dayIndex = filter_type_data.day.indexOf(day);
+    const start_day = 7 * (weekIndex + 1) - 6;
+    const end_day = (weekIndex + 1) * 7;
+    start_date = new Date(year, monthIndex, start_day + dayIndex, 0);
+    end_date = new Date(year, monthIndex, start_day, 23, 59, 59);
+  }
+
+  return { start_date, end_date };
+};
+
+export const getCurrentDate = () => {
+  const currentDate = new Date();
+
+  // Get the current year
+  const currentYear = currentDate.getFullYear();
+
+  // Get the current month (0-indexed, so January is 0)
+  const currentMonth = currentDate.getMonth(); // Adding 1 to make it 1-indexed
+
+  // Get the current week of the year
+  const currentWeek = Math.ceil(
+    (currentDate.getDate() + currentDate.getDay()) / 7
+  );
+
+  // Get the current day of the week (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
+  const currentDayOfWeek = currentDate.getDay();
+
+  return { currentYear, currentMonth, currentWeek, currentDayOfWeek };
+};
+
+export const generateChartData = (chartData) => {
+  let chart = {};
+  for (let key in chartData) {
+    if (chartData.hasOwnProperty(key)) {
+      // const currentKey = "";
+      chart[key] = chartData[key];
+    }
+  }
+  return chart;
+};
+
+export const generateChartDataCategories = (selected, chartData) => {
+  let categories = [];
+  const data = Object.values(chartData);
+  if (selected === "year") {
+    categories = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    return { categories, data };
+  }
+
+  if (selected === "month") {
+    categories = [
+      "1st",
+      "2nd",
+      "3rd",
+      "4th",
+      "5th",
+      "6th",
+      "7th",
+      "8th",
+      "9th",
+      "10th",
+      "11th",
+      "12th",
+      "13th",
+      "14th",
+      "15th",
+      "16th",
+      "17th",
+      "18th",
+      "19th",
+      "20th",
+      "21st",
+      "22nd",
+      "23rd",
+      "24th",
+      "25th",
+      "26th",
+      "27th",
+      "28th",
+      "29th",
+      "30th",
+      "31st",
+    ];
+    return { categories, data };
+  }
+
+  if (selected === "week") {
+    categories = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    return { categories, data };
+  }
+
+  if (selected === "day") {
+    categories = [
+      "00:00",
+      "1:00",
+      "2:00",
+      "3:00",
+      "4:00",
+      "5:00",
+      "6:00",
+      "7:00",
+      "8:00",
+      "9:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "19:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00",
+    ];
+    return { categories, data };
+  }
+};
+
+export const formatNumber = (number) => {
+  if (number >= 1000000) {
+    return (number / 1000000).toFixed(1) + "M";
+  } else if (number >= 10000) {
+    return (number / 1000).toFixed(1) + "K";
+  } else {
+    return number?.toString();
+  }
 };

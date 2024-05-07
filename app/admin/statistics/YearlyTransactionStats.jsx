@@ -1,19 +1,21 @@
+import { selectChart, selectOption } from "@/store/features/statisticsSlice";
 import { ApexCharts } from "@/utils/chartHelpers";
 import { useState } from "react";
-
-const selects = ["Day", "Week", "Month", "Year"];
+import { useSelector } from "react-redux";
+import { generateChartDataCategories } from "@/utils/helpers";
 
 const YearlyTransactionStats = () => {
-  const [selected, setSelected] = useState("Year");
+  const chartData = useSelector(selectChart);
+  const selected = useSelector(selectOption);
+  console.log(chartData);
+
+  const { categories, data } = generateChartDataCategories(selected, chartData);
+
   const series = [
     {
       name: "Revenue",
-      data: [11, 21, 113, 41, 5, 16, 71, 81, 19, 102, 11, 12],
+      data: data,
     },
-    // {
-    //   name: "Income",
-    //   data: [11, 21, 31, 41, 51, 61, 71, 18, 19, 101, 11, 12],
-    // },
   ];
 
   const options = {
@@ -37,21 +39,11 @@ const YearlyTransactionStats = () => {
       curve: "smooth",
     },
     xaxis: {
-      type: "months",
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
+      // type: "months",
+      // labels: {
+      //   format: "MM",
+      // },
+      categories: categories,
     },
     tooltip: {
       x: {
@@ -61,30 +53,15 @@ const YearlyTransactionStats = () => {
     colors: ["#4A3AFF"],
   };
 
-  const activeClass = "bg-[#1E1B39] text-white rounded-2xl";
-  const InactiveClass = "bg-transparent text-gray-400";
-
   return (
     <div className="bg-white lg:p-6 py-6 px-3 rounded-lg space-y-6 ">
-      <div className="rounded-2xl bg-[#F8F8FF] lg:w-fit py-4 px-4 text-gray-400 space-x-4 w-full overflow-x-auto">
-        {selects.map((value) => (
-          <span
-            key={value}
-            onClick={() => setSelected(value)}
-            className={`${
-              selected === value ? activeClass : InactiveClass
-            } cursor-pointer py-3 px-6 text-xs whitespace-nowrap`}
-          >
-            {value}
-          </span>
-        ))}
-      </div>
       <ApexCharts
         options={options}
         series={series}
         type="area"
         width={"100%"}
-        height={300}
+        height={400}
+        className="overflow-"
       />
     </div>
   );

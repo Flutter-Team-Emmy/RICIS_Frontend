@@ -23,11 +23,14 @@ import SaveDraftLoader from "@/components/loaders/saveDraftLoader";
 import useFiles from "@/hooks/useFiles";
 import useDND from "@/hooks/useDND";
 import { truncateWithEllipsisAndExtension } from "@/utils/helpers";
+import { useSelector } from "react-redux";
+import { selectFormName } from "@/store/features/formSlice";
 
 const Documents = () => {
   const router = useRouter();
   const params = useParams();
   const applicationId = params.applicationId;
+  const form_name = JSON.parse(localStorage.getItem("form_name"));
 
   const [
     createNewDraft,
@@ -165,8 +168,8 @@ const Documents = () => {
             <div className="flex justify-between items-center w-full">
               <div className="">
                 <h1 className="text-black font-bold">
-                  Personnel certification:{" "}
-                  <span className="text-[#46B038]">CLEARANCE</span>
+                  Application Name:
+                  <span className="text-[#46B038]"> {form_name}</span>
                 </h1>
                 <p className="text-gray-600 text-sm">
                   Please add all required documents
@@ -181,9 +184,6 @@ const Documents = () => {
                 <h1 className="text-[#46B038] font-bold">
                   APPLICATION DETAILS:
                 </h1>
-                <span className="font-semibold text-gray-500">
-                  {applicationId}
-                </span>
               </div>
               <div className="grid lg:grid-cols-[3fr_7fr] grid-cols-1 gap-4">
                 <div className="bg-gray-100 space-y-3 px-3 py-2 text-[#0F5805] rounded-md text-sm">

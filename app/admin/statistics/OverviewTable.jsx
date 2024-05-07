@@ -8,6 +8,12 @@ import {
   selectStartDate,
 } from "@/store/features/statisticsSlice";
 import { useSelector } from "react-redux";
+import { baseUrl } from "@/lib/configs";
+import { getToken } from "@/utils/authHelpers";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { ClipLoader } from "react-spinners";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const columns = [
   "Application Name",
@@ -15,74 +21,6 @@ const columns = [
   "Payment channel",
   "Company Revenue",
   "Government Revenue",
-];
-
-// const
-const overviews = [
-  {
-    id: "k1",
-    application_name: "Personnel",
-    application_type: "OClearance and Oil Equipment",
-    company_revenue: "50,000",
-    third_part_revenue: "50,000",
-    total_revenue: "50,000",
-  },
-  {
-    id: "k2",
-    application_name: "Personnel",
-    application_type: "OClearance and Oil Equipment",
-    company_revenue: "50,000",
-    third_part_revenue: "50,000",
-    total_revenue: "50,000",
-  },
-  {
-    id: "k3",
-    application_name: "Personnel",
-    application_type: "OClearance and Oil Equipment",
-    company_revenue: "50,000",
-    third_part_revenue: "50,000",
-    total_revenue: "50,000",
-  },
-  {
-    id: "k4",
-    application_name: "Personnel",
-    application_type: "OClearance and Oil Equipment",
-    company_revenue: "50,000",
-    third_part_revenue: "50,000",
-    total_revenue: "50,000",
-  },
-  {
-    id: "k5",
-    application_name: "Personnel",
-    application_type: "OClearance and Oil Equipment",
-    company_revenue: "50,000",
-    third_part_revenue: "50,000",
-    total_revenue: "50,000",
-  },
-  {
-    id: "k6",
-    application_name: "Personnel",
-    application_type: "OClearance and Oil Equipment",
-    company_revenue: "50,000",
-    third_part_revenue: "50,000",
-    total_revenue: "50,000",
-  },
-  {
-    id: "k7",
-    application_name: "Personnel",
-    application_type: "OClearance and Oil Equipment",
-    company_revenue: "50,000",
-    third_part_revenue: "50,000",
-    total_revenue: "50,000",
-  },
-  {
-    id: "k8",
-    application_name: "Personnel",
-    application_type: "Clearance and Oil Equipment",
-    company_revenue: "50,000",
-    third_part_revenue: "50,000",
-    total_revenue: "50,000",
-  },
 ];
 
 const OverviewTable = () => {
@@ -104,6 +42,58 @@ const OverviewTable = () => {
   console.log({ start_date, end_date });
   console.log(data);
 
+  const token = getToken();
+
+  const [items, setItems] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [index, setIndex] = useState(2);
+
+  useEffect(() => {
+    const endPoint = `transactions/stats/records?page=1&limit=5&start_date=${start_date}&end_date=${end_date}`;
+    axios
+      .get(`${baseUrl}/${endPoint}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => setItems(res.data?.data?.transactions?.data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  const fetchMoreData = () => {
+    axios
+      .get(
+        `${baseUrl}/transactions/stats/records?page=${index}&limit=5&start_date=${start_date}&end_date=${end_date}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        setItems((prevItems) => [
+          ...prevItems,
+          ...res.data?.data?.transactions?.data,
+        ]);
+
+        res.data?.data?.transactions?.data.length > 0
+          ? setHasMore(true)
+          : setHasMore(false);
+      })
+      .catch((err) => console.log(err));
+
+    setIndex((prevIndex) => prevIndex + 1);
+  };
+
+  const scrollLoader = (
+    <div className="flex justify-center w-full mx-auto py-10">
+      <ClipLoader />
+    </div>
+  );
+
   if (isLoading) return <TableSkeleton />;
 
   return (
@@ -119,7 +109,7 @@ const OverviewTable = () => {
           </tr>
         </thead>
         <tbody className="">
-          {stats?.map((overview, index) => {
+          {items?.map((overview, index) => {
             // const columns = Object.keys(data);
             const comapany_revenue =
               overview?.amount * overview?.company_percentage * 100;
@@ -149,6 +139,12 @@ const OverviewTable = () => {
               </tr>
             );
           })}
+          <InfiniteScroll
+            dataLength={items?.length}
+            next={fetchMoreData}
+            hasMore={hasMore}
+            loader={items?.length >= 5 && hasMore && scrollLoader}
+          />
         </tbody>
       </table>
     </div>

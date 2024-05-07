@@ -13,9 +13,7 @@ const StatsCard = ({
   colorCode,
   colorClass,
 }) => {
-  const series = [
-    { name: "dd", data: [2, 24, 19, 33, 15, 90, 20, 50, 80, 67, 9, 44] },
-  ];
+  const series = [{ name: "dd", data: dailyStat }];
   const options = {
     chart: {
       group: "sparklines",
@@ -29,7 +27,7 @@ const StatsCard = ({
         left: 2,
         blur: 4,
         opacity: 1,
-        color: "#69CB5C",
+        color: "transparent",
       },
     },
     stroke: {
@@ -44,22 +42,9 @@ const StatsCard = ({
     },
     xaxis: {
       //   type: 'datetime',
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
+      categories: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     },
-    colors: ["#69CB5C"],
+    colors: [`#${colorCode[0]}`],
   };
   return (
     <div className="whitespace-nowra border-2 border-gray-200 rounded-md bg-white flex-grow basis-1/4">
@@ -84,14 +69,14 @@ const StatsCard = ({
             <span className="">{TrendArrow(`#${colorCode[0]}`)}</span>
           </div>
         </div>
-        <Image src="/images/graph.png" width={200} height={100} />
-        {/* <ApexCharts
-          type="Area"
+        {/* <Image src="/images/graph.png" width={200} height={100} /> */}
+        <ApexCharts
+          type="area"
           series={series}
           options={options}
-          width={150}
-          height={70}
-        /> */}
+          width={180}
+          height={80}
+        />
       </div>
     </div>
   );
