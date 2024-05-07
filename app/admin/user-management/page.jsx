@@ -18,7 +18,7 @@ const UserManagement = () => {
   const totalPages = data?.data?.meta.total;
   console.log(users);
   return (
-    <DashboardLayout header="Admin">
+    <DashboardLayout header="Admin" isSidebarLink={true}>
       <div className="w-full pb-8">
         <h1 className="text-black font-bold text-lg">User Management</h1>
         <p className="text-gray-600 text-sm">

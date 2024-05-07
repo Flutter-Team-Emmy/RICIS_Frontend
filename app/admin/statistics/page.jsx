@@ -95,7 +95,7 @@ const Statistics = () => {
   return (
     <>
       {isEditing && <Filter setIsEditing={setIsEditing} />}
-      <DashboardLayout header="Statistics" icon="">
+      <DashboardLayout header="Statistics" icon="" isSidebarLink={true}>
         <div className="space-y-10 w-full">
           <div className="flex justify-between items-center">
             <div className="space-y-3">

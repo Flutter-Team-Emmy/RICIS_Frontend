@@ -1,7 +1,9 @@
 import Link from "next/link";
 
 const ApplicationStatus = ({ data }) => {
-  console.log(data?.application?.data);
+
+  console.log(data);
+
   return (
     <div className="space-y-8">
       <div className="space-y-2">

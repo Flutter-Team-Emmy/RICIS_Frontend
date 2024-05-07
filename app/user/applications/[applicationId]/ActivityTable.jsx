@@ -68,7 +68,12 @@ const ActivityTable = ({ activities }) => {
 
               case "RESUBMITTED":
                 action = "resubmitted";
-                actionColor = "yellow";
+                actionColor = "#F6BE00";
+                break;
+
+                case "RENEW":
+                action = "renewed";
+                actionColor = "brown";
                 break;
 
               default:
