@@ -41,6 +41,16 @@ export const applicationApi = createApi({
       },
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
     }),
+    renewApplication: builder.mutation({
+      query(payload) {
+        return {
+          url: "/application",
+          method: "PUT",
+          body: payload,
+        };
+      },
+      invalidatesTags: [{ type: "Applications", id: "LIST" }],
+    }),
     getSingleApplication: builder.query({
       query(applicationId) {
         return {
@@ -176,6 +186,7 @@ export const applicationApi = createApi({
 
 export const {
   useAddNewApplicationMutation,
+  useRenewApplicationMutation,
   useUpdateApplicationMutation,
   useGetSingleApplicationQuery,
   useGetAllApplicationsQuery,
