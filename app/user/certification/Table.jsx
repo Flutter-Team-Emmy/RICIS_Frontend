@@ -36,8 +36,19 @@ const tableColumn = [
 
 const Table = () => {
     const [displayOptions, setDisplayOptions] = useState(false);
-    const [id, setId] = useState("");
-    const [value, setValue] = useState("Open");
+    const [clickDetails, setClickDetails] = useState({
+        id: "",
+        value: "Open"
+    });
+
+    const handleClick = (id) => {
+        if (clickDetails.id === id) {
+            setClickDetails({ id: "", value: "Open" });
+        } else {
+            setClickDetails({ id, value: "Close" });
+        }
+    };
+    
 
     const router = useRouter();
 
@@ -126,20 +137,17 @@ const Table = () => {
                                 </td>
                                 <td className={`px-6 py-4`}>
                                     <p
-                                        onClick={() => {
-                                            setId(data.id);
-                                           value === "Open" ? setValue("Close") : setValue("Open");
-                                        }}
+                                        onClick={() => handleClick(data.id)}
                                         className="px-4 py-2 rounded-medium border-gray-300 border-solid border-[1px] w-fit"
                                     >
-                                        {value}
+                                         {clickDetails.id === data.id ? "Close" : "Open"}
                                     </p>
-                                    {(data.id === id && value === "Close") && (
-                                        <div className="absolute bg-white py-6 px-4 rounded-lg shadow-xl">
+                                    {(data.id === clickDetails.id && clickDetails.value === "Close") && (
+                                        <div className="absolute bg-white py-6 px-6 rounded-lg shadow-xl right-8">
                                             {data.status === "ACTIVE" ? (
                                                 <div className="space-y-4">
                                                     <p
-                                                        className="flex items-center gap-x-2"
+                                                        className="flex items-center whitespace-nowrap gap-x-2"
                                                         onClick={() =>
                                                             router.push(
                                                                 `/user/applications/${data.application_id}?status=${data.applicationData.status}&id=${data.application_id}`
@@ -150,7 +158,7 @@ const Table = () => {
                                                         <span>View Application</span>
                                                     </p>
                                                     <p
-                                                        className="flex items-center gap-x-2"
+                                                        className="flex items-center whitespace-nowrap gap-x-2"
                                                         onClick={handleDownload}
                                                     >
                                                         {isDownloading ? (
@@ -165,7 +173,7 @@ const Table = () => {
                                                         </span>
                                                     </p>
                                                     <p
-                                                        className="flex items-center gap-x-2"
+                                                        className="flex items-center whitespace-nowrap gap-x-2"
                                                         onClick={() =>
                                                             mailCertificate(data?.application_id)
                                                         }
@@ -185,7 +193,7 @@ const Table = () => {
                                             ) : (
                                                 <div className="space-y-4">
                                                     <p
-                                                        className="flex items-center gap-x-2"
+                                                        className="flex items-center whitespace-nowrap gap-x-2"
                                                         onClick={() =>
                                                             router.push(
                                                                 `/user/applications/${data.application_id}?status=${data.applicationData.status}&id=${data.application_id}`
@@ -196,7 +204,7 @@ const Table = () => {
                                                         <span>View Application</span>
                                                     </p>
                                                     <p
-                                                        className="flex items-center gap-x-2"
+                                                        className="flex items-center whitespace-nowrap gap-x-2"
                                                         onClick={() =>
                                                             router.push(
                                                                 `/user/certification/${data.application_id}`
@@ -207,7 +215,7 @@ const Table = () => {
                                                         <span> Renew Application</span>
                                                     </p>
                                                     <p
-                                                        className="flex items-center gap-x-2"
+                                                        className="flex items-center whitespace-nowrap gap-x-2"
                                                         onClick={handleDownload}
                                                     >
                                                         {isDownloading ? (
@@ -222,7 +230,7 @@ const Table = () => {
                                                         </span>
                                                     </p>
                                                     <p
-                                                        className="flex items-center gap-x-2"
+                                                        className="flex items-center whitespace-nowrap gap-x-2"
                                                         onClick={() =>
                                                             mailCertificate(data?.application_id)
                                                         }
