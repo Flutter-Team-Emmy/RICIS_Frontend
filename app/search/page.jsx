@@ -16,25 +16,31 @@ const Search = () => {
     const [items, setItems] = useState([]);
     const [refNo, setRefNo] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
 
     const token = getToken();
 
-    const getResult = (e) => {
+    const getResult = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        axios
-            .get(`${baseUrl}/certificates/search-by-ref?ref=${refNo}`, {
+        setError("")
+
+        try {
+            const res = await axios({
+                method: "GET",
+                url: `${baseUrl}/certificates/search-by-ref?ref=${refNo}`,
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",
                 },
             })
-            .then((res) => {
-                setIsLoading(false);
-                setItems(res.data.data.certificates);
-            })
-            .catch((err) => console.log(err));
-
+            setItems(res.data.data.certificates)
+        } catch (error) {
+            console.log(error)
+            setError(error.response.data.error)
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     console.log(items)
@@ -79,22 +85,23 @@ const Search = () => {
                         onClick={getResult}
                     >
                         {isLoading ?
-                           <div className="flex gap-x-2 items-center">
-                              <ClipLoader color="white" size={15} />
-                              <p className="text-white">Searching...</p>
-                           </div>
+                            <div className="flex gap-x-2 items-center">
+                                <ClipLoader color="white" size={15} />
+                                <p className="text-white">Searching...</p>
+                            </div>
                             :
                             "Search"
                         }
                     </button>
                 </div>
             </form>
-            {items.length === 0 ?
+            {error &&
                 <div className="w-full space-y-8 mt-28 pb-12">
                     <img className="mx-auto w-36 h-36" src="/images/Group.svg" alt="" />
                     <h1 className="text-slate-300 text-xl text-center">No record found on system</h1>
                 </div>
-                :
+            }
+            {(items?.length !== 0 && !error) &&
                 <div className="w-[90%] mx-auto font-bold text-md text-center pt-8">
                     <p className="">Result for Certification Number: {items[0]?.ref_no}</p>
                     <div className="bg-white p-6 mt-12 w-full mx-auto rounded-md shadow-md">
