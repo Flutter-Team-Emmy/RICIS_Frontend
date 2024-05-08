@@ -22,7 +22,7 @@ const NotificationsAdmin = () => {
 
   useEffect(() => {
     axios
-      .get(`${baseUrl}/notifications?page=1&limit=5`, {
+      .get(`${baseUrl}/notifications?page=1&limit=20`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -34,7 +34,7 @@ const NotificationsAdmin = () => {
 
   const fetchMoreData = () => {
     axios
-      .get(`${baseUrl}/notifications?page=${index}&limit=5`, {
+      .get(`${baseUrl}/notifications?page=${index}&limit=20`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
