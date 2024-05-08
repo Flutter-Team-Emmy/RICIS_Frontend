@@ -7,33 +7,83 @@ import { TabsList } from "@/components/ui/tabs";
 import { TabsTrigger } from "@/components/ui/tabs";
 import { TabsContent } from "@/components/ui/tabs";
 import ActivityTable from "./ActivityTable";
-import { useGetApplicationActivityQuery } from "@/store/api/applicationApi";
-import { useParams } from "next/navigation";
+import {
+  useGetApplicationActivityQuery,
+  useReSubmitApplicationMutation,
+} from "@/store/api/applicationApi";
+import { useParams, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { selectRole } from "@/store/features/userSlice";
+import Btn from "@/components/Btn";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
+import { normalizeErrors } from "@/utils/helpers";
 
 const ApplicationRejected = ({ data, reason }) => {
+  const router = useRouter();
   const params = useParams();
   const applicationId = params.applicationId;
 
   const role = useSelector(selectRole);
   const isAdmin = role === "ADMIN";
 
-  const { data: applicationActivityData, isLoading } = useGetApplicationActivityQuery(applicationId);
+  const { data: applicationActivityData, isLoading } =
+    useGetApplicationActivityQuery(applicationId);
   const activities = applicationActivityData?.data.application_activities;
 
-  console.log(reason);
+  const [
+    resubmitApplication,
+    { isLoading: resubmiting, error: resubmitError, isSuccess: resubitSuccess },
+  ] = useReSubmitApplicationMutation();
+  console.log(data);
+
+  const generateFormData = () => {
+    let formData = {};
+    data?.application?.data?.forEach((field) => {
+      formData[field?.form_field?.name] = field?.value;
+    });
+    return formData;
+  };
+
+  const resubmitRejectedApplication = async () => {
+    const formData = generateFormData();
+    console.log(formData);
+    const payload = {
+      form_id: applicationId,
+      as_draft: false,
+      data: formData,
+    };
+    await resubmitApplication({ payload, applicationId });
+  };
+
+  useEffect(() => {
+    if (resubmitError) {
+      const err = normalizeErrors(resubmitError);
+      toast.error(err, { autoClose: 30000 });
+    }
+    if (resubitSuccess) {
+      toast.success("Your application has been resubmitted", {
+        autoClose: 10000,
+      });
+      router.push(
+        `/user/applications/${applicationId}?status=PENDING&id=${applicationId}`
+      );
+    }
+  }, [resubitSuccess, resubmitError]);
+
+  const navigateTEditApplication = () => {
+    router.push(`/user/applications/${applicationId}/edit`);
+  };
 
   const applicationDetailsSection = (
     <>
-      {
-        data ? (
-          <ApplicationStatus data={data} />
-        ) : (
-          <div className="flex items-center justify-center h-[40vh] w-full  ">
-            <ClipLoader color="#46B038" size={30} />
-          </div >
-        )}
+      {data ? (
+        <ApplicationStatus data={data} />
+      ) : (
+        <div className="flex items-center justify-center h-[40vh] w-full  ">
+          <ClipLoader color="#46B038" size={30} />
+        </div>
+      )}
       <div className="lg:w-[45%] h-[80%] mt-8 pb-6 px-6 pt-8 bg-[#FFF6F6] text-[#7D3434] border-solid border-[1px] border-[#7D3434] rounded-md">
         <p className="pb-4 font-bold">Reason:</p>
         <p className="text-sm text-justify">{reason}</p>
@@ -41,35 +91,36 @@ const ApplicationRejected = ({ data, reason }) => {
     </>
   );
 
-
   return (
     <DashboardLayout header="Application">
-      <div className="lg:flex lg:justify-between w-[95%] pb-8">
-        <div className="w-full pb-8">
-          <h1 className="text-black font-bold text-2xl">
+      <div className="flex lg:flex-row flex-col lg:justify-between lg:items-center pb-8">
+        <div className="w-full pb-4">
+          <h1 className="text-black font-bold lg:text-xl text-lg">
             Application <span className="text-red-600">Rejected</span>
           </h1>
-          {/* <p className="text-gray-600 text-sm">
-            Sorry! Your Application was unsuccessful
-          </p> */}
         </div>
-        <div className="lg:w-[30%]">
-          {/* <Image src={certificateIcon} alt="download certificate icon" /> */}
-          {/* <button className="flex items-center gap-1 text-sm bg-[#46B038] text-white py-2 px-4 w-fit rounded-md hover:opacity-70">
-            <span className="">{DownloadIcon}</span>
-            <span className="">Download Certificate</span>
-          </button> */}
+        <div className="flex gap-3 lg:items-center">
+          <Btn text="Edit" handleClick={navigateTEditApplication} />
+          <Btn
+            text="Re-Submit"
+            handleClick={resubmitRejectedApplication}
+            bgColorClass="bg-[#46B038]"
+            loading={resubmiting}
+            loadingMsg="Re-submitting..."
+          />
         </div>
       </div>
       <div className="bg-white lg:flex lg:justify-between rounded-md pt-12 px-6 pb-6">
-        {isAdmin ?
+        {isAdmin ? (
           <Tabs defaultValue="staff-logs" className="w-full">
             <TabsList className="grid w-full grid-cols-2 lg:w-96 w-full mb-8">
               <TabsTrigger className="space-x-2" value="staff-logs">
                 <span className="">Application Details</span>
                 {/* <span className="">{Log}</span> */}
               </TabsTrigger>
-              <TabsTrigger value="activity">Application Activity Log</TabsTrigger>
+              <TabsTrigger value="activity">
+                Application Activity Log
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="staff-logs">
               {applicationDetailsSection}
@@ -78,11 +129,11 @@ const ApplicationRejected = ({ data, reason }) => {
               <ActivityTable activities={activities} />
             </TabsContent>
           </Tabs>
-          :
+        ) : (
           applicationDetailsSection
-        }
+        )}
       </div>
-    </DashboardLayout >
+    </DashboardLayout>
   );
 };
 

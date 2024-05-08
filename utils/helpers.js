@@ -99,6 +99,17 @@ export const EnLocalDateFormat = (date) => {
   return formattedDate;
 };
 
+// MM/DD/YY
+export const UsLocalDateFormat = (dateString) => {
+  const date = new Date(dateString);
+  const formattedDate = date.toLocaleDateString('en-US', {
+    month: '2-digit', // MM
+    day: '2-digit',   // DD
+    year: 'numeric'   // YYYY
+  });
+  return formattedDate;
+};
+
 // export const removeEmptyFields = (obj) => {
 //   for (let key in obj) {
 //     if (obj[key] === null || obj[key] === undefined || obj[key] === "") {

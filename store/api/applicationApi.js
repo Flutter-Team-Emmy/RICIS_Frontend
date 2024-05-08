@@ -51,6 +51,16 @@ export const applicationApi = createApi({
       },
       invalidatesTags: [{ type: "Applications", id: "LIST" }],
     }),
+    reSubmitApplication: builder.mutation({
+      query({ payload, applicationId }) {
+        return {
+          url: `/application/${applicationId}`,
+          method: "PUT",
+          body: payload,
+        };
+      },
+      invalidatesTags: [{ type: "Applications", id: "LIST" }],
+    }),
     getSingleApplication: builder.query({
       query(applicationId) {
         return {
@@ -187,11 +197,11 @@ export const applicationApi = createApi({
 export const {
   useAddNewApplicationMutation,
   useRenewApplicationMutation,
+  useReSubmitApplicationMutation,
   useUpdateApplicationMutation,
   useGetSingleApplicationQuery,
   useGetAllApplicationsQuery,
   useLazyGetAllApplicationsQuery,
-  // useLazySearchApplicationsQuery,
   useGetCategoriesQuery,
   useGetAllDraftsQuery,
   useGetFormsQuery,

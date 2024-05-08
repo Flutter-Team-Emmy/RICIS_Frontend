@@ -32,21 +32,25 @@ const DatePicker = ({
         <span> {name}</span>
         {required && <span className="text-red-500 text-xl">*</span>}
       </div>
-      <input
-        datepicker
-        datepicker-autohide
-        type="date"
-        className={` ${
-          !isValid ? "border-2 border-red-600" : "border-gray-300"
-        } bg-gray-50 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5`}
-        placeholder="Select date"
-        name={name}
-        id="date-picker"
-        onChange={onChange}
-        value={value}
-        required={required}
-        autoComplete="off"
-      />
+      <div className="">
+        <p className="">{value}</p>
+        <input
+          datepicker
+          datepicker-autohide
+          type="date"
+          className={` ${
+            !isValid ? "border-2 border-red-600" : "border-gray-300"
+          } bg-gray-50 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5`}
+          placeholder="Select date"
+          name={name}
+          id="date-picker"
+          onChange={onChange}
+          // value={value}
+          defaultValue={value}
+          required={required}
+          autoComplete="off"
+        />
+      </div>
       {!isValid && <p className="text-red-500 text-xs">{error}</p>}
     </div>
   );
