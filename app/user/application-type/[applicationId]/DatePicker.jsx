@@ -45,8 +45,7 @@ const DatePicker = ({
           name={name}
           id="date-picker"
           onChange={onChange}
-          // value={value}
-          defaultValue={value}
+          value={value}
           required={required}
           autoComplete="off"
         />
