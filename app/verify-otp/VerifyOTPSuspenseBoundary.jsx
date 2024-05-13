@@ -40,11 +40,11 @@ const VerifyOTPSuspenseBoundary = () => {
   const queryString = param.toString();
 
   const queryParams = decodeUrlQueryParams(queryString);
+  const email_address = queryParams?.email;
 
   const token = getToken();
 
   const handleVerifyOTP = async () => {
-    const email_address = queryParams?.email;
     const payload = { email: email_address, otp: otpValue };
     if (!validator.validateOTPCode(otpValue)) {
       toast.error("Enter valid otp codes!", { autoClose: 10000 });
@@ -60,7 +60,7 @@ const VerifyOTPSuspenseBoundary = () => {
     }
     if (isSuccess) {
       toast.success(data?.message, { autoClose: 7000 });
-      router.push(`/create-account?email=${email}&otp=${otpValue}`);
+      router.push(`/create-account?email=${email_address}&otp=${otpValue}`);
     }
   }, [isSuccess, data?.message, error, otpValue, router]);
 

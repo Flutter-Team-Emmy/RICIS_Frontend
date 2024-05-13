@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { useRegisterUserMutation } from "@/store/api/authApi";
 import { setLoginTime, setToken } from "@/utils/authHelpers";
 import { registrationFormFields } from ".";
-import { normalizeErrors } from "@/utils/helpers";
+import { decodeUrlQueryParams, normalizeErrors } from "@/utils/helpers";
 
 const InitialData = {
   first_name: "",
@@ -38,8 +38,12 @@ const CreateAccoutSuspenseBoundary = () => {
   console.log(data);
 
   const disableBtn = validator.whiteSpaces(formData);
-  const email = param.get("email");
-  const otp = param.get("otp");
+
+  const queryString = param.toString();
+
+  const queryParams = decodeUrlQueryParams(queryString);
+  const email = queryParams?.email;
+  const otp = queryParams?.otp;
 
   const handleRegisterUser = async () => {
     const isInValid = validator.whiteSpaces(formData);
