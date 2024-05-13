@@ -11,7 +11,7 @@ import { validator } from "@/utils/validator";
 import { useRouter } from "next/navigation";
 import { useVerifyResetPasswordOTPMutation } from "@/store/api/authApi";
 import { otpNumbersFields } from ".";
-import { normalizeErrors } from "@/utils/helpers";
+import { decodeUrlQueryParams, normalizeErrors } from "@/utils/helpers";
 import { getToken } from "@/utils/authHelpers";
 import {
   InputOTP,
@@ -28,7 +28,6 @@ const InitialData = {
 };
 
 const VerifyOTPSuspenseBoundary = () => {
-
   const [otpValue, setOtpValue] = useState("");
 
   const param = useSearchParams();
@@ -39,14 +38,15 @@ const VerifyOTPSuspenseBoundary = () => {
   ] = useVerifyResetPasswordOTPMutation();
   const disableBtn = !validator.notEmpty(otpValue);
   const router = useRouter();
-  const email = param.get("email");
-  const as_staff = param.get("as_staff");
 
-  // const otp = Object.values(formData)
-  //   .map((num) => num)
-  //   .join("");
+  const queryString = param.toString();
 
-  const token = getToken();
+  const queryParams = decodeUrlQueryParams(queryString);
+  const email = queryParams?.email;
+  const as_staff = queryParams?.as_staff;
+
+
+  const token = getToken(); 
 
   const handleVerifyOTP = async () => {
     const payload = { email, otp: otpValue };

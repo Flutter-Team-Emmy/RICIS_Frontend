@@ -10,7 +10,7 @@ import {
   useRequestResetPasswordOTPMutation,
   useResetPasswordMutation,
 } from "@/store/api/authApi";
-import { normalizeErrors } from "@/utils/helpers";
+import { decodeUrlQueryParams, normalizeErrors } from "@/utils/helpers";
 import { validator } from "@/utils/validator";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -32,25 +32,18 @@ const NewPasswordSuspense = () => {
     useResetPasswordMutation();
   const token = getToken();
   const isValid = validator.whiteSpaces(formData);
-  const email = param.get("email");
-  const otp = param.get("otp");
-  const as_staff = param.get("as_staff");
   const [isInvalid, setIsInvalid] = useState(false);
-  // const
-  //   const [isChecked, setIsChecked] = useState(false);
 
-  //   const handleCheckboxChange = (e) => {
-  //     setIsChecked(e.target.checked);
-  //   };
+  const queryString = param.toString();
+
+  const queryParams = decodeUrlQueryParams(queryString);
+  const email = queryParams?.email;
+  const as_staff = queryParams?.as_staff;
+  const otp = queryParams?.otp;
 
   const handleResetPassword = async () => {
     const { new_password, confirm_password } = formData;
     const isMatch = validator.confirmPassword(new_password, confirm_password);
-    // const isValid = validator.whiteSpaces(formData);
-
-    // if (!isValid) {
-    //   return toast.warning("Enter all fields", {autoClose: 10000})
-    // }
 
     if (!isMatch) {
       setIsInvalid(true);

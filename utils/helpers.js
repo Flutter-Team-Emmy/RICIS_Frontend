@@ -102,10 +102,10 @@ export const EnLocalDateFormat = (date) => {
 // MM/DD/YY
 export const UsLocalDateFormat = (dateString) => {
   const date = new Date(dateString);
-  const formattedDate = date.toLocaleDateString('en-US', {
-    month: '2-digit', // MM
-    day: '2-digit',   // DD
-    year: 'numeric'   // YYYY
+  const formattedDate = date.toLocaleDateString("en-US", {
+    month: "2-digit", // MM
+    day: "2-digit", // DD
+    year: "numeric", // YYYY
   });
   return formattedDate;
 };
@@ -387,4 +387,17 @@ export const formatNumber = (number) => {
   } else {
     return number?.toString();
   }
+};
+
+export const decodeUrlQueryParams = (queryString) => {
+  let queryParams = {};
+
+  decodeURIComponent(queryString)
+    .split("&")
+    .forEach((query) => {
+      const [key, value] = query.split("=");
+      queryParams[key] = value;
+    });
+
+  return queryParams;
 };

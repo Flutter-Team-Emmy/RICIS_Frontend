@@ -4,14 +4,14 @@ import FPI from "@/components/FPI";
 import FormLayout from "@/components/FormLayout";
 import useForm from "@/hooks/useForm";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { validator } from "@/utils/validator";
 import { useRouter } from "next/navigation";
 import { useVerifyOTPMutation } from "@/store/api/authApi";
 import { otpNumbersFields } from ".";
-import { normalizeErrors } from "@/utils/helpers";
+import { decodeUrlQueryParams, normalizeErrors } from "@/utils/helpers";
 import { getToken } from "@/utils/authHelpers";
 import {
   InputOTPGroup,
@@ -36,15 +36,16 @@ const VerifyOTPSuspenseBoundary = () => {
     useVerifyOTPMutation();
   const disableBtn = !validator.notEmpty(otpValue);
   const router = useRouter();
-  const email = param.get("email");
 
-  // const otp = Object.values(formData)
-  //   .map((num) => num)
-  //   .join("");
+  const queryString = param.toString();
+
+  const queryParams = decodeUrlQueryParams(queryString);
+
   const token = getToken();
 
   const handleVerifyOTP = async () => {
-    const payload = { email, otp: otpValue };
+    const email_address = queryParams?.email;
+    const payload = { email: email_address, otp: otpValue };
     if (!validator.validateOTPCode(otpValue)) {
       toast.error("Enter valid otp codes!", { autoClose: 10000 });
       return;
@@ -61,7 +62,7 @@ const VerifyOTPSuspenseBoundary = () => {
       toast.success(data?.message, { autoClose: 7000 });
       router.push(`/create-account?email=${email}&otp=${otpValue}`);
     }
-  }, [isSuccess, data?.message, email, error, otpValue, router]);
+  }, [isSuccess, data?.message, error, otpValue, router]);
 
   useEffect(() => {
     if (token) {
