@@ -11,6 +11,7 @@ import {
 } from "@/store/features/transactionSlice";
 import { selectUser } from "@/store/features/userSlice";
 import { selectRole } from "@/store/features/userSlice";
+import { EmptyRecord } from "@/svgs";
 
 const tableHeader = [
   "Ref No",
@@ -44,7 +45,7 @@ const TransactionsTable = () => {
 
   if (isLoading) return <TableSkeleton />;
 
-  return (
+  return transactions?.length !== 0 ? (
     <div className="w-full overflow-x-scroll lg:overflow-x-hidden z-[-10] rounded-lg text-xs">
       <table className="w-full text-left rtl:text-right">
         <thead className={`bg-dark-gray text-gray-400 py-4 bg-gray-100`}>
@@ -102,6 +103,13 @@ const TransactionsTable = () => {
           })}
         </tbody>
       </table>
+    </div>
+  ) : (
+    <div className="flex flex-col items-center pt-20 gap-4 bg-white rounded-[4px] h-screen">
+      <div className="animate-bounce">{EmptyRecord}</div>
+      <h1 className="text-gray-500 lg:text-lg text-sm text-center">
+        You haven't made any transaction yet.
+      </h1>
     </div>
   );
 };

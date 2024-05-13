@@ -18,6 +18,7 @@ const DashboardLayout = ({ children, header, icon, isSidebarLink }) => {
 
   const currentUser = useSelector(selectUser);
   const role = useSelector(selectRole);
+  const isUser = role === "USER";
   const isOnline = useNetworkStatus();
 
   console.log("gottend here ", role);
@@ -51,13 +52,14 @@ const DashboardLayout = ({ children, header, icon, isSidebarLink }) => {
             />
             <div className="w-full flex justify-between items-center">
               <div className="items-center gap-x-3 hidden lg:flex">
-                {!isSidebarLink && <span
-                  className="cursor-pointer hover:opacity-70 p-1 rounded-full border-2 border-dashed"
-                  onClick={() => router.back()}
-                >
-                  {ArrowLeft}
-                </span>
-                }
+                {!isSidebarLink && (
+                  <span
+                    className="cursor-pointer hover:opacity-70 p-1 rounded-full border-2 border-dashed"
+                    onClick={() => router.back()}
+                  >
+                    {ArrowLeft}
+                  </span>
+                )}
                 {isOnline ? (
                   <h1 className="text-slate-800 text-lg font-semibold inline whitespace-nowrap">
                     {header}
@@ -70,9 +72,14 @@ const DashboardLayout = ({ children, header, icon, isSidebarLink }) => {
                 )}
               </div>
               <div className="flex items-center w-full justify-end gap-4">
-                <div className="p-2 border-2 rounded-full">
-                  <span className="">{BellIcon}</span>
-                </div>
+                {isUser && (
+                  <div
+                    onClick={() => router.push("/user/notifications")}
+                    className="p-2 border-2 rounded-full cursor-pointer"
+                  >
+                    <span className="">{BellIcon}</span>
+                  </div>
+                )}
                 <div className="p-1 border-2 rounded-full">
                   <Avatar currentUser={currentUser} role={role} />
                 </div>

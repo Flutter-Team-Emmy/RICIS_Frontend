@@ -1,6 +1,6 @@
 "use client";
 
-import { SortIcon } from "@/svgs";
+import { EmptyRecord, SortIcon } from "@/svgs";
 import { usePathname, useRouter } from "next/navigation";
 import {
   useGetAllApplicationsQuery,
@@ -90,9 +90,13 @@ const Table = ({ isLoading, drafts }) => {
                   {drafts?.user?.first_name + " " + drafts?.user?.last_name}
                 </td> */}
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="bg-gray-100 text-gray-600 py-2 px-6 font-semibold rounded-3xl">Draft</span>
+                  <span className="bg-gray-100 text-gray-600 py-2 px-6 font-semibold rounded-3xl">
+                    Draft
+                  </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">{drafts?.form?.amount}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {drafts?.form?.amount}
+                </td>
                 {/* <td className="px-6 py-4">
               <span className={`px-2.5 py-1.5 text-sm bg-gray-200 rounded-3xl py-1 px-3`}>Draft</span>
             </td> */}
@@ -107,10 +111,10 @@ const Table = ({ isLoading, drafts }) => {
       </table>
     </div>
   ) : (
-    <div className="flex items-center justify-center bg-white rounded-[4px] ">
-      <h1>
-        You currently dont have an application, create an application to get
-        started
+    <div className="flex flex-col items-center justify-center gap-4 bg-white rounded-[4px] h-screen">
+      <div className="animate-bounce">{EmptyRecord}</div>
+      <h1 className="text-gray-500 lg:text-lg text-sm text-center">
+        You haven't added any draft
       </h1>
     </div>
   );

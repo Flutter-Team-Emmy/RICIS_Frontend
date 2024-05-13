@@ -13,6 +13,7 @@ import { useSearchParams } from "next/navigation";
 import { capitalizeFirstLetter } from "@/utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  selectApplications,
   selectFirstPage,
   selectLastPage,
   setPage,
@@ -27,6 +28,7 @@ const ApplicationsSuspense = () => {
   const dispatch = useDispatch();
   const firstPage = useSelector(selectFirstPage);
   const lastPage = useSelector(selectLastPage);
+  const applications = useSelector(selectApplications);
   const pageCount = lastPage;
 
   const pathname = usePathname();

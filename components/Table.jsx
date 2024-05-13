@@ -33,6 +33,7 @@ const tableColumn = [
   "Application Name",
   "Status",
   "Date Applied",
+  "Date Modified",
 ];
 
 const Table = () => {
@@ -209,6 +210,10 @@ const Table = () => {
                   <p className="">{time.formatDate(application?.created_at)}</p>
                   <p className="">{time.formatTime(application?.created_at)}</p>
                 </td>
+                <td className="px-6 py-4 space-y-1 mr-auto">
+                  <p className="">{time.formatDate(application?.updated_at)}</p>
+                  <p className="">{time.formatTime(application?.updated_at)}</p>
+                </td>
               </tr>
             ))
           )}
@@ -216,18 +221,11 @@ const Table = () => {
       </table>
     </div>
   ) : (
-    <div className="flex flex-col items-center justify-center gap-4 bg-white rounded-[4px] py-10">
+    <div className="flex flex-col items-center pt-20 gap-4 bg-white rounded-[4px] h-screen">
       <div className="animate-bounce">{EmptyPagesIcon}</div>
       <h1 className="text-gray-500 lg:text-lg text-sm text-center">
         No application found
       </h1>
-      <button
-        onClick={openNewApplication}
-        className="bg-blue-700 mt-6 w-fit px-4 py-2.5 text-sm flex items-center gap-3 rounded-md text-white hover:bg-blue-600"
-      >
-        <span className="">{ApplicationAdd}</span>
-        <span className="">New Application</span>
-      </button>
     </div>
   );
 };
