@@ -10,7 +10,7 @@ const ApprovalFlow = () => {
   const invoice = data?.data?.transaction;
 
   const governentPercentage = invoice?.third_party_percentage * 100;
-  const governentAmount = invoice?.amount * invoice?.company_percentage;
+  const governentAmount = invoice?.amount * invoice?.third_party_percentage;
   const companyPercentage = invoice?.company_percentage * 100;
   const companyAmount = invoice?.amount * invoice?.company_percentage;
 

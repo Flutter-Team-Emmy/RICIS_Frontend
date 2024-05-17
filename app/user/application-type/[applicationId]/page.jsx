@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import WithAuth from "@/components/withAuth";
 import FPI from "../../FPI";
@@ -45,10 +45,14 @@ const ApplicationFormFields = () => {
 
   console.log(fields);
 
+  const formFields = useMemo(() => {
+    return fields?.filter((field) => field.page === 1 || field.page === 2);
+  }, [fields]);
+
   // forms fields are on page one and 2 of fields data
-  const formFields = fields?.filter(
-    (field) => field.page === 1 || field.page === 2
-  );
+  // const formFields = fields?.filter(
+  //   (field) => field.page === 1 || field.page === 2
+  // );
 
   // documents are on page 3 of fiels data
   const generatedDocuments = fields?.filter((field) => field.page === 3);
@@ -154,7 +158,11 @@ const ApplicationFormFields = () => {
     }
 
     if (validate) {
-      const transformedFormData = convertToValidNumberType(nonEmptyFields);
+      const formFieldTypesObj = JSON.parse(localStorage.getItem("errorFields"));
+      const transformedFormData = convertToValidNumberType(
+        nonEmptyFields,
+        formFieldTypesObj
+      );
       const payload = {
         form_id: applicationId,
         data: transformedFormData,

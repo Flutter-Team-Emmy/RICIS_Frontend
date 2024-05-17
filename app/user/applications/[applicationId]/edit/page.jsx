@@ -10,7 +10,7 @@ import TextArea from "../../../application-type/[applicationId]/TextArea";
 import DatePicker from "../../../application-type/[applicationId]/DatePicker";
 import { FieldTypes } from "../../../application-type/[applicationId]";
 import useForm from "@/hooks/useForm";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import useValidateForm from "@/hooks/useValidateForm";
 import { UsLocalDateFormat } from "@/utils/helpers";
@@ -26,9 +26,15 @@ const Edit = () => {
   const form_name = data?.form?.name;
   console.log(data);
 
-  const formFields = application?.filter(
-    (field) => field?.form_field?.page === 1 || field?.form_field?.page === 2
-  );
+  const formFields = useMemo(() => {
+    return application?.filter(
+      (field) => field?.form_field?.page === 1 || field?.form_field?.page === 2
+    );
+  }, [application]);
+
+  // const formFields = application?.filter(
+  //   (field) => field?.form_field?.page === 1 || field?.form_field?.page === 2
+  // );
 
   // documents are on page 3 of fiels data
   const generatedEditDocuments = application?.filter(
@@ -64,7 +70,7 @@ const Edit = () => {
               ? ""
               : field?.form_field.type === "DATE"
               ? UsLocalDateFormat(field.value)
-              : field.value;
+              : String(field.value);
           fieldsInitialErrorStates[field?.form_field?.name] = {
             value: true,
             type: field?.form_field.type,

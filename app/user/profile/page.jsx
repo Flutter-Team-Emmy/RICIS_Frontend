@@ -106,7 +106,6 @@ const Profile = () => {
               ))}
           </div>
           <div className="flex flex-col lg:flex-row w-full items-center gap-4">
-            {/* <Btn text="cancel" bgColorClass="bg-gray-500"></Btn> */}
             <Btn
               text="Save changes"
               loading={isUpdatingBioData}
@@ -114,13 +113,11 @@ const Profile = () => {
               handleClick={updateBio}
               disabled={btnIsdisabled}
               className="w-full"
+              bgColorClass="bg-[#46B038]"
             ></Btn>
             <Btn
               text="Change Password"
-              // loading={isUpdatingBioData}
-              // loadingMsg="saving.."
               handleClick={() => router.push("/user/profile/change-password")}
-            // disabled={btnIsdisabled}
             ></Btn>
           </div>
         </div>

@@ -165,44 +165,45 @@ const ApplicationPending = ({ data }) => {
         </div>
       )}
       {!type &&
-        (isAdmin ? (
-          <div className="flex gap-x-4 w-full lg:justify-start mt-8">
-            <button
-              className="rounded-md h-[50%] text-sm text-[#fff] p-2  bg-[#46B038]"
-              onClick={() => {
-                setStatus("APPROVED");
-                openModal();
-              }}
-            >
-              Approve
-            </button>
-            <button
-              className="text-sm bg-red-500 h-[50%] text-white py-2 px-4 w-fit rounded-md"
-              onClick={() => {
-                setStatus("REJECTED");
-                openModal();
-                // setSaveBtnLoader(true);
-              }}
-            >
-              {rejectBtnLoader ? (
-                <ClipLoader color="#fff" size={25} />
-              ) : (
-                "Reject"
-              )}
-            </button>
-          </div>
-        ) : (
-          data?.application?.transactions?.length === 0 && (
-            <div className="mt-8">
-              <Btn
-                text="Make payment"
-                // loading={isLoading}
-                // loadingMsg="creating transaction..."
-                handleClick={() => setPayementModalIsOpen(true)}
-              />
-            </div>
-          )
-        ))}
+        (isAdmin
+          ? data &&
+            data?.application?.transactions?.length !== 0 && (
+              <div className="flex gap-x-4 w-full lg:justify-start mt-8">
+                <button
+                  className="rounded-md h-[50%] text-sm text-[#fff] p-2  bg-[#46B038]"
+                  onClick={() => {
+                    setStatus("APPROVED");
+                    openModal();
+                  }}
+                >
+                  Approve
+                </button>
+                <button
+                  className="text-sm bg-red-500 h-[50%] text-white py-2 px-4 w-fit rounded-md"
+                  onClick={() => {
+                    setStatus("REJECTED");
+                    openModal();
+                    // setSaveBtnLoader(true);
+                  }}
+                >
+                  {rejectBtnLoader ? (
+                    <ClipLoader color="#fff" size={25} />
+                  ) : (
+                    "Reject"
+                  )}
+                </button>
+              </div>
+            )
+          : data?.application?.transactions?.length === 0 && (
+              <div className="mt-8">
+                <Btn
+                  text="Make payment"
+                  // loading={isLoading}
+                  // loadingMsg="creating transaction..."
+                  handleClick={() => setPayementModalIsOpen(true)}
+                />
+              </div>
+            ))}
     </>
   );
 

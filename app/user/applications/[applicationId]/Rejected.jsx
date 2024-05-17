@@ -25,6 +25,7 @@ const ApplicationRejected = ({ data, reason }) => {
   const applicationId = params.applicationId;
 
   const role = useSelector(selectRole);
+  const isUser = role === "USER";
   const isAdmin = role === "ADMIN";
 
   const { data: applicationActivityData, isLoading } =
@@ -65,9 +66,7 @@ const ApplicationRejected = ({ data, reason }) => {
       toast.success("Your application has been resubmitted", {
         autoClose: 10000,
       });
-      router.push(
-        `/user/applications/${applicationId}?status=PENDING&id=${applicationId}`
-      );
+      router.push(`/user`);
     }
   }, [resubitSuccess, resubmitError]);
 
@@ -99,16 +98,18 @@ const ApplicationRejected = ({ data, reason }) => {
             Application <span className="text-red-600">Rejected</span>
           </h1>
         </div>
-        <div className="flex gap-3 lg:items-center">
-          <Btn text="Edit" handleClick={navigateTEditApplication} />
-          <Btn
-            text="Re-Submit"
-            handleClick={resubmitRejectedApplication}
-            bgColorClass="bg-[#46B038]"
-            loading={resubmiting}
-            loadingMsg="Re-submitting..."
-          />
-        </div>
+        {isUser && (
+          <div className="flex gap-3 lg:items-center">
+            <Btn text="Edit" handleClick={navigateTEditApplication} />
+            <Btn
+              text="Re-Submit"
+              handleClick={resubmitRejectedApplication}
+              bgColorClass="bg-[#46B038]"
+              loading={resubmiting}
+              loadingMsg="Re-submitting..."
+            />
+          </div>
+        )}
       </div>
       <div className="bg-white lg:flex lg:justify-between rounded-md pt-12 px-6 pb-6">
         {isAdmin ? (

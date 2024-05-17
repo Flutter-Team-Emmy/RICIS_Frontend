@@ -11,7 +11,7 @@ import TextArea from "../../application-type/[applicationId]/TextArea";
 import DatePicker from "../../application-type/[applicationId]/DatePicker";
 import { FieldTypes } from "../../application-type/[applicationId]";
 import useForm from "@/hooks/useForm";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import useValidateForm from "@/hooks/useValidateForm";
 
@@ -29,9 +29,15 @@ const Draft = () => {
   const form_name = draft?.form?.name;
   console.log(data);
 
-  const formFields = draft?.data?.filter(
-    (field) => field?.form_field?.page === 1 || field?.form_field?.page === 2
-  );
+  const formFields = useMemo(() => {
+    return draft?.data?.filter(
+      (field) => field?.form_field?.page === 1 || field?.form_field?.page === 2
+    );
+  }, [draft]);
+
+  // const formFields = draft?.data?.filter(
+  //   (field) => field?.form_field?.page === 1 || field?.form_field?.page === 2
+  // );
 
   // documents are on page 3 of fiels data
   const generatedDraftDocuments = draft?.data?.filter(

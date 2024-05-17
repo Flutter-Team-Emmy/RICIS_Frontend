@@ -72,36 +72,45 @@ const NotificationsAdmin = () => {
           </p>
         </div>
         <div className="bg-white p-6 space-y-4">
-          {items?.map((notification) => (
-            <div
-              onClick={() =>
-                router.push(`/user/notifications/${notification?.id}`)
-              }
-              className="border-b-gray border-b-solid border-b-[1px] pb-4 space-y-2 bg-gray-100 w-full p-4 rounded-md"
-              key={notification.id}
-            >
-              <div className="lg:flex lg:justify-between space-y-2">
-                <p
-                  className="px-4 py-1 text-[0.7rem] font-bold rounded-md w-fit"
-                  style={{
-                    backgroundColor: `#${notification?.bgColor}`,
-                    color: `#${notification?.textColor}`,
-                  }}
-                >
-                  {notification?.type}
-                </p>
-                <div className="flex text-sm items-center gap-x-2 w-full lg:w-[20%]">
-                  <img src="/images/timeIcon.svg" alt="" />
-                  <p>{time.formatDate(notification?.created_at)}</p>
-                  <p>at {time.formatTime(notification?.created_at)}</p>
+          {items?.map((notification) => {
+            const message = notification?.message;
+            const phrases = message?.split("\n");
+
+            return (
+              <div
+                onClick={() =>
+                  router.push(`/user/notifications/${notification?.id}`)
+                }
+                className="border-b-gray border-b-solid border-b-[1px] pb-4 space-y-2 bg-gray-100 w-full p-4 rounded-md"
+                key={notification.id}
+              >
+                <div className="lg:flex lg:justify-between space-y-2">
+                  <p
+                    className="px-4 py-1 text-[0.7rem] font-bold rounded-md w-fit"
+                    style={{
+                      backgroundColor: `#${notification?.bgColor}`,
+                      color: `#${notification?.textColor}`,
+                    }}
+                  >
+                    {notification?.type}
+                  </p>
+                  <div className="flex text-sm items-center gap-x-2 w-full lg:w-[20%]">
+                    <img src="/images/timeIcon.svg" alt="" />
+                    <p>{time.formatDate(notification?.created_at)}</p>
+                    <p>at {time.formatTime(notification?.created_at)}</p>
+                  </div>
+                </div>
+                <h3 className="font-bold text-sm">{notification?.title}</h3>
+                <div className="">
+                  {phrases.map((phrase, index) => (
+                    <p key={index} className="text-sm message-container">
+                      {phrase}
+                    </p>
+                  ))}
                 </div>
               </div>
-              <h3 className="font-bold text-sm">{notification?.title}</h3>
-              <p className="text-sm message-container">
-                {notification?.message}
-              </p>
-            </div>
-          ))}
+            );
+          })}
           <InfiniteScroll
             dataLength={items?.length}
             next={fetchMoreData}

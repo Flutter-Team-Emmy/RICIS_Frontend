@@ -55,6 +55,9 @@ const Preview = () => {
   const storedFormData = JSON.parse(localStorage.getItem("editFormData"));
   const formData = Object.keys(storedFormData);
 
+  const generatedDocumentsArray =
+    generatedDocuments !== "undefined" ? JSON.parse(generatedDocuments) : [];
+
   const replacedDocuments =
     documents?.length > 0
       ? documents?.filter((doc) => doc.data.length !== 0)
@@ -63,8 +66,8 @@ const Preview = () => {
 
   const unchangedDocuments =
     replacedDocuments?.length === 0
-      ? JSON.parse(generatedDocuments)
-      : JSON.parse(generatedDocuments)?.filter((doc) => {
+      ? generatedDocumentsArray
+      : generatedDocumentsArray?.filter((doc) => {
           return replacedDocuments?.find(
             (replacedDoc) => replacedDoc.name !== doc?.form_field.name
           );
@@ -238,7 +241,7 @@ const Preview = () => {
   const atLeastOneDocument = documents?.some((doc) => doc.data.length !== 0);
   const noNewDocument = documents?.every((doc) => doc.data.length === 0);
   const allNewDocuments =
-    JSON.parse(generatedDocuments)?.length === documents?.length
+    generatedDocumentsArray?.length === documents?.length
       ? documents?.every((doc) => doc.data.length !== 0)
       : false;
 
@@ -337,11 +340,11 @@ const Preview = () => {
                     </div>
                   </>
                 )}
-              {noNewDocument && (
+              {generatedDocuments !== "undefined" && noNewDocument && (
                 <div className="pt-8 space-y-6">
                   <p className="font-semibold">Applicant's Documents</p>
                   <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-4 lg:gap-y-8 gap-y-6 text-sm">
-                    {JSON.parse(generatedDocuments)?.map((doc) => (
+                    {generatedDocumentsArray?.map((doc) => (
                       <div key={doc} className="space-y-3">
                         <p className="text-[#69CB5C]">{doc?.form_field.name}</p>
                         <div className="space-y-3">
@@ -352,7 +355,7 @@ const Preview = () => {
                   </div>
                 </div>
               )}
-              {allNewDocuments && (
+              {generatedDocuments !== "undefined" && allNewDocuments && (
                 <div className="pt-8 space-y-6">
                   <p className="font-semibold">Applicant's Documents</p>
                   <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-4 lg:gap-y-8 gap-y-6 text-sm">

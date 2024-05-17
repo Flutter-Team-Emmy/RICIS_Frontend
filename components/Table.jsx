@@ -210,7 +210,7 @@ const Table = () => {
                   <p className="">{time.formatDate(application?.created_at)}</p>
                   <p className="">{time.formatTime(application?.created_at)}</p>
                 </td>
-                <td className="px-6 py-4 space-y-1 mr-auto">
+                <td className="px-8 py-4 space-y-1 text-end ">
                   <p className="">{time.formatDate(application?.updated_at)}</p>
                   <p className="">{time.formatTime(application?.updated_at)}</p>
                 </td>

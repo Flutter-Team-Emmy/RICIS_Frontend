@@ -6,19 +6,24 @@ import { applications, drafts } from "@/utils/data";
 import { useGetAllDraftsQuery } from "@/store/api/applicationApi";
 import WithAuth from "@/components/withAuth";
 import Paginations from "@/components/Pagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Drafts = () => {
   const [page, setPage] = useState(0);
-  const { isLoading, isSuccess, isError, error, data } = useGetAllDraftsQuery({
-    page: page === 0 ? 1 : page,
-    limit: 20,
-  });
+  const { isLoading, isSuccess, isError, error, data, refetch } =
+    useGetAllDraftsQuery({
+      page: page === 0 ? 1 : page,
+      limit: 20,
+    });
   console.log(data);
 
   const pageCount = data?.data?.draft_applications?.meta?.lastPage;
 
   const drafts = data?.data.draft_applications.data;
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   return (
     <DashboardLayout header="Drafts" icon="" isSidebarLink={true}>

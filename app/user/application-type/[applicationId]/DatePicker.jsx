@@ -29,11 +29,11 @@ const DatePicker = ({
   return (
     <div class="w-full max-w-sm space-y-2 ">
       <div className="">
-        <span> {name}</span>
+        <span className="font-semibold text-gray-600 text-sm"> {name}</span>
         {required && <span className="text-red-500 text-xl">*</span>}
       </div>
       <div className="">
-        <p className="">{value}</p>
+        <p className="text-sm font-semibold">{value}</p>
         <input
           datepicker
           datepicker-autohide
