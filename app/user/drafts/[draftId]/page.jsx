@@ -69,7 +69,11 @@ const Draft = () => {
       if (formFields?.length !== 0) {
         formFields?.forEach((field) => {
           InitialData[field?.form_field?.name] =
-            field.value === null ? "" : field.value;
+            field.value === null
+              ? ""
+              : typeof field.value === "number"
+              ? String(field.value)
+              : field.value;
           fieldsInitialErrorStates[field?.form_field?.name] = {
             value: true,
             type: field?.form_field.type,
