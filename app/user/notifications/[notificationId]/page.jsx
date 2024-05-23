@@ -6,14 +6,13 @@ import { time } from "@/utils/time&dates";
 import { useParams } from "next/navigation";
 
 const Notification = () => {
-
   const params = useParams();
   const notificationId = params.notificationId;
 
   const { data, isLoading } = useGetSingleNotificationQuery(notificationId);
   const notification = data?.data.notification;
 
-  console.log(data)
+  console.log(data);
 
   const loader = (
     <div className="pb-4 bg-gray-100 w-full space-y-6 bg-white px-4 py-8 space-y-10 w-full h-screen">
@@ -29,18 +28,21 @@ const Notification = () => {
     </div>
   );
 
+  const message = notification?.message;
+  const phrases = message?.split("\n");
+
   return (
     <DashboardLayout header="Notification" icon="">
-      {isLoading ?
+      {isLoading ? (
         loader
-        :
+      ) : (
         <div className="pb-4 bg-gray-100 w-full space-y-6 bg-white px-4 py-8 space-y-10 w-full h-screen">
           <div className="lg:flex lg:justify-between">
             <p
               className="px-4 py-1 text-[0.7rem] font-bold rounded-md w-fit"
               style={{
                 backgroundColor: `#${notification?.bgColor}`,
-                color: `#${notification?.textColor}`
+                color: `#${notification?.textColor}`,
               }}
             >
               {notification?.type}
@@ -52,9 +54,15 @@ const Notification = () => {
             </div>
           </div>
           <h3 className="font-bold text-sm">{notification?.title}</h3>
-          <p className="text-sm">{notification?.message}</p>
+          <div className="space-y-[2px]">
+            {phrases.map((phrase, index) => (
+              <p key={index} className="text-sm message-container">
+                {phrase}
+              </p>
+            ))}
+          </div>
         </div>
-      }
+      )}
     </DashboardLayout>
   );
 };

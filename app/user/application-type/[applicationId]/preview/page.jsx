@@ -11,7 +11,7 @@ import { cloud_name, upload_preset } from "@/lib/configs";
 import { useAddNewApplicationMutation } from "@/store/api/applicationApi";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { normalizeErrors } from "@/utils/helpers";
+import { normalizeErrors, resetForm } from "@/utils/helpers";
 import PaymentModal from "@/components/modals/paymentModal";
 import { getDocuments } from "@/lib/indexDB";
 import { ImageUpload } from "@/components/imageUpload";
@@ -182,6 +182,8 @@ const Preview = () => {
         .catch((error) => {
           console.error("Failed to delete all documents:", error);
         });
+
+      resetForm(storedFormData, "formData");
 
       toast.success("Successfully created form!", { autoClose: 5000 });
     }

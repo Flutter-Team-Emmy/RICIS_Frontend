@@ -132,7 +132,7 @@ const Filter = ({ setIsEditing }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      setIsSuccess(false);
+      setIsEditing(false);
     }
   }, [isSuccess]);
 

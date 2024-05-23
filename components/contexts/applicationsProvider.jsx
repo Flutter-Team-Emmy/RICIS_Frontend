@@ -2,8 +2,10 @@
 
 import { useGetAllApplicationsQuery } from "@/store/api/applicationApi";
 import {
-  selectAfterDate,
-  selectBeforeDate,
+  selectAppliedAfterDate,
+  selectAppliedBeforeDate,
+  selectModifiedAfterDate,
+  selectModifiedBeforeDate,
   selectPage,
   selectTotalPage,
   setApplications,
@@ -17,7 +19,7 @@ import { getToken } from "@/utils/authHelpers";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { baseUrl } from "@/lib/configs";
-import { getDateModified } from "@/utils/helpers";
+import { EnLocalDateFormat, getDateRange } from "@/utils/helpers";
 import { usePathname } from "next/navigation";
 
 const ApplicationsProvider = ({ children }) => {
@@ -28,32 +30,50 @@ const ApplicationsProvider = ({ children }) => {
   const searchOptions =
     typeof window !== "undefined" &&
     JSON.parse(localStorage?.getItem("options"));
-  const isCustomDate = searchOptions?.date_modified === "Custom";
+  const isCustomModifiedDate = searchOptions?.date_modified === "Custom";
+  const isCustomAppliedDate = searchOptions?.date_applied === "Custom";
 
-  const beforeDate = useSelector(selectBeforeDate);
-  const afterDate = useSelector(selectAfterDate);
+  const modifiedBeforeDate = useSelector(selectModifiedBeforeDate);
+  const modifiedAfterDate = useSelector(selectModifiedAfterDate);
+  const appliedBeforeDate = useSelector(selectAppliedBeforeDate);
+  const appliedAfterDate = useSelector(selectAppliedAfterDate);
 
   const getSearchPayload = () => {
-    if (isCustomDate) {
-      return {
-        page: page === 0 ? 1 : page,
-        limit: 20,
-        application_name: searchOptions.application_name,
-        applicant_name: searchOptions.applicant_name,
-        start_date: beforeDate,
-        end_date: afterDate,
-        reference_id: searchOptions.reference_id,
-      };
+    const filterModifiedDate = getDateRange(searchOptions?.date_modified);
+    const filterAppliedDate = getDateRange(searchOptions?.date_applied);
+    const initialPayload = {
+      page: page === 0 ? 1 : page,
+      limit: 30,
+      application_name: searchOptions?.application_name,
+      applicant_name: searchOptions?.applicant_name,
+      reference_id: searchOptions?.reference_id,
+    };
+    if (isCustomAppliedDate || isCustomModifiedDate) {
+      if (isCustomModifiedDate) {
+        return {
+          ...initialPayload,
+          start_date: EnLocalDateFormat(modifiedBeforeDate),
+          end_date: EnLocalDateFormat(modifiedAfterDate),
+          applied_start_date: filterAppliedDate?.start_date,
+          applied_end_date: filterAppliedDate?.end_date,
+        };
+      }
+      if (isCustomAppliedDate) {
+        return {
+          ...initialPayload,
+          start_date: filterModifiedDate?.start_date,
+          end_date: filterModifiedDate?.end_date,
+          applied_start_date: EnLocalDateFormat(appliedBeforeDate),
+          applied_end_date: EnLocalDateFormat(appliedAfterDate),
+        };
+      }
     } else {
-      const filterDate = getDateModified(searchOptions?.date_modified);
       return {
-        page: page === 0 ? 1 : page,
-        limit: 20,
-        application_name: searchOptions?.application_name,
-        applicant_name: searchOptions?.applicant_name,
-        start_date: filterDate.start_date,
-        end_date: filterDate.end_date,
-        reference_id: searchOptions?.reference_id,
+        ...initialPayload,
+        start_date: filterModifiedDate.start_date,
+        end_date: filterModifiedDate?.end_date,
+        applied_start_date: filterAppliedDate?.start_date,
+        applied_end_date: filterAppliedDate?.end_date,
       };
     }
   };

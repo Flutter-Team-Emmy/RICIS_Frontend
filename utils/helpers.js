@@ -34,6 +34,13 @@ export const normalizeErrors = (error) => {
   }
 };
 
+export const resetForm = (data, name) => {
+  Object.keys(data).forEach((key) => {
+    data[key] = "";
+  });
+  localStorage.setItem(name, JSON.stringify(data));
+};
+
 export const formatDate = (inputDateStr) => {
   const inputDate = new Date(inputDateStr);
   const formattedDate = `${inputDate.getDate()}/${
@@ -43,7 +50,7 @@ export const formatDate = (inputDateStr) => {
   return `${formattedDate} ${formattedTime}`;
 };
 
-export const getDateModified = (date) => {
+export const getDateRange = (date) => {
   const today = new Date();
 
   switch (date) {

@@ -155,7 +155,7 @@ const Preview = () => {
   };
 
   const createNewApplication = async () => {
-    const formFieldTypesObj = JSON.parse(localStorage.getItem("errorFields"));
+    const formFieldTypesObj = JSON.parse(localStorage.getItem("editErrorFields"));
     const formData = convertToValidNumberType(
       storedFormData,
       formFieldTypesObj

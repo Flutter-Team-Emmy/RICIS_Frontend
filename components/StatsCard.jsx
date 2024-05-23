@@ -5,7 +5,7 @@ import { ApexCharts } from "@/utils/chartHelpers";
 import Image from "next/image";
 
 const StatsCard = ({
-  status,
+  title,
   amount,
   percentage,
   dailyStat,
@@ -49,7 +49,7 @@ const StatsCard = ({
   return (
     <div className="whitespace-nowra border-2 border-gray-200 rounded-md bg-white flex-grow basis-1/4">
       <p className="p-4 text-lg font-semibold text-gray-700">
-        {capitalizeFirstLetter(status)} Applications
+        {capitalizeFirstLetter(title)}
       </p>
       <div className="flex items-end justify-between">
         <div className="px-4 py-2 space-y-2">

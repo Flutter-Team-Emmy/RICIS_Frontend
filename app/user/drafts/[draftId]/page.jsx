@@ -29,15 +29,15 @@ const Draft = () => {
   const form_name = draft?.form?.name;
   console.log(data);
 
-  const formFields = useMemo(() => {
-    return draft?.data?.filter(
-      (field) => field?.form_field?.page === 1 || field?.form_field?.page === 2
-    );
-  }, [draft]);
+  // const formFields = useMemo(() => {
+  //   return draft?.data?.filter(
+  //     (field) => field?.form_field?.page === 1 || field?.form_field?.page === 2
+  //   );
+  // }, [draft]);
 
-  // const formFields = draft?.data?.filter(
-  //   (field) => field?.form_field?.page === 1 || field?.form_field?.page === 2
-  // );
+  const formFields = draft?.data?.filter(
+    (field) => field?.form_field?.page === 1 || field?.form_field?.page === 2
+  );
 
   // documents are on page 3 of fiels data
   const generatedDraftDocuments = draft?.data?.filter(

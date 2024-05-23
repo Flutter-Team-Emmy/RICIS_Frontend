@@ -27,16 +27,12 @@ const FinancialManagement = () => {
             <p className="text-gray-600 text-sm">view all users transactions</p>
           </div>
           <button
-              onClick={() => setDisplayDeleteModal(true)}
-              className="bg-[#F0F2F2] shadow-md rounded-md flex gap-x-4 px-6 whitespace-nowrap items-center justify-center py-2"
-            >
-              <img
-                className="w-4 h-4"
-                src="/images/transactionIcon.svg"
-                alt=""
-              />
-              <p className="font-medium text-sm">View transaction stat</p>
-            </button>
+            onClick={() => router.push("/admin/statistics")}
+            className="bg-blue-700 text-white shadow-md rounded-md flex gap-x-4 px-6 whitespace-nowrap items-center justify-center py-2"
+          >
+            <img className="w-4 h-4" src="/images/transactionIcon.svg" alt="" />
+            <p className="font-medium text-sm">View transaction stat</p>
+          </button>
         </div>
         <div className="bg-white rounded-lg space-y-6 p-4">
           <h1 className="text-black font-bold">Payment Information</h1>

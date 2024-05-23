@@ -2,19 +2,23 @@ import { Cancel } from "@/svgs";
 import Options from "../search/Options";
 import { Input } from "../ui/input";
 import DatePicker from "../search/DatePicker";
-import { dateModified } from "../search/filters";
+import { dateApplied, dateModified } from "../search/filters";
 import { useEffect, useState } from "react";
 import useForm from "@/hooks/useForm";
-import { EnLocalDateFormat, getDateModified } from "@/utils/helpers";
+import { EnLocalDateFormat, getDateRange } from "@/utils/helpers";
 import { ClipLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectAfterDate,
-  selectBeforeDate,
+  selectAppliedAfterDate,
+  selectAppliedBeforeDate,
+  selectModifiedBeforeDate,
+  selectModifiedAfterDate,
+  setAppliedAfterDate,
+  setAppliedBeforeDate,
+  setModifiedBeforeDate,
+  setModifiedAfterDate,
   selectPage,
-  setAfterDate,
   setApplications,
-  setBeforeDate,
   setLastPage,
   setPage,
 } from "@/store/features/applicatonsSlice";
@@ -27,25 +31,27 @@ const InitialData = {
   applicant_name: "",
   reference_id: "",
   date_modified: "",
+  date_applied: "",
 };
 
 const FilterOptionsModal = ({ setOpenFilter }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-  const page = useSelector(selectPage); 
-  const beforeDate = useSelector(selectBeforeDate);
-  const afterDate = useSelector(selectAfterDate);
+  const page = useSelector(selectPage);
   const token = getToken();
-
-  console.log({ beforeDate, afterDate }); 
 
   // persist search options
   const initializer = () =>
     JSON.parse(localStorage.getItem("options")) || InitialData;
   const { formData, setFormData, handleChange } = useForm(initializer);
-  const isCustomDate = formData.date_modified === "Custom";
-  console.log(isCustomDate);
+  const isCustomModifiedDate = formData?.date_modified === "Custom";
+  const isCustomAppliedDate = formData?.date_applied === "Custom";
+
+  const modifiedBeforeDate = useSelector(selectModifiedBeforeDate);
+  const modifiedAfterDate = useSelector(selectModifiedAfterDate);
+  const appliedBeforeDate = useSelector(selectAppliedBeforeDate);
+  const appliedAfterDate = useSelector(selectAppliedAfterDate);
 
   // fetch persisted data from local storage
   useEffect(() => {
@@ -60,42 +66,67 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
     localStorage.setItem("options", JSON.stringify(formData));
   }, [formData]);
 
-  const resetFilter = () => {
+  const handleReset = () => {
     setFormData(InitialData);
-    setBeforeDate();
-    setAfterDate();
+    setModifiedAfterDate();
+    setModifiedBeforeDate();
+    setAppliedAfterDate();
+    setAppliedBeforeDate();
     toast.info("search filter has been reset to default", {
       autoClose: 1500,
       hideProgressBar: true,
     });
   };
 
+  const resetFilter = () => {
+    setFormData(InitialData);
+    setModifiedAfterDate();
+    setModifiedBeforeDate();
+    setAppliedAfterDate();
+    setAppliedBeforeDate();
+  };
+
   const searchApplication = async () => {
     let payload;
 
-    if (isCustomDate) {
-      payload = {
-        page: page === 0 ? 1 : page,
-        limit: 20,
-        application_name: formData.application_name,
-        applicant_name: formData.applicant_name,
-        start_date: EnLocalDateFormat(beforeDate),
-        end_date: EnLocalDateFormat(afterDate),
-        reference_id: formData.reference_id,
-      };
+    const filterModifiedDate = getDateRange(formData?.date_modified);
+    const filterAppliedDate = getDateRange(formData?.date_applied);
+    const initialPayload = {
+      page: page === 0 ? 1 : page,
+      limit: 30,
+      application_name: formData.application_name,
+      applicant_name: formData.applicant_name,
+      reference_id: formData.reference_id,
+    };
+    if (isCustomAppliedDate || isCustomModifiedDate) {
+      if (isCustomModifiedDate) {
+        payload= {
+          ...initialPayload,
+          start_date: EnLocalDateFormat(modifiedBeforeDate),
+          end_date: EnLocalDateFormat(modifiedAfterDate),
+          applied_start_date: filterAppliedDate?.start_date,
+          applied_end_date: filterAppliedDate?.end_date,
+        };
+      }
+      if (isCustomAppliedDate) {
+        payload = {
+          ...initialPayload,
+          start_date: filterModifiedDate?.start_date,
+          end_date: filterModifiedDate?.end_date,
+          applied_start_date: EnLocalDateFormat(appliedBeforeDate),
+          applied_end_date: EnLocalDateFormat(appliedAfterDate),
+        };
+      }
     } else {
-      const filterDate = getDateModified(formData.date_modified);
-      console.log(filterDate);
       payload = {
-        page: page === 0 ? 1 : page,
-        limit: 20,
-        application_name: formData.application_name,
-        applicant_name: formData.applicant_name,
-        start_date: filterDate.start_date,
-        end_date: filterDate.end_date,
-        reference_id: formData.reference_id,
+        ...initialPayload,
+        start_date: filterModifiedDate.start_date,
+        end_date: filterModifiedDate?.end_date,
+        applied_start_date: filterAppliedDate?.start_date,
+        applied_end_date: filterAppliedDate?.end_date,
       };
     }
+
     try {
       setIsLoading(true);
       console.log(payload);
@@ -138,10 +169,10 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
   console.log(formData);
 
   return (
-    <div className="flex justify-center items-center fixed top bottom-0 left-0 right-0  inset-0 bg-[rgb(0,0,0,0.8)] overflow-y-auto bg-opacity-50 z-[9999] h-full">
+    <div className="flex justify-center items-center fixed top bottom-0 left-0 right-0  inset-0 bg-[rgb(0,0,0,0.8)]  bg-opacity-50 z-[9999] h-full">
       <div
         // onSubmit={submitForm}
-        className="bg-white px-6 py-6 rounded shadow-md md:w-[500px] z-[9999] lg:space-y-6 space-y-6 w-[95%] lg:w-[40rem]"
+        className="bg-white px-6 py-6 rounded shadow-md md:w-[500px] z-[9999] overflow-y-auto lg:h-[95%] lg:space-y-6 space-y-6 w-[95%] lg:w-[40rem]"
       >
         <div className="flex justify-between items-center gap-4">
           <h1 className="lg:text-xl text-lg font-semibold">Filter</h1>
@@ -207,7 +238,7 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
             ))}
           </select>
         </div>
-        {isCustomDate && (
+        {isCustomModifiedDate && (
           <div className="flex flex-col gap-2 w-full">
             <p className="text-gray-500 lg:self-center lg:-ml-14 text-sm font-semibold">
               Between
@@ -215,13 +246,51 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
             <div className="flex lg:justify-end w-full gap-4 items-center">
               <DatePicker
                 text="Before Date"
-                date={beforeDate}
-                setDate={(value) => dispatch(setBeforeDate(value))}
+                date={modifiedBeforeDate}
+                setDate={(value) => dispatch(setModifiedBeforeDate(value))}
               />
               <DatePicker
                 text="After Date"
-                date={afterDate}
-                setDate={(value) => dispatch(setAfterDate(value))}
+                date={modifiedAfterDate} 
+                setDate={(value) => dispatch(setModifiedAfterDate(value))}
+              />
+            </div>
+          </div>
+        )}
+        <div className="flex lg:flex-row flex-col lg:justify-between gap-4 lg:items-center">
+          <p className="text-sm font-semibold">Date Applied</p>
+          <select
+            name="date_applied"
+            value={formData.date_applied}
+            onChange={handleChange}
+            id=""
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg lg:w-[65%] p-2.5"
+          >
+            <option selected className="">
+              Select Date
+            </option>
+            {dateApplied?.map((option) => (
+              <option key={option.id} value={option.value}>
+                {option.value.split("_").join(" ")}
+              </option>
+            ))}
+          </select>
+        </div>
+        {isCustomAppliedDate && (
+          <div className="flex flex-col gap-2 w-full">
+            <p className="text-gray-500 lg:self-center lg:-ml-14 text-sm font-semibold">
+              Between
+            </p>
+            <div className="flex lg:justify-end w-full gap-4 items-center">
+              <DatePicker
+                text="Before Date"
+                date={appliedBeforeDate}
+                setDate={(value) => dispatch(setAppliedBeforeDate(value))}
+              />
+              <DatePicker
+                text="After Date"
+                date={appliedAfterDate} 
+                setDate={(value) => dispatch(setAppliedAfterDate(value))}
               />
             </div>
           </div>
@@ -229,7 +298,7 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
         <div className="flex lg:justify-end w-full gap-x-4">
           <button
             type="button"
-            onClick={resetFilter}
+            onClick={handleReset}
             className="bg-white  px-10 py-4 text-sm rounded-md text-blue-700 font-semibold hover:bg-gray-100 hover:opacity-70"
           >
             Reset

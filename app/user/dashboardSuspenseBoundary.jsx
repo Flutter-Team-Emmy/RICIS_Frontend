@@ -69,7 +69,7 @@ const DashboardSuspenseBoundary = () => {
           {stats?.map((stat) => (
             <StatsCard
               key={stat.id}
-              status={stat.status}
+              title={stat.title}
               amount={stat.amount}
               percentage={
                 stat.percentage === null

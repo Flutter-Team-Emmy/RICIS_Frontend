@@ -11,6 +11,7 @@ import { ClipLoader } from "react-spinners";
 import { baseUrl } from "@/lib/configs";
 import { getToken } from "@/utils/authHelpers";
 import NoNotification from "@/components/NoNotification";
+import NotificationSkeleton from "@/components/skeleton-loaders/NotificationSkeleton";
 
 const NotificationsAdmin = () => {
   const router = useRouter();
@@ -19,8 +20,10 @@ const NotificationsAdmin = () => {
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [index, setIndex] = useState(2);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`${baseUrl}/notifications?page=1&limit=20`, {
         headers: {
@@ -29,7 +32,8 @@ const NotificationsAdmin = () => {
         },
       })
       .then((res) => setItems(res.data.data.notifications.data))
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
   }, []);
 
   const fetchMoreData = () => {
@@ -72,45 +76,49 @@ const NotificationsAdmin = () => {
           </p>
         </div>
         <div className="bg-white p-6 space-y-4">
-          {items?.map((notification) => {
-            const message = notification?.message;
-            const phrases = message?.split("\n");
+          {loading
+            ? [1, 2, 3, 4, 5, 6].map((notif) => (
+                <NotificationSkeleton key={notif} />
+              ))
+            : items?.map((notification) => {
+                const message = notification?.message;
+                const phrases = message?.split("\n");
 
-            return (
-              <div
-                onClick={() =>
-                  router.push(`/user/notifications/${notification?.id}`)
-                }
-                className="border-b-gray border-b-solid border-b-[1px] pb-4 space-y-2 bg-gray-100 w-full p-4 rounded-md"
-                key={notification.id}
-              >
-                <div className="lg:flex lg:justify-between space-y-2">
-                  <p
-                    className="px-4 py-1 text-[0.7rem] font-bold rounded-md w-fit"
-                    style={{
-                      backgroundColor: `#${notification?.bgColor}`,
-                      color: `#${notification?.textColor}`,
-                    }}
+                return (
+                  <div
+                    onClick={() =>
+                      router.push(`/user/notifications/${notification?.id}`)
+                    }
+                    className="border-b-gray border-b-solid border-b-[1px] pb-4 space-y-2 bg-gray-100 w-full p-4 rounded-md cursor-pointer"
+                    key={notification.id}
                   >
-                    {notification?.type}
-                  </p>
-                  <div className="flex text-sm items-center gap-x-2 w-full lg:w-[20%]">
-                    <img src="/images/timeIcon.svg" alt="" />
-                    <p>{time.formatDate(notification?.created_at)}</p>
-                    <p>at {time.formatTime(notification?.created_at)}</p>
+                    <div className="lg:flex lg:justify-between space-y-2">
+                      <p
+                        className="px-4 py-1 text-[0.7rem] font-bold rounded-md w-fit"
+                        style={{
+                          backgroundColor: `#${notification?.bgColor}`,
+                          color: `#${notification?.textColor}`,
+                        }}
+                      >
+                        {notification?.type}
+                      </p>
+                      <div className="flex text-sm items-center gap-x-2 w-full lg:w-[20%]">
+                        <img src="/images/timeIcon.svg" alt="" />
+                        <p>{time.formatDate(notification?.created_at)}</p>
+                        <p>at {time.formatTime(notification?.created_at)}</p>
+                      </div>
+                    </div>
+                    <h3 className="font-bold text-sm">{notification?.title}</h3>
+                    <div className="space-y-[2px]">
+                      {phrases.map((phrase, index) => (
+                        <p key={index} className="text-sm message-container">
+                          {phrase}
+                        </p>
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <h3 className="font-bold text-sm">{notification?.title}</h3>
-                <div className="">
-                  {phrases.map((phrase, index) => (
-                    <p key={index} className="text-sm message-container">
-                      {phrase}
-                    </p>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
+                );
+              })}
           <InfiniteScroll
             dataLength={items?.length}
             next={fetchMoreData}

@@ -12,8 +12,10 @@ const initialState = {
     error: "",
     // refetch:,
   },
-  afterDate: null,
-  beforeDate: null,
+  modifiedAfterDate: null,
+  modifiedBeforeDate: null,
+  appliedBeforeDate: null,
+  appliedAfterDate: null,
   applications: [],
 };
 
@@ -36,11 +38,17 @@ const applicationsSlice = createSlice({
     setLastPage: (state, action) => {
       state.lastPage = action.payload;
     },
-    setBeforeDate: (state, action) => {
-      state.beforeDate = action.payload;
+    setModifiedBeforeDate: (state, action) => {
+      state.modifiedBeforeDate = action.payload;
     },
-    setAfterDate: (state, action) => {
-      state.afterDate = action.payload;
+    setModifiedAfterDate: (state, action) => {
+      state.modifiedAfterDate = action.payload;
+    },
+    setAppliedBeforeDate: (state, action) => {
+      state.appliedBeforeDate = action.payload;
+    },
+    setAppliedAfterDate: (state, action) => {
+      state.appliedAfterDate = action.payload;
     },
   },
 });
@@ -51,15 +59,19 @@ export const {
   setPage,
   setFirstPage,
   setLastPage,
-  setBeforeDate,
-  setAfterDate,
+  setAppliedAfterDate,
+  setAppliedBeforeDate,
+  setModifiedBeforeDate,
+  setModifiedAfterDate,
 } = applicationsSlice.actions;
 export const selectApplications = (state) => state.applications.applications;
 export const selectPage = (state) => state.applications.page;
 export const selectFirstPage = (state) => state.applications.firstPae;
 export const selectLastPage = (state) => state.applications.lastPage;
-export const selectBeforeDate = (state) => state.applications.beforeDate;
-export const selectAfterDate = (state) => state.applications.afterDate;
+export const selectModifiedBeforeDate = (state) => state.applications.modifiedBeforeDate;
+export const selectModifiedAfterDate = (state) => state.applications.modifiedAfterDate;
+export const selectAppliedBeforeDate = (state) => state.applications.appliedBeforeDate;
+export const selectAppliedAfterDate = (state) => state.applications.appliedAfterDate;
 export const selectFetchingStates = (state) =>
   state.applications.fetchingStates;
 export default applicationsSlice.reducer;

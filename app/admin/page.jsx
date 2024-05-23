@@ -37,7 +37,7 @@ const Admin = () => {
           {stats?.map((stat) => (
             <StatsCard
               key={stat.id}
-              status={stat.status}
+              title={stat.title}
               amount={stat.amount}
               percentage={Number(stat.percentage?.toFixed(2) ?? 0)}
               increase={stat.daily_stats[0]}
