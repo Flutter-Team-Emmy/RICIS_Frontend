@@ -51,7 +51,27 @@ export const formatDate = (inputDateStr) => {
 };
 
 export const getDateRange = (date) => {
-  const today = new Date();
+  const now = new Date();
+  const getDaysAgo = (days) => {
+    return new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() - days,
+      0,
+      0,
+      0,
+      0
+    );
+  };
+  const startOfDay = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    0,
+    0,
+    0,
+    0
+  );
 
   switch (date) {
     case "Anytime":
@@ -61,33 +81,48 @@ export const getDateRange = (date) => {
       };
 
     case "Today":
+      // End of the day (11:59 PM)
+      const endOfDay = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+        23,
+        59,
+        59,
+        999
+      );
+
       return {
-        start_date: EnLocalDateFormat(today),
-        end_date: EnLocalDateFormat(today),
+        start_date: startOfDay,
+        end_date: endOfDay,
       };
 
     case "Yesterday":
-      const yesterday = new Date(today);
-      yesterday.setDate(today.getDate() - 1);
+      const startOfYesterday = getDaysAgo(1);
+      // const yesterday = new Date(today);
+      // yesterday.setDate(today.getDate() - 1);
       return {
-        start_date: EnLocalDateFormat(today),
-        end_date: EnLocalDateFormat(yesterday),
+        start_date: startOfYesterday,
+        end_date: startOfDay,
       };
 
     case "Last_7_days":
-      const lastWeek = new Date(today);
-      lastWeek.setDate(today.getDate() - 7);
+      const sevenDaysAgo = getDaysAgo(7);
+      // const lastWeek = new Date(today);
+      // lastWeek.setDate(today.getDate() - 7);
       return {
-        start_date: EnLocalDateFormat(lastWeek),
-        end_date: EnLocalDateFormat(today),
+        start_date: sevenDaysAgo,
+        end_date: startOfDay,
       };
 
     case "Last_30_days":
-      const lastMonth = new Date(today);
-      lastMonth.setDate(today.getDate() - 30);
+      const thirtyDaysAgo = getDaysAgo(30);
+
+      // const lastMonth = new Date(today);
+      // lastMonth.setDate(today.getDate() - 30);
       return {
-        start_date: EnLocalDateFormat(lastMonth),
-        end_date: EnLocalDateFormat(today),
+        start_date: thirtyDaysAgo,
+        end_date: startOfDay,
       };
 
     default:

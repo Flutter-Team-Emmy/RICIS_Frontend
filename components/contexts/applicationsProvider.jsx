@@ -52,7 +52,7 @@ const ApplicationsProvider = ({ children }) => {
       if (isCustomModifiedDate) {
         return {
           ...initialPayload,
-          start_date: EnLocalDateFormat(modifiedBeforeDate),
+          start_date: modifiedBeforeDate,
           end_date: EnLocalDateFormat(modifiedAfterDate),
           applied_start_date: filterAppliedDate?.start_date,
           applied_end_date: filterAppliedDate?.end_date,
@@ -63,8 +63,8 @@ const ApplicationsProvider = ({ children }) => {
           ...initialPayload,
           start_date: filterModifiedDate?.start_date,
           end_date: filterModifiedDate?.end_date,
-          applied_start_date: EnLocalDateFormat(appliedBeforeDate),
-          applied_end_date: EnLocalDateFormat(appliedAfterDate),
+          applied_start_date: appliedBeforeDate,
+          applied_end_date: appliedAfterDate,
         };
       }
     } else {

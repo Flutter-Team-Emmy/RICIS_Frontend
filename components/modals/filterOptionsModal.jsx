@@ -100,10 +100,10 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
     };
     if (isCustomAppliedDate || isCustomModifiedDate) {
       if (isCustomModifiedDate) {
-        payload= {
+        payload = {
           ...initialPayload,
-          start_date: EnLocalDateFormat(modifiedBeforeDate),
-          end_date: EnLocalDateFormat(modifiedAfterDate),
+          start_date: modifiedBeforeDate,
+          end_date: modifiedAfterDate,
           applied_start_date: filterAppliedDate?.start_date,
           applied_end_date: filterAppliedDate?.end_date,
         };
@@ -113,8 +113,8 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
           ...initialPayload,
           start_date: filterModifiedDate?.start_date,
           end_date: filterModifiedDate?.end_date,
-          applied_start_date: EnLocalDateFormat(appliedBeforeDate),
-          applied_end_date: EnLocalDateFormat(appliedAfterDate),
+          applied_start_date: appliedBeforeDate,
+          applied_end_date: appliedAfterDate,
         };
       }
     } else {
@@ -127,6 +127,7 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
       };
     }
 
+    console.log(payload);
     try {
       setIsLoading(true);
       console.log(payload);
@@ -169,10 +170,10 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
   console.log(formData);
 
   return (
-    <div className="flex justify-center items-center fixed top bottom-0 left-0 right-0  inset-0 bg-[rgb(0,0,0,0.8)]  bg-opacity-50 z-[9999] h-full">
+    <div className="flex justify-center items-center fixed top bottom-0 left-0 right-0  inset-0 bg-[rgb(0,0,0,0.8)]  bg-opacity-50 z-[9999] ">
       <div
         // onSubmit={submitForm}
-        className="bg-white px-6 py-6 rounded shadow-md md:w-[500px] z-[9999] overflow-y-auto lg:h-[95%] lg:space-y-6 space-y-6 w-[95%] lg:w-[40rem]"
+        className="bg-white px-6 py-6 rounded shadow-md md:w-[500px] z-[9999] overflow-y-auto lg:h-fit lg:space-y-6 space-y-6 w-[98%] lg:w-[40rem]"
       >
         <div className="flex justify-between items-center gap-4">
           <h1 className="lg:text-xl text-lg font-semibold">Filter</h1>
@@ -251,7 +252,7 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
               />
               <DatePicker
                 text="After Date"
-                date={modifiedAfterDate} 
+                date={modifiedAfterDate}
                 setDate={(value) => dispatch(setModifiedAfterDate(value))}
               />
             </div>
@@ -289,7 +290,7 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
               />
               <DatePicker
                 text="After Date"
-                date={appliedAfterDate} 
+                date={appliedAfterDate}
                 setDate={(value) => dispatch(setAppliedAfterDate(value))}
               />
             </div>
