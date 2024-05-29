@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import WithAuth from "@/components/withAuth";
 import FPI from "../FPI";
 import { Suspense } from "react";
+import { resetForm } from "@/utils/helpers";
 
 const initialFormData = {
   application_type: "",
@@ -27,11 +28,14 @@ const ApplicationTypesSuspense = () => {
   const router = useRouter();
   console.log(forms);
 
+  const initialStoredFormData = JSON.parse(localStorage.getItem("formData"));
+
   const proceedToNextStep = () => {
     if (!formData.application_type) {
       toast("Select a field to proceed!", { autoClose: 30000 });
       return;
     }
+    resetForm(initialStoredFormData, "formData");
     router.push(`/user/application-type/${selectedFormId}`);
   };
 
