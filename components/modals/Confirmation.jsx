@@ -16,7 +16,7 @@ const Confirmation = ({ confirmAction, closeModal, loading }) => {
         <div className="flex gap-4">
           <button
             onClick={closeModal}
-            className="text-sm bg-slate-800 py-2 px-6 shadow-md rounded-md text-white hover:opacity-75"
+            className="text-sm bg-slate-800 py-2 px-6 shadow-md rounded-md text-white hover:opacity-75 transform active:scale-75 transition-transform"
           >
             cancel
           </button>

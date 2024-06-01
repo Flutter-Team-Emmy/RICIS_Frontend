@@ -14,7 +14,7 @@ const Btn = ({
     <button
       className={`${textColor} py-2 px-[1.725rem] h-10 cursor-pointer flex items-center justify-center hover:opacity-70 shadow-md ${
         disabled ? "bg-gray-200" : bgColorClass
-      } rounded-[4px] whitespace-nowrap`}
+      } rounded-[4px] whitespace-nowrap transform active:scale-75 transition-transform`}
       onClick={handleClick}
       disabled={disabled}
       type="button"

@@ -24,7 +24,7 @@ const StaffManagement = () => {
           </div>
           <div className="w-full lg:w-[15%]">
             <Link href="/admin/create-staff">
-              <button className="text-sm bg-[#46B038] text-white py-2 px-4 w-fit rounded-md">
+              <button className="text-sm bg-[#46B038] text-white py-2 px-4 w-fit rounded-md transform active:scale-75 transition-transform">
                 Create Staff
               </button>
             </Link>

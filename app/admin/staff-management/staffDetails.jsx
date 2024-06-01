@@ -41,7 +41,7 @@ const StaffDetails = ({ staff, staffId }) => {
                 onClick={() =>
                   router.push(`/admin/staff-management/${staffId}/edit`)
                 }
-                className="bg-[#46B038] shadow-md rounded-md text-sm text-white py-2 px-6"
+                className="bg-[#46B038] shadow-md rounded-md text-sm text-white py-2 px-6 transform active:scale-75 transition-transform"
               >
                 Edit
               </button>

@@ -144,7 +144,7 @@ const Sidebar = ({
             )}
             <button
               onClick={logout}
-              className="flex items-center gap-1 px-6 py-2 bg-blue-800 rounded-md hover:bg-blue-700"
+              className="flex items-center gap-1 px-6 py-2 bg-blue-800 rounded-md hover:bg-blue-700 transform active:scale-75 transition-transform"
             >
               <span>{LogoutIcon}</span>
               <span className="">Logout</span>

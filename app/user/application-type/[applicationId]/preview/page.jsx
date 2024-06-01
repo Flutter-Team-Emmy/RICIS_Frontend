@@ -267,7 +267,7 @@ const Preview = () => {
                 <button
                   type="button"
                   onClick={() => router.back()}
-                  className="px-6 py-2 bg-gray-700 text-white rounded-md hover:opacity-70"
+                  className="px-6 py-2 bg-gray-700 text-white rounded-md hover:opacity-70 transform active:scale-75 transition-transform"
                 >
                   Back
                 </button>

@@ -28,7 +28,7 @@ const FinancialManagement = () => {
           </div>
           <button
             onClick={() => router.push("/admin/statistics")}
-            className="bg-blue-700 text-white shadow-md rounded-md flex gap-x-4 px-6 whitespace-nowrap items-center justify-center py-2"
+            className="bg-blue-700 text-white shadow-md rounded-md flex gap-x-4 px-6 whitespace-nowrap items-center justify-center py-2 transform active:scale-75 transition-transform"
           >
             <img className="w-4 h-4" src="/images/transactionIcon.svg" alt="" />
             <p className="font-medium text-sm">View transaction stat</p>

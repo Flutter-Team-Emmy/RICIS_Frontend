@@ -245,7 +245,7 @@ const Draft = () => {
               <button
                 type="button"
                 onClick={() => router.back()}
-                className="px-6 py-2 bg-gray-900 text-white rounded-md hover:opacity-70"
+                className="px-6 py-2 bg-gray-900 text-white rounded-md hover:opacity-70 transform active:scale-75 transition-transform"
               >
                 Back
               </button>
@@ -253,7 +253,7 @@ const Draft = () => {
                 // disabled={allfieldsNotFilled}
                 type="button"
                 onClick={navigateToNextStep}
-                className="lg:px-8 px-6 py-2 bg-[#46B038] hover:opacity-70 text-white rounded-md disabled:cursor-not-allowed disabled:opacity-70"
+                className="lg:px-8 px-6 py-2 bg-[#46B038] hover:opacity-70 text-white rounded-md disabled:cursor-not-allowed disabled:opacity-70 transform active:scale-75 transition-transform"
               >
                 Next
               </button>

@@ -98,7 +98,7 @@ const ApplicationApproved = ({ data }) => {
         <div className="lg:w-[30%] space-y-3">
           <button
             onClick={handleDownload}
-            className="flex items-center gap-1 text-sm bg-[#46B038] text-white py-2 px-4 w-fit rounded-md hover:opacity-70"
+            className="flex items-center gap-1 text-sm bg-[#46B038] text-white py-2 px-4 w-fit rounded-md hover:opacity-70 transform active:scale-75 transition-transform"
           >
             {isDownloading ? (
               <ClipLoader color="#fff" size={20} />
@@ -113,7 +113,7 @@ const ApplicationApproved = ({ data }) => {
           </button>
           <button
             onClick={() => mailCertificate(data?.application?.id)}
-            className="flex items-center gap-1 text-sm bg-[#46B038] text-white py-2 px-4 w-fit rounded-md hover:opacity-70"
+            className="flex items-center gap-1 text-sm bg-[#46B038] text-white py-2 px-4 w-fit rounded-md hover:opacity-70 transform active:scale-75 transition-transform"
           >
             {mailing ? (
               <ClipLoader color="#fff" size={20} />

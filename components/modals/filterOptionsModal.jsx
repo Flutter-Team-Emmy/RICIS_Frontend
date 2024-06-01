@@ -248,12 +248,12 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
               <DatePicker
                 text="Before Date"
                 date={modifiedBeforeDate}
-                setDate={(value) => dispatch(setModifiedBeforeDate(value))}
+                setDate={(value) => dispatch(setModifiedBeforeDate(value.toISOString()))}
               />
               <DatePicker
                 text="After Date"
                 date={modifiedAfterDate}
-                setDate={(value) => dispatch(setModifiedAfterDate(value))}
+                setDate={(value) => dispatch(setModifiedAfterDate(value.toISOString()))}
               />
             </div>
           </div>
@@ -286,12 +286,12 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
               <DatePicker
                 text="Before Date"
                 date={appliedBeforeDate}
-                setDate={(value) => dispatch(setAppliedBeforeDate(value))}
+                setDate={(value) => dispatch(setAppliedBeforeDate(value.toISOString()))}
               />
               <DatePicker
                 text="After Date"
                 date={appliedAfterDate}
-                setDate={(value) => dispatch(setAppliedAfterDate(value))}
+                setDate={(value) => dispatch(setAppliedAfterDate(value.toISOString()))}
               />
             </div>
           </div>
@@ -300,14 +300,14 @@ const FilterOptionsModal = ({ setOpenFilter }) => {
           <button
             type="button"
             onClick={handleReset}
-            className="bg-white  px-10 py-4 text-sm rounded-md text-blue-700 font-semibold hover:bg-gray-100 hover:opacity-70"
+            className="bg-white  px-10 py-4 text-sm rounded-md text-blue-700 font-semibold hover:bg-gray-100 hover:opacity-70 transform active:scale-75 transition-transform"
           >
             Reset
           </button>
           <button
             type="button"
             onClick={searchApplication}
-            className="flex items-center gap-2 justify-center bg-blue-700 w-36 py-4 px-4 text-sm rounded-md text-white hover:bg-blue-600"
+            className="flex items-center gap-2 justify-center bg-blue-700 w-36 py-4 px-4 text-sm rounded-md text-white hover:bg-blue-600 transform active:scale-75 transition-transform"
           >
             {isLoading && <ClipLoader size={20} color="#fff" />}
             <span className="">{isLoading ? "Applying..." : "Apply"}</span>

@@ -54,7 +54,7 @@ const PaymentModal = ({ application_id, setPaynow }) => {
         <div className="flex gap-4">
           <button
             onClick={() => router.push("/user")}
-            className="text-sm bg-blue-400 py-1.5 px-4 shadow-md rounded-md text-white hover:opacity-75"
+            className="text-sm bg-blue-400 py-1.5 px-4 shadow-md rounded-md text-white hover:opacity-75 transform active:scale-75 transition-transform"
           >
             Pay later
           </button>

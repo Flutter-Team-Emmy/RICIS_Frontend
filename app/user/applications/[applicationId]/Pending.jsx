@@ -170,7 +170,7 @@ const ApplicationPending = ({ data }) => {
             data?.application?.transactions?.length !== 0 && (
               <div className="flex gap-x-4 w-full lg:justify-start mt-8">
                 <button
-                  className="rounded-md h-[50%] text-sm text-[#fff] p-2  bg-[#46B038]"
+                  className="rounded-md h-[50%] text-sm text-[#fff] p-2  bg-[#46B038] transform active:scale-75 transition-transform"
                   onClick={() => {
                     setStatus("APPROVED");
                     openModal();
@@ -179,7 +179,7 @@ const ApplicationPending = ({ data }) => {
                   Approve
                 </button>
                 <button
-                  className="text-sm bg-red-500 h-[50%] text-white py-2 px-4 w-fit rounded-md"
+                  className="text-sm bg-red-500 h-[50%] text-white py-2 px-4 w-fit rounded-md transform active:scale-75 transition-transform"
                   onClick={() => {
                     setStatus("REJECTED");
                     openModal();

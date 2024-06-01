@@ -229,14 +229,14 @@ const Documents = () => {
                     <button
                       type="button"
                       onClick={() => router.back()}
-                      className="px-6 py-2 bg-gray-900 text-white rounded-md hover:opacity-70 lg:w-fit "
+                      className="px-6 py-2 bg-gray-900 text-white rounded-md hover:opacity-70 lg:w-fit transform active:scale-75 transition-transform"
                     >
                       Back
                     </button>
                     <button
                       type="button"
                       onClick={previewForm}
-                      className="px-6 py-2 bg-[#46B038] hover:opacity-70 text-white rounded-md disabled:cursor-not-allowed disabled:opacity-70"
+                      className="px-6 py-2 bg-[#46B038] hover:opacity-70 text-white rounded-md disabled:cursor-not-allowed disabled:opacity-70 transform active:scale-75 transition-transform"
                     >
                       Preview
                     </button>

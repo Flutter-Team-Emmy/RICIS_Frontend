@@ -114,7 +114,7 @@ const NewApplication = () => {
           <div className="flex items-center gap-3">
             <button
               onClick={() => router.back()}
-              className="bg-black px-6 py-2.5 text-white text-sm font-medium rounded-md shadow-lg hover:opacity-70"
+              className="bg-black px-6 py-2.5 text-white text-sm font-medium rounded-md shadow-lg hover:opacity-70 transform active:scale-75 transition-transform"
             >
               Back
             </button>

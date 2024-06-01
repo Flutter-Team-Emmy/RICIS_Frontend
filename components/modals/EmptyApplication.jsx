@@ -15,13 +15,13 @@ const EmptyApplication = () => {
         <div className="flex gap-4">
           <button
             onClick={() => router.push("/user")}
-            className="text-sm bg-blue-400 py-2 px-6 shadow-md rounded-md text-white hover:opacity-75"
+            className="text-sm bg-blue-400 py-2 px-6 shadow-md rounded-md text-white hover:opacity-75 transform active:scale-75 transition-transform"
           >
             Dashboard
           </button>
           <button
             onClick={() => router.back()}
-            className="text-sm bg-slate-800 py-2 px-6 shadow-md rounded-md text-white hover:opacity-75"
+            className="text-sm bg-slate-800 py-2 px-6 shadow-md rounded-md text-white hover:opacity-75 transform active:scale-75 transition-transform"
           >
             Go back
           </button>

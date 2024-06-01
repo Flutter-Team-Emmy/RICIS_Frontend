@@ -284,14 +284,14 @@ const ApplicationFormFields = () => {
                     <button
                       type="button"
                       onClick={() => router.back()}
-                      className="px-6 py-2 bg-gray-900 text-white rounded-md hover:opacity-70 w-full lg:w-fit "
+                      className="px-6 py-2 bg-gray-900 text-white rounded-md hover:opacity-70 w-full lg:w-fit transform active:scale-75 transition-transform "
                     >
                       Back
                     </button>
                     <button
                       type="button"
                       onClick={createDraft}
-                      className="w-full lg:w-fit  px-4 py-2 border border-[#46B038] text-gray-600 rounded-md hover:opacity-70"
+                      className="w-full lg:w-fit  px-4 py-2 border border-[#46B038] text-gray-600 rounded-md hover:opacity-70 transform active:scale-75 transition-transform"
                     >
                       Save as Draft
                     </button>
@@ -300,7 +300,7 @@ const ApplicationFormFields = () => {
                     // disabled={allfieldsNotFilled}
                     type="button"
                     onClick={navigateToNextStep}
-                    className="w-full lg:w-fit lg:px-8 px-6 py-2 bg-[#46B038] hover:opacity-70 text-white rounded-md disabled:cursor-not-allowed disabled:opacity-70"
+                    className="w-full lg:w-fit lg:px-8 px-6 py-2 bg-[#46B038] hover:opacity-70 text-white rounded-md disabled:cursor-not-allowed disabled:opacity-70 transform active:scale-75 transition-transform"
                   >
                     Next
                   </button>

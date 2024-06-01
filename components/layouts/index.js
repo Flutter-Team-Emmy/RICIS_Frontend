@@ -83,7 +83,7 @@ export const AdminSidebarLinks = [
   },
   {
     id: "s5",
-    name: "Financial Management",
+    name: "Payment Record",
     href: "/admin/financial-management",
     icon: draftsIcon,
   },

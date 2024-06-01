@@ -207,7 +207,7 @@ const RenewApplication = () => {
           onClick={navigateToNextStep}
           // disabled={allfieldsNotFilled}
           type="button"
-          className="w-[30%] lg:px-8 px-6 py-2 bg-[#46B038] hover:opacity-70 text-white rounded-md disabled:cursor-not-allowed disabled:opacity-70"
+          className="w-[30%] lg:px-8 px-6 py-2 bg-[#46B038] hover:opacity-70 text-white rounded-md disabled:cursor-not-allowed disabled:opacity-70 transform active:scale-75 transition-transform"
         >
           Renew
         </button>

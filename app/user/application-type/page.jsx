@@ -91,7 +91,7 @@ const ApplicationTypesSuspense = () => {
               </button>
               <button
                 onClick={proceedToNextStep}
-                className="bg-[#46B038] px-6 py-2.5 text-white text-sm font-medium rounded-md shadow-lg hover:bg-lime-700"
+                className="bg-[#46B038] px-6 py-2.5 text-white text-sm font-medium rounded-md shadow-lg hover:bg-lime-700 transform active:scale-75 transition-transform"
               >
                 Proceed
               </button>

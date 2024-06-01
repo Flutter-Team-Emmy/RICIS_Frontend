@@ -40,7 +40,7 @@ const Search = () => {
         <div className="text-sm flex items-center gap-4">
           <button
             onClick={() => setOpenFilter(true)}
-            className="flex items-center gap-2 bg-blue-800 font-medium lg:px-6 px-3 py-2.5 text-white shadow-md rounded-md hover:bg-blue-950"
+            className="flex items-center gap-2 bg-blue-800 font-medium lg:px-6 px-3 py-2.5 text-white shadow-md rounded-md hover:bg-blue-950 transform active:scale-75 transition-transform"
           >
             <span>{FilterIcon}</span>
             <span className="">Select filters</span>

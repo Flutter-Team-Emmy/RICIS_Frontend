@@ -58,7 +58,7 @@ const DashboardSuspenseBoundary = () => {
           {!isAdmin && (
             <Link
               href="user/new-application"
-              className="bg-blue-700 mt-6 w-fit px-4 py-2.5 text-sm flex items-center gap-2 rounded-md text-white hover:bg-blue-600"
+              className="bg-blue-700 mt-6 w-fit px-4 py-2.5 text-sm flex items-center gap-2 rounded-md text-white hover:bg-blue-600 transform active:scale-75 transition-transform"
             >
               <span className="">{ApplicationAdd}</span>
               <span className="">New Application</span>

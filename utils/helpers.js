@@ -93,8 +93,8 @@ export const getDateRange = (date) => {
       );
 
       return {
-        start_date: startOfDay,
-        end_date: endOfDay,
+        start_date: startOfDay.toISOString(),
+        end_date: endOfDay.toISOString(),
       };
 
     case "Yesterday":
@@ -102,8 +102,8 @@ export const getDateRange = (date) => {
       // const yesterday = new Date(today);
       // yesterday.setDate(today.getDate() - 1);
       return {
-        start_date: startOfYesterday,
-        end_date: startOfDay,
+        start_date: startOfYesterday.toISOString(),
+        end_date: startOfDay.toISOString(),
       };
 
     case "Last_7_days":
@@ -111,8 +111,8 @@ export const getDateRange = (date) => {
       // const lastWeek = new Date(today);
       // lastWeek.setDate(today.getDate() - 7);
       return {
-        start_date: sevenDaysAgo,
-        end_date: startOfDay,
+        start_date: sevenDaysAgo.toISOString(),
+        end_date: startOfDay.toISOString(),
       };
 
     case "Last_30_days":
@@ -121,8 +121,8 @@ export const getDateRange = (date) => {
       // const lastMonth = new Date(today);
       // lastMonth.setDate(today.getDate() - 30);
       return {
-        start_date: thirtyDaysAgo,
-        end_date: startOfDay,
+        start_date: thirtyDaysAgo.toISOString(),
+        end_date: startOfDay.toISOString(),
       };
 
     default:

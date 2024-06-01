@@ -53,7 +53,7 @@ const ApplicationsProvider = ({ children }) => {
         return {
           ...initialPayload,
           start_date: modifiedBeforeDate,
-          end_date: EnLocalDateFormat(modifiedAfterDate),
+          end_date: modifiedAfterDate,
           applied_start_date: filterAppliedDate?.start_date,
           applied_end_date: filterAppliedDate?.end_date,
         };

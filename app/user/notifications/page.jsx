@@ -89,7 +89,7 @@ const NotificationsAdmin = () => {
                     onClick={() =>
                       router.push(`/user/notifications/${notification?.id}`)
                     }
-                    className="border-b-gray border-b-solid border-b-[1px] pb-4 space-y-2 bg-gray-100 w-full p-4 rounded-md cursor-pointer"
+                    className="border-b-gray border-b-solid border-b-[1px] pb-4 space-y-2 bg-gray-100 w-full p-4 rounded-md cursor-pointer transform active:scale-75 transition-transform"
                     key={notification.id}
                   >
                     <div className="lg:flex lg:justify-between space-y-2">

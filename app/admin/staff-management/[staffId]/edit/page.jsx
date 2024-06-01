@@ -221,7 +221,7 @@ const EditStaff = () => {
           )}
           <button
             onClick={updateStaffCurrentStatus}
-            className="bg-[#F0F2F2] text-gray-600 text-center shadow-md rounded-md flex justify-center gap-x-4 px-6 py-2"
+            className="bg-[#F0F2F2] text-gray-600 text-center shadow-md rounded-md flex justify-center gap-x-4 px-6 py-2 transform active:scale-75 transition-transform"
           >
             {updatingStatus && <ClipLoader size={20} />}
             <p className="font-medium text-sm">
