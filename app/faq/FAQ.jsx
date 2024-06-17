@@ -16,14 +16,14 @@ const FAQItem = ({ question, answer }) => {
         className="flex items-center justify-between w-full focus:outline-none "
         onClick={toggleOpen}
       >
-        <span className="sf600 text-[1rem] lg:text-[1.5rem] leading-[48px] text-[#000000CC]">
+        <span className="sf600 text-[1rem] lg:text-xl leading-[48px] text-[#000000CC]">
           {question}
         </span>
         {isOpen ? chevUp : chevDown}
       </div>
       {isOpen && (
         <div className="py-[1.5rem]">
-          <p className="sf400 text-[20px] leading-[30px] text-[#0000008A] ">
+          <p className="sf400  leading-[30px] text-[#0000008A] ">
             {answer}
           </p>
         </div>
