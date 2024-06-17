@@ -37,7 +37,7 @@ const HeaderDropDown = ({
 
 	return (
 		<div
-			className={`relative  w-fit  z-[1000] h-[20px]  ${isSelected && "border-[#2056A7] border-b-[2px]"
+			className={`relative  w-fit  z-[1000] h-[20px]  ${isSelected && "border-[#2056A7] border-b-[2px] pb-6"
 				}  `}
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}

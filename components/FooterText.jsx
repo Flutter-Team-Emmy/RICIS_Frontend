@@ -8,7 +8,7 @@ const FooterText = ({ header, data }) => {
 			{data?.map((data, i) => (
 				<Link
 					href={header === "Services" ? `/services/${data.id}` : header === "Legislation/Rules" ? "/legislation_rules" : header === "Information" ? "/information" : data.href}
-					className='sf400 flex text-[#e2e2e2] text-xs lg:text-[0.7rem] leading-[21px] mb-[10px]' key={i}>
+					className='sf400 flex max-w-[15rem] text-[#e2e2e2] text-xs lg:text-[0.7rem] leading-[21px] mb-[10px]' key={i}>
 					{data.name}
 				</Link>
 			))}
