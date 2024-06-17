@@ -30,7 +30,7 @@ const FirstSect = () => {
           <br /> Mauris a quam nec, pellentesque pulvinar sem. Morbi lacus
           magna.
         </MotionComponent>
-        <h1 className="text-white font-[700] text-3xl mr-auto translate-y-24 translate-x-12">Our Services</h1> 
+        <h1 className="text-white font-[700] text-3xl mr-auto translate-y-20 translate-x-12">Our Services</h1> 
       </div>
     </div>
   );

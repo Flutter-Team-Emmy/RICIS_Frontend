@@ -1,16 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import BgImgText from "@/components/BgImgText";
 import Tab from "./Tab";
 import News from "./News";
 import Notice from "./Notice";
 import Circular from "./Circular";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import MainLayout from "@/components/mainLayout";
 
-const Page = () => {
-	const [selectedTab, setSelectedTab] = useState("News");
+const PageBoundary = () => {
+	// const [selectedTab, setSelectedTab] = useState("News");
+	const router = useRouter();
+	const param = useSearchParams();
+	const selectedTab = param.get("selected");
 
 	// const searchParams = useSearchParams();
 
@@ -22,7 +25,8 @@ const Page = () => {
 	// }, [searchParams]);
 
 	const handleClick = (name) => {
-		setSelectedTab(name);
+		// setSelectedTab(name);
+		router.push(`/notification?selected=${name}`);
 	};
 
 	return (
@@ -62,5 +66,15 @@ const Page = () => {
 		</MainLayout>
 	);
 };
+
+
+const Page = () => {
+
+	return (
+		<Suspense>
+			<PageBoundary />
+		</Suspense>
+	)
+}
 
 export default Page;

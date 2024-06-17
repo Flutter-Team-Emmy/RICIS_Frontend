@@ -20,7 +20,7 @@ const Contact = () => {
       <div className="">
         <div className="grid bg-[url('/images/contact-us.png')] relative bg-cover bg-no-repeat w-full h-[45rem] pt-20 lg:px-10 px-4">
           <div className="absolute inset-0 bg-black opacity-40 h-full"></div>
-          <div className="relative flex justify-center items-center self-center p-6 lg:h-[26rem] lg:w-[35rem] w-full h-full rounded-md ml-auto mr-24">
+          <div className="relative flex justify-center items-center self-center p-6 lg:h-[26rem] lg:w-[35rem] w-full h-full rounded-md ml-auto mt-12 mr-24">
             <div className="absolute lg:h-[26rem] lg:w-[35rem] w-full h-full bg-white opacity-[42%] z-[10] rounded-md"></div>
             <div className="w-full h-full bg-white z-[100] py-8 lg:px-10 px-4 space-y-12 rounded-md">
               <h1 className="lg:text-2xl text-lg font-semibold text-slate-900 text-center">
