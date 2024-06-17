@@ -6,6 +6,7 @@ import Card from "./Card";
 import MainLayout from "@/components/mainLayout";
 import { useGetAdministrativePersonnelsQuery } from "@/store/api/generalApi";
 import Image from "next/image";
+import Structure from "./Tree";
 
 const Admin = () => {
   const { data, isLoading, isSuccess } = useGetAdministrativePersonnelsQuery();
@@ -62,7 +63,12 @@ const Admin = () => {
             contributions to the world.
           </h2>
 
-          <Image alt="" src="/images/table.jpg" className=" mx-auto mt-[64px] " />
+          {/* <img
+            alt=""
+            src="/images/table.jpg"
+            className=" mx-auto mt-[64px] w-full h-full"
+          /> */}
+          <Structure />
         </div>
       </div>
     </MainLayout>

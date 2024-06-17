@@ -42,13 +42,14 @@ const PdfComp = ({ data }) => {
         <a href={data?.url} target="_blank" download>
           <button
             className={`py-[8px] px-[16px] ${
-              data?.type === "EXCEL" ? "border-[#6DCC81]" : "border-[#3361FF]"
+              data?.type === "EXCEL"
+                ? "border-[#6DCC81] text-[#6DCC81] hover:bg-[#6DCC81] hover:text-white"
+                : "border-[#3361FF] text-[#3361FF] hover:bg-[#3361FF] hover:text-white"
             } border rounded-[6px]`}
           >
             <h2
-              className={`${
-                data?.type === "EXCEL" ? "text-[#6DCC81]" : "text-[#3361FF]"
-              } inter700 text-[14px] leading-[21px]`}
+              className="
+               inter700 text-[14px] leading-[21px]"
             >
               Download
             </h2>
