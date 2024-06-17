@@ -18,17 +18,18 @@ const Contact = () => {
   return (
     <MainLayout>
       <div className="">
-        <div className="grid bg-[url('/images/contact-us.png')] bg-cover bg-no-repeat w-full h-[45rem] pt-20 lg:px-10 px-4">
-          <div className="relative flex justify-center items-center self-center p-6 lg:h-[26rem] lg:w-[30rem] w-full h-full rounded-md ml-auto">
-            <div className="absolute lg:h-[26rem] lg:w-[30rem] w-full h-full bg-white opacity-[42%] z-[10] rounded-md"></div>
+        <div className="grid bg-[url('/images/contact-us.png')] relative bg-cover bg-no-repeat w-full h-[45rem] pt-20 lg:px-10 px-4">
+          <div className="absolute inset-0 bg-black opacity-40 h-full"></div>
+          <div className="relative flex justify-center items-center self-center p-6 lg:h-[26rem] lg:w-[35rem] w-full h-full rounded-md ml-auto mr-24">
+            <div className="absolute lg:h-[26rem] lg:w-[35rem] w-full h-full bg-white opacity-[42%] z-[10] rounded-md"></div>
             <div className="w-full h-full bg-white z-[100] py-8 lg:px-10 px-4 space-y-12 rounded-md">
-              <h1 className="lg:text-xl text-lg font-semibold text-slate-900 text-center">
+              <h1 className="lg:text-2xl text-lg font-semibold text-slate-900 text-center">
                 Having issues? Please contact us!
               </h1>
-              <div className="max-w-sm space-y-4 lg:px-16 px-3 mx-auto">
-                <h2 className="font-[700]">RIC Inspection Services LTD</h2>
-                <div className="text-sm text-gray-400 space-y-1 max-w-[15rem]">
-                  <p className=" ">
+              <div className="relative max-w-sm space-y-4 lg:px-16 px-3 mx-auto">
+                <h2 className="font-[700] text-lg">RIC Inspection Services LTD</h2>
+                <div className="text-md text-gray-400 space-y-1 max-w-[15rem]">
+                  <p className="">
                     P.O BOX 2500, 48 George Street, Houston, Texas .B.C. USA
                   </p>
                   <p className="">info@technical.consultant.com</p>
@@ -38,7 +39,7 @@ const Contact = () => {
             </div>
           </div>
 
-          <div className="pt-10 -mb-16 align-self-end">
+          <div className="relative pt-10 -mb-16 align-self-end">
             <h1 className="text-white text-4xl font-semibold">Contact us</h1>
           </div>
         </div>
