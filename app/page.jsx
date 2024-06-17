@@ -10,11 +10,11 @@ import MainLayout from "../components/mainLayout";
 export default function Home() {
 	return (
 		<MainLayout>
-			<div>
+			<div className="">
 				<FirstSect />
 				<Services />
-				<ThirdSect />
-				<Notice />
+				{/* <ThirdSect />
+				<Notice /> */}
 			</div>
 		</MainLayout>
 	);

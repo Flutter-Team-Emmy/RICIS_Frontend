@@ -121,7 +121,6 @@ body {
   align-items: center;
   margin-top: 2px;
   cursor: pointer;
-  /* color: #ccc; */
 }
 
 .active {
@@ -156,4 +155,23 @@ body {
   white-space: nowrap;
 }
 
+
+/* 
+.swiper-pagination {
+  position: relative !important;
+  margin-top: 2rem;
+} */
+
+.swiper-pagination-bullet-active {
+  background-color: #EBE31D !important;
+}
+
+.swiper-css-mode > .swiper-wrapper {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+}
  
+.swiper-wrapper {
+  z-index: -1 !important;
+  gap: 2rem !important;
+}

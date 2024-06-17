@@ -17,37 +17,36 @@ const Footer = () => {
   console.log(services)
 
   return (
-    <footer className="lg:flex gap-x-12 space-y-12 lg:space-y-0 justify-center bg-[#2056A7] py-[5rem] px-4 lg:px-[4rem]">
-      <div className="space-y-8">
-        <div className="flex flex-col space-y-5 w-full lg:max-w-sm font-semibold">
-          <span className="">{headerRound("white")}</span>
-          <div>
-            <h2 className="sf700 text-sm  lg:text-[14px] 2xl:text-[16px] mb-[4px] uppercase leading-[19.2px] tracking-[-0.2px] text-white">
+    <footer className="lg:flex gap-x-12 space-y-12 lg:space-y-0 justify-center bg-[#2056A7] pt-[20rem] pb-[5rem] px-4 lg:px-[4rem]">
+      <div className="space-y-8 lg:pr-28">
+        <div className="flex flex-col space-y-5 w-full lg:max-w-sm">
+          <img src="/images/logo2.svg" className="w-16 h-16" alt=""/>
+          <div className="text-[0.75rem]">
+            <h2 className="sf700 mb-[4px] uppercase leading-[19.2px] tracking-[-0.2px] text-white">
               Technical Consultant
             </h2>
-            <h2 className="sf700 text-sm lg:text-[14px] 2xl:text-[16px] mb-[4px] uppercase leading-[19.2px] tracking-[-0.2px] text-white">
-              Boiler & Pressure Vessel Regulation{" "}
+            <h2 className="sf700 mb-[4px] uppercase leading-[19.2px] tracking-[-0.2px] text-white">
+              Boiler & Pressure Vessel Regulation
             </h2>
-            <h2 className="sf700 text-sm lg:text-[14px] 2xl:text-[16px] mb-[4px] uppercase leading-[19.2px] tracking-[-0.2px] text-white">
-              {" "}
+            <h2 className="sf700 mb-[4px] uppercase leading-[19.2px] tracking-[-0.2px] text-white">
               Lifting & Allied Work Equipment (Safety) Regulation
             </h2>
-            <h2 className="sf700 text-xs lg:text-sm  lg:text-[14px] 2xl:text-[16px] mb-[4px] uppercase leading-[19.2px] tracking-[-0.2px] text-white">
+            <h2 className="sf700 text-xs mb-[4px] uppercase leading-[19.2px] tracking-[-0.2px] text-white">
               info@ries.gov.ng, www. ries.gov.ng
             </h2>
           </div>
         </div>
 
-        <div className="space-y-[0.5rem] items-start md:mt-[2rem] lg:max-w-sm font-semibold">
-          <img alt="" src="/images/logo.jpg" className="pb-4 w-12 h-12" />
-          <div className="flex flex-col w-ful space-y-2">
-            <h2 className="sf700 text-sm lg:text-[14px] 2xl:text-[16px] text-white leading-[19.2px] uppercase text-left">
+        <div className="space-y-[0.5rem] items-start md:mt-[2rem] lg:max-w-sm  ">
+          <img alt="" src="/images/logo.svg" className="pb-4 w-16 h-16" />
+          <div className="flex flex-col w-ful space-y-2 text-[0.75rem]">
+            <h2 className="sf700 text-white leading-[19.2px] uppercase text-left">
               Regulatory IMPLEMentation & compliance scheme
             </h2>
-            <h2 className="sf700 text-sm lg:text-[14px] 2xl:text-[16px] text-white leading-[19.2px] uppercase text-left">
+            <h2 className="sf700 text-white leading-[19.2px] uppercase text-left">
               OCCUPATIONAL SAFETY & HEALTH DEPARTMENT
             </h2>
-            <h2 className="sf700 text-sm lg:text-[14px] 2xl:text-[16px] text-white leading-[19.2px] uppercase text-left">
+            <h2 className="sf700 text-white leading-[19.2px] uppercase text-left">
               FEDERAL MINISTRY OF LABOUR & EMPLOYMENT
             </h2>
           </div>

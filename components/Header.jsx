@@ -13,46 +13,31 @@ const Header = () => {
 	const dropData = headerDrop();
 
 	return (
-		<div className="hidden lg:flex flex-col w-full px-[3.75rem] pt-[1rem] items-end">
+		<div className="hidden lg:block w-full px-[3.75rem] pt-[1rem]">
 			<div className="flex justify-between w-full">
 				<Link
 					href="/"
-					className="flex flex-col text-justify space-y-[10px] mt-[3rem]"
+					className="flex text-center font-[700] flex-col space-y-[10px] mx-auto"
 				>
-					<span>{headerRound("#2056A7")}</span>
-					<h2 className="sf600 text-[10px] leading-[12px] uppercase text-[#68768C] font-[500]">
+					<img alt="" className="self-center w-12 h-12" src="/images/logo.svg" />
+					<h2 className="sf600 text-[10px] leading-[12px] uppercase text-[#68768C]">
 						Regulatory IMPLEMentation & compliance scheme
 					</h2>
-					<h2 className="sf600 text-[10px] leading-[12px] uppercase text-[#68768C] font-[500]">
-						OCCUPATIONAL SAFETY & HEALTH DEPARTMENT
+					<div className="text-[#1B7339] space-y-[10px]">
+						<h2 className="sf600 text-[10px] leading-[12px] uppercase">
+							OCCUPATIONAL SAFETY & HEALTH DEPARTMENT
 					</h2>
-					<h2 className="sf600 text-[10px] leading-[12px] uppercase text-[#68768C] font-[500]">
-						FEDERAL MINISTRY OF LABOUR & EMPLOYMENT
+						<h2 className="sf600 text-[10px] leading-[12px] uppercase">
+							FEDERAL MINISTRY OF LABOUR & EMPLOYMENT
 					</h2>
-				</Link>
-				<Link href="/"
-					className="flex flex-col text-center space-y-[10px]  mt-[1rem]">
-					<img alt="" className="self-center w-8 h-8" src="/images/logo.jpg" />
-					<h2 className='sf500 text-[10px] text-[#68768C] uppercase leading-[12px] tracking-[-0.2px] font-[500]'>
-						Technical Consultant
-					</h2>
-					<h2 className='sf500 text-[10px] text-[#68768C] uppercase leading-[12px] tracking-[-0.2px] font-[500]'>
-						Boiler & Pressure Vessel Regulation
-					</h2>
-					<h2 className='sf500 text-[10px] text-[#68768C] uppercase leading-[12px] tracking-[-0.2px] font-[500]'>
-						Lifting & Allied Work Equipment (Safety) Regulation
-					</h2>
-					<h2 className='sf500 text-[10px] text-[#68768C] uppercase leading-[12px] tracking-[-0.2px] font-[500]'>
-						info@ries.gov.ng, www. ries.gov.ng
-					</h2>
+					</div>
 				</Link>
 				<Link className="" href="/signin">
 					<Btn text="Sign in" />
 				</Link>
 			</div>
 
-
-			<div className='mt-[3rem] flex items-center space-x-[2rem] justify-between pb-[5px]'>
+			<div className='mt-[3rem] flex space-x-[2rem] justify-center w-full pb-[5px]'>
 				{dropData?.map((drop, i) => (
 					<HeaderDropDown
 						header={drop.header}

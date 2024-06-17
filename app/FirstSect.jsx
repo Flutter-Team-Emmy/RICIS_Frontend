@@ -5,14 +5,14 @@ import React from "react";
 const FirstSect = () => {
   return (
     <div
-      className="flex items-center justify-center w-full min-h-[600px] h-full"
+      className="flex items-center justify-center relative w-full min-h-[600px] h-full "
       style={{
         backgroundImage: 'url("/images/9347.jpg")',
         backgroundPosition: "contain",
         backgroundSize: "cover",
       }}
     >
-      <div className="flex flex-col items-center justify-center space-y-[1rem] 2xl:space-y-[1.5rem]  bg-[#0000006c] w-full h-full min-h-[600px] px-6">
+      <div className="flex flex-col items-center justify-center absolute space-y-[1rem] 2xl:space-y-[1.5rem]  bg-[#0000006c] w-full h-full min-h-[600px] px-6">
         <MotionComponent
           as="h1"
           variants={textVariants}
@@ -30,6 +30,7 @@ const FirstSect = () => {
           <br /> Mauris a quam nec, pellentesque pulvinar sem. Morbi lacus
           magna.
         </MotionComponent>
+        <h1 className="text-white font-700 text-3xl mr-auto translate-y-24 translate-x-12">Our Services</h1> 
       </div>
     </div>
   );
