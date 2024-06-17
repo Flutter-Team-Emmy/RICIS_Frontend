@@ -20,8 +20,8 @@ const Cert = () => {
         <BgImgText
           header="About Us"
           text="Certificate Issued"
-          url={imgUrl}
-          isLoading={isLoading}
+          url="/images/9347.jpg"
+          // isLoading={isLoading}
         />
         {/* <div className="w-[90%] mx-auto pt-[4rem] pb-[6rem]">
           {isSuccess && (

@@ -22,7 +22,7 @@ const Footer = () => {
   return (
     <footer className={`lg:space-y-0 bg-[#2056A7] ${pathname === "/" ? "pt-[15rem]" : "pt-20"} pb-[5rem] px-4 lg:px-[4rem]`}>
       <div className="space-y-20">
-        <div className="lg:flex lg:gap-x-24 justify-around">
+        <div className="lg:grid grid-cols-[4fr_3fr_3fr] lg:gap-x-24">
           <div className="space-y-20">
             <div className="flex flex-col space-y-5 w-full lg:max-w-sm">
               <img src="/images/logo2.svg" className="w-16 h-16" alt="" />
@@ -63,7 +63,7 @@ const Footer = () => {
           />
         </div>
 
-        <div className="lg:flex lg:gap-x-24 justify-center">
+        <div className="lg:grid grid-cols-[4fr_3fr_3fr] lg:gap-x-24">
           <div className="space-y-[0.5rem] items-start md:mt-[2rem] lg:max-w-sm  ">
             <img alt="" src="/images/logo.svg" className="pb-4 w-[100px] h-[90px]" />
             <div className="flex flex-col font-bold w-ful space-y-2 text-[0.75rem]">
@@ -89,7 +89,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="flex space-x-[16px] justify-center lg:justify-start items-center justify-start lg:px-[4rem] pt-8 lg:pt-0">
+      <div className="flex space-x-[16px] items-center pt-8 lg:pt-4">
         <span>{FacebookIcon}</span>
         <span>{LinkedInIcon}</span>
         <span>{TwitterIcon}</span>

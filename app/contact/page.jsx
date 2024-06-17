@@ -18,7 +18,7 @@ const Contact = () => {
   return (
     <MainLayout>
       <div className="">
-        <div className="grid bg-[url('/images/contact-us.png')] relative bg-cover bg-no-repeat w-full h-[45rem] pt-20 lg:px-10 px-4">
+        <div className="grid bg-[url('/images/9347.jpg')] relative bg-cover bg-no-repeat w-full h-[45rem] pt-20 lg:px-10 px-4">
           <div className="absolute inset-0 bg-black opacity-40 h-full"></div>
           <div className="relative flex justify-center items-center self-center p-6 lg:h-[26rem] lg:w-[35rem] w-full h-full rounded-md ml-auto mt-12 mr-24">
             <div className="absolute lg:h-[26rem] lg:w-[35rem] w-full h-full bg-white opacity-[42%] z-[10] rounded-md"></div>

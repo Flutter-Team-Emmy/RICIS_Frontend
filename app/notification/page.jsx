@@ -32,7 +32,7 @@ const PageBoundary = () => {
 	return (
 		<MainLayout>
 			<div className='mb-[6rem]  '>
-				<BgImgText header='NOTIFICATION' text='News, Notice & Circular' />
+				<BgImgText header='NOTIFICATION' text='News, Notice & Circular' url="/images/9347.jpg" />
 				<div className='border-b-[2px] border-transparent border-b-[#0000000A]    '>
 					<div className='w-[90%] mx-auto flex space-x-[64px] pt-[2rem]'>
 						<Tab

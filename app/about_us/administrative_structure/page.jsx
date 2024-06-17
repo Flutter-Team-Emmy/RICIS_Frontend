@@ -10,7 +10,7 @@ const Admin = () => {
   return (
     <MainLayout>
       <div>
-        <div className="grid bg-[url('/images/contact-us.png')] relative bg-cover bg-no-repeat w-full h-[30rem] pt-20 lg:px-10 px-4">
+        <div className="grid bg-[url('/images/9347.jpg')] relative bg-cover bg-no-repeat w-full h-[30rem] pt-20 lg:px-10 px-4">
         <div className="absolute inset-0 bg-black opacity-40 h-full"></div>
           <div className="mt-auto text-white pb-12 pl-12 relative">
             <h1 className="text-sm font-light">ABOUT US</h1>
