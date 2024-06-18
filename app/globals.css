@@ -166,13 +166,8 @@ body {
   background-color: #EBE31D !important;
 }
 
-/* .swiper-css-mode > .swiper-wrapper {
-  overflow-x: auto !important;
-  overflow-y: auto !important;
-} */
  
 .swiper-wrapper {
   z-index: -1 !important;
-  gap: 2rem !important;
-  /* overflow-y: hidden !important; */
+  /* gap: 2rem !important; */
 }

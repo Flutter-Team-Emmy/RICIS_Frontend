@@ -8,7 +8,7 @@ import { useGetServicesQuery } from "@/store/api/generalApi";
 import MotionComponent from "@/components/MotionComponent";
 import { textVariants, fadeInVariants } from "@/utils/variants";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Keyboard, Mousewheel, Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Keyboard, Mousewheel, Navigation, Pagination } from "swiper/modules";
 import SwiperNavBtn from "../components/SwiperNavBtn";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -19,8 +19,9 @@ const Services = () => {
 
   const results = data?.data.services;
 
+
   return (
-    <div className="w-full mx-auto absolute -mt-40 mb-[3rem]">
+    <div className="w-full mx-auto absolute -mt-40 mb-[3rem] pb-[30rem]">
       <div className="mt-20 w-full">
         <Swiper
           slidesPerView={4}
@@ -42,13 +43,14 @@ const Services = () => {
               spaceBetween: 40,
             },
           }}
+          modules={[Navigation, Mousewheel, Keyboard, Autoplay]}
           // cssMode={true}
           pagination={{
             clickable: true,
           }}
           mousewheel={true}
           keyboard={true}
-          modules={[Navigation, Mousewheel, Keyboard]}
+          autoplay={true}
           className="mySwiper"
         >
           {isSuccess && results?.map((data, index) => (

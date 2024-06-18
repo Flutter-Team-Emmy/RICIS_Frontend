@@ -6,7 +6,7 @@ const Activities = () => {
   return (
     <MainLayout>
       <div>
-        <BgImgText header="About Us" text="Activities" />
+        <BgImgText header="About Us" text="Activities" url="/images/9347.jpg"/>
         <div className="w-[90%] mx-auto pt-[4rem] pb-[6rem] space-y-10">
           <h1 className="font-semibold text-2xl">
             Activities of Regulatory Implementation & Compliance Services

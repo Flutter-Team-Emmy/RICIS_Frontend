@@ -16,7 +16,7 @@ const FirstSect = () => {
         <MotionComponent
           as="h1"
           variants={textVariants}
-          className="inter900 lg:text-[3rem] 2xl:text-[4rem] lg:leading-[72px] 2xl:leading-[96px] text-white text-center"
+          className="inter900 font-black lg:text-[64px] 2xl:text-[4rem] lg:leading-[72px] 2xl:leading-[96px] text-white text-center"
         >
           Empowered to make a difference
         </MotionComponent>
@@ -30,7 +30,7 @@ const FirstSect = () => {
           <br /> Mauris a quam nec, pellentesque pulvinar sem. Morbi lacus
           magna.
         </MotionComponent>
-        <h1 className="text-white font-700 text-3xl mr-auto translate-y-24 translate-x-12">Our Services</h1> 
+        <h1 className="text-white font-[700] text-3xl mr-auto translate-y-20 translate-x-12">Our Services</h1> 
       </div>
     </div>
   );
