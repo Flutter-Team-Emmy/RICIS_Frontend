@@ -26,10 +26,10 @@ const Footer = () => {
     <footer
       className={`lg:space-y-0 bg-[#2056A7] ${
         pathname === "/" ? "pt-[15rem]" : "pt-20"
-      } pb-[5rem] px-4 lg:px-[4rem]`}
+      } pb-[3rem] px-4 lg:px-[4rem]`}
     >
       <div className="space-y-20">
-        <div className="lg:grid grid-cols-[4fr_3fr_3fr] lg:gap-x-24">
+        <div className="lg:grid grid-cols-[3fr_3fr_2fr_3fr] lg:gap-x-24">
           <div className="space-y-20">
             <div className="flex flex-col space-y-5 w-full lg:max-w-sm">
               <img src="/images/logo2.svg" className="w-16 h-16" alt="" />
@@ -48,26 +48,37 @@ const Footer = () => {
           </div>
 
           <FooterText
-            header="About Us"
-            data={[
-              {
-                name: "Activities",
-                href: "/about_us",
-              },
-              {
-                name: "Administrative Structure",
-                href: "/about_us/administrative_structure",
-              },
-              {
-                name: "Certificate issued",
-                href: "/about_us/certificate_issued",
-              },
-            ]}
+            header="Legislation/Rules"
+            data={legislation && [...legislation]}
           />
           <FooterText header="Services" data={services && [...services]} />
+          <div>
+            <FooterText
+              header="Contact Us"
+              data={[
+                {
+                  name: "P.O BOX 2500, 48 George Street, Houston, Texas.B.C.USA",
+                  href: "/contact",
+                },
+                {
+                  name: "+2349019133316",
+                  href: "/contact",
+                },
+                {
+                  name: "info@technical.consultant.com",
+                  href: "/contact",
+                },
+              ]}
+            />
+            <div className="flex space-x-[16px] items-center pt-8 lg:pt-4">
+              <span>{FacebookIcon}</span>
+              <span>{LinkedInIcon}</span>
+              <span>{TwitterIcon}</span>
+            </div>
+          </div>
         </div>
 
-        <div className="lg:grid grid-cols-[4fr_3fr_3fr] lg:gap-x-24">
+        {/* <div className="lg:grid grid-cols-[4fr_3fr_3fr] lg:gap-x-24">
           <div className="space-y-[0.5rem] items-start md:mt-[2rem] lg:max-w-sm  ">
             <img
               alt=""
@@ -99,7 +110,7 @@ const Footer = () => {
             header="Information"
             data={information && [...information]}
           />
-        </div>
+        </div> */}
       </div>
     </footer>
   );

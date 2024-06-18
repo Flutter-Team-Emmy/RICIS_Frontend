@@ -13,9 +13,9 @@ const Header = () => {
 	const dropData = headerDrop();
 
 	return (
-		<div className="hidden lg:block w-full px-[3.75rem] pt-[1rem]">
+		<div className="hidden lg:block w-full pt-[1rem]">
 			<div className="flex flex-col w-full">
-				<Link className="self-end" href="/signin">
+				<Link className="self-end mr-[3.75rem]" href="/signin">
 					<Btn text="Sign in" />
 				</Link>
 				<Link
@@ -38,7 +38,7 @@ const Header = () => {
 
 			</div>
 
-			<div className='mt-[3rem] flex space-x-[2rem] justify-center w-full'>
+			<div className='bg-[#2056A7] pt-[1rem] pb-[1rem] flex space-x-[2rem] justify-center w-full'>
 				{dropData?.map((drop, i) => (
 					<HeaderDropDown
 						header={drop.header}

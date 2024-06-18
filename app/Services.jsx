@@ -21,7 +21,7 @@ const Services = () => {
 
 
   return (
-    <div className="w-full mx-auto absolute -mt-40 mb-[3rem] pb-[30rem]">
+    <div className="w-full mx-auto absolute -mt-40 mb-[3rem] ">
       <div className="mt-20 w-full">
         <Swiper
           slidesPerView={4}

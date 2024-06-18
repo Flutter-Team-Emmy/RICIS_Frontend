@@ -47,7 +47,7 @@ const HeaderDropDown = ({
 			}}
 		>
 			<h1
-				className={` headerNav cursor-pointer sf600 text-[13px] leading-[19.5px] text-center  ${isSelected ? "text-[#3361FF]" : "text-[#7E849B]"
+				className={` headerNav cursor-pointer sf600 text-[13px] leading-[19.5px] text-center  ${isSelected ? "text-[#FFFF00]" : "text-white"
 					} `}
 			>
 				{header}

@@ -10,10 +10,10 @@ const BgImgText = ({ url, header, text, isLoading }) => {
 				backgroundPosition: "center",
 			}}
 		>
-			<div className='h-[500px] w-full bg-[#00000046] relative'>
-				<div className='absolute bottom-[50px] left-[25px] lg:left-[50px]'>
+			<div className='h-[167px] w-full bg-[#00000043] opacity-[0.85] relative'>
+				<div className='absolute bottom-[20px] left-[25px] lg:left-[50px]'>
 					<h2 className='sf700 text-[1rem] text-white'>{header}</h2>
-					<h2 className='sf700 text-[30px] lg:text-[48px] leading-[57.6px] text-white'>
+					<h2 className='sf700 text-[30px] lg:text-[25px] leading-[57.6px] text-white'>
 						{text}
 					</h2>
 				</div>
