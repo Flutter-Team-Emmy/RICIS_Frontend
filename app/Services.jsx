@@ -42,7 +42,7 @@ const Services = () => {
               spaceBetween: 40,
             },
           }}
-          cssMode={true}
+          // cssMode={true}
           pagination={{
             clickable: true,
           }}
