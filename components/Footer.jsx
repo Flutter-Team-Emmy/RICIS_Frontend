@@ -2,11 +2,14 @@ import React from "react";
 import FooterText from "./FooterText";
 import { FacebookIcon, LinkedInIcon, TwitterIcon, headerRound } from "../svgs";
 import Image from "next/image";
-import { useGetInformationQuery, useGetServicesQuery, useGetlegislaionsQuery } from "@/store/api/generalApi";
+import {
+  useGetInformationQuery,
+  useGetServicesQuery,
+  useGetlegislaionsQuery,
+} from "@/store/api/generalApi";
 import { usePathname } from "next/navigation";
 
 const Footer = () => {
-
   const { data: servicesData } = useGetServicesQuery();
   const { data: informationData } = useGetInformationQuery();
   const { data: legislationData } = useGetlegislaionsQuery();
@@ -15,12 +18,16 @@ const Footer = () => {
   const legislation = legislationData?.data.legislations;
   const information = informationData?.data.information;
 
-  console.log(services)
+  console.log(services);
 
   const pathname = usePathname();
 
   return (
-    <footer className={`lg:space-y-0 bg-[#2056A7] ${pathname === "/" ? "pt-[15rem]" : "pt-20"} pb-[5rem] px-4 lg:px-[4rem]`}>
+    <footer
+      className={`lg:space-y-0 bg-[#2056A7] ${
+        pathname === "/" ? "pt-[15rem]" : "pt-20"
+      } pb-[5rem] px-4 lg:px-[4rem]`}
+    >
       <div className="space-y-20">
         <div className="lg:grid grid-cols-[4fr_3fr_3fr] lg:gap-x-24">
           <div className="space-y-20">
@@ -57,15 +64,16 @@ const Footer = () => {
               },
             ]}
           />
-          <FooterText
-            header="Services"
-            data={services && [...services]}
-          />
+          <FooterText header="Services" data={services && [...services]} />
         </div>
 
         <div className="lg:grid grid-cols-[4fr_3fr_3fr] lg:gap-x-24">
           <div className="space-y-[0.5rem] items-start md:mt-[2rem] lg:max-w-sm  ">
-            <img alt="" src="/images/logo.svg" className="pb-4 w-[100px] h-[90px]" />
+            <img
+              alt=""
+              src="/images/logo.svg"
+              className="pb-4 w-[100px] h-[90px]"
+            />
             <div className="flex flex-col font-bold w-ful space-y-2 text-[0.75rem]">
               <h2 className="text-white leading-[19.2px] uppercase text-left">
                 Regulatory IMPLEMentation & compliance scheme
@@ -77,6 +85,11 @@ const Footer = () => {
                 FEDERAL MINISTRY OF LABOUR & EMPLOYMENT
               </h2>
             </div>
+            <div className="flex space-x-[16px] items-center pt-8 lg:pt-4">
+              <span>{FacebookIcon}</span>
+              <span>{LinkedInIcon}</span>
+              <span>{TwitterIcon}</span>
+            </div>
           </div>
           <FooterText
             header="Legislation/Rules"
@@ -87,12 +100,6 @@ const Footer = () => {
             data={information && [...information]}
           />
         </div>
-      </div>
-
-      <div className="flex space-x-[16px] items-center pt-8 lg:pt-4">
-        <span>{FacebookIcon}</span>
-        <span>{LinkedInIcon}</span>
-        <span>{TwitterIcon}</span>
       </div>
     </footer>
   );
