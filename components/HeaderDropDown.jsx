@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const HeaderDropDown = ({
@@ -14,6 +14,7 @@ const HeaderDropDown = ({
 	const [selected, setSelected] = useState(false);
 	const [counter, setCounter] = useState(0);
 	const router = useRouter();
+	const pathname = usePathname();
 
 
 	const isSelected = selectedHeader === header;
@@ -47,8 +48,9 @@ const HeaderDropDown = ({
 			}}
 		>
 			<h1
-				className={` headerNav cursor-pointer sf600 text-[13px] leading-[19.5px] text-center  ${isSelected ? "text-[#FFFF00]" : "text-white"
+				className={` headerNav cursor-pointer sf600 text-[13px] leading-[19.5px] text-center  ${href === pathname ? "text-[#FFFF00]" : "text-white"
 					} `}
+					onClick={() => href && router.push(href)}
 			>
 				{header}
 			</h1>
