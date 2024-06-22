@@ -55,8 +55,6 @@ const services = [
 ];
 
 const subServices = [
-  // {
-  // service: [
   {
     id: 1,
     details: {
@@ -264,8 +262,6 @@ const subServices = [
       ],
     },
   },
-  // ],
-  // },
 ];
 
 const Accordion = ({
@@ -293,8 +289,8 @@ const Accordion = ({
         </p>
       </div>
       {isOpen &&
-        service.equipments.map((equip) => (
-          <div className="px-3">
+        service.equipments.map((equip,index) => (
+          <div key={index} className="px-3">
             <p
               className="py-3 cursor-pointer"
               onClick={() => changeDefault(equip.id)}
@@ -345,6 +341,7 @@ const Services = () => {
             const isNotLast = services.length - 1 !== index;
             return (
               <Accordion
+                key={index}
                 isOpen={openedAccordion.includes(service)}
                 boorderBottom={isNotLast}
                 service={service}
@@ -381,7 +378,7 @@ const Services = () => {
                       <p>{list.subDetails.subTitle}</p>
                       <ol className="text-sm list-disc ml-4 space-y-2">
                         {list.subDetails.subLists.map((el, id) => (
-                          <li>{el}</li>
+                          <li key={Date.now()}>{el}</li>
                         ))}
                       </ol>
                     </div>
