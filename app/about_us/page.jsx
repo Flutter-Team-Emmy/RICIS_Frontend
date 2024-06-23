@@ -1,131 +1,148 @@
+"use client";
+
 import BgImgText from "@/components/BgImgText";
 import MainLayout from "@/components/mainLayout";
-import React from "react";
+import React, { useState } from "react";
+import Default from "./Default";
+import { aboutUs, subActs } from "@/utils/aboutUsData";
+import { ArrowDown } from "@/svgs";
+
+const Accordion = ({
+  boorderBottom,
+  isOpen,
+  toggleAccordion,
+  data,
+  changeDefault,
+}) => {
+  const [selectedId, setSelectedId] = useState(0);
+
+  return (
+    <div
+      className={`w-full ${
+        boorderBottom && !isOpen && "border-b border-gray-500"
+      } ${
+        isOpen && data.hasDrop ? "border-b border-[#D5B69A] rounded-xl" : ""
+      }`}
+    >
+      <div
+        onClick={() => {
+          toggleAccordion();
+          changeDefault(data.id);
+        }}
+        className={`${
+          isOpen ? "bg-[#D5B69A] text-slate-800" : "bg-transparent"
+        } flex items-center justify-between py-3 px-3`}
+      >
+        <p className="">{data.name}</p>
+        {data.hasDrop && (
+          <p className={`w-fi ${isOpen ? "rotate-180" : "rotate-0"}`}>
+            {ArrowDown}
+          </p>
+        )}
+      </div>
+      {isOpen &&
+        data.hasDrop &&
+        data.subActs?.map((abtData, index) => (
+          <div key={index} className="px-3">
+            <p
+              className={`py-3 cursor-pointer ${
+                abtData.id === selectedId ? "text-[#C7854A]" : "text-black"
+              }`}
+              onClick={() => {
+                changeDefault(abtData.id);
+                setSelectedId(abtData.id);
+              }}
+            >
+              {abtData.name}
+            </p>
+          </div>
+        ))}
+    </div>
+  );
+};
 
 const Activities = () => {
+  const [openedAccordion, setOpenedAccordion] = useState([""]);
+  const [selectedAct, setSelectedAct] = useState([]);
+
+  const toggleAccordion = (accordion_id) => {
+    if (openedAccordion.includes(accordion_id)) {
+      setOpenedAccordion([]);
+    } else {
+      setOpenedAccordion([accordion_id]);
+    }
+  };
+
+  const changeDefault = (id) => {
+    console.log(id);
+    const newAct = subActs.filter((act) => id === act.id);
+    setSelectedAct(newAct);
+
+    console.log(selectedAct);
+  };
+
   return (
     <MainLayout>
-      <div>
-        <BgImgText header="About Us" text="Activities" url="/images/9347.jpg"/>
-        <div className="w-[90%] mx-auto pt-[4rem] pb-[6rem] space-y-10">
-          <h1 className="font-semibold text-2xl">
-            Activities of Regulatory Implementation & Compliance Services
-            (RICS)
-          </h1>
-          <div className="space-y-8">
-            <div className="flex items-center justify-center gap-3">
-              <span className="w-2 h-1.5 rounded-full bg-gray-500">.</span>
-              <span className="text-gray-500 leading-regula">
-                Develop technical guidelines for the administration, management
-                and implementation of the Boiler & Pressure Vessel Regulation,
-                2018 (BPVR) and the Lifting & Allied Work Equipment (Safety)
-                Regulation, 2018 (LAWER).
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <p className="w-2 h-1.5 rounded-full bg-gray-500">.</p>
-              <p className="text-gray-500 leading-regula">
-                Organize awareness campaigns and carry out training on
-                implementation and compliance to requirements of BPVR and LAWER
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="w-2 h-1.5 rounded-full bg-gray-500">.</span>
-              <span className="text-gray-500 leading-regula">
-                Inspect and monitor organizations for implementation and
-                compliance of the BPVR and LAWER.
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="w-2 h-1.5 rounded-full bg-gray-500">.</span>
-              <span className="text-gray-500 leading-regula">
-                Carry out inspection of Steam Boilers, Pressure Vessels, Cranes
-                and Lifting Equipment, during manufacture or installation for
-                the purpose of registration as required by Regulation.
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="w-2 h-1.5 rounded-full bg-gray-500">.</span>
-              <span className="text-gray-500 leading-regula">
-                Publish records of registered equipment and all other activities
-                undertaken in relation to implementation and compliance of the
-                BPVR and LAWER.
-              </span>
-            </div>
-            <div className="flex items-center  gap-3">
-              <span className="w-2 h-1.5 rounded-full bg-gray-500">.</span>
-              <span className="text-gray-500 leading-regula">
-                Review and approve design calculations and drawings associated
-                with the manufacture and erection of boilers, pressure vessels,
-                passenger lifts, escalators, and other lifting equipment as
-                appropriate.
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="w-2 h-1.5 rounded-full bg-gray-500">.</span>
-              <span className="text-gray-500 leading-regula">
-                Review quality program and quality documents pertaining to
-                manufacture of boilers, pressure vessels, passenger lifts,
-                escalators, lifting equipment and other related components.
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="w-2 h-1.5 rounded-full bg-gray-500">.</span>
-              <span className="text-gray-500 leading-regula">
-                Investigate and submit reports on accident involving boilers,
-                pressure vessels, passenger lifts, escalators, lifting equipment
-                and other related components under the purview of the BPVR and
-                LAWER.
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="w-2 h-1.5 rounded-full bg-gray-500">.</span>
-              <span className="text-gray-500 leading-regula">
-                Recommend for prosecution of the owners of boilers, pressure
-                vessels, passenger lifts, escalators, lifting equipment and
-                other related components for violation of the provisions in the
-                Regulations.
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="w-2 h-1.5 rounded-full bg-gray-500">.</span>
-              <span className="text-gray-500 leading-regula">
-                Update records of the OSH Department with respect to location
-                change and transfer of boilers and pressure vessels.
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="w-2 h-1.5 rounded-full bg-gray-500">.</span>
-              <span className="text-gray-500 leading-regula">
-                In conjunction with the Exam Board, develop body of knowledge
-                for personnel competency examinations and purse accreditation of
-                certification program to international standard.
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="w-2 h-1.5 rounded-full bg-gray-500">.</span>
-              <span className="text-gray-500 leading-regula">
-                Coordinate the activities of the Examination Board and
-                administer competency examinations as enshrined in BPVR and
-                LAWER.
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="w-2 h-1.5 rounded-full bg-gray-500">.</span>
-              <span className="text-gray-500 leading-regula">
-                Conduct qualification tests of pressure welders and recommend
-                successful candidates for certification.
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="w-2 h-1.5 rounded-full bg-gray-500">.</span>
-              <span className="text-gray-500 leading-regula">
-                In conjunction with the OSH Department compliance team, conduct
-                approval audit for Registered Contactors, Authorised Inspection
-                Agency and Training Organisations.
-              </span>
-            </div>
+      <BgImgText
+        header="About Us"
+        text={selectedAct.length === 0 ? "Activities" : selectedAct[0]?.name}
+        url="/images/9347.jpg"
+      />
+      <div className="py-10 px-12 grid grid-cols-[4fr_6fr]">
+        <div className="rounded-xl w-[25rem] border border-gray-500 h-fit">
+          <div className="bg-[#2056A7] w-full py-2 px-3 rounded-t-xl">
+            <p className="font-semibold text-white">About Us</p>
           </div>
+          {aboutUs.map((data, index) => {
+            const isNotLast = aboutUs.length - 1 !== index;
+            return (
+              <Accordion
+                key={index}
+                isOpen={openedAccordion.includes(data)}
+                boorderBottom={isNotLast}
+                data={data}
+                changeDefault={changeDefault}
+                toggleAccordion={() => toggleAccordion(data)}
+              />
+            );
+          })}
+        </div>
+
+        <div className="text-gray-500">
+          {selectedAct.length === 0 && <Default />}
+          {selectedAct.map((data, index) => (
+            <div className="space-y-6" key={data.id}>
+              <h1 className="font-bold text-black text-lg">
+                {data.details.mainHeader}
+              </h1>
+              <div className="text-sm space-y-6 text-justify">
+                {data.details.paragraphs &&
+                  data.details.paragraphs.map((paragraph, id) => (
+                    <p key={id}>{paragraph}</p>
+                  ))}
+              </div>
+              <ol className="text-sm list-disc space-y-4 pl-4 list-inside">
+                {data.details.mainLists &&
+                  data.details.mainLists.map((mainList, id) => (
+                    <li key={id}>{mainList.des}</li>
+                  ))}
+              </ol>
+              {data.details.sections &&
+                data.details.sections.map((section, id) => (
+                  <div key={id} className="space-y-4">
+                    <h1 className="font-medium text-black">
+                      {section.subHeader}
+                    </h1>
+                    <p className="text-sm">{section.subTitle}</p>
+                    <ol className="text-sm list-disc space-y-4 pl-4 list-inside">
+                      {section.lists.map((list, id) => (
+                        <li key={id}>{list}</li>
+                      ))}
+                    </ol>
+                  </div>
+                ))}
+            </div>
+          ))}
         </div>
       </div>
     </MainLayout>

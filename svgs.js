@@ -155,7 +155,7 @@ export const file = (
 
 export const chevUp = (
   <svg
-    width="24"
+    width="15"
     height="12"
     viewBox="0 0 24 12"
     fill="none"
@@ -178,7 +178,7 @@ export const chevUp = (
 
 export const chevDown = (
   <svg
-    width="24"
+    width="15"
     height="12"
     viewBox="0 0 24 12"
     fill="none"

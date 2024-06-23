@@ -28,7 +28,7 @@ export const headerDrop = () => {
 			{
 				header: "About Us",
 				id: "03",
-				href: "about_us",
+				href: "/about_us",
 				drop: [
 					{
 						name: "Activities",
@@ -62,12 +62,14 @@ export const headerDrop = () => {
 			{
 				header: "Information",
 				id: "06",
+				href: "/information",
 				drop: informationDrop && [...informationDrop],
 			},
 
 			{
 				header: "Notifications",
 				id: "07",
+				href: "/notification",
 				drop: [
 					{
 						name: "News",
