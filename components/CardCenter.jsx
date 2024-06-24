@@ -15,7 +15,7 @@ const CardCenter = ({ header, subHeader, img, id, index }) => {
         <img src={img} className="w-[20rem] rounded-t-[12px] h-[150px]" />
         <div className="absolute rounded-t-[12px] inset-0 bg-black opacity-40 h-full"></div>
       </div>
-      <div className="bg-black w-full h-full text-white pt-2">
+      <div className="bw-full h-full text-black pt-2">
         <h1 className="sf700 text-sm font-medium leading-[24px] tracking-[-0.64px] text-center">
           {header}
         </h1>

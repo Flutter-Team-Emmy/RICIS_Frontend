@@ -21,6 +21,7 @@ const Accordion = ({
   currentServiceId,
   changeDefault,
 }) => {
+
   return (
     <div
       className={`w-full ${
@@ -99,7 +100,7 @@ const Services = () => {
       <BgImgText
         header="Our Services"
         text={selectedService[0]?.name}
-        url={imgUrl}
+        url="/images/bg4.png"
       />
       <div className="py-10 px-16 flex justify-between gap-2">
         <div className="rounded-xl w-[25rem] border border-gray-500 h-fit">

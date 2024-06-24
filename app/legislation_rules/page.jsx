@@ -23,6 +23,8 @@ const Accordion = ({
   setCurrentAccordion,
   changeDefault,
 }) => {
+
+  
   return (
     <div
       className={`w-full cursor-pointer ${
@@ -113,7 +115,7 @@ const LegislationRules = () => {
             : selectedRule[0]?.name
         }
         isLoading={isLoading}
-        url={imgUrl}
+        url="/images/bg4.png"
       />
       <div className="py-10 px-12 grid grid-cols-[4fr_6fr]">
         <div className="rounded-xl w-[25rem] border border-gray-500 h-fit">

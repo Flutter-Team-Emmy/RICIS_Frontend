@@ -67,7 +67,7 @@ const Information = () => {
       <BgImgText
         header="Information"
         text={selectedInformation[0]?.name}
-        url={imgUrl}
+        url="/images/bg4.png"
         isLoading={isLoading}
       />
       <div className="py-10 px-12 grid grid-cols-[4fr_6fr]">

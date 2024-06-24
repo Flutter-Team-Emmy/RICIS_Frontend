@@ -17,7 +17,6 @@ const Accordion = ({
   currentServiceId,
   changeDefault,
 }) => {
-  const [selectedId, setSelectedId] = useState(0);
 
   return (
     <div
@@ -98,7 +97,7 @@ const Activities = () => {
       <BgImgText
         header="About Us"
         text={selectedAct.length === 0 ? "Activities" : selectedAct[0]?.name}
-        url="/images/9347.jpg"
+        url="/images/homeBg1.png"
       />
       <div className="py-10 px-12 grid grid-cols-[4fr_6fr]">
         <div className="rounded-xl w-[25rem] border border-gray-500 h-fit">

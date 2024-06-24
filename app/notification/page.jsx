@@ -25,7 +25,7 @@ const PageBoundary = () => {
         <BgImgText
           header="NOTIFICATION"
           text="News, Notice & Circular"
-          url="/images/9347.jpg"
+          url="/images/bg4.png"
         />
         <div className="flex flex-col lg:flex-row justify-between gap-10 p-10">
           <div className="rounded-xl w-[35rem] border border-gray-400 h-fit">

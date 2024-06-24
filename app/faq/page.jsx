@@ -53,7 +53,7 @@ const FAQs = () => {
       <BgImgText
         isLoading={isLoading}
         header="FAQS"
-        url={imgUrl}
+        url="/images/bg4.png"
         text="FREQUENTLY ASKED QUESTIONS"
       />
       <div className="py-10 px-12 grid grid-cols-[4fr_6fr]">
