@@ -7,19 +7,25 @@ import MainLayout from "@/components/mainLayout";
 import { useGetFAQSQuery } from "@/store/api/generalApi";
 import { faqs, faqsTypes } from "@/utils/faqData";
 
-const Accordion = ({ data, id, setCurrentAccordion, currentAccordion, changeDefault }) => {
+const Accordion = ({
+  data,
+  id,
+  setCurrentAccordion,
+  currentAccordion,
+  changeDefault,
+}) => {
   return (
     <div className={`w-full border-b border-[#D5B69A] rounded-xl`}>
       <div
         onClick={() => {
-           setCurrentAccordion(id)
+          setCurrentAccordion(id);
           changeDefault(data.id);
         }}
         className={`${
-           currentAccordion === id
+          currentAccordion === id
             ? "bg-[#D5B69A] text-slate-800"
             : "bg-transparent"
-        }  py-3 px-3`}
+        }  py-3 px-3 cursor-pointer`}
       >
         <p className="">{data.name}</p>
       </div>
@@ -39,14 +45,13 @@ const FAQs = () => {
   useEffect(() => {
     const newFaqType = faqs.filter((faq) => faq.faqTypeId === currentFaqTypeId);
     setSelectedFaqType(newFaqType);
-    console.log(selectedFaqType)
-  }, [currentFaqTypeId])
+    console.log(selectedFaqType);
+  }, [currentFaqTypeId]);
 
   const changeDefault = (id) => {
     console.log(id);
-     setCurrentFaqTypeId(id);
+    setCurrentFaqTypeId(id);
   };
-
 
   return (
     <MainLayout>

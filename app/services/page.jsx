@@ -4,54 +4,56 @@ import BgImgText from "@/components/BgImgText";
 import MainLayout from "@/components/mainLayout";
 import { useGetServicesQuery } from "@/store/api/generalApi";
 import { ArrowDown } from "@/svgs";
-// import { ArrowDown } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { services, subServices } from "@/utils/servicesData";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const faqs = ["f1", "f2", "f3"];
 
-const Accordion = ({
-  boorderBottom,
-  isOpen,
-  toggleAccordion,
-  service,
-  id,
-  currentAccordion,
-  setCurrentAccordion,
-  currentServiceId,
-  changeDefault,
-}) => {
+const Accordion = ({ boorderBottom, service, id, firstSubServiceId }) => {
+  const param = useSearchParams();
+  const tab = param.get("tab");
+  const subId = param.get("subId");
+  const router = useRouter();
+  // const subServices = new Array(service.subServices);
+  // const firstSubServiceId = service && service.subServices[0]?.id;
+  // console.log(subServices);
+
   return (
     <div
       className={`w-full ${
-        boorderBottom && !isOpen && "border-b border-gray-500"
-      } ${isOpen ? "border-b border-[#D5B69A] rounded-xl" : ""}`}
+        boorderBottom && service.name === tab && "border-b border-gray-500"
+      } ${service.name === tab ? "border-b border-[#D5B69A] rounded-xl" : ""}`}
     >
       <div
-        onClick={() => {
-          toggleAccordion();
-          setCurrentAccordion(id);
-        }}
+        onClick={() =>
+          router.push(
+            `/services?tab=${service.name}&subId=${firstSubServiceId}`
+          )
+        }
         className={`${
-          isOpen || currentAccordion === id
-            ? "bg-[#D5B69A] text-slate-800"
+          service.name === tab
+            ? // currentAccordion === tab
+              "bg-[#D5B69A] text-slate-800"
             : "bg-transparent"
-        } flex items-center justify-between py-3 px-3`}
+        } flex items-center justify-between py-3 px-3 cursor-pointer`}
       >
         <p className="">{service.name}</p>
-        <p className={`w-fi ${isOpen ? "rotate-180" : "rotate-0"}`}>
+        <p
+          className={`w-fi ${service.name === tab ? "rotate-180" : "rotate-0"}`}
+        >
           {ArrowDown}
         </p>
       </div>
-      {isOpen &&
+      {service.name === tab &&
         service.subServices?.map((equip, index) => (
           <div key={index} className="px-3">
             <p
               className={`py-3 cursor-pointer ${
-                equip.id === currentServiceId ? "text-[#C7854A]" : "text-black"
+                equip.id === +subId ? "text-[#C7854A]" : "text-black"
               }`}
               onClick={() => {
-                changeDefault(equip.id);
+                router.push(`/services?tab=${service.name}&subId=${equip.id}`);
               }}
             >
               {equip.name}
@@ -63,42 +65,24 @@ const Accordion = ({
 };
 
 const Services = () => {
+  const param = useSearchParams();
+  const tab = param.get("tab");
+  const subId = param.get("subId");
+
   const { data, isLoading, isSuccess } = useGetServicesQuery();
-  const [openedAccordion, setOpenedAccordion] = useState([""]);
-  const [selectedService, setSelectedService] = useState([]);
-  const [currentServiceId, setCurrentServiceId] = useState(1);
-  const [currentAccordion, setCurrentAccordion] = useState(0);
 
-  const toggleAccordion = (accordion_id) => {
-    if (openedAccordion.includes(accordion_id)) {
-      setOpenedAccordion([]);
-    } else {
-      setOpenedAccordion([accordion_id]);
-    }
-  };
-
-  useEffect(() => {
-    const newService = subServices.filter(
-      (service) => currentServiceId === service.id
-    );
-    setSelectedService(newService);
-  }, [currentServiceId]);
-
-  const changeDefault = (id) => {
-    console.log(id);
-    setCurrentServiceId(id);
-  };
-
-  const results = data?.data.services;
-  console.log(results);
+  const currentService = services.find((service) => service.name === tab);
+  const currentSubService = subServices.find(
+    (subService) => subService.id === +subId
+  );
   const imgUrl = data?.data.image;
-  const description = data?.data.description;
+  // const description = data?.data.description;
 
   return (
     <MainLayout>
       <BgImgText
         header="Our Services"
-        text={selectedService[0]?.name}
+        text={currentService?.name}
         url={imgUrl}
       />
       <div className="py-10 px-16 flex justify-between gap-2">
@@ -106,84 +90,81 @@ const Services = () => {
           <div className="bg-[#2056A7] w-full py-2 px-3 rounded-t-xl">
             <p className="font-semibold text-white">Services</p>
           </div>
-          {services.map((service, index) => {
+          {services?.map((service, index) => {
             const isNotLast = services.length - 1 !== index;
             return (
               <Accordion
                 key={index}
                 id={index}
-                setCurrentAccordion={setCurrentAccordion}
-                currentAccordion={currentAccordion}
-                isOpen={openedAccordion.includes(service)}
                 boorderBottom={isNotLast}
                 service={service}
-                currentServiceId={currentServiceId}
-                changeDefault={changeDefault}
-                toggleAccordion={() => toggleAccordion(service)}
+                firstSubServiceId={service.subServices[0]?.id}
               />
             );
           })}
         </div>
 
-        {selectedService.map((data) => (
-          <div key={data.id} className="space-y-4 max-w-2xl">
-            <h1 className="text-md font-bold">{data.details.header}</h1>
-            {data.details.title && (
-              <p className="text-sm text-gray-500">{data.details.title}</p>
-            )}
-            <ol className="text-gray-500 ml-6 space-y-10 text-sm list-decimal">
-              {data.details.lists.map((list, id) => (
-                <li key={id} className="space-y-4">
-                  {list.des}
-                  {list.subLists &&
-                    list.subLists.map((data, id) => (
-                      <ol key={id} className="text-sm list-disc list-inside">
-                        <li
-                          key={Math.ceil(Math.random()) * id}
-                          className="pt-2 text-gray-500"
-                        >
-                          {data}
-                        </li>
-                      </ol>
-                    ))}
-                  {list.subDetails && (
-                    <div className="space-y-4 py-4">
-                      <h2 className="text-black font-bold">
-                        {list.subDetails.subHeader}
-                      </h2>
-                      <p>{list.subDetails.subTitle}</p>
-                      <ol className="text-sm list-disc list-inside space-y-2">
-                        {list.subDetails.subLists.map((el, id) => (
-                          <li key={Date.now()}>{el}</li>
-                        ))}
-                      </ol>
-                    </div>
-                  )}
-                  {list.mainSubLists &&
-                    list.mainSubLists.map((mainSubList, id) => (
-                      <ol
-                        key={id}
-                        className="space-y-4 text-sm list-inside alphaListStyle"
+        <div className="space-y-4 max-w-2xl">
+          <h1 className="text-md font-bold">
+            {currentSubService.details.header}
+          </h1>
+          {currentSubService.details.title && (
+            <p className="text-sm text-gray-500">
+              {currentSubService.details.title}
+            </p>
+          )}
+          <ol className="text-gray-500 ml-6 space-y-10 text-sm list-decimal">
+            {currentSubService.details.lists.map((list, id) => (
+              <li key={id} className="space-y-4">
+                {list.des}
+                {list.subLists &&
+                  list.subLists.map((data, id) => (
+                    <ol key={id} className="text-sm list-disc list-inside">
+                      <li
+                        key={Math.ceil(Math.random()) * id}
+                        className="pt-2 text-gray-500"
                       >
-                        <li className="space-y-2">
-                          <span className="text-sm">{mainSubList.name}</span>
-                          {mainSubList.subLists &&
-                            mainSubList.subLists.map((subList, id) => (
-                              <ol
-                                key={id}
-                                className="text-sm list-disc list-inside ml-4"
-                              >
-                                <li>{subList}</li>
-                              </ol>
-                            ))}
-                        </li>
-                      </ol>
-                    ))}
-                </li>
-              ))}
-            </ol>
-          </div>
-        ))}
+                        {data}
+                      </li>
+                    </ol>
+                  ))}
+                {list.subDetails && (
+                  <div className="space-y-4 py-4">
+                    <h2 className="text-black font-bold">
+                      {list.subDetails.subHeader}
+                    </h2>
+                    <p>{list.subDetails.subTitle}</p>
+                    <ol className="text-sm list-disc list-inside space-y-2">
+                      {list.subDetails.subLists.map((el, id) => (
+                        <li key={Date.now()}>{el}</li>
+                      ))}
+                    </ol>
+                  </div>
+                )}
+                {list.mainSubLists &&
+                  list.mainSubLists.map((mainSubList, id) => (
+                    <ol
+                      key={id}
+                      className="space-y-4 text-sm list-inside alphaListStyle"
+                    >
+                      <li className="space-y-2">
+                        <span className="text-sm">{mainSubList.name}</span>
+                        {mainSubList.subLists &&
+                          mainSubList.subLists.map((subList, id) => (
+                            <ol
+                              key={id}
+                              className="text-sm list-disc list-inside ml-4"
+                            >
+                              <li>{subList}</li>
+                            </ol>
+                          ))}
+                      </li>
+                    </ol>
+                  ))}
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </MainLayout>
   );

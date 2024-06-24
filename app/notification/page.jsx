@@ -2,12 +2,12 @@
 "use client";
 import React, { Suspense, useEffect, useState } from "react";
 import BgImgText from "@/components/BgImgText";
-import Tab from "./Tab";
 import News from "./News";
 import Notice from "./Notice";
 import Circular from "./Circular";
 import { useRouter, useSearchParams } from "next/navigation";
 import MainLayout from "@/components/mainLayout";
+import Order from "./Order";
 
 const PageBoundary = () => {
   const router = useRouter();
@@ -59,28 +59,9 @@ const PageBoundary = () => {
           ) : selectedTab === "Circular" ? (
             <Circular />
           ) : (
-            <News />
+            <Order />
           )}
         </div>
-        {/* <div className="border-b-[2px] border-transparent border-b-[#0000000A]    ">
-          <div className="w-[90%] mx-auto flex space-x-[64px] pt-[2rem]">
-            <Tab
-              name="News"
-              selected={selectedTab === "News"}
-              handleClick={handleClick}
-            />
-            <Tab
-              name="Notice"
-              selected={selectedTab === "Notice"}
-              handleClick={handleClick}
-            />
-            <Tab
-              name="Circular"
-              selected={selectedTab === "Circular"}
-              handleClick={handleClick}
-            />
-          </div>
-        </div> */}
       </div>
     </MainLayout>
   );
