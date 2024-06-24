@@ -1,6 +1,7 @@
 export const services = [
   {
     name: "Registration",
+    Image: "https://firebasestorage.googleapis.com/v0/b/biz-hub101.appspot.com/o/Picture%206.png?alt=media&token=4960de57-5b25-49e3-9821-2888bcc42255",
     subServices: [
       {
         name: "Boiler and Pressure Vessel",
@@ -13,7 +14,8 @@ export const services = [
     ],
   },
   {
-    name: "Authorization",
+    name: "Authorisation",
+    Image: "https://firebasestorage.googleapis.com/v0/b/biz-hub101.appspot.com/o/Picture%205.png?alt=media&token=327b04ec-8523-4100-af55-fda77edd172b",
     subServices: [
       {
         name: "Boiler and Pressure Vessel",
@@ -27,6 +29,7 @@ export const services = [
   },
   {
     name: "Certification",
+    Image: "https://firebasestorage.googleapis.com/v0/b/biz-hub101.appspot.com/o/Picture%204.png?alt=media&token=cd24022f-f3c0-4438-961a-122e5fbacaeb",
     subServices: [
       {
         name: "Boiler and Pressure Vessel",
@@ -40,6 +43,7 @@ export const services = [
   },
   {
     name: "Document Review",
+    Image: "https://firebasestorage.googleapis.com/v0/b/biz-hub101.appspot.com/o/Picture%203.png?alt=media&token=92153527-a9e9-401d-9c0d-f8eab21c5771",
     subServices: [
       {
         name: "Design Review",
@@ -55,12 +59,14 @@ export const services = [
       },
     ],
   },
-  {
-    name: "Accident Investigation",
-  },
-  {
-    name: "Technical Training",
-  },
+  // {
+  //   name: "Accident Investigation",
+  //   Image: "https://firebasestorage.googleapis.com/v0/b/biz-hub101.appspot.com/o/Picture%201.png?alt=media&token=9c2f2ed2-0474-4cf9-a5b9-684e1a949164",
+  // },
+  // {
+  //   name: "Technical Training",
+  //   Image: "https://firebasestorage.googleapis.com/v0/b/biz-hub101.appspot.com/o/Picture%202.png?alt=media&token=eebf0316-d845-4024-975f-a18dcb616e4d",
+  // },
 ];
 
 export const subServices = [

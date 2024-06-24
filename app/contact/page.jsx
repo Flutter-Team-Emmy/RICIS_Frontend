@@ -18,7 +18,7 @@ const Contact = () => {
 
   return (
     <MainLayout>
-      <section className="bg-[#2056A7] px-20 py-24 space-y-20">
+      <section className="bg-[#2056A7] px-32 py-24 space-y-20">
         <div className="flex flex-col lg:flex-row gap-6 justify-between">
           <div className="w-ful space-y-5">
             <img
@@ -51,7 +51,7 @@ const Contact = () => {
                 Lifting & Allied Work Equipment (Safety) Regulation
               </p>
             </div>
-            <div className="text-white space-y-1 w-[20rem] text-sm">
+            <div className="text-white space-y-1 w-[15rem] text-sm">
               <p className="">
                 9 Community Road, Off Allen Avenue, Ikeja. Lagos
               </p>

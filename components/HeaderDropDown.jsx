@@ -65,29 +65,37 @@ const HeaderDropDown = ({
 
       {isHovered && drop && (
         <div className="absolute left-[-50%]  bg-[#FFFFFF]  border-[4px] border-transparent border-b-[#3361FF] py-[1.5rem] px-[2rem]  flex-col flex gap-[12px]">
-          {drop.map((drop, i) => (
-            <Link
-              href={
-                header === "Services"
-                  ? `/services/${drop.id}`
-                  : header === "Legislation/Rules"
-                  ? "/legislation_rules"
-                  : header === "Information"
-                  ? "/information"
-                  : drop.href
-              }
-              key={i}
-              className=" cursor-pointer  "
-              onClick={() => {
-                setCounter((count) => count + 1);
-                setIsHovered(false);
-              }}
-            >
-              <h2 className="sf500 text-[13px] leading-[19.5px] whitespace-nowrap  text-[#7E849B] ">
-                {drop.name}
-              </h2>
-            </Link>
-          ))}
+          {drop.map((drop, i) => {
+            let firstSubServiceId;
+            const containsSub = Object.keys(drop)?.includes("subServices");
+            if (containsSub) {
+              firstSubServiceId = drop.subServices[0]?.id;
+            }
+
+            return (
+              <Link
+                href={
+                  header === "Services"
+                    ? `/services?tab=${drop.name}&subId=${firstSubServiceId}`
+                    : header === "Legislation/Rules"
+                    ? "/legislation_rules"
+                    : header === "Information"
+                    ? "/information"
+                    : drop.href
+                }
+                key={i}
+                className=" cursor-pointer  "
+                onClick={() => {
+                  setCounter((count) => count + 1);
+                  setIsHovered(false);
+                }}
+              >
+                <h2 className="sf500 text-[13px] leading-[19.5px] whitespace-nowrap  text-[#7E849B] ">
+                  {drop.name}
+                </h2>
+              </Link>
+            );
+          })}
         </div>
       )}
     </div>

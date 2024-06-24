@@ -1,4 +1,5 @@
  import { useGetInformationQuery, useGetServicesQuery, useGetlegislaionsQuery } from "./store/api/generalApi";
+import { services } from "./utils/servicesData";
 
 
 export const headerDrop = () => {
@@ -7,11 +8,10 @@ export const headerDrop = () => {
 	const { data: information } = useGetInformationQuery();
 	const { data: legislationData } = useGetlegislaionsQuery();
 
-	const servicesDrop = servicesData?.data.services;
 	const legislationDrop = legislationData?.data.legislations;
 	const informationDrop = information?.data.information;
 
-	console.log(servicesDrop)
+	// console.log(servicesDrop)
 
 	return (
 		[
@@ -49,7 +49,7 @@ export const headerDrop = () => {
 				header: "Services",
 				id: "04",
 				href: "/services",
-				drop: servicesDrop && [...servicesDrop],
+				drop: services,
 			},
 
 			{

@@ -8,13 +8,14 @@ import {
   useGetlegislaionsQuery,
 } from "@/store/api/generalApi";
 import { usePathname } from "next/navigation";
+import { services } from "@/utils/servicesData";
 
 const Footer = () => {
   const { data: servicesData } = useGetServicesQuery();
   const { data: informationData } = useGetInformationQuery();
   const { data: legislationData } = useGetlegislaionsQuery();
 
-  const services = servicesData?.data.services;
+  // const services = services;
   const legislation = legislationData?.data.legislations;
   const information = informationData?.data.information;
 
@@ -51,7 +52,7 @@ const Footer = () => {
             header="Legislation/Rules"
             data={legislation && [...legislation]}
           />
-          <FooterText header="Services" data={services && [...services]} />
+          <FooterText header="Services" data={services} />
           <div>
             <FooterText
               header="Contact Us"

@@ -14,7 +14,7 @@ const FAQItem = ({ question, answer }) => {
   return (
     <div className="border-b border-[#0000001F] w-full py-4 ">
       <div
-        className="flex items-center justify-between w-full focus:outline-none "
+        className="flex items-center justify-between w-full focus:outline-none cursor-pointer"
         onClick={toggleOpen}
       >
         <span className="sf600 text-md font-bold leading-[30px] text-[#000000CC]">
@@ -32,7 +32,7 @@ const FAQItem = ({ question, answer }) => {
 };
 
 const FAQ = ({ selectedFaqType }) => {
-  console.log(selectedFaqType)
+  console.log(selectedFaqType);
   // const { isLoading, isSuccess, isError, error, data } = useGetFAQSQuery();
   // const faqs = data?.data.faqs;
   // const description = data?.des;

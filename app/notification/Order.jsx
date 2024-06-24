@@ -1,6 +1,6 @@
 import React from "react";
 
-const Circular = () => {
+const Order = () => {
   const data = [
     `Keeping up with your competitor’s latest product announcements in
 			real-time is close to impossible. We’ve added Product Launches to the
@@ -68,4 +68,4 @@ const Circular = () => {
   );
 };
 
-export default Circular;
+export default Order;
