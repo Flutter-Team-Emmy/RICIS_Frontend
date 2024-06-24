@@ -17,6 +17,7 @@ export const legislationAndRules = [
   {
     name: "Approved Code of Practice",
     hasDrop: true,
+    id: 23,
     subRule: [
       {
         name: "Boiler and Pressure Vessels Code of Practice",
@@ -31,6 +32,7 @@ export const legislationAndRules = [
   {
     name: "Guidelines",
     hasDrop: true,
+    id: 34,
     subRule: [
       {
         name: "Boiler and Pressure Vessels",

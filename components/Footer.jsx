@@ -9,6 +9,7 @@ import {
 } from "@/store/api/generalApi";
 import { usePathname } from "next/navigation";
 import { services } from "@/utils/servicesData";
+import { legislationAndRules } from "@/utils/legislationAndRulesData";
 
 const Footer = () => {
   const { data: servicesData } = useGetServicesQuery();
@@ -19,7 +20,7 @@ const Footer = () => {
   const legislation = legislationData?.data.legislations;
   const information = informationData?.data.information;
 
-  console.log(services);
+  console.log(legislation);
 
   const pathname = usePathname();
 
@@ -48,10 +49,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <FooterText
-            header="Legislation/Rules"
-            data={legislation && [...legislation]}
-          />
+          <FooterText header="Legislation/Rules" data={legislationAndRules} /> 
           <FooterText header="Services" data={services} />
           <div>
             <FooterText
