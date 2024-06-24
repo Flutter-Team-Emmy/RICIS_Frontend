@@ -4,7 +4,7 @@ import BgImgText from "@/components/BgImgText";
 import MainLayout from "@/components/mainLayout";
 import { useGetServicesQuery } from "@/store/api/generalApi";
 import { ArrowDown } from "@/svgs";
-import React from "react";
+import React, { Suspense } from "react";
 import { services, subServices } from "@/utils/servicesData";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -64,7 +64,7 @@ const Accordion = ({ boorderBottom, service, id, firstSubServiceId }) => {
   );
 };
 
-const Services = () => {
+const ServicesBoundary = () => {
   const param = useSearchParams();
   const tab = param.get("tab");
   const subId = param.get("subId");
@@ -93,13 +93,14 @@ const Services = () => {
           {services?.map((service, index) => {
             const isNotLast = services.length - 1 !== index;
             return (
-              <Accordion
-                key={index}
-                id={index}
-                boorderBottom={isNotLast}
-                service={service}
-                firstSubServiceId={service.subServices[0]?.id}
-              />
+              <Suspense key={index}>
+                <Accordion
+                  id={index}
+                  boorderBottom={isNotLast}
+                  service={service}
+                  firstSubServiceId={service.subServices[0]?.id}
+                />
+              </Suspense>
             );
           })}
         </div>
@@ -167,6 +168,14 @@ const Services = () => {
         </div>
       </div>
     </MainLayout>
+  );
+};
+
+const Services = () => {
+  return (
+    <Suspense>
+      <ServicesBoundary />
+    </Suspense>
   );
 };
 
