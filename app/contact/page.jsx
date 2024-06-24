@@ -4,6 +4,7 @@ import BgImgText from "@/components/BgImgText";
 import MainLayout from "@/components/mainLayout";
 import { useGetContactInfosQuery } from "@/store/api/generalApi";
 import React from "react";
+import { FacebookIcon, LinkedInIcon, TwitterIcon } from "@/svgs";
 // import {Display} from "next/font/google"
 
 const Contact = () => {
@@ -17,44 +18,54 @@ const Contact = () => {
 
   return (
     <MainLayout>
-      <div className="">
-        <div className="grid bg-[url('/images/9347.jpg')] relative bg-cover bg-no-repeat w-full h-[45rem] pt-20 lg:px-10 px-4">
-          <div className="absolute inset-0 bg-black opacity-40 h-full"></div>
-          <div className="relative flex justify-center items-center self-center p-6 lg:h-[26rem] lg:w-[35rem] w-full h-full rounded-md ml-auto mt-12 mr-24">
-            <div className="absolute lg:h-[26rem] lg:w-[35rem] w-full h-full bg-white opacity-[42%] z-[10] rounded-md"></div>
-            <div className="w-full h-full bg-white z-[100] py-8 lg:px-10 px-4 space-y-12 rounded-md">
-              <h1 className="lg:text-2xl text-lg font-semibold text-slate-900 text-center">
-                Having issues? Please contact us!
-              </h1>
-              <div className="relative max-w-sm space-y-4 lg:px-16 px-3 mx-auto">
-                <h2 className="font-[700] text-lg">RIC Inspection Services LTD</h2>
-                <div className="text-md text-gray-400 space-y-1 max-w-[15rem]">
-                  <p className="">
-                    P.O BOX 2500, 48 George Street, Houston, Texas .B.C. USA
-                  </p>
-                  <p className="">info@technical.consultant.com</p>
-                  <p className="">09019133316</p>
-                </div>
-              </div>
+      <section className="bg-[#2056A7] px-20 py-24 space-y-20">
+        <div className="flex flex-col lg:flex-row gap-6 justify-between">
+          <div className="w-ful space-y-5">
+            <img
+              alt=""
+              className="self-center w-[100px] h-[90px]"
+              src="/images/logo.svg"
+            />
+            <div className="text-white">
+              <h3 className="font-bold">
+                Regulatory IMPLEMentation & compliance scheme
+              </h3>
+              <p className="text-[#018839]">
+                OCCUPATIONAL SAFETY & HEALTH DEPARTMENT
+              </p>
+              <p className="text-[#018839]">
+                FEDERAL MINISTRY OF LABOUR & EMPLOYMENT
+              </p>
             </div>
+            <p className="text-white w-[20rem] text-sm">
+              P.M.B. 04, Federal Secretariat Complex Phase I, Annex II, Shehu
+              Shagari Way, Abuja FCT. Nigeria info@labour.gov.ng
+            </p>
           </div>
-
-          <div className="relative pt-10 -mb-16 align-self-end">
-            <h1 className="text-white text-4xl font-semibold">Contact us</h1>
+          <div className="w-ful space-y-5">
+            <img src="/images/logo2.svg" className="w-16 h-16" alt="" />
+            <div className="text-white font-bold">
+              <p className="">Regulatory IMPLEMentation & compliance scheme</p>
+              <p className="">Boiler & Pressure Vessel Regulation </p>
+              <p className="">
+                Lifting & Allied Work Equipment (Safety) Regulation
+              </p>
+            </div>
+            <div className="text-white space-y-1 w-[20rem] text-sm">
+              <p className="">
+                9 Community Road, Off Allen Avenue, Ikeja. Lagos
+              </p>
+              <p className="">info@technical.consultant.com</p>
+              <p className="">09019133316</p>
+            </div>
           </div>
         </div>
-      </div>
-      {/* <div className="grid lg:grid-cols-2 w-full px-12 gap-y-16 gap-x-40 pb-12">
-        {(isLoading || contactInfos?.length === 0) &&
-          [1, 2, 3, 4].map((loader) => (
-            <div key={loader} className="space-y-4">
-              <h1 className="w-[80%] mb-8 h-8 lg:h-12 bg-gray-200 animate-pulse rounded-md"></h1>
-              <h2 className="w-[80%] h-4 lg:h-8 bg-gray-200 animate-pulse rounded-md"></h2>
-              <h2 className="w-[80%] h-4 lg:h-8 bg-gray-200 animate-pulse rounded-md"></h2>
-              <h2 className="w-[80%] h-4 lg:h-8 bg-gray-200 animate-pulse rounded-md"></h2>
-            </div>
-          ))}
-      </div> */}
+        <div className="flex space-x-[16px] items-center pt-8 lg:pt-4">
+          <span>{FacebookIcon}</span>
+          <span>{LinkedInIcon}</span>
+          <span>{TwitterIcon}</span>
+        </div>
+      </section>
     </MainLayout>
   );
 };

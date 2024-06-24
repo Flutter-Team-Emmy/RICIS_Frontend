@@ -3,7 +3,7 @@ import NewsCard from "./NewsCard";
 
 const News = () => {
   return (
-    <div className="w-[90%] mx-auto">
+    <div className="bg-white w-full">
       <NewsCard
         data={{
           name: "Research critical vulnerabilities with the new CVE Intelligence Card",

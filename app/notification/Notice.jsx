@@ -55,7 +55,7 @@ const Notice = () => {
     },
   ];
   return (
-    <div className="mt-[1.5rem] w-[90%] mx-auto">
+    <div className="w-full">
       <div className="bg-white w-full p-4 space-y-16">
         {notice_data.map((item) => (
           <h2 key={item.id} className="border-b text-lg font-semibold pb-3">
