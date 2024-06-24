@@ -4,13 +4,12 @@ import BgImgText from "@/components/BgImgText";
 import PdfComp from "@/components/PdfComp";
 import MainLayout from "@/components/mainLayout";
 import { useGetlegislaionsQuery } from "@/store/api/generalApi";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Loader from "./loader";
 import {
   legislationAndRules,
   subLegislationAndRules,
 } from "@/utils/legislationAndRulesData";
-import Default from "./Default";
 import { ArrowDown } from "@/svgs";
 
 const Accordion = ({
@@ -18,10 +17,12 @@ const Accordion = ({
   isOpen,
   toggleAccordion,
   data,
+  id,
+  currentRuleId,
+  currentAccordion,
+  setCurrentAccordion,
   changeDefault,
 }) => {
-  const [selectedId, setSelectedId] = useState(0);
-
   return (
     <div
       className={`w-full cursor-pointer ${
@@ -33,10 +34,13 @@ const Accordion = ({
       <div
         onClick={() => {
           toggleAccordion();
-          changeDefault(data.id);
+          !data.hasDrop && changeDefault(data.id);
+          setCurrentAccordion(id);
         }}
         className={`${
-          isOpen ? "bg-[#D5B69A] text-slate-800" : "bg-transparent"
+          isOpen || currentAccordion === id
+            ? "bg-[#D5B69A] text-slate-800"
+            : "bg-transparent"
         } flex items-center justify-between py-3 px-3`}
       >
         <p className="">{data.name}</p>
@@ -52,11 +56,10 @@ const Accordion = ({
           <div key={index} className="px-3">
             <p
               className={`py-3 cursor-pointer ${
-                data.id === selectedId ? "text-[#C7854A]" : "text-black"
+                data.id === currentRuleId ? "text-[#C7854A]" : "text-black"
               }`}
               onClick={() => {
                 changeDefault(data.id);
-                setSelectedId(data.id);
               }}
             >
               {data.name}
@@ -77,6 +80,15 @@ const LegislationRules = () => {
 
   const [openedAccordion, setOpenedAccordion] = useState([""]);
   const [selectedRule, setSelectedRule] = useState([]);
+  const [currentRuleId, setCurrentRuleId] = useState(1);
+  const [currentAccordion, setCurrentAccordion] = useState(0);
+
+  useEffect(() => {
+    const newSubRule = subLegislationAndRules.filter(
+      (rule) => currentRuleId === rule.id
+    );
+    setSelectedRule(newSubRule);
+  }, [currentRuleId]);
 
   const toggleAccordion = (accordion_id) => {
     if (openedAccordion.includes(accordion_id)) {
@@ -88,17 +100,18 @@ const LegislationRules = () => {
 
   const changeDefault = (id) => {
     console.log(id);
-    const newSubRule = subLegislationAndRules.filter((rule) => id === rule.id);
-    setSelectedRule(newSubRule);
-
-    console.log(selectedRule);
+    setCurrentRuleId(id);
   };
 
   return (
     <MainLayout>
       <BgImgText
         header="Legislations/Rules"
-        text={selectedRule.length === 0 ? "Legislations/Rules" : selectedRule[0]?.name}
+        text={
+          selectedRule.length === 0
+            ? "Legislations/Rules"
+            : selectedRule[0]?.name
+        }
         isLoading={isLoading}
         url={imgUrl}
       />
@@ -112,9 +125,13 @@ const LegislationRules = () => {
             return (
               <Accordion
                 key={index}
+                id={index}
                 isOpen={openedAccordion.includes(data)}
                 boorderBottom={isNotLast}
                 data={data}
+                currentRuleId={currentRuleId}
+                currentAccordion={currentAccordion}
+                setCurrentAccordion={setCurrentAccordion}
                 changeDefault={changeDefault}
                 toggleAccordion={() => toggleAccordion(data)}
               />
@@ -122,46 +139,32 @@ const LegislationRules = () => {
           })}
         </div>
 
-        {selectedRule.length === 0 ? (
-          <Default />
-        ) : (
-          <div>
-            {selectedRule[0]?.details.singlePdf && (
-              <div className="w-full grid grid-cols-[6fr_4fr]">
-                <img
-                  className="w-24 h-32"
-                  src={selectedRule[0]?.details.singlePdf}
-                  alt=""
-                />
-                <div className="mt-auto">
-                  <button className="mr-auto border-[#B12A27] border-solid rounded-sm text-[#B12A27] p-2 text-sm border-[1px]">
-                    Download
-                  </button>
-                </div>
-              </div>
-            )}
-            {selectedRule[0]?.details.paragraphs && (
-              <div className="text-sm space-y-6 text-justify">
-                {selectedRule[0]?.details.paragraphs.map((paragraph, id) => (
-                  <p key={id}>{paragraph}</p>
-                ))}
-              </div>
-            )}
-            {selectedRule[0]?.details.pdfs && (
-              <div className="space-y-4 text-xs">
-                {selectedRule[0]?.details.pdfs.map((pdf,id) => (
-                  <div key={id} className="bg-[#EFF0F3] flex justify-between shadow-sm rounded-md items-center px-4 py-2">
-                    <div className="flex gap-x-4 items-center">
-                      <img className="w-5 h-5" src={pdf.icon} alt="" />
-                      <p>{pdf.des}</p>
-                    </div>
-                    <p className="text-[#B12A27]">Download</p>
+        <div>
+          {selectedRule[0]?.details.pdfs && (
+            <div className="space-y-4 text-xs">
+              {selectedRule[0]?.details.pdfs.map((pdf, id) => (
+                <div
+                  key={id}
+                  className="bg-[#EFF0F3] flex justify-between shadow-sm rounded-md items-center px-4 py-2"
+                >
+                  <div className="flex gap-x-4 items-center">
+                    <img className="w-5 h-5" src={pdf.icon} alt="" />
+                    <p>{pdf.des}</p>
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
+                  {pdf.link && (
+                    <a
+                      href={pdf.link}
+                      target="blank"
+                      className="text-[#B12A27]"
+                    >
+                      Download
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </MainLayout>
   );

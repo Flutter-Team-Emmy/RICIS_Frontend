@@ -5,22 +5,22 @@ import MainLayout from "@/components/mainLayout";
 import { useGetServicesQuery } from "@/store/api/generalApi";
 import { ArrowDown } from "@/svgs";
 // import { ArrowDown } from "lucide-react";
-import React, { useState } from "react";
-import Default from "./Default";
+import React, { useEffect, useState } from "react";
 import { services, subServices } from "@/utils/servicesData";
 
 const faqs = ["f1", "f2", "f3"];
 
- 
 const Accordion = ({
   boorderBottom,
   isOpen,
   toggleAccordion,
   service,
+  id,
+  currentAccordion,
+  setCurrentAccordion,
+  currentServiceId,
   changeDefault,
 }) => {
-  const [selectedId, setSelectedId] = useState(0);
-
   return (
     <div
       className={`w-full ${
@@ -28,9 +28,14 @@ const Accordion = ({
       } ${isOpen ? "border-b border-[#D5B69A] rounded-xl" : ""}`}
     >
       <div
-        onClick={toggleAccordion}
+        onClick={() => {
+          toggleAccordion();
+          setCurrentAccordion(id);
+        }}
         className={`${
-          isOpen ? "bg-[#D5B69A] text-slate-800" : "bg-transparent"
+          isOpen || currentAccordion === id
+            ? "bg-[#D5B69A] text-slate-800"
+            : "bg-transparent"
         } flex items-center justify-between py-3 px-3`}
       >
         <p className="">{service.name}</p>
@@ -43,11 +48,10 @@ const Accordion = ({
           <div key={index} className="px-3">
             <p
               className={`py-3 cursor-pointer ${
-                equip.id === selectedId ? "text-[#C7854A]" : "text-black"
+                equip.id === currentServiceId ? "text-[#C7854A]" : "text-black"
               }`}
               onClick={() => {
                 changeDefault(equip.id);
-                setSelectedId(equip.id);
               }}
             >
               {equip.name}
@@ -62,6 +66,8 @@ const Services = () => {
   const { data, isLoading, isSuccess } = useGetServicesQuery();
   const [openedAccordion, setOpenedAccordion] = useState([""]);
   const [selectedService, setSelectedService] = useState([]);
+  const [currentServiceId, setCurrentServiceId] = useState(1);
+  const [currentAccordion, setCurrentAccordion] = useState(0);
 
   const toggleAccordion = (accordion_id) => {
     if (openedAccordion.includes(accordion_id)) {
@@ -71,12 +77,16 @@ const Services = () => {
     }
   };
 
+  useEffect(() => {
+    const newService = subServices.filter(
+      (service) => currentServiceId === service.id
+    );
+    setSelectedService(newService);
+  }, [currentServiceId]);
+
   const changeDefault = (id) => {
     console.log(id);
-    const newService = subServices.filter((service) => id === service.id);
-    setSelectedService(newService);
-
-    console.log(selectedService);
+    setCurrentServiceId(id);
   };
 
   const results = data?.data.services;
@@ -86,7 +96,11 @@ const Services = () => {
 
   return (
     <MainLayout>
-      <BgImgText text="Our Services" url={imgUrl} />
+      <BgImgText
+        header="Our Services"
+        text={selectedService[0]?.name}
+        url={imgUrl}
+      />
       <div className="py-10 px-16 flex justify-between gap-2">
         <div className="rounded-xl w-[25rem] border border-gray-500 h-fit">
           <div className="bg-[#2056A7] w-full py-2 px-3 rounded-t-xl">
@@ -97,9 +111,13 @@ const Services = () => {
             return (
               <Accordion
                 key={index}
+                id={index}
+                setCurrentAccordion={setCurrentAccordion}
+                currentAccordion={currentAccordion}
                 isOpen={openedAccordion.includes(service)}
                 boorderBottom={isNotLast}
                 service={service}
+                currentServiceId={currentServiceId}
                 changeDefault={changeDefault}
                 toggleAccordion={() => toggleAccordion(service)}
               />
@@ -107,8 +125,6 @@ const Services = () => {
           })}
         </div>
 
-        {/* <div className="space-y-10 text-gray-500"></div> */}
-        {selectedService.length === 0 && <Default />}
         {selectedService.map((data) => (
           <div key={data.id} className="space-y-4 max-w-2xl">
             <h1 className="text-md font-bold">{data.details.header}</h1>

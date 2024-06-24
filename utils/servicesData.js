@@ -66,6 +66,7 @@ export const services = [
 export const subServices = [
   {
     id: 1,
+    name: "Registration",
     details: {
       header: "Boiler and Pressure Vessel Equipment Registration",
       title:
@@ -97,6 +98,7 @@ export const subServices = [
 
   {
     id: 2,
+    name: "Registration",
     details: {
       header: "Lifting and Allied Works Equipment Registration",
       lists: [
@@ -169,6 +171,7 @@ export const subServices = [
 
   {
     id: 3,
+    name: "Authorization",
     details: {
       header: "Boiler and Pressure Vessel Authorization",
       lists: [
@@ -187,6 +190,7 @@ export const subServices = [
 
   {
     id: 4,
+    name: "Authorization",
     details: {
       header: "Lifting and Allied Works Equipment Authorization",
       title: "The Director of Factories shall register-",
@@ -206,6 +210,7 @@ export const subServices = [
 
   {
     id: 5,
+    name: "Certification",
     details: {
       header: "Boiler and Pressure Vessel Certification",
       lists: [
@@ -242,6 +247,7 @@ export const subServices = [
 
   {
     id: 6,
+    name: "Certification",
     details: {
       header: "Lifting and Allied Work Certification",
       lists: [
@@ -274,6 +280,7 @@ export const subServices = [
 
   {
     id: 7,
+    name: "Document Review",
     details: {
       header: "Lifting and Allied Work Certification",
       lists: [

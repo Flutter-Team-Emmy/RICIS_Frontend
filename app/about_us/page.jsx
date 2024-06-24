@@ -2,8 +2,7 @@
 
 import BgImgText from "@/components/BgImgText";
 import MainLayout from "@/components/mainLayout";
-import React, { useState } from "react";
-import Default from "./Default";
+import React, { useEffect, useState } from "react";
 import { aboutUs, subActs } from "@/utils/aboutUsData";
 import { ArrowDown } from "@/svgs";
 
@@ -12,6 +11,10 @@ const Accordion = ({
   isOpen,
   toggleAccordion,
   data,
+  id,
+  currentAccordion,
+  setCurrentAccordion,
+  currentServiceId,
   changeDefault,
 }) => {
   const [selectedId, setSelectedId] = useState(0);
@@ -27,10 +30,13 @@ const Accordion = ({
       <div
         onClick={() => {
           toggleAccordion();
-          changeDefault(data.id);
+          !data.hasDrop && changeDefault(data.id);
+          setCurrentAccordion(id);
         }}
         className={`${
-          isOpen ? "bg-[#D5B69A] text-slate-800" : "bg-transparent"
+          isOpen || currentAccordion === id
+            ? "bg-[#D5B69A] text-slate-800"
+            : "bg-transparent"
         } flex items-center justify-between py-3 px-3`}
       >
         <p className="">{data.name}</p>
@@ -46,11 +52,13 @@ const Accordion = ({
           <div key={index} className="px-3">
             <p
               className={`py-3 cursor-pointer ${
-                abtData.id === selectedId ? "text-[#C7854A]" : "text-black"
+                abtData.id === currentServiceId
+                  ? "text-[#C7854A]"
+                  : "text-black"
               }`}
               onClick={() => {
                 changeDefault(abtData.id);
-                setSelectedId(abtData.id);
+                // setSelectedId(abtData.id);
               }}
             >
               {abtData.name}
@@ -64,6 +72,8 @@ const Accordion = ({
 const Activities = () => {
   const [openedAccordion, setOpenedAccordion] = useState([""]);
   const [selectedAct, setSelectedAct] = useState([]);
+  const [currentServiceId, setCurrentServiceId] = useState(1);
+  const [currentAccordion, setCurrentAccordion] = useState(0);
 
   const toggleAccordion = (accordion_id) => {
     if (openedAccordion.includes(accordion_id)) {
@@ -73,12 +83,14 @@ const Activities = () => {
     }
   };
 
+  useEffect(() => {
+    const newAct = subActs.filter((act) => currentServiceId === act.id);
+    setSelectedAct(newAct);
+  }, [currentServiceId]);
+
   const changeDefault = (id) => {
     console.log(id);
-    const newAct = subActs.filter((act) => id === act.id);
-    setSelectedAct(newAct);
-
-    console.log(selectedAct);
+    setCurrentServiceId(id);
   };
 
   return (
@@ -98,6 +110,10 @@ const Activities = () => {
             return (
               <Accordion
                 key={index}
+                id={index}
+                currentServiceId={currentServiceId}
+                currentAccordion={currentAccordion}
+                setCurrentAccordion={setCurrentAccordion}
                 isOpen={openedAccordion.includes(data)}
                 boorderBottom={isNotLast}
                 data={data}
@@ -109,18 +125,11 @@ const Activities = () => {
         </div>
 
         <div className="text-gray-500">
-          {selectedAct.length === 0 && <Default />}
           {selectedAct.map((data, index) => (
             <div className="space-y-6" key={data.id}>
               <h1 className="font-bold text-black text-lg">
                 {data.details.mainHeader}
               </h1>
-              <div className="text-sm space-y-6 text-justify">
-                {data.details.paragraphs &&
-                  data.details.paragraphs.map((paragraph, id) => (
-                    <p key={id}>{paragraph}</p>
-                  ))}
-              </div>
               <ol className="text-sm list-disc space-y-4 pl-4 list-inside">
                 {data.details.mainLists &&
                   data.details.mainLists.map((mainList, id) => (

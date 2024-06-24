@@ -12,18 +12,18 @@ const FAQItem = ({ question, answer }) => {
   };
 
   return (
-    <div className="border-b border-[#0000001F] w-full py-[1rem] ">
+    <div className="border-b border-[#0000001F] w-full py-4 ">
       <div
         className="flex items-center justify-between w-full focus:outline-none "
         onClick={toggleOpen}
       >
-        <span className="sf600 text-lg font-bold leading-[30px] text-[#000000CC]">
+        <span className="sf600 text-md font-bold leading-[30px] text-[#000000CC]">
           {question}
         </span>
         {isOpen ? chevUp : chevDown}
       </div>
       {isOpen && (
-        <div className="py-[1rem]">
+        <div className="py-4">
           <p className="text-sm leading-[20px] text-[#0000008A] ">{answer}</p>
         </div>
       )}
@@ -32,6 +32,7 @@ const FAQItem = ({ question, answer }) => {
 };
 
 const FAQ = ({ selectedFaqType }) => {
+  console.log(selectedFaqType)
   // const { isLoading, isSuccess, isError, error, data } = useGetFAQSQuery();
   // const faqs = data?.data.faqs;
   // const description = data?.des;
@@ -39,8 +40,8 @@ const FAQ = ({ selectedFaqType }) => {
   // console.log(data);
 
   return (
-    <div className="w-full flex flex-col space-y-[2rem] ">
-      {selectedFaqType[0].data?.map((faq) => (
+    <div className="w-full flex flex-col space-y-4 ">
+      {selectedFaqType[0]?.data.map((faq) => (
         <FAQItem key={faq.id} question={faq.question} answer={faq.answer} />
       ))}
       {/* {(isLoading || faqs?.length === 0) &&

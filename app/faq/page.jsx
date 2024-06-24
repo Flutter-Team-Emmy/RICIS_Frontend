@@ -1,24 +1,22 @@
 "use client";
 
 import BgImgText from "@/components/BgImgText";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FAQ from "./FAQ";
 import MainLayout from "@/components/mainLayout";
 import { useGetFAQSQuery } from "@/store/api/generalApi";
 import { faqs, faqsTypes } from "@/utils/faqData";
-import Default from "./Default";
 
-const Accordion = ({ data, changeDefault, selectedId, setSelectedId }) => {
+const Accordion = ({ data, id, setCurrentAccordion, currentAccordion, changeDefault }) => {
   return (
     <div className={`w-full border-b border-[#D5B69A] rounded-xl`}>
       <div
         onClick={() => {
-          setSelectedId(data.id);
-          console.log(selectedId);
+           setCurrentAccordion(id)
           changeDefault(data.id);
         }}
         className={`${
-          data.id === selectedId
+           currentAccordion === id
             ? "bg-[#D5B69A] text-slate-800"
             : "bg-transparent"
         }  py-3 px-3`}
@@ -35,15 +33,20 @@ const FAQs = () => {
   const imgUrl = data?.data.image;
 
   const [selectedFaqType, setSelectedFaqType] = useState([]);
-  const [selectedId, setSelectedId] = useState("");
+  const [currentFaqTypeId, setCurrentFaqTypeId] = useState("faq1");
+  const [currentAccordion, setCurrentAccordion] = useState(0);
+
+  useEffect(() => {
+    const newFaqType = faqs.filter((faq) => faq.faqTypeId === currentFaqTypeId);
+    setSelectedFaqType(newFaqType);
+    console.log(selectedFaqType)
+  }, [currentFaqTypeId])
 
   const changeDefault = (id) => {
     console.log(id);
-    const newFaqType = faqs.filter((faq) => id === faq.faqTypeId);
-    setSelectedFaqType(newFaqType);
-
-    console.log(selectedFaqType);
+     setCurrentFaqTypeId(id);
   };
+
 
   return (
     <MainLayout>
@@ -62,15 +65,16 @@ const FAQs = () => {
             return (
               <Accordion
                 key={data.id}
+                id={index}
                 data={data}
-                selectedId={selectedId}
-                setSelectedId={setSelectedId}
+                currentAccordion={currentAccordion}
+                setCurrentAccordion={setCurrentAccordion}
                 changeDefault={changeDefault}
               />
             );
           })}
         </div>
-        {selectedFaqType.length === 0 ? <Default /> : <FAQ selectedFaqType={selectedFaqType} />}
+        <FAQ selectedFaqType={selectedFaqType} />
       </div>
     </MainLayout>
   );

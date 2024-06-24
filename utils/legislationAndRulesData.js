@@ -17,30 +17,28 @@ export const legislationAndRules = [
   {
     name: "Approved Code of Practice",
     hasDrop: true,
-    id: 4,
     subRule: [
       {
         name: "Boiler and Pressure Vessels Code of Practice",
-        id: 5,
+        id: 4,
       },
       {
         name: "Lifting and Allied Works Code of Practice",
-        id: 6,
-      }
+        id: 5,
+      },
     ],
   },
   {
     name: "Guidelines",
     hasDrop: true,
-    id: 7,
     subRule: [
       {
         name: "Boiler and Pressure Vessels",
-        id: 8,
+        id: 6,
       },
       {
         name: "Lifting and Allied Works",
-        id: 9,
+        id: 7,
       },
     ],
   },
@@ -51,30 +49,50 @@ export const subLegislationAndRules = [
     id: 1,
     name: "Factories Act 2004",
     details: {
-      singlePdf: "/images/pdfIcon.svg",
+      pdfs: [
+        {
+          icon: "/images/pdfIcon.svg",
+          des: "Factories Act 2004",
+  link: "https://firebasestorage.googleapis.com/v0/b/biz-hub101.appspot.com/o/Factories%20Act%20CAP%20126%20LFN.pdf?alt=media&token=91a735c9-f1d5-43c7-9f46-b10ee4032d26"
+        },
+      ],
     },
   },
   {
     id: 2,
     name: "Boiler and Pressure Vessel Regulation 2019",
     details: {
-      singlePdf: "/images/pdfIcon.svg",
+      pdfs: [
+        {
+          icon: "/images/pdfIcon.svg",
+          des: "Boiler and Pressure Vessel Regulation 2019",
+  link: "https://firebasestorage.googleapis.com/v0/b/biz-hub101.appspot.com/o/Boiler%20and%20Pressure-2024-06-24T13-45-20.019Z.pdf?alt=media",
+        },
+      ],
     },
   },
   {
     id: 3,
     name: "Lifting and Allied Works Equipment (Safety) Regulation",
     details: {
-      singlePdf: "/images/pdfIcon.svg",
+      pdfs: [
+        {
+          icon: "/images/pdfIcon.svg",
+          des: "Lifting and Allied Works Equipment (Safety) Regulation",
+  link: "https://firebasestorage.googleapis.com/v0/b/biz-hub101.appspot.com/o/Lifting%20%26%20Allied%20Work%20Equipmenyt%20Regulation%202018-1.pdf?alt=media&token=58649310-b379-4405-8588-106db7dd6e2c",
+        },
+      ],
     },
   },
   {
     id: 4,
     name: "Approved Code of Practice",
     details: {
-      paragraphs: [
-        "She set up some Google Alerts, and subscribed to emails from assorted websites, but it was messy. And if members of the team weren’t already experts in an area (like bioprocessing, for example), Sienna found it hard to know which sources to look at for relevant research. Sienna and her team needed a way to ​track dozens of different topics and trends in biopharma at the same time from a large range of source",
-        "For certain queries, Sienna and her team get their information from published literature in research journals, like PubMed.  However, Sienna remembers how tricky things got when her team started getting requests for information about broader topics like drug innovations, regulatory decisions, political decisions, or industry updates. “Rather than being about a specific disease, we started getting asked about things like drug pricing, or the gene and cell therapy industry.” Sienna commented that it wasn’t easy to capture this type of news about “those more general areas where there is news, rather than just published literature.”",
+      pdfs: [
+        {
+          icon: "/images/pdfIcon.svg",
+          des: "Boiler and Pressure Vessels Code of Practice",
+        },
       ],
     },
   },
@@ -82,162 +100,36 @@ export const subLegislationAndRules = [
     id: 5,
     name: "Approved Code of Practice",
     details: {
-        pdfs: [
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-        ]
-    }
+      pdfs: [
+        {
+          icon: "/images/pdfIcon.svg",
+          des: "Lifting and Allied Works Code of Practice",
+        },
+      ],
+    },
   },
   {
     id: 6,
-    name: "Approved Code of Practice",
+    name: "Guidelines",
     details: {
-        pdfs: [
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-        ]
-    }
+      pdfs: [
+        {
+          icon: "/images/pdfIcon.svg",
+          des: "Boiler and Pressure Vessels",
+        },
+      ],
+    },
   },
   {
     id: 7,
     name: "Guidelines",
     details: {
-      paragraphs: [
-        "She set up some Google Alerts, and subscribed to emails from assorted websites, but it was messy. And if members of the team weren’t already experts in an area (like bioprocessing, for example), Sienna found it hard to know which sources to look at for relevant research. Sienna and her team needed a way to ​track dozens of different topics and trends in biopharma at the same time from a large range of source",
-        "For certain queries, Sienna and her team get their information from published literature in research journals, like PubMed.  However, Sienna remembers how tricky things got when her team started getting requests for information about broader topics like drug innovations, regulatory decisions, political decisions, or industry updates. “Rather than being about a specific disease, we started getting asked about things like drug pricing, or the gene and cell therapy industry.” Sienna commented that it wasn’t easy to capture this type of news about “those more general areas where there is news, rather than just published literature.”",
+      pdfs: [
+        {
+          icon: "/images/pdfIcon.svg",
+          des: "Lifting and Allied Works",
+        },
       ],
     },
   },
-  {
-    id: 8,
-    name: "Guidelines",
-    details: {
-        pdfs: [
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-        ]
-    }
-  },
-  {
-    id: 9,
-    name: "Guidelines",
-    details: {
-        pdfs: [
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-            {
-                icon: "/images/pdfIcon.svg",
-                des: "What is the easiest Registration method?"
-            },
-        ]
-    }
-  }
 ];
