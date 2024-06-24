@@ -10,9 +10,18 @@ const FooterText = ({ header, data }) => {
       </h2>
       {data?.map((current_data, i) => {
         let firstSubServiceId;
+        let firstSubRuleId;
         const containsSub = Object.keys(current_data)?.includes("subServices");
+        const containsHasDrop = Object.keys(current_data)?.includes("hasDrop");
         if (containsSub) {
           firstSubServiceId = current_data.subServices[0]?.id;
+        }
+        if (containsHasDrop) {
+          if (current_data.hasDrop) {
+            firstSubRuleId = current_data.subRule[0]?.id;
+          } else {
+            firstSubRuleId = current_data?.id;
+          }
         }
         return (
           <Link
@@ -20,7 +29,7 @@ const FooterText = ({ header, data }) => {
               header === "Services"
                 ? `/services?tab=${current_data.name}&subId=${firstSubServiceId}`
                 : header === "Legislation/Rules"
-                ? "/legislation_rules"
+                ? `/legislation_rules?tab=${current_data.name}&subId=${firstSubRuleId}`
                 : header === "Information"
                 ? "/information"
                 : current_data.href

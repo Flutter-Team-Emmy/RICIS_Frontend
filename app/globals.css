@@ -146,6 +146,9 @@ body {
   filter: blur(1px);
 } */
 
+.mySwiper {
+  position: relative;
+}
 
 
 .message-container {
@@ -169,7 +172,6 @@ body {
  
 .swiper-wrapper {
   z-index: -1 !important;
-  /* gap: 2rem !important; */
 }
 
 .alphaListStyle > li {

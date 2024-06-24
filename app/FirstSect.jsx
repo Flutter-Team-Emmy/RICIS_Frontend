@@ -19,7 +19,7 @@ import "swiper/css/pagination";
 
 const backgroundCardData = [
   {
-    url: "/images/homeBg3.png",
+    url: "/images/bg7.png",
   },
   {
     url: "/images/homeBg2.png",
@@ -70,14 +70,14 @@ const FirstSect = () => {
     <Swiper
       slidesPerView={1}
       modules={[Navigation, Mousewheel, Keyboard, Autoplay]}
-      cssMode={true}
+      // cssMode={true}
       //  pagination={{
       //   clickable: true,
       // }}
       mousewheel={true}
       keyboard={true}
       autoplay={{ autoplay: 5000 }}
-      className="mySwiper"
+      className="mySwiper z-[-1]"
     >
       {backgroundCardData.map((data, index) => (
         <SwiperSlide key={index}>

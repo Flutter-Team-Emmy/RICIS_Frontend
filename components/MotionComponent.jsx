@@ -9,6 +9,7 @@ const MotionComponent = ({
   children,
   className,
   href,
+  onClick,
   src,
   ...rest
 }) => {
@@ -20,6 +21,7 @@ const MotionComponent = ({
       className={className}
       href={href}
       src={src}
+      onClick={onClick}
       variants={shouldbeReduceMotion ? "visible" : variants}
       initial="hidden"
       whileInView="visible"

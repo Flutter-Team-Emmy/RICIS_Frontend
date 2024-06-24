@@ -18,30 +18,45 @@ import {
 import SwiperNavBtn from "../components/SwiperNavBtn";
 import "swiper/css";
 import "swiper/css/pagination";
+import { services } from "@/utils/servicesData";
+import { useRouter } from "next/navigation";
 
 const Services = () => {
   const { data, isLoading, isSuccess } = useGetServicesQuery();
 
   const results = data?.data.services;
 
+  const router = useRouter();
+
   return (
     <div className="w-full mx-auto absolute -mt-40 mb-[3rem] ">
       <div className="mt-20 w-full">
-        <div className="flex gap-x-20 justify-center">
-          {results?.map((data, index) => (
-            <CardCenter
-              key={data.id}
-              index={index}
-              header={data.name}
-              subHeader={data.description}
-              id={data.id}
-              img={data.image}
-              results={results}
-            />
-          ))}
-        </div>
+        {services.length <= 4 && (
+          <div className="flex gap-x-20 justify-center z-[100] relative ">
+            {services.map((data, index) => {
+              const firstSubServiceId = data.subServices[0]?.id;
+              return (
+                <CardCenter
+                  key={data.id}
+                  index={index}
+                  header={data.name}
+                  // subHeader={data.description}
+                  id={data.id}
+                  img={data.Image}
+                  handleClick={() =>
+                    console.log("clicked")
+                    // router.push(
+                    //   `/services?tab=${data.name}&subId=${firstSubServiceId}`
+                    // )
+                  }
+                  // results={results}
+                />
+              );
+            })}
+          </div>
+        )}
         <Swiper
-          slidesPerView={results?.length >= 4 ? 4 : results?.length}
+          slidesPerView={services?.length >= 4 ? 4 : services?.length}
           spaceBetween={30}
           // centeredSlides={true}
           breakpoints={{
@@ -71,17 +86,17 @@ const Services = () => {
           autoplay={results?.length > 4 ? true : false}
           className="mySwiper"
         >
-          {(isSuccess && results.length > 4) &&
-            results?.map((data, index) => (
+          {services.length > 4 &&
+            services?.map((data, index) => (
               <SwiperSlide key={data.id}>
                 <CardCenter
                   key={data.id}
                   index={index}
                   header={data.name}
-                  subHeader={data.description}
+                  // subHeader={data.description}
                   id={data.id}
-                  img={data.image}
-                  results={results}
+                  img={data.Image}
+                  // results={results}
                 />
               </SwiperSlide>
             ))}

@@ -95,11 +95,11 @@ const Information = () => {
               {selectedInformation[0]?.lists.map((list, id) => (
                 <div
                   key={id}
-                  className="bg-[#EFF0F3] flex justify-between shadow-sm rounded-md items-center px-4 py-2"
+                  className="bg-[#EFF0F3] flex justify-between shadow-sm rounded-md items-center px-4 py-4"
                 >
                   <div className="flex gap-x-4 items-center">
                     <img className="w-5 h-5" src={list.icon} alt="" />
-                    <p>{list.title}</p>
+                    <p className="text-[1rem]">{list.title}</p>
                   </div>
                   {list.link && (
                     <a
