@@ -97,7 +97,7 @@ const Activities = () => {
       <BgImgText
         header="About Us"
         text={selectedAct.length === 0 ? "Activities" : selectedAct[0]?.name}
-        url="/images/homeBg1.png"
+        url="/images/bg4.png"
       />
       <div className="py-10 px-12 grid grid-cols-[4fr_6fr]">
         <div className="rounded-xl w-[25rem] border border-gray-500 h-fit">

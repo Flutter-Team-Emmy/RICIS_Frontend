@@ -24,8 +24,8 @@ const PageBoundary = () => {
       <div className="mb-[6rem]">
         <BgImgText
           header="NOTIFICATION"
-          text="News, Notice & Circular"
-          url="/images/bg4.png"
+          text={!selectedTab ? "News" : selectedTab}
+          url="/images/homeBg2.png"
         />
         <div className="flex flex-col lg:flex-row justify-between gap-10 p-10">
           <div className="rounded-xl w-[35rem] border border-gray-400 h-fit">
@@ -52,7 +52,9 @@ const PageBoundary = () => {
               })}
             </div>
           </div>
-          {selectedTab === "News" ? (
+          {!selectedTab ? (
+            <News />
+          ) : selectedTab === "News" ? (
             <News />
           ) : selectedTab === "Notice" ? (
             <Notice />

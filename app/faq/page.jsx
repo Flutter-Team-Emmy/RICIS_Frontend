@@ -56,10 +56,10 @@ const FAQs = () => {
   return (
     <MainLayout>
       <BgImgText
-        isLoading={isLoading}
+        // isLoading={isLoading}
         header="FAQS"
-        url="/images/bg4.png"
-        text="FREQUENTLY ASKED QUESTIONS"
+        url="/images/homeBg1.png"
+        text={selectedFaqType[0]?.name}
       />
       <div className="py-10 px-12 grid grid-cols-[4fr_6fr]">
         <div className="rounded-xl w-[25rem] border border-gray-500 h-fit">

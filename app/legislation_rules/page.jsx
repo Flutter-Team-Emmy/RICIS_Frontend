@@ -100,7 +100,7 @@ const LegislationRules = () => {
         header="Legislations/Rules"
         text={currentSubRule?.name}
         isLoading={isLoading}
-        url="/images/bg4.png"
+        url="/images/bg7.png"
       />
       <div className="py-10 px-12 grid grid-cols-[4fr_6fr]">
         <div className="rounded-xl w-[25rem] border border-gray-500 h-fit">

@@ -12,6 +12,7 @@ export const faqsTypes = [
 export const faqs = [
   {
     faqTypeId: "faq1",
+    name: "Boiler and Pressure Vessels",
     data: [
       {
         id: 1,
@@ -107,6 +108,7 @@ export const faqs = [
   },
   {
     faqTypeId: "faq2",
+    name: "Lifting and Allied Works",
     data: [
       {
         id: 1,

@@ -74,7 +74,9 @@ const ServicesBoundary = () => {
 
   const { data, isLoading, isSuccess } = useGetServicesQuery();
 
-  const currentService = services.find((service) => service.name === tab);
+  const currentService = !tab
+    ? services[0]
+    : services.find((service) => service.name === tab);
 
   useEffect(() => {
     if (!tab) {
@@ -95,9 +97,9 @@ const ServicesBoundary = () => {
       <BgImgText
         header="Our Services"
         text={currentService?.name}
-        url={imgUrl}
+        url="/images/bg6.png"
       />
-      <div className="py-10 px-16 flex justify-between gap-2">
+      <div className="py-10 px-10 grid grid-cols-[4fr_6fr] gap-4">
         <div className="rounded-xl w-[25rem] border border-gray-500 h-fit">
           <div className="bg-[#2056A7] w-full py-2 px-3 rounded-t-xl">
             <p className="font-semibold text-white">Services</p>
