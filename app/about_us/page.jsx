@@ -17,7 +17,6 @@ const Accordion = ({
   currentServiceId,
   changeDefault,
 }) => {
-
   return (
     <div
       className={`w-full ${
@@ -99,8 +98,8 @@ const Activities = () => {
         text={selectedAct.length === 0 ? "Activities" : selectedAct[0]?.name}
         url="/images/bg4.png"
       />
-      <div className="py-10 px-12 grid grid-cols-[4fr_6fr]">
-        <div className="rounded-xl w-[25rem] border border-gray-500 h-fit">
+      <div className="py-10 px-12 grid grid-cols-[4fr_6fr] gap-10">
+        <div className="rounded-xl w-[30rem] border border-gray-500 h-fit">
           <div className="bg-[#2056A7] w-full py-2 px-3 rounded-t-xl">
             <p className="font-semibold text-white">About Us</p>
           </div>
@@ -125,31 +124,34 @@ const Activities = () => {
 
         <div className="text-gray-500">
           {selectedAct.map((data, index) => (
-            <div className="space-y-6" key={data.id}>
-              <h1 className="font-bold text-black text-lg">
-                {data.details.mainHeader}
-              </h1>
-              <ol className="text-sm list-disc space-y-4 pl-4 list-inside">
-                {data.details.mainLists &&
-                  data.details.mainLists.map((mainList, id) => (
-                    <li key={id}>{mainList.des}</li>
+            <>
+              <div>{data.details.image && <img src={data.details.image} alt="" />}</div>
+              <div className="space-y-6" key={data.id}>
+                <h1 className="font-bold text-black text-lg">
+                  {data.details.mainHeader}
+                </h1>
+                <ol className="text-sm list-disc space-y-4 pl-4 list-inside">
+                  {data.details.mainLists &&
+                    data.details.mainLists.map((mainList, id) => (
+                      <li key={id}>{mainList.des}</li>
+                    ))}
+                </ol>
+                {data.details.sections &&
+                  data.details.sections.map((section, id) => (
+                    <div key={id} className="space-y-4">
+                      <h1 className="font-medium text-black">
+                        {section.subHeader}
+                      </h1>
+                      <p className="text-sm">{section.subTitle}</p>
+                      <ol className="text-sm list-disc space-y-4 pl-4 list-inside">
+                        {section.lists.map((list, id) => (
+                          <li key={id}>{list}</li>
+                        ))}
+                      </ol>
+                    </div>
                   ))}
-              </ol>
-              {data.details.sections &&
-                data.details.sections.map((section, id) => (
-                  <div key={id} className="space-y-4">
-                    <h1 className="font-medium text-black">
-                      {section.subHeader}
-                    </h1>
-                    <p className="text-sm">{section.subTitle}</p>
-                    <ol className="text-sm list-disc space-y-4 pl-4 list-inside">
-                      {section.lists.map((list, id) => (
-                        <li key={id}>{list}</li>
-                      ))}
-                    </ol>
-                  </div>
-                ))}
-            </div>
+              </div>
+            </>
           ))}
         </div>
       </div>

@@ -89,7 +89,7 @@ const HeaderDropDown = ({
                     : header === "Legislation/Rules"
                     ? `/legislation_rules?tab=${drop.name}&subId=${firstSubRuleId}`
                     : header === "Information"
-                    ? "/information"
+                    ? (drop.name === "Fees" ? "/signin" : "/information")
                     : drop.href
                 }
                 key={i}

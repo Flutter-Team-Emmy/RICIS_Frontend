@@ -187,4 +187,11 @@ export const subActs = [
       ],
     },
   },
+  {
+    id: 5,
+    name: "Administrative Structure",
+    details: {
+      image: "/images/administrativeStructure.png",
+    },
+  },
 ];

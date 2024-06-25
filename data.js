@@ -1,22 +1,8 @@
-import {
-  useGetInformationQuery,
-  useGetServicesQuery,
-  useGetlegislaionsQuery,
-} from "./store/api/generalApi";
 import { legislationAndRules } from "./utils/legislationAndRulesData";
 import { services } from "./utils/servicesData";
 import { information } from "./utils/informationPageData";
 
 export const headerDrop = () => {
-  // const { data: servicesData} = useGetServicesQuery();
-//   const { data: information } = useGetInformationQuery();
-//   const { data: legislationData } = useGetlegislaionsQuery();
-
-//   const legislationDrop = legislationData?.data.legislations;
-//   const informationDrop = information?.data.information;
-
-  // console.log(servicesDrop)
-
   return [
     {
       header: "Home",
@@ -29,8 +15,13 @@ export const headerDrop = () => {
       id: "02",
     },
     {
-      header: "About Us",
+      header: "Application",
+      href: "/signin",
       id: "03",
+    },
+    {
+      header: "About Us",
+      id: "04",
       href: "/about_us",
       drop: [
         {
@@ -39,39 +30,39 @@ export const headerDrop = () => {
         },
         {
           name: "Administrative Structure",
-          href: "/about_us/administrative_structure",
+          href: "/about_us",
         },
         {
           name: "Certificate Issued",
-          href: "/about_us/certificate_issued",
+          href: "/about_us",
         },
       ],
     },
 
     {
       header: "Services",
-      id: "04",
+      id: "05",
       href: "/services",
       drop: services,
     },
 
     {
       header: "Legislation/Rules",
-      id: "05",
+      id: "06",
       href: "/legislation_rules",
       drop: legislationAndRules,
     },
 
     {
       header: "Information",
-      id: "06",
+      id: "07",
       href: "/information",
       drop: information,
     },
 
     {
       header: "Notifications",
-      id: "07",
+      id: "08",
       href: "/notification",
       drop: [
         {
@@ -86,18 +77,22 @@ export const headerDrop = () => {
           name: "Circular",
           href: "/notification?selected=Circular",
         },
+        {
+          name: "Order",
+          href: "/notification?selected=Order",
+        },
       ],
     },
 
     {
       header: "FAQs",
-      id: "08",
+      id: "09",
       href: "/faq",
     },
 
     {
       header: "Contact Us",
-      id: "09",
+      id: "10",
       href: "/contact",
     },
   ];

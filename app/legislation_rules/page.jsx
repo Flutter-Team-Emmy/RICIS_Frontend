@@ -102,8 +102,8 @@ const LegislationRules = () => {
         isLoading={isLoading}
         url="/images/bg7.png"
       />
-      <div className="py-10 px-12 grid grid-cols-[4fr_6fr]">
-        <div className="rounded-xl w-[25rem] border border-gray-500 h-fit">
+      <div className="py-10 px-12 grid grid-cols-[4fr_6fr] gap-10">
+        <div className="rounded-xl w-[30rem] border border-gray-500 h-fit">
           <div className="bg-[#2056A7] w-full py-2 px-3 rounded-t-xl">
             <p className="font-semibold text-white">Legislations/Rules</p>
           </div>

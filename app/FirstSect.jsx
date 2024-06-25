@@ -66,16 +66,16 @@ const BackgroundCard = ({ data }) => {
 };
 
 const FirstSect = () => {
+
   return (
     <Swiper
       slidesPerView={1}
-      modules={[Navigation, Mousewheel, Keyboard, Autoplay]}
+      modules={[Navigation, Keyboard, Autoplay]}
       // cssMode={true}
       //  pagination={{
       //   clickable: true,
       // }}
-      mousewheel={true}
-      keyboard={true}
+      keyboard={{ enabled: true }}
       autoplay={{ autoplay: 5000 }}
       className="mySwiper z-[-1]"
     >
