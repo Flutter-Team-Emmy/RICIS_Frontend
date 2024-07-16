@@ -49,12 +49,12 @@ export const UserSidebarLinks = [
     href: "/user/certification",
     icon: cerificateIcon,
   },
-  {
-    id: "s7",
-    name: "Certification",
-    href: "/user/certification",
-    icon: cerificateIcon,
-  },
+  // {
+  //   id: "s7",
+  //   name: "Certification",
+  //   href: "/user/certification",
+  //   icon: cerificateIcon,
+  // },
   {
     id: "s8",
     name: "Fees",
