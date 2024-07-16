@@ -18,17 +18,15 @@ const FirstSect = () => {
           variants={textVariants}
           className="inter900 font-black lg:text-[64px] 2xl:text-[4rem] lg:leading-[72px] 2xl:leading-[96px] text-white text-center"
         >
-          Empowered to make a difference
+          Promoting Workplace Safety Compliance
         </MotionComponent>
         <MotionComponent
           as="h2"
           variants={textVariants}
           className="text-center inter500 lg:text-[1rem] 2xl:text-[1.5rem] 2xl:leading-[36px] text-white"
         >
-          Phasellus interdum sagittis magna. Donec varius ultricies diam sed
-          lacinia.
-          <br /> Mauris a quam nec, pellentesque pulvinar sem. Morbi lacus
-          magna.
+          Ensuring Adherence to National Safety Standards through Expert Consultancy and Rigorous
+          <br />  inspection Services for a safer Workplace Environment
         </MotionComponent>
         <h1 className="text-white font-[700] text-3xl mr-auto translate-y-20 translate-x-12">Our Services</h1> 
       </div>
