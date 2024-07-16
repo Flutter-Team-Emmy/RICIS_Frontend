@@ -35,10 +35,12 @@ export const normalizeErrors = (error) => {
 };
 
 export const resetForm = (data, name) => {
-  Object.keys(data).forEach((key) => {
-    data[key] = "";
-  });
-  localStorage.setItem(name, JSON.stringify(data));
+  if (typeof data === "object") {
+    Object.keys(data).forEach((key) => {
+      data[key] = "";
+    });
+    localStorage.setItem(name, JSON.stringify(data));
+  }
 };
 
 export const formatDate = (inputDateStr) => {

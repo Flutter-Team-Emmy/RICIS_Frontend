@@ -28,21 +28,39 @@ const ApplicationTypesSuspense = () => {
   const router = useRouter();
   console.log(forms);
 
-  let initialStoredFormData;
+  // let initialStoredFormData;
+  const storageForm = localStorage.getItem("formData");
 
-  if (localStorage.getItem("formData") !== "undefined") {
-    initialStoredFormData = JSON.parse(localStorage.getItem("formData"));
-  }
+  // if (
+  //   storageForm !== "undefined" &&
+  //   storageForm !== "null" &&
+  //   storageForm !== undefined &&
+  //   storageForm !== null
+  // ) {
+  //   initialStoredFormData = JSON.parse(localStorage.getItem("formData"));
+  // }
 
-  console.log(localStorage.getItem("formData"));
+  // console.log("Type form", typeof localStorage.getItem("formData"));
+  // console.log("type", typeof initialStoredFormData);
+  // console.log("formadata", initialStoredFormData);
+  // console.log(initialStoredFormData);
 
   const proceedToNextStep = () => {
     if (!formData.application_type) {
       toast("Select a field to proceed!", { autoClose: 30000 });
       return;
     }
-    if (initialFormData) {
+    if (
+      storageForm !== "undefined" &&
+      storageForm !== "null" &&
+      storageForm !== undefined &&
+      storageForm !== null
+    ) {
+      const initialStoredFormData = JSON.parse(
+        localStorage.getItem("formData")
+      );
       resetForm(initialStoredFormData, "formData");
+      console.log("i'm here");
     }
     router.push(`/user/application-type/${selectedFormId}`);
   };
