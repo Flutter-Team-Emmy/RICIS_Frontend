@@ -123,9 +123,17 @@ const Activities = () => {
         </div>
 
         <div className="text-gray-500">
+          {selectedAct[0]?.name === "Administrative Structure" && (
+            <div>
+              <img src={selectedAct[0]?.details.admin1} alt="" />
+              <img src={selectedAct[0]?.details.admin2} alt="" />
+            </div>
+          )}
           {selectedAct.map((data, index) => (
             <>
-              <div>{data.details.image && <img src={data.details.image} alt="" />}</div>
+              <div>
+                {data.details.image && <img src={data.details.image} alt="" />}
+              </div>
               <div className="space-y-6" key={data.id}>
                 <h1 className="font-bold text-black text-lg">
                   {data.details.mainHeader}

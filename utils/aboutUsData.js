@@ -35,7 +35,7 @@ export const subActs = [
     name: "Activities",
     details: {
       mainHeader:
-        "Activities of Regulatory Implementation & Compliance Services (RICS)",
+        " REGULATORY IMPLEMENTATION & COMPLIANCE SCHEME (RICS)",
       mainLists: [
         {
           des: "Develop technical guidelines for the administration, management and implementation of the Boiler & Pressure Vessel Regulation, 2018 (BPVR) and the Lifting & Allied Work Equipment (Safety) Regulation, 2018 (LAWER).",
@@ -44,7 +44,7 @@ export const subActs = [
           des: "Organize awareness campaigns and carry out training on implementation and compliance to requirements of BPVR and LAWER",
         },
         {
-          des: "Inspect and monitor organizations for implementation and compliance of the BPVR and LAWER. ",
+          des: "Carry out oversite activities to ascertain level of implementation and ensure compliance with the BPVR and LAWER. ",
         },
         {
           des: "Carry out inspection of Steam Boilers, Pressure Vessels, Cranes and Lifting Equipment, during manufacture or installation for the purpose of registration as required by Regulation.",
@@ -65,7 +65,7 @@ export const subActs = [
           des: "Recommend for prosecution of the owners of boilers, pressure vessels, passenger lifts, escalators, lifting equipment and other related components for violation of the provisions in the Regulations.",
         },
         {
-          des: "Update records of the OSH Department with respect to location change and transfer of boilers and pressure vessels.",
+          des: " Prepare and update records of location, re-location and transfer of ownership of  boilers and pressure vessels.",
         },
         {
           des: "In conjunction with the Exam Board, develop body of knowledge for personnel competency examinations and purse accreditation of certification program to international standard.",
@@ -77,7 +77,7 @@ export const subActs = [
           des: "Conduct qualification tests of pressure welders and recommend successful candidates for certification.",
         },
         {
-          des: "In conjunction with the OSH Department compliance team, conduct approval audit for Registered Contactors, Authorised Inspection Agency and Training Organisations.",
+          des: " Conduct approval and authorisation audit for Registered Contactors, Authorised Inspection Agency and Training Organisations",
         },
       ],
     },
@@ -185,6 +185,14 @@ export const subActs = [
           ],
         },
       ],
+    },
+  },
+  {
+    id: 5,
+    name: "Administrative Structure",
+    details: {
+      admin1: "/images/admin1.jpg",
+      admin2: "/images/admin2.jpg",
     },
   },
 ];
