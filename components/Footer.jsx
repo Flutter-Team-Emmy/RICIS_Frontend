@@ -49,7 +49,10 @@ const Footer = () => {
             </div>
           </div>
 
-          <FooterText header="Legislation/Rules" data={legislationAndRules} /> 
+          <FooterText
+            header="Legislation/Rules"
+            data={legislationAndRules}
+          />
           <FooterText header="Services" data={services} />
           <div>
             <FooterText

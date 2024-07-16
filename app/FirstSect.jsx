@@ -1,13 +1,40 @@
+"use client";
+
 import MotionComponent from "@/components/MotionComponent";
 import { textVariants } from "@/utils/variants";
 import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import {
+  Autoplay,
+  EffectCoverflow,
+  EffectCreative,
+  EffectFade,
+  Keyboard,
+  Mousewheel,
+  Navigation,
+  Pagination,
+} from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 
-const FirstSect = () => {
+const backgroundCardData = [
+  {
+    url: "/images/bg7.png",
+  },
+  {
+    url: "/images/homeBg2.png",
+  },
+  {
+    url: "/images/homeBg1.png",
+  },
+];
+
+const BackgroundCard = ({ data }) => {
   return (
     <div
       className="flex items-center justify-center relative w-full min-h-[600px] h-full "
       style={{
-        backgroundImage: 'url("/images/9347.jpg")',
+        backgroundImage: `url(${data.url})`,
         backgroundPosition: "contain",
         backgroundSize: "cover",
       }}
@@ -28,9 +55,34 @@ const FirstSect = () => {
           Ensuring Adherence to National Safety Standards through Expert Consultancy and Rigorous
           <br />  inspection Services for a safer Workplace Environment
         </MotionComponent>
-        <h1 className="text-white font-[700] text-3xl mr-auto translate-y-20 translate-x-12">Our Services</h1> 
+        <h1 className="text-white font-[700] text-3xl mr-auto translate-y-20 translate-x-12">
+          Our Services
+        </h1>
       </div>
     </div>
+  );
+};
+
+const FirstSect = () => {
+
+  return (
+    <Swiper
+      slidesPerView={1}
+      modules={[Navigation, Keyboard, Autoplay]}
+      // cssMode={true}
+      //  pagination={{
+      //   clickable: true,
+      // }}
+      keyboard={{ enabled: true }}
+      autoplay={{ autoplay: 5000 }}
+      className="mySwiper z-[-1]"
+    >
+      {backgroundCardData.map((data, index) => (
+        <SwiperSlide key={index}>
+          <BackgroundCard key={index} data={data} />
+        </SwiperSlide>
+      ))}
+    </Swiper>
   );
 };
 

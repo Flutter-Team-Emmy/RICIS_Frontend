@@ -67,9 +67,18 @@ const HeaderDropDown = ({
         <div className="absolute left-[-50%]  bg-[#FFFFFF]  border-[4px] border-transparent border-b-[#3361FF] py-[1.5rem] px-[2rem]  flex-col flex gap-[12px]">
           {drop.map((drop, i) => {
             let firstSubServiceId;
+            let firstSubRuleId;
             const containsSub = Object.keys(drop)?.includes("subServices");
+            const containsHasDrop = Object.keys(drop)?.includes("hasDrop");
             if (containsSub) {
               firstSubServiceId = drop.subServices[0]?.id;
+            }
+            if (containsHasDrop) {
+              if (drop.hasDrop) {
+                firstSubRuleId = drop.subRule[0]?.id;
+              } else {
+                firstSubRuleId = drop?.id;
+              }
             }
 
             return (
@@ -78,9 +87,9 @@ const HeaderDropDown = ({
                   header === "Services"
                     ? `/services?tab=${drop.name}&subId=${firstSubServiceId}`
                     : header === "Legislation/Rules"
-                    ? "/legislation_rules"
+                    ? `/legislation_rules?tab=${drop.name}&subId=${firstSubRuleId}`
                     : header === "Information"
-                    ? "/information"
+                    ? (drop.name === "Fees" ? "/signin" : "/information")
                     : drop.href
                 }
                 key={i}

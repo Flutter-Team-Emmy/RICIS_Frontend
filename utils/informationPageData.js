@@ -100,4 +100,9 @@ export const information = [
       },
     ],
   },
+  {
+    name: "Fees",
+    id: 8,
+    href: "/sigin"
+  } 
 ];

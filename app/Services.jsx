@@ -1,10 +1,7 @@
 "use client";
 
 import React from "react";
-import TextHeader from "./TextHeader";
 import CardCenter from "../components/CardCenter";
-import Link from "next/link";
-import { useGetServicesQuery } from "@/store/api/generalApi";
 import MotionComponent from "@/components/MotionComponent";
 import { textVariants, fadeInVariants } from "@/utils/variants";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -18,30 +15,34 @@ import {
 import SwiperNavBtn from "../components/SwiperNavBtn";
 import "swiper/css";
 import "swiper/css/pagination";
+import { services } from "@/utils/servicesData";
+ 
 
 const Services = () => {
-  const { data, isLoading, isSuccess } = useGetServicesQuery();
-
-  const results = data?.data.services;
 
   return (
     <div className="w-full mx-auto absolute -mt-40 mb-[3rem] ">
       <div className="mt-20 w-full">
-        <div className="flex gap-x-20 justify-center">
-          {results?.map((data, index) => (
-            <CardCenter
-              key={data.id}
-              index={index}
-              header={data.name}
-              subHeader={data.description}
-              id={data.id}
-              img={data.image}
-              results={results}
-            />
-          ))}
-        </div>
+        {services.length <= 4 && (
+          <div className="flex gap-x-20 justify-center z-[100] relative ">
+            {services.map((data, index) => {
+              return (
+                <CardCenter
+                  key={data.id}
+                  index={index}
+                  data={data}
+                  header={data.name}
+                  // subHeader={data.description}
+                  id={data.id}
+                  img={data.Image}
+                  // results={results}
+                />
+              );
+            })}
+          </div>
+        )}
         <Swiper
-          slidesPerView={results?.length >= 4 ? 4 : results?.length}
+          slidesPerView={services?.length >= 4 ? 4 : services?.length}
           spaceBetween={30}
           // centeredSlides={true}
           breakpoints={{
@@ -66,26 +67,27 @@ const Services = () => {
           //  pagination={{
           //   clickable: true,
           // }}
-          mousewheel={results?.length > 4 ? true : false}
+          mousewheel={services?.length > 4 ? true : false}
           keyboard={true}
-          autoplay={results?.length > 4 ? true : false}
+          autoplay={services?.length > 4 ? true : false}
           className="mySwiper"
         >
-          {(isSuccess && results.length > 4) &&
-            results?.map((data, index) => (
+          {services.length > 4 &&
+            services?.map((data, index) => (
               <SwiperSlide key={data.id}>
                 <CardCenter
                   key={data.id}
                   index={index}
+                  data={data}
                   header={data.name}
-                  subHeader={data.description}
+                  // subHeader={data.description}
                   id={data.id}
-                  img={data.image}
-                  results={results}
+                  img={data.Image}
+                  // results={results}
                 />
               </SwiperSlide>
             ))}
-          {(isLoading || results?.length === 0) &&
+          { services?.length === 0 &&
             [0, 1, 2, 3, 4, 5].map((loader, index) => (
               <SwiperSlide key={loader}>
                 <MotionComponent
